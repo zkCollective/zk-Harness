@@ -5,24 +5,26 @@ In the followingm, we initially separate between *Succinct Non-Interactive Argum
 
 ## Overview of ZK SNARK Compilers
 
-| Name                                                                  | Language       | Arithmetization       | Commitment Scheme         |
-| :---                                                                  |    :----:     |          ---:         |          ---:             |
-| [libsnark](https://github.com/scipr-lab/libsnark)                     | C++         | Here's this           |                           |
-| [Bellman](https://github.com/zkcrypto/bellman)                        | Text          | Here's this           |                           |
-| [jsnark](https://github.com/akosba/jsnark)                            | Text          | Here's this           |                           |
-| [snarky](https://github.com/o1-labs/snarky)                           | Text          | Here's this           |                           |
-| [gnark](https://github.com/ConsenSys/gnark)                           | Text          | Here's this           |                           |
-| [PLONK Dusk Network](https://github.com/dusk-network/plonk)           | Text          | Here's this           |                           |
-| [circom](https://github.com/iden3/circom)                             | Text          | Here's this           |                           |
-| [arkworks](https://github.com/arkworks-rs)                            | Text          | Here's this           |                           |
-| [jellyfish](https://github.com/EspressoSystems/jellyfish)             | Text          | Here's this           |                           |
-| [halo2](https://github.com/zcash/halo2)                               | Text          | Here's this           |                           |
-| [adjoint-io bulletproofs](https://github.com/sdiehl/bulletproofs)     | Text          | Here's this           |                           |
-| [DIZK](https://github.com/scipr-lab/dizk)                             | Text          | Here's this           |                           |
-| [Spartan](https://github.com/microsoft/Spartan)                       | Text          | Here's this           |                           |
-| [Anoma Vamp-IR](https://github.com/anoma/vamp-ir)                     | Text          | Here's this           |                           |
-| [VIRGO](https://github.com/sunblaze-ucb/Virgo)                        | Text          | Here's this           |                           |
-| [Hyperplonk](https://github.com/EspressoSystems/hyperplonk)           | Text          | Here's this           |                           |
+This is a high-level overview of currently  existing snark-compilers.
+
+| Name                                                                  | Lang.     | Arith.  | IOP     | Front/Back    |
+| :---                                                                  | :----:    | :----:  | :---:    |   ---:   |
+| [libsnark](https://github.com/scipr-lab/libsnark)                     | C++       | R1CS    | Groth16 | Back          |
+| [Bellman](https://github.com/zkcrypto/bellman)                        | Rust      | R1CS    | Groth16 | Back          |
+| [jsnark](https://github.com/akosba/jsnark)                            | JS        | libsnark    |  libsnark  | Front          |
+| [snarky](https://github.com/o1-labs/snarky)                           | OCAML     | libsnark    |  libsnark  | Front          |
+| [gnark](https://github.com/ConsenSys/gnark)                           | Go     | Plonk    |  Plonk  | Front + Back          |
+| [PLONK Dusk Network](https://github.com/dusk-network/plonk)           | Rust     | Plonk    |  Plonk  | Front + Back          |
+| [circom](https://github.com/iden3/circom)                             | Rust     | R1CS    |  Groth16  | Front + Back          |
+| [arkworks](https://github.com/arkworks-rs)                            | Rust     | R1CS    |  Groth16/Spartan/Marlin  | Front + Back          |
+| [jellyfish](https://github.com/EspressoSystems/jellyfish)             | Rust     | Plonk    |  Plonk  | Front + Back          |
+| [halo2](https://github.com/zcash/halo2)                               | Rust     | UltraPlonk    |  Halo2  | Front + Back          |
+| [adjoint-io bulletproofs](https://github.com/sdiehl/bulletproofs)     | Rust     | - (DLOG)    |  Bulletproof  | Front + Back          |
+| [DIZK](https://github.com/scipr-lab/dizk)                             | Java     | R1CS    |  Groth16  | Front + Back          |
+| [Spartan](https://github.com/microsoft/Spartan)                       | Rust     | R1CS    |  Spartan  | Front + Back          |
+| [Anoma Vamp-IR](https://github.com/anoma/vamp-ir)                     | Rust     | ?    |  X  | Front          |
+| [VIRGO](https://github.com/sunblaze-ucb/Virgo)                        | C++     | ?    |  ?  | ?          |
+| [Hyperplonk](https://github.com/EspressoSystems/hyperplonk)           | Rust      | Plonk    |  ?  | ?          |
 
 ## Overview of ZK STARK Compilers
 
@@ -75,8 +77,7 @@ The arithemtization for Halo2 comes from PLONK, more precisely UltraPlonk, which
 
 Detailed Informations about Halo2:
 
-- The Halo2 Book [here]()
-- 
+- The Halo2 Book [here](https://zcash.github.io/halo2/)
 
 Halo2 is commonly used in:
 
@@ -105,18 +106,27 @@ Sigma protocols are commonly used in:
 ## Polynomial Commitments
 
 Example of an univariate polynomial:    p = x^4 - 4*x^2 - 7*x + 9
+
 Example of a multivariate polynomial:   p = 2*xz^4 - 4*xz^2 - 7*xy
+
 Example of a multilinear polynomial:    p = 2*xz - 4*xz - 7*xy
 
 - Hyrax ([Paper](https://eprint.iacr.org/2017/1132.pdf) / [Code](https://github.com/TAMUCrypto/hyrax-bls12-381))
 - KZG ([Paper]())
   - Prima One - Simple KZG implementation [here](https://github.com/proxima-one/kzg)
   - Espresso Systems - Implementation of Multilinear KZG commitments [here](https://github.com/EspressoSystems/hyperplonk)
-- Arkworks Polynomial Commitmente implementations [here](https://github.com/arkworks-rs/poly-commit/tree/master/src) (KZG, IPA, Marlin KZG, Sonic KZG)
+- Arkworks Polynomial Commitment implementations [here](https://github.com/arkworks-rs/poly-commit/tree/master/src) (KZG, IPA, Marlin KZG, Sonic KZG)
+- FRI (Risc0, Plonky2, Winterfell) [Paper](Fast Reed-Solomon Interactive Oracle Proofs of Proximity)
+  - Risc0 [implementation](https://github.com/risc0/risc0/blob/main/risc0/zkp/src/prove/fri.rs) / [Description](https://www.risczero.com/docs/reference-docs/about-fri) of FRI
 
 ### Additional Info on Polynomial Commitments and Multilinear Extenstions
 
 - Interactive Proofs & Arguments, Low-Degree & Multilinear Extensions - Justin Thaler [here](https://people.cs.georgetown.edu/jthaler/IPsandextensions.pdf)
+
+## Curves and Pairings
+
+<!-- https://github.com/supranational/blst BLS12-381 -->
+<!-- 2-adicity of curves see https://www.cryptologie.net/article/559/whats-two-adicity/ -->
 
 ## Hardware Accelerations
 
@@ -139,7 +149,15 @@ Whereas e.g. Groth16 demands for a trusted setup per circuit, e.g. PLONK require
 
 ## Toy Examples
 
-<!-- TODO -->
+Potential Toy Examples that we can evaluate in the paper:
+
+- Multiplication
+- Cubic polynomial 
+- Dot product
+- Inner product
+- Sorting
+- Modulo
+- Exponentiation
 
 ## Cryptographic Primitives
 
@@ -152,14 +170,36 @@ Whereas e.g. Groth16 demands for a trusted setup per circuit, e.g. PLONK require
 
 ### Traditional Schemes
 
-- Merkle Patricia Tree []() 
+- Merkle Patricia Tree [docs](https://ethereum.org/en/developers/docs/data-structures-and-encoding/patricia-merkle-trie/) 
   - Implemenation by Scroll can be found [here](https://github.com/scroll-tech/mpt-circuit)
-- SHA-256 []()
-  - Arkworks implementation can be found [here]()
+- SHA-256 [RFC](https://www.rfc-editor.org/rfc/rfc6234)
+  - Arkworks implementation can be found [here](https://github.com/arkworks-rs/crypto-primitives/tree/main/src/crh)
+  - Risc0 implementation can be found [here](https://github.com/risc0/risc0-rust-examples/tree/main/sha)
 
 ## Existing Performance Comparisons
 
 - Comparison pairings in gnark/arkworks [here](https://eprint.iacr.org/2022/1162.pdf)
-- Performance comparison of polynomial commitments []()
+- Polynomial Commitment benchmark can be found [here](https://2π.com/23/pc-bench/index.html)
 - SHA-256 comparison for halo2, plonky2, circom [here](https://github.com/Sladuca/sha256-prover-comparison)
 - Master Thesis on a theoretical / practical Overview of SNARKs [here](https://is.muni.cz/th/ovl3c/SNARKs_STARKs_introduction.pdf)
+- ZKP Test Repository [here](https://github.com/spalladino/zkp-tests)
+
+## What are questions that we should answer in the paper?
+
+- Which compilers are mostly used?
+- Which compiler should a developer choos given a specific project in mind?
+- What is the state-of-the-art in current ZKP implementations?
+- As a designer of a compiler, what are limitations of existing approaches?
+- As policy makers - what are the assurances that ZKPs can provide - and where can they fail?
+
+- What is the performance of different Curve implementations for SNARKs that apply bilinear pairings?
+- What is the performance of different polynomial commitment schemes? (For SNARKs that rely on polynomial commitment schemes)
+- How do optimizations, such as lookups and custom gates, influence the performance of the baseline SNARK?
+- What are current bottlenecks to SNARKs?
+  - Multi Scalar Multiplication
+  - Fast Fourier Transformation
+  - Trusted Setup Ceremony
+
+## Questions for us to resolve in order to determine the focus
+
+<!-- TODO -->
