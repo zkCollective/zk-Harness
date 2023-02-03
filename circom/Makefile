@@ -1,4 +1,4 @@
-HELL = zsh
+SHELL = zsh
 
 circom = circuits/toy/sudoku.circom
 p_input = circuits/toy/sudoku.input.json

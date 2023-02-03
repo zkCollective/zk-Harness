@@ -152,7 +152,7 @@ Whereas e.g. Groth16 demands for a trusted setup per circuit, e.g. PLONK require
 Potential Toy Examples that we can evaluate in the paper:
 
 - Multiplication
-- Cubic polynomial 
+- Cubic polynomial
 - Dot product
 - Inner product
 - Sorting
@@ -187,12 +187,18 @@ Potential Toy Examples that we can evaluate in the paper:
 ## What are questions that we should answer in the paper?
 
 - Which compilers are mostly used?
-- Which compiler should a developer choos given a specific project in mind?
+- Which compiler should a developer choose given a specific project in mind?
+  - E.g. Recursion
 - What is the state-of-the-art in current ZKP implementations?
+  - Leave hands of off this
 - As a designer of a compiler, what are limitations of existing approaches?
+  - Leave as discussion
 - As policy makers - what are the assurances that ZKPs can provide - and where can they fail?
+  - Leave as discussion
+  - Search in Repos where they fixed any bugs
 
 - What is the performance of different Curve implementations for SNARKs that apply bilinear pairings?
+  - Can do that - very important primitive
 - What is the performance of different polynomial commitment schemes? (For SNARKs that rely on polynomial commitment schemes)
 - How do optimizations, such as lookups and custom gates, influence the performance of the baseline SNARK?
 - What are current bottlenecks to SNARKs?
@@ -202,4 +208,12 @@ Potential Toy Examples that we can evaluate in the paper:
 
 ## Questions for us to resolve in order to determine the focus
 
-<!-- TODO -->
+### Questions to focus on
+
+1. Performance Toy Examples
+   1. Create a Table of availabel toy examples
+   2. Decide which ones to compare
+      1. circom
+      2. gnark
+2. What are the current bottlenecks in SNARKs?
+3. Which are the most commonly use libraries / compilers / HDLs?
