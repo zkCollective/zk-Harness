@@ -1,11 +1,11 @@
 # ZK Compilers
 
-This repository provides an overview of existing zk compilers and DSLs.
-In the followingm, we initially separate between *Succinct Non-Interactive Arguments of Knowledge* (SNARKs), *Succinct Transparent Arguments of Knowledge* (STARKs) and *Dedicated Verifier Proofs*, which may require interaction with a dedicated verifier and therefore lose non-interactivity.
+This is a software to benchmark various implementations of polynomial commitment schemes, curve implementations, circuit implementations that leverage different proving schemes.
+
 
 ## Overview of ZK SNARK Compilers
 
-This is a high-level overview of currently  existing snark-compilers.
+In the followingm, we initially separate between *Succinct Non-Interactive Arguments of Knowledge* (SNARKs), *Succinct Transparent Arguments of Knowledge* (STARKs) and *Dedicated Verifier Proofs*, which may require interaction with a dedicated verifier and therefore lose non-interactivity.
 
 | Name                                                                  | Lang.     | Arith.  | IOP     | Front/Back    |
 | :---                                                                  | :----:    | :----:  | :---:    |   ---:   |
@@ -92,6 +92,7 @@ Halo2 is commonly used in:
 
 ### Circom
 
+- [circomlib](https://github.com/iden3/circomlib/tree/master/circuits) provides loads or circuit templates for use in applications (see detailed list in the sheets)
 - Sismo Hydra S1 ZKPS [here](https://github.com/sismo-core/hydra-s1-zkps)
  
 ### Bulletproofs
@@ -217,3 +218,7 @@ Potential Toy Examples that we can evaluate in the paper:
       2. gnark
 2. What are the current bottlenecks in SNARKs?
 3. Which are the most commonly use libraries / compilers / HDLs?
+  
+### Micro-Benchmark Metrics
+
+- What are impor

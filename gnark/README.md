@@ -1,5 +1,7 @@
 # gnark Library
 
+The development version documentation of gnark can be found [gnark](https://docs.gnark.consensys.net/en/latest/Concepts/schemes_curves/)
+
 ## Plain Setup
 
 ### Installation
@@ -18,7 +20,3 @@ To run the provided code you can leverage the ``` Makefile ``` with the followin
 - ``` make test-toy```
   - Runs all toy examples provided in the ``` /toy ``` directory for gnark
   - By default, this this tests on all curves and proving schemes supported by gnark by leveraging the ``` github.com/ConsenSys/gnark/test ``` package and the ``` AssertNew ``` method. See detailed descriptiont on what exactly is tested in ``` toy/cubic/cubic_test.go ```
-
-
-
-

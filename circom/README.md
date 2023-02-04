@@ -15,7 +15,7 @@ As Circom is only the compiler to compile from HDL circuit description to R1CS, 
 
 You can install snarkjs with ``` npm install -g snarkjs ``` using [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
-### Compilation & Proof
+### Compilation & Proof - Toy Examples
 
 To compile a circuit run e.g. ``` circom circuits/toy/multiply.circom ``` in this folder.
 
