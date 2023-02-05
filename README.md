@@ -2,10 +2,11 @@
 
 This is a software to benchmark various implementations of polynomial commitment schemes, curve implementations, circuit implementations that leverage different proving schemes.
 
+Google drive link: <https://drive.google.com/drive/u/0/folders/1zkiGrN1xA4FIfAk4N3P8v-\_QIeA8P4Jb>
 
 ## Overview of ZK SNARK Compilers
 
-In the followingm, we initially separate between *Succinct Non-Interactive Arguments of Knowledge* (SNARKs), *Succinct Transparent Arguments of Knowledge* (STARKs) and *Dedicated Verifier Proofs*, which may require interaction with a dedicated verifier and therefore lose non-interactivity.
+In the following, we initially separate between *Succinct Non-Interactive Arguments of Knowledge* (SNARKs), *Succinct Transparent Arguments of Knowledge* (STARKs) and *Dedicated Verifier Proofs*, which may require interaction with a dedicated verifier and therefore lose non-interactivity.
 
 | Name                                                                  | Lang.     | Arith.  | IOP     | Front/Back    |
 | :---                                                                  | :----:    | :----:  | :---:    |   ---:   |
@@ -43,6 +44,13 @@ In the followingm, we initially separate between *Succinct Non-Interactive Argum
 | :---                                                      |    :----:     |          ---:         |          ---:             |
 | [emp-zk](https://github.com/emp-toolkit/emp-zk)           | Text          | Here's this           |                           |
 | [FETA](https://github.com/KULeuven-COSIC/Feta)            | Text          | Here's this           |                           |
+
+## General Purpose Frameworks
+
+We should have a discussion section describing frontend approach implementing
+circuits that essentially execute step-by-step some simple CPU, also called a 
+virtual machine (VM). Such approaches are: StarkWare's (Cairo), zkEVMS,
+Polygon's VM, RISC-V (?), and zkLLVM.
 
 ## Implementations leveraging different ZK Compilers
 
