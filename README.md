@@ -4,19 +4,58 @@ This is a software to benchmark various implementations of polynomial commitment
 
 Google drive link: <https://drive.google.com/drive/u/0/folders/1zkiGrN1xA4FIfAk4N3P8v-\_QIeA8P4Jb>
 
-## Running Benchmarks
+<!--ts-->
+- [ZK Compilers](#zk-compilers)
+  - [Benchmarks](#benchmarks)
+    - [Toy Examples](#toy-examples)
+  - [Overview of ZK SNARK Compilers](#overview-of-zk-snark-compilers)
+  - [Overview of ZK STARK Compilers](#overview-of-zk-stark-compilers)
+  - [Overview of Compilers for Dedicated Verifier Proofs](#overview-of-compilers-for-dedicated-verifier-proofs)
+  - [General Purpose Frameworks](#general-purpose-frameworks)
+  - [Implementations leveraging different ZK Compilers](#implementations-leveraging-different-zk-compilers)
+    - [PLONK](#plonk)
+    - [Halo2](#halo2)
+    - [Circom](#circom)
+    - [Bulletproofs](#bulletproofs)
+    - [Sigma Protocols](#sigma-protocols)
+  - [Polynomial Commitments](#polynomial-commitments)
+    - [Additional Info on Polynomial Commitments and Multilinear Extenstions](#additional-info-on-polynomial-commitments-and-multilinear-extenstions)
+  - [Curves and Pairings](#curves-and-pairings)
+  - [Hardware Accelerations](#hardware-accelerations)
+    - [GPU-based Hardware acceleration](#gpu-based-hardware-acceleration)
+    - [FPGA-based Hardware acceleration](#fpga-based-hardware-acceleration)
+  - [Trusted Setup](#trusted-setup)
+  - [Toy Examples](#toy-examples-1)
+  - [Cryptographic Primitives](#cryptographic-primitives)
+    - [Optimized for SNARKs](#optimized-for-snarks)
+    - [Traditional Schemes](#traditional-schemes)
+  - [Existing Performance Comparisons](#existing-performance-comparisons)
+  - [What are questions that we should answer in the paper?](#what-are-questions-that-we-should-answer-in-the-paper)
+  - [Questions for us to resolve in order to determine the focus](#questions-for-us-to-resolve-in-order-to-determine-the-focus)
+    - [Questions to focus on](#questions-to-focus-on)
+    - [Micro-Benchmark Metrics](#micro-benchmark-metrics)
+
+<!-- Created by https://github.com/ekalinin/github-markdown-toc -->
+<!-- Added by: serious, at: Mon Feb  6 13:44:17 CET 2023 -->
+
+<!--te-->
+
+## Benchmarks
 
 TODO:
-[ ] Include Toy Example multiplication Golang
-[ ] Output benchmarks in a csv file
+
+- [ ] Include Toy Example multiplication Golang
+- [ ] Output benchmarks in a csv file
 
 Benchmarks can be run through the Makefile. Currently, the following benchmarks are supported:
 
 ### Toy Examples
 
 The benchmarks for Toy examples can be run by executing ``` make benchmarks-toy ```
+The following Toy example benchmarks will be executed:
 
 - Exponentiation
+  - Gnark
 
 ## Overview of ZK SNARK Compilers
 
