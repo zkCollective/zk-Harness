@@ -4,6 +4,20 @@ This is a software to benchmark various implementations of polynomial commitment
 
 Google drive link: <https://drive.google.com/drive/u/0/folders/1zkiGrN1xA4FIfAk4N3P8v-\_QIeA8P4Jb>
 
+## Running Benchmarks
+
+TODO:
+[ ] Include Toy Example multiplication Golang
+[ ] Output benchmarks in a csv file
+
+Benchmarks can be run through the Makefile. Currently, the following benchmarks are supported:
+
+### Toy Examples
+
+The benchmarks for Toy examples can be run by executing ``` make benchmarks-toy ```
+
+- Exponentiation
+
 ## Overview of ZK SNARK Compilers
 
 In the following, we initially separate between *Succinct Non-Interactive Arguments of Knowledge* (SNARKs), *Succinct Transparent Arguments of Knowledge* (STARKs) and *Dedicated Verifier Proofs*, which may require interaction with a dedicated verifier and therefore lose non-interactivity.

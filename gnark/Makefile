@@ -7,5 +7,5 @@ directory = github.com/tumberger/zk-compilers/gnark
 all: test-toy
 
 test-toy:
-	go test $(directory)/toy/cubic
-	go test $(directory)/toy/exponentiate
+	go test $(directory)/circuits/toy/cubic
+	go test $(directory)/circuits/toy/exponentiate
