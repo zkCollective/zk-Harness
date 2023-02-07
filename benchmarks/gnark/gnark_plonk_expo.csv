@@ -1,4 +1,10 @@
 backend,curve,algorithm,nbConstraints,nbInternal,nbSecret,nbPublic,nbCoefficients,ram(mb),time(ms),throughput(constraints/s),througputPerCore(constraints/s),nbPhysicalCores,nbThreadsPerCore,nbLogicalCores,cacheLine,l1d,l1i,l2,l3,freq,adx,cpu
-plonk,BN254,setup,10001,10000,1,1,4,67,280,35626,35626,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-plonk,BN254,prove,10001,10000,1,1,4,97,382,26157,26157,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-plonk,BN254,verify,10001,10000,1,1,4,85,2,3697797,3697797,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,BN254,setup,10001,10000,1,1,4,59,271,36829,36829,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,BN254,prove,10001,10000,1,1,4,97,404,24750,24750,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,BN254,verify,10001,10000,1,1,4,85,2,3346961,3346961,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,bls12_377,setup,10001,10000,1,1,4,63,450,22216,22216,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,bls12_377,prove,10001,10000,1,1,4,105,698,14307,14307,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,bls12_377,verify,10001,10000,1,1,4,85,4,2185891,2185891,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,BW6_761,setup,10001,10000,1,1,4,85,6528,1531,1531,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,BW6_761,prove,10001,10000,1,1,4,137,10020,998,998,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,BW6_761,verify,10001,10000,1,1,4,105,41,241148,241148,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
