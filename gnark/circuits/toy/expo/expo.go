@@ -11,7 +11,7 @@ type BenchCircuit struct {
 
 // Circuit defines a an exponentiation for a frontend variable with itself
 func (circuit *BenchCircuit) Define(api frontend.API) error {
-	for i := 0; i <= circuit.N; i++ {
+	for i := 0; i < circuit.N; i++ {
 		circuit.X = api.Mul(circuit.X, circuit.X)
 	}
 	api.AssertIsEqual(circuit.Y, circuit.X)

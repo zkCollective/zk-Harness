@@ -16,7 +16,6 @@ limitations under the License.
 package cmd
 
 import (
-	"encoding/csv"
 	"fmt"
 	"os"
 	"runtime"
@@ -28,6 +27,7 @@ import (
 	"github.com/consensys/gnark/test"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
+	"github.com/tumberger/zk-compilers/gnark/util"
 )
 
 // plonkCmd represents the plonk command
@@ -38,16 +38,17 @@ var plonkCmd = &cobra.Command{
 }
 
 func runPlonk(cmd *cobra.Command, args []string) {
+
+	var filename = "../benchmarks/gnark/gnark_" +
+		"plonk" + "_" +
+		*fCircuit + "." +
+		// *fAlgo + "_" +
+		// *fCurve + "." +
+		*fFileType
+
 	if err := parseFlags(); err != nil {
 		fmt.Println("error: ", err.Error())
 		cmd.Help()
-		os.Exit(-1)
-	}
-
-	// write to stdout
-	w := csv.NewWriter(os.Stdout)
-	if err := w.Write(benchData{}.headers()); err != nil {
-		fmt.Println("error: ", err.Error())
 		os.Exit(-1)
 	}
 
@@ -57,7 +58,7 @@ func runPlonk(cmd *cobra.Command, args []string) {
 		runtime.ReadMemStats(&m)
 
 		internal, secret, public := ccs.GetNbVariables()
-		bData := benchData{
+		bData := util.BenchData{
 			Backend:             "plonk",
 			Curve:               curveID.String(),
 			Algorithm:           *fAlgo,
@@ -71,10 +72,9 @@ func runPlonk(cmd *cobra.Command, args []string) {
 			Throughput:          int(float64(ccs.GetNbConstraints()) / took.Seconds()),
 		}
 
-		if err := w.Write(bData.values()); err != nil {
+		if err := util.WriteData("csv", bData, filename); err != nil {
 			panic(err)
 		}
-		w.Flush()
 	}
 
 	var (

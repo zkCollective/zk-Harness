@@ -15,13 +15,13 @@ func TestExpoGroth16(t *testing.T) {
 	assert.ProverFailed(&benchCircuit, &BenchCircuit{
 		X: 2,
 		Y: 5,
-		N: 1,
+		N: 2,
 	})
 
 	assert.ProverSucceeded(&benchCircuit, &BenchCircuit{
 		X: 2,
 		Y: 4,
-		N: 1,
+		N: 2,
 	})
 
 }

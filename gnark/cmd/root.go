@@ -34,6 +34,7 @@ var (
 	fProfile     *string
 	fCount       *int
 	fCurve       *string
+	fFileType    *string
 )
 
 var (
@@ -56,6 +57,7 @@ func init() {
 	fAlgo = rootCmd.PersistentFlags().String("algo", "prove", "name of the algorithm to benchmark. must be compile, setup, prove or verify")
 	fProfile = rootCmd.PersistentFlags().String("profile", "none", "type of profile. must be none, trace, cpu or mem")
 	fCurve = rootCmd.PersistentFlags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
+	fFileType = rootCmd.PersistentFlags().String("filetype", "csv", "Type of file to output for benchmarks")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

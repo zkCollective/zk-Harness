@@ -20,9 +20,74 @@ type BenchCircuit interface {
 	Witness(size int, curveID ecc.ID) *witness.Witness
 }
 
+type TemplateCircuit struct {
+	X frontend.Variable
+	Y frontend.Variable `gnark:",public"`
+}
+
 func init() {
 	BenchCircuits = make(map[string]BenchCircuit)
 	BenchCircuits["expo"] = &defaultCircuit{}
+}
+
+func preCalc(size int, curveID ecc.ID) interface{} {
+	switch curveID {
+	case ecc.BN254:
+		// compute expected Y
+		var expectedY bn254fr.Element
+		expectedY.SetInterface(2)
+		for i := 0; i < size; i++ {
+			expectedY.Mul(&expectedY, &expectedY)
+		}
+		return expectedY
+	case ecc.BLS12_381:
+		// compute expected Y
+		var expectedY bls12381fr.Element
+		expectedY.SetInterface(2)
+		for i := 0; i < size; i++ {
+			expectedY.Mul(&expectedY, &expectedY)
+		}
+
+		return expectedY
+	case ecc.BLS12_377:
+		// compute expected Y
+		var expectedY bls12377fr.Element
+		expectedY.SetInterface(2)
+		for i := 0; i < size; i++ {
+			expectedY.Mul(&expectedY, &expectedY)
+		}
+
+		return expectedY
+	case ecc.BLS24_315:
+		// compute expected Y
+		var expectedY bls24315fr.Element
+		expectedY.SetInterface(2)
+		for i := 0; i < size; i++ {
+			expectedY.Mul(&expectedY, &expectedY)
+		}
+
+		return expectedY
+	case ecc.BW6_761:
+		// compute expected Y
+		var expectedY bw6761fr.Element
+		expectedY.SetInterface(2)
+		for i := 0; i < size; i++ {
+			expectedY.Mul(&expectedY, &expectedY)
+		}
+
+		return expectedY
+	case ecc.BW6_633:
+		// compute expected Y
+		var expectedY bw6633fr.Element
+		expectedY.SetInterface(2)
+		for i := 0; i < size; i++ {
+			expectedY.Mul(&expectedY, &expectedY)
+		}
+
+		return expectedY
+	default:
+		panic("not implemented")
+	}
 }
 
 type defaultCircuit struct {
@@ -34,67 +99,8 @@ func (d *defaultCircuit) Circuit(size int) frontend.Circuit {
 
 func (d *defaultCircuit) Witness(size int, curveID ecc.ID) *witness.Witness {
 	witness := expo.BenchCircuit{N: size}
-
 	witness.X = (2)
-
-	switch curveID {
-	case ecc.BN254:
-		// compute expected Y
-		var expectedY bn254fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		witness.Y = (expectedY)
-	case ecc.BLS12_381:
-		// compute expected Y
-		var expectedY bls12381fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		witness.Y = (expectedY)
-	case ecc.BLS12_377:
-		// compute expected Y
-		var expectedY bls12377fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		witness.Y = (expectedY)
-	case ecc.BLS24_315:
-		// compute expected Y
-		var expectedY bls24315fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		witness.Y = (expectedY)
-	case ecc.BW6_761:
-		// compute expected Y
-		var expectedY bw6761fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		witness.Y = (expectedY)
-	case ecc.BW6_633:
-		// compute expected Y
-		var expectedY bw6633fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		witness.Y = (expectedY)
-	default:
-		panic("not implemented")
-	}
+	witness.Y = preCalc(size, curveID)
 
 	w, err := frontend.NewWitness(&witness, curveID)
 	if err != nil {

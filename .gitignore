@@ -34,3 +34,9 @@ Cargo.lock
 
 # Go workspace file
 go.work
+
+# Autogen gnark value
+*.pprof
+
+# Automated Creation of Readme TOC
+gh-md-toc

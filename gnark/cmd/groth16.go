@@ -16,7 +16,6 @@ limitations under the License.
 package cmd
 
 import (
-	"encoding/csv"
 	"fmt"
 	"os"
 	"runtime"
@@ -27,6 +26,7 @@ import (
 	"github.com/consensys/gnark/frontend/cs/r1cs"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
+	"github.com/tumberger/zk-compilers/gnark/util"
 )
 
 // groth16Cmd represents the groth16 command
@@ -37,16 +37,17 @@ var groth16Cmd = &cobra.Command{
 }
 
 func runGroth16(cmd *cobra.Command, args []string) {
+
+	var filename = "../benchmarks/gnark/gnark_" +
+		"groth16" + "_" +
+		*fCircuit + "." +
+		// *fAlgo + "_" +
+		// *fCurve + "." +
+		*fFileType
+
 	if err := parseFlags(); err != nil {
 		fmt.Println("error: ", err.Error())
 		cmd.Help()
-		os.Exit(-1)
-	}
-
-	// write to stdout
-	w := csv.NewWriter(os.Stdout)
-	if err := w.Write(benchData{}.headers()); err != nil {
-		fmt.Println("error: ", err.Error())
 		os.Exit(-1)
 	}
 
@@ -56,7 +57,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		runtime.ReadMemStats(&m)
 
 		internal, secret, public := ccs.GetNbVariables()
-		bData := benchData{
+		bData := util.BenchData{
 			Backend:             "groth16",
 			Curve:               curveID.String(),
 			Algorithm:           *fAlgo,
@@ -70,10 +71,9 @@ func runGroth16(cmd *cobra.Command, args []string) {
 			Throughput:          int(float64(ccs.GetNbConstraints()) / took.Seconds()),
 		}
 
-		if err := w.Write(bData.values()); err != nil {
+		if err := util.WriteData("csv", bData, filename); err != nil {
 			panic(err)
 		}
-		w.Flush()
 	}
 
 	var (
