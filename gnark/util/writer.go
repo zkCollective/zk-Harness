@@ -16,16 +16,6 @@ func WriteData(fileFormat string, data BenchData, filename ...string) error {
 	var err error
 	var exists bool = false
 
-	// if len(filename) == 0 {
-	// 	file = os.Stdout
-	// } else {
-	// 	file, err = os.Create(filename[0])
-	// 	if err != nil {
-	// 		return err
-	// 	}
-	// 	defer file.Close()
-	// }
-
 	if len(filename) == 0 {
 		file = os.Stdout
 	} else {
