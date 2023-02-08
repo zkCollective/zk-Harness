@@ -67,18 +67,21 @@ In the following, we initially separate between *Succinct Non-Interactive Argume
 | [Bellman](https://github.com/zkcrypto/bellman)                        | Rust      | R1CS    | Groth16 | Back          |
 | [jsnark](https://github.com/akosba/jsnark)                            | JS        | libsnark    |  libsnark  | Front          |
 | [snarky](https://github.com/o1-labs/snarky)                           | OCAML     | libsnark    |  libsnark  | Front          |
-| [gnark](https://github.com/ConsenSys/gnark)                           | Go     | Plonk    |  Plonk  | Front + Back          |
-| [PLONK Dusk Network](https://github.com/dusk-network/plonk)           | Rust     | Plonk    |  Plonk  | Front + Back          |
-| [circom](https://github.com/iden3/circom)                             | Rust     | R1CS    |  Groth16  | Front + Back          |
-| [arkworks](https://github.com/arkworks-rs)                            | Rust     | R1CS    |  Groth16/Spartan/Marlin  | Front + Back          |
-| [jellyfish](https://github.com/EspressoSystems/jellyfish)             | Rust     | Plonk    |  Plonk  | Front + Back          |
-| [halo2](https://github.com/zcash/halo2)                               | Rust     | UltraPlonk    |  Halo2  | Front + Back          |
-| [adjoint-io bulletproofs](https://github.com/sdiehl/bulletproofs)     | Rust     | - (DLOG)    |  Bulletproof  | Front + Back          |
-| [DIZK](https://github.com/scipr-lab/dizk)                             | Java     | R1CS    |  Groth16  | Front + Back          |
-| [Spartan](https://github.com/microsoft/Spartan)                       | Rust     | R1CS    |  Spartan  | Front + Back          |
-| [Anoma Vamp-IR](https://github.com/anoma/vamp-ir)                     | Rust     | ?    |  X  | Front          |
-| [VIRGO](https://github.com/sunblaze-ucb/Virgo)                        | C++     | ?    |  ?  | ?          |
+| [gnark](https://github.com/ConsenSys/gnark)                           | Go        | Plonk    |  Plonk  | Front + Back          |
+| [PLONK Dusk Network](https://github.com/dusk-network/plonk)           | Rust      | Plonk    |  Plonk  | Front + Back          |
+| [circom](https://github.com/iden3/circom)                             | Rust      | R1CS    |  Groth16  | Front + Back          |
+| [arkworks](https://github.com/arkworks-rs)                            | Rust      | R1CS    |  Groth16/Spartan/Marlin  | Front + Back          |
+| [jellyfish](https://github.com/EspressoSystems/jellyfish)             | Rust      | Plonk    |  Plonk  | Front + Back          |
+| [halo2](https://github.com/zcash/halo2)                               | Rust      | UltraPlonk    |  Halo2  | Front + Back          |
+| [adjoint-io bulletproofs](https://github.com/sdiehl/bulletproofs)     | Rust      | - (DLOG)    |  Bulletproof  | Front + Back          |
+| [DIZK](https://github.com/scipr-lab/dizk)                             | Java      | R1CS    |  Groth16  | Front + Back          |
+| [Spartan](https://github.com/microsoft/Spartan)                       | Rust      | R1CS    |  Spartan  | Front + Back          |
+| [Anoma Vamp-IR](https://github.com/anoma/vamp-ir)                     | Rust      | ?    |  X  | Front          |
+| [VIRGO](https://github.com/sunblaze-ucb/Virgo)                        | C++       | ?    |  ?  | ?          |
 | [Hyperplonk](https://github.com/EspressoSystems/hyperplonk)           | Rust      | Plonk    |  ?  | ?          |
+| [Nova](https://github.com/microsoft/Nova)                             | Rust      | Relaxed R1CS    |  ?  | ?          |
+| [CirC](https://github.com/circify/circ)                               | Rust        | Mult.    |  ?  | ?          |
+
 
 ## Overview of ZK STARK Compilers
 

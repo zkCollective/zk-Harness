@@ -103,7 +103,7 @@ func runPlonk(cmd *cobra.Command, args []string) {
 		var err error
 		var ccs frontend.CompiledConstraintSystem
 		for i := 0; i < *fCount; i++ {
-			ccs, err = frontend.Compile(curveID, scs.NewBuilder, c.Circuit(*fCircuitSize), frontend.WithCapacity(*fCircuitSize))
+			ccs, err = frontend.Compile(curveID, scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -111,7 +111,7 @@ func runPlonk(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	ccs, err := frontend.Compile(curveID, scs.NewBuilder, c.Circuit(*fCircuitSize), frontend.WithCapacity(*fCircuitSize))
+	ccs, err := frontend.Compile(curveID, scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
 	assertNoError(err)
 
 	// create srs
@@ -130,7 +130,7 @@ func runPlonk(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	witness := c.Witness(*fCircuitSize, curveID)
+	witness := c.Witness(*fCircuitSize, curveID, *fCircuit)
 	pk, vk, err := plonk.Setup(ccs, srs)
 	assertNoError(err)
 

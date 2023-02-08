@@ -10,14 +10,15 @@ import (
 	bw6761fr "github.com/consensys/gnark-crypto/ecc/bw6-761/fr"
 	"github.com/consensys/gnark/backend/witness"
 	"github.com/consensys/gnark/frontend"
+	"github.com/tumberger/zk-compilers/gnark/circuits/toy/cubic"
 	"github.com/tumberger/zk-compilers/gnark/circuits/toy/expo"
 )
 
 var BenchCircuits map[string]BenchCircuit
 
 type BenchCircuit interface {
-	Circuit(size int) frontend.Circuit
-	Witness(size int, curveID ecc.ID) *witness.Witness
+	Circuit(size int, name string) frontend.Circuit
+	Witness(size int, curveID ecc.ID, name string) *witness.Witness
 }
 
 type TemplateCircuit struct {
@@ -28,6 +29,7 @@ type TemplateCircuit struct {
 func init() {
 	BenchCircuits = make(map[string]BenchCircuit)
 	BenchCircuits["expo"] = &defaultCircuit{}
+	BenchCircuits["cubic"] = &defaultCircuit{}
 }
 
 func preCalc(size int, curveID ecc.ID) interface{} {
@@ -93,18 +95,41 @@ func preCalc(size int, curveID ecc.ID) interface{} {
 type defaultCircuit struct {
 }
 
-func (d *defaultCircuit) Circuit(size int) frontend.Circuit {
-	return &expo.BenchCircuit{N: size}
+func (d *defaultCircuit) Circuit(size int, name string) frontend.Circuit {
+	switch name {
+	case "expo":
+		return &expo.BenchCircuit{N: size}
+	case "cubic":
+		return &cubic.CubicCircuit{}
+	default:
+		panic("not implemented")
+	}
 }
 
-func (d *defaultCircuit) Witness(size int, curveID ecc.ID) *witness.Witness {
-	witness := expo.BenchCircuit{N: size}
-	witness.X = (2)
-	witness.Y = preCalc(size, curveID)
+func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string) *witness.Witness {
 
-	w, err := frontend.NewWitness(&witness, curveID)
-	if err != nil {
-		panic(err)
+	switch name {
+	case "expo":
+		witness := expo.BenchCircuit{N: size}
+		witness.X = (2)
+		witness.Y = preCalc(size, curveID)
+
+		w, err := frontend.NewWitness(&witness, curveID)
+		if err != nil {
+			panic(err)
+		}
+		return w
+	case "cubic":
+		witness := cubic.CubicCircuit{}
+		witness.X = (3)
+		witness.Y = (35)
+
+		w, err := frontend.NewWitness(&witness, curveID)
+		if err != nil {
+			panic(err)
+		}
+		return w
+	default:
+		panic("not implemented")
 	}
-	return w
 }

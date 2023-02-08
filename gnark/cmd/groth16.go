@@ -102,7 +102,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		var err error
 		var ccs frontend.CompiledConstraintSystem
 		for i := 0; i < *fCount; i++ {
-			ccs, err = frontend.Compile(curveID, r1cs.NewBuilder, c.Circuit(*fCircuitSize), frontend.WithCapacity(*fCircuitSize))
+			ccs, err = frontend.Compile(curveID, r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -110,7 +110,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	ccs, err := frontend.Compile(curveID, r1cs.NewBuilder, c.Circuit(*fCircuitSize), frontend.WithCapacity(*fCircuitSize))
+	ccs, err := frontend.Compile(curveID, r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
 	assertNoError(err)
 
 	if *fAlgo == "setup" {
@@ -125,7 +125,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	witness := c.Witness(*fCircuitSize, curveID)
+	witness := c.Witness(*fCircuitSize, curveID, *fCircuit)
 
 	if *fAlgo == "prove" {
 		pk, err := groth16.DummySetup(ccs)
