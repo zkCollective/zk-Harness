@@ -1,0 +1,4 @@
+backend,curve,algorithm,nbConstraints,nbInternal,nbSecret,nbPublic,nbCoefficients,ram(mb),time(ms),throughput(constraints/s),througputPerCore(constraints/s),nbPhysicalCores,nbThreadsPerCore,nbLogicalCores,cacheLine,l1d,l1i,l2,l3,freq,adx,cpu
+groth16,BN254,setup,274,273,1,2,95,19,38,7057,7057,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+groth16,BN254,prove,274,273,1,2,95,19,7,34750,34750,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+groth16,BN254,verify,274,273,1,2,95,19,1,176003,176003,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz

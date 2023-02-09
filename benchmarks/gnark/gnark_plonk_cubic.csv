@@ -1,10 +1,10 @@
 backend,curve,algorithm,nbConstraints,nbInternal,nbSecret,nbPublic,nbCoefficients,ram(mb),time(ms),throughput(constraints/s),througputPerCore(constraints/s),nbPhysicalCores,nbThreadsPerCore,nbLogicalCores,cacheLine,l1d,l1i,l2,l3,freq,adx,cpu
-plonk,BN254,setup,5,4,1,1,5,27,2,1802,1802,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-plonk,BN254,prove,5,4,1,1,5,27,3,1423,1423,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-plonk,BN254,verify,5,4,1,1,5,27,2,1953,1953,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-plonk,bls12_377,setup,5,4,1,1,5,31,4,1207,1207,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-plonk,bls12_377,prove,5,4,1,1,5,27,5,977,977,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,BN254,setup,5,4,1,1,5,27,2,1874,1874,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,BN254,prove,5,4,1,1,5,27,3,1297,1297,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,BN254,verify,5,4,1,1,5,27,2,1919,1919,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,bls12_377,setup,5,4,1,1,5,27,4,1179,1179,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,bls12_377,prove,5,4,1,1,5,27,5,946,946,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
 plonk,bls12_377,verify,5,4,1,1,5,31,4,1182,1182,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-plonk,BW6_761,setup,5,4,1,1,5,47,32,154,154,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-plonk,BW6_761,prove,5,4,1,1,5,47,37,132,132,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-plonk,BW6_761,verify,5,4,1,1,5,47,36,138,138,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,BW6_761,setup,5,4,1,1,5,43,31,157,157,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,BW6_761,prove,5,4,1,1,5,39,38,129,129,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,BW6_761,verify,5,4,1,1,5,39,34,145,145,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz

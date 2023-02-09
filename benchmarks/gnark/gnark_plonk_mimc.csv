@@ -1,0 +1,4 @@
+backend,curve,algorithm,nbConstraints,nbInternal,nbSecret,nbPublic,nbCoefficients,ram(mb),time(ms),throughput(constraints/s),througputPerCore(constraints/s),nbPhysicalCores,nbThreadsPerCore,nbLogicalCores,cacheLine,l1d,l1i,l2,l3,freq,adx,cpu
+plonk,BN254,setup,366,365,1,1,95,27,16,21562,21562,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,BN254,prove,366,365,1,1,95,27,22,16165,16165,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+plonk,BN254,verify,366,365,1,1,95,27,2,134847,134847,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
