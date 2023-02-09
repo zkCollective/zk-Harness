@@ -1,0 +1,7 @@
+backend,curve,algorithm,nbConstraints,nbInternal,nbSecret,nbPublic,nbCoefficients(?),ram(mb),time(ms),cpu
+groth16,bn128,Compiler,2,1,1,1,-,17488,0.06s,Apple M1 Max
+groth16,bn128,WitnessGeneration,2,1,1,1,-,33552,0.06s,Apple M1 Max
+groth16,bn128,Setup,2,1,1,1,-,175632,1.04s,Apple M1 Max
+groth16,bn128,ExportVerificationKey,2,1,1,1,-,151904,1.05s,Apple M1 Max
+groth16,bn128,Proving,2,1,1,1,-,167472,0.76s,Apple M1 Max
+groth16,bn128,Verifying,2,1,1,1,-,135076,0.68s,Apple M1 Max

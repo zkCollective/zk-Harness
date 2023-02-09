@@ -9,36 +9,50 @@ The compiler outputs the representation of the circuit as R1CS. Successively, on
 
 Installation and setup descriptions can be found [here](https://docs.circom.io/getting-started/installation/#installing-dependencies)
 
-In short, you need to clone the Circom repository, run ``` cargo build --release ``` and then install circom with ``` cargo install --path circom ```.
+In short, you need to clone the Circom repository, run `cargo build --release` and then install circom with `cargo install --path circom`.
 
 As Circom is only the compiler to compile from HDL circuit description to R1CS, you need to additionally install [snarkjs](https://github.com/iden3/snarkjs) to create and verify proofs with e.g. [Groth16](https://github.com/iden3/snarkjs/blob/master/src/groth16_prove.js).
 
-You can install snarkjs with ``` npm install -g snarkjs ``` using [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+You can install snarkjs with `npm install -g snarkjs` using [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
 ### Compilation & Proof - Toy Examples
 
-To compile a circuit run e.g. ``` circom circuits/toy/multiply.circom ``` in this folder.
+To produce and verify a circom circuit you need to perform 6 steps:
 
-The Makefile creates additional files in the folder ``` tmp ```, with the following phases:
+1. Compile the circuit
+2. Generating the witness for the circuit
+3. Setup ceremony for proving and verifying the witness
+4. Prove
+5. Verify the proof
 
-- ``` make ```
-  - multiply.r1cs - The binary format file of the R1CS description of the circuit
-  - multiply_js/multiply.wasm - Contains the wasm code 
-  - multiply_js/witness_calculator.js and generate_witness.js - files for witness generation
+To automate that process we have wrap everything in a single script (`scripts/run_circuit.sh`).
 
-- ``` make setup ```
-  - ``` sudok.wtns ``` - witness, contains all the computed signals given the input file (json)
-  - ``` sudok.ptau ``` - File for the ["Powers of Tau"](https://eprint.iacr.org/2022/1592.pdf), in this Makefile we simply run it without any contribution
-  - ``` sudoku.pk ``` and ``` sudoku.vk ``` - prover key and verifier key as output of the trusted setup
-  
-- ``` make prove ```
-  - ``` sudoku.inst.json ``` - Contains the public inputs and outputs
-  - ``` sudoku.pf.json ``` - The proof of the to be proven relation
+For example, to prove and verify `circuits/toy/sudoku.circom` using as input `inputs/toy/sudoku.input.json`,
+you can run the following command:
 
-- ``` make verify ```
-  - Outputs ``` OK ``` if the proof verifies.
+```
+./scripts/run_circuit.sh circuits/toy/sudoku.circom inputs/toy/sudoku.input.json phase1/powersOfTau28_hez_final_16.ptau res.csv sudoku_output
+```
 
-- ``` make clean ```
-  - Cleans up the ``` tmp ``` folder
+This script will produce the following files:
+
+* Compile
+  - `sudoku_output/sudoku.r1cs` -- the binary format file of the R1CS description of the circuit.
+  - `sudoku_output/sudoku_js/sudoku.wasm` -- contains the wasm code describing the circuit.
+  - `sudoku_output/sudoku_js/generate_witness.js` and `sudoku_output/sudoku_js/witness_calculator.js` -- files for witness generation.
+* Witness Generation
+  - `sudoku_output/witness.wtns` -- witness, contains all the computed signals given the input file.
+* Setup
+  - `sudoku_output/sudoku_0.zkey` -- prover key
+  - `sudoku_output/verification_key.json` -- verifier key
+* Prove
+  - `sudoku_output/public.json` -- contain the public inputs and outputs.
+  - `sudoku_output/proof.json` -- contains the proof.
+* Verify 
+  - Prints the message `[INFO]  snarkJS: OK!` if the verification succeeds.
+
+Finally, `res.csv` will contain statistics about the execution of each step.
+
+__Note__: We currently using the precomputed ceremony from `phase1/powersOfTau28_hez_final_16.ptau`, but in order to safely prove a circuit using Circom you need to safely run a setup ceremony. 
 
 ## Docker Setup
