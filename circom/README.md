@@ -31,7 +31,7 @@ For example, to prove and verify `circuits/toy/sudoku.circom` using as input `in
 you can run the following command:
 
 ```
-./scripts/run_circuit.sh circuits/toy/sudoku.circom inputs/toy/sudoku.input.json phase1/powersOfTau28_hez_final_20.ptau res.csv sudoku_output
+./scripts/run_circuit.sh circuits/toy/sudoku.circom inputs/toy/sudoku.input.json phase1/powersOfTau28_hez_final_16.ptau res.csv sudoku_output
 ```
 
 This script will produce the following files:
@@ -53,6 +53,6 @@ This script will produce the following files:
 
 Finally, `res.csv` will contain statistics about the execution of each step.
 
-__Note__: We currently using the precomputed ceremony from `phase1/powersOfTau28\_hez\_final\_20.ptau`, but in order to safely prove a circuit using Circom you need to safely run a setup ceremony. 
+__Note__: We currently using the precomputed ceremony from `phase1/powersOfTau28_hez_final_16.ptau`, but in order to safely prove a circuit using Circom you need to safely run a setup ceremony. 
 
 ## Docker Setup
