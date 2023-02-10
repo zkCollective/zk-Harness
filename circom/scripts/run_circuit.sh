@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Compiler, setup, prove, and verify a proof for a circom circuit.
+# Compile, setup, prove, and verify a proof for a circom circuit.
 # #TODO add C++ witness generation support
 
 if [ $# -lt 3 ]; then
