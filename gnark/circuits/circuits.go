@@ -3,6 +3,7 @@ package circuits
 import (
 	"github.com/consensys/gnark-crypto/ecc"
 	bls12377fr "github.com/consensys/gnark-crypto/ecc/bls12-377/fr"
+	"github.com/consensys/gnark-crypto/hash"
 
 	bls12381fr "github.com/consensys/gnark-crypto/ecc/bls12-381/fr"
 	bls24315fr "github.com/consensys/gnark-crypto/ecc/bls24-315/fr"
@@ -98,6 +99,67 @@ func preCalc(size int, curveID ecc.ID) interface{} {
 	}
 }
 
+func preCalcMIMC(curveID ecc.ID) interface{} {
+	switch curveID {
+	case ecc.BN254:
+		// compute expected Y
+		var expectedY bn254fr.Element
+		expectedY.SetInterface("16130099170765464552823636852555369511329944820189892919423002775646948828469")
+
+		// running MiMC (Go)
+		goMimc := hash.MIMC_BN254.New()
+		goMimc.Write(expectedY.Marshal())
+		expectedh := goMimc.Sum(nil)
+		return expectedh
+
+	case ecc.BLS12_377:
+		// compute expected Y
+		var expectedY bls12377fr.Element
+		expectedY.SetInterface("16130099170765464552823636852555369511329944820189892919423002775646948828469")
+
+		// running MiMC (Go)
+		goMimc := hash.MIMC_BLS12_377.New()
+		goMimc.Write(expectedY.Marshal())
+		expectedh := goMimc.Sum(nil)
+		return expectedh
+
+	case ecc.BLS24_315:
+		// compute expected Y
+		var expectedY bls24315fr.Element
+		expectedY.SetInterface("16130099170765464552823636852555369511329944820189892919423002775646948828469")
+
+		// running MiMC (Go)
+		goMimc := hash.MIMC_BLS24_315.New()
+		goMimc.Write(expectedY.Marshal())
+		expectedh := goMimc.Sum(nil)
+		return expectedh
+
+	case ecc.BW6_761:
+		// compute expected Y
+		var expectedY bw6761fr.Element
+		expectedY.SetInterface("16130099170765464552823636852555369511329944820189892919423002775646948828469")
+
+		// running MiMC (Go)
+		goMimc := hash.MIMC_BW6_761.New()
+		goMimc.Write(expectedY.Marshal())
+		expectedh := goMimc.Sum(nil)
+		return expectedh
+
+	case ecc.BW6_633:
+		// compute expected Y
+		var expectedY bw6633fr.Element
+		expectedY.SetInterface("16130099170765464552823636852555369511329944820189892919423002775646948828469")
+
+		// running MiMC (Go)
+		goMimc := hash.MIMC_BW6_633.New()
+		goMimc.Write(expectedY.Marshal())
+		expectedh := goMimc.Sum(nil)
+		return expectedh
+	default:
+		panic("not implemented")
+	}
+}
+
 type defaultCircuit struct {
 }
 
@@ -153,7 +215,9 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string) *witness
 	case "mimc":
 		witness := mimc.MimcCircuit{}
 		witness.PreImage = ("16130099170765464552823636852555369511329944820189892919423002775646948828469")
-		witness.Hash = ("8674594860895598770446879254410848023850744751986836044725552747672873438975")
+		// Currently - hard coded input and calculation per curve
+		witness.Hash = preCalcMIMC(curveID)
+		// witness.Hash = ("8674594860895598770446879254410848023850744751986836044725552747672873438975")
 
 		w, err := frontend.NewWitness(&witness, curveID)
 		if err != nil {

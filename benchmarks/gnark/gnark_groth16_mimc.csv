@@ -1,4 +1,13 @@
 backend,curve,algorithm,nbConstraints,nbInternal,nbSecret,nbPublic,nbCoefficients,ram(mb),time(ms),throughput(constraints/s),througputPerCore(constraints/s),nbPhysicalCores,nbThreadsPerCore,nbLogicalCores,cacheLine,l1d,l1i,l2,l3,freq,adx,cpu
-groth16,BN254,setup,274,273,1,2,95,19,38,7057,7057,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-groth16,BN254,prove,274,273,1,2,95,19,7,34750,34750,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-groth16,BN254,verify,274,273,1,2,95,19,1,176003,176003,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+groth16,BN254,setup,274,273,1,2,95,19,40,6831,6831,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+groth16,BN254,prove,274,273,1,2,95,19,8,33275,33275,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+groth16,BN254,verify,274,273,1,2,95,19,1,177813,177813,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+groth16,bls12_377,setup,92,91,1,2,95,18,29,3153,3153,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+groth16,bls12_377,prove,92,91,1,2,95,19,9,9620,9620,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+groth16,bls12_377,verify,92,91,1,2,95,19,2,34562,34562,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+groth16,BW6_761,setup,274,273,1,2,95,23,516,530,530,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+groth16,BW6_761,prove,274,273,1,2,95,23,91,2987,2987,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+groth16,BW6_761,verify,274,273,1,2,95,23,21,12644,12644,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+groth16,bls24_315,setup,274,273,1,2,95,19,83,3269,3269,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+groth16,bls24_315,prove,274,273,1,2,95,19,17,15338,15338,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+groth16,bls24_315,verify,274,273,1,2,95,19,4,60297,60297,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
