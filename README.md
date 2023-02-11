@@ -44,18 +44,30 @@ Google drive link: <https://drive.google.com/drive/u/0/folders/1zkiGrN1xA4FIfAk4
 
 TODO:
 
-- [ ] Include Toy Example multiplication Golang
-- [ ] Output benchmarks in a csv file
+Gnark:
+- [] MIMC - Variable Input evaluation
+- [] SHA256 - Fix such that compatible with testing framework as provided in gnark, currently SHA256 assigns byte slices and tests do not pass 
 
 Benchmarks can be run through the Makefile. Currently, the following benchmarks are supported:
 
 ### Toy Examples
 
-The benchmarks for Toy examples can be run by executing ``` make benchmarks-toy ```
+The benchmarks for Toy examples can be run by executing ``` make benchmarks-toy-<library> ```
 The following Toy example benchmarks will be executed:
 
-- Exponentiation
-  - Gnark
+- Circom
+  - Cubic
+- Gnark
+  - Cubic
+  - Exponentiation
+  - Modular Exponentiation
+
+The benchmarks for PRF examples can be run by executing ``` make benchmarks-prf ```
+The following PRF example benchmarks will be executed
+
+- Gnark
+  - MIMC Hash function with fixed size input
+
 
 ## Overview of ZK SNARK Compilers
 

@@ -119,14 +119,36 @@ benchmark-toy-gnark:
 	# cd $(gnark_directory); go build; ./gnark plonk --circuit exponentiate --algo=verify --curve=bw6_756
 
 benchmark-prf:
-	# MIMC over bls12_377, bw6_761, bls24_315 yields an error -> unsatisfied constraint
 	cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=setup 
 	cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=prove 
 	cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=verify 
 	cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=setup 
 	cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=prove
 	cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=verify 
-
+	cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=setup --curve=bls12_377
+	cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=prove --curve=bls12_377
+	cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=verify --curve=bls12_377
+	cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=setup --curve=bls12_377
+	cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=prove --curve=bls12_377
+	cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=verify --curve=bls12_377
+	cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=setup --curve=bw6_761
+	cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=prove --curve=bw6_761
+	cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=verify --curve=bw6_761
+	cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=setup --curve=bw6_761
+	cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=prove --curve=bw6_761
+	cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=verify --curve=bw6_761
+	cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=setup --curve=bls24_315
+	cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=prove --curve=bls24_315
+	cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=verify --curve=bls24_315
+	cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=setup --curve=bls24_315
+	cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=prove --curve=bls24_315
+	cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=verify --curve=bls24_315
+	# cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=setup --curve=bw6_756
+	# cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=prove --curve=bw6_756
+	# cd $(gnark_directory); go build; ./gnark groth16 --circuit=mimc --algo=verify --curve=bw6_756
+	# cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=setup --curve=bw6_756
+	# cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=prove --curve=bw6_756
+	# cd $(gnark_directory); go build; ./gnark plonk --circuit mimc --algo=verify --curve=bw6_756
 
 clean:
 	rm -r $(gnark_benchmarks_directory)/*
