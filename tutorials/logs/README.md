@@ -29,12 +29,13 @@ In the following sections, we describe the columns in the CSV file for each benc
 
 The following information is recorded for each field arithmetic benchmark:
 
-* Field: the benchmarked field
+* Framework: the name of the framework (e.g., gnark)
+* Field: the benchmarked field (e.g., Native)
 * p: the order of the field
 * Operation: the operation performed
-* Input: the input to the operation
+* Input: file path of the input used 
 * Ram: memory consumed in bytes
-* Time: elapsed time in seconds
+* Time: elapsed time in milliseconds
 * nbCores: number of cores used
 * Machine: the machine used for benchmarking
 
@@ -42,11 +43,12 @@ The following information is recorded for each field arithmetic benchmark:
 
 The following information is recorded for each elliptic curve group operation benchmark:
 
+* Framework: the name of the framework (e.g., gnark)
 * Curve: the benchmarked curve
-* Operation: the operation performed
-* Input: the input to the operation
+* Operation: the operation performed -- MSM, FFT/NTT, Pairing
+* Input: file path of the input used 
 * Ram: memory consumed in bytes
-* Time: elapsed time in seconds
+* Time: elapsed time in milliseconds
 * nbCores: number of cores used
 * Machine: the machine used for benchmarking
 
@@ -54,19 +56,19 @@ The following information is recorded for each elliptic curve group operation be
 
 The following information is recorded for each circuit benchmark:
 
+* Framework: the name of the framework (e.g., gnark)
 * Backend: the backend used (e.g., groth16)
 * Curve: the curve used (e.g., bn256)
-* Benchmark: the benchmark being run
-* Step: the step being measured (e.g., setup)
-* nbConstraint: the number of constraints in the circuit
+* Circuit: the circuit being run
+* Input: file path of the input used 
+* Step: the step being measured -- compile, setup, proving, verifying 
+* nbConstraints: the number of constraints in the circuit
 * nbSecret: number of secret inputs
 * nbPublic: number of public inputs
 * Ram: memory consumed in bytes
-* Time: elapsed time in seconds
+* Time: elapsed time in milliseconds
 * nbCores: number of cores used
 * Machine: the machine used for benchmarking
-
-Note: Should we add intermediate signals in the logs.
 
 ### Recursion
 
