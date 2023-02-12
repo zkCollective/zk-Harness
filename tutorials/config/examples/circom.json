@@ -1,0 +1,19 @@
+{
+    "project": "circom",
+    "project_url": "https://github.com/iden3/circom",
+    "backend": [
+        "groth16"
+    ],
+    "curves": [
+        "bn254"
+    ], 
+    "circuit": [
+        "cubic"        
+    ],
+    "algorithm": [
+        "compile",
+        "setup",
+        "prove",
+        "verify"
+    ]
+}
