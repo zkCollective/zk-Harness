@@ -6,6 +6,10 @@ You can find a description of the configuration file in the ``config`` sub-folde
 
 ## Adding a new framework to the zk-Harness
 
+```diff
+- TODO - Fix this once fully implemented - So far only first draft
+```
+
 To integrate a custom, yet not supported framework, one should follow the following steps:
 
 1. First, fork the ``zk-benchmarks`` repository
