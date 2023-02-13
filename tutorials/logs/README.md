@@ -61,7 +61,7 @@ The following information is recorded for each circuit benchmark:
 * Curve: the curve used (e.g., bn256)
 * Circuit: the circuit being run
 * Input: file path of the input used 
-* Step: the step being measured -- compile, setup, proving, verifying 
+* Operation: the step being measured -- compile, setup, proving, verifying 
 * nbConstraints: the number of constraints in the circuit
 * nbSecret: number of secret inputs
 * nbPublic: number of public inputs
