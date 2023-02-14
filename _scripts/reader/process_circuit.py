@@ -26,9 +26,10 @@ def build_command_gnark(payload):
     gnark_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'gnark'))
 
     if payload.backend is not None and payload.curves is not None:
-        commands = [f"./gnark {backend} --circuit={payload.circuit} --algo={algo} --curve={curve}\n"
+        commands = [f"./gnark {backend} --circuit={circuit} --algo={algo} --curve={curve}\n"
                     for backend in payload.backend
                     for curve in payload.curves
+                    for circuit in payload.circuit
                     for algo in payload.algo]
 
         # Join the commands into a single string
@@ -92,7 +93,7 @@ def get_payload(config):
     # Extract the relevant fields from the configuration data
     backend = config['payload']['backend']
     curves = config['payload']['curves']
-    circuit = list(config['payload']['circuits'].keys())[0]
+    circuit = list(config['payload']['circuits'].keys())
     algo = config['payload']['algorithm']
 
     # Define a named tuple for the payload
