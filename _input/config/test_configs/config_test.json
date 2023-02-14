@@ -1,0 +1,21 @@
+{
+    "project": "gnark",
+    "project_url": "https://github.com/ConsenSys/gnark",
+    "mode": "circuit",
+    "payload": {
+        "backend": [
+            "groth16"
+        ],
+        "curves": [
+            "bls12_377"
+        ], 
+        "circuits": {
+            "cubic": {
+                "input_path": "./input/circuit/cubic"
+            }
+        },
+        "algorithm": [
+            "compile"
+        ]
+    }    
+}
