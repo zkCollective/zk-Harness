@@ -70,6 +70,7 @@ The following information is recorded for each circuit benchmark:
 * nbPublic: number of public inputs
 * Ram: memory consumed in bytes
 * Time: elapsed time in milliseconds
+* ProofSize: the size of the proof -- empty value when Operation != proving
 * nbCores: number of cores used
 * Machine: the machine used for benchmarking
 
