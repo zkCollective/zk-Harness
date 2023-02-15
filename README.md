@@ -1,4 +1,4 @@
- ZK Compilers
+# zk-Harness - Benchmarking Hackathon
 
 We cordially invite the zk SNARK community to join us in creating a comprehensive benchmarking framework for zk SNARKs. As part of our efforts to further advance the technology and promote its widespread adoption, we have organized a Hackathon to bring together experts and enthusiasts from the community to collaborate and contribute to the establishment of a standardized benchmarking framework. This is a crucial step in our mission to create a reference point for non-experts and experts alike on what zkSNARK scheme best suits their needs, and to also promote further research by identifying performance gaps. We believe that the collective efforts of the community will help to achieve this goal. Whether you are a researcher, developer, or simply passionate about zk SNARKs, we welcome your participation and contribution in this exciting initiative.
 
@@ -51,16 +51,7 @@ There is a large and ever-increasing number of SNARK implementations. Although t
 
 We integrated gnark to exemplify how to integrate libraries into the benchmarking harness. You can find a description on how to run benchmarks for gnark here.
 
-## Review Mechanism
-
-We will carefully review the correctness of benchmarks to integrate in the benchmarking framework. On completing a novel benchmark that is not yet integrated in the zk-Harness, we recommend that you create a pull request that can be independently reviewed.
-Your implementation will be evaluated based on the following criteria:
-
-1. Correctness of the implementation.
-2. Efficiency of the implementation.
-3. Quality of the documentation.
-
-## Program Desctiption
+## Program Description
 
 ### Benchmarking Mathematical Operations
 
@@ -117,22 +108,112 @@ Prize: X$
 
 #### Goal
 
+Develop a circuit implementation that does not yet exist and benchmark it against other implementations.
+
 #### Task Description / Steps Involved
 
+Given a framework, choose a cryptographic primitive that is not yet implemented, implement it and benchmark your implementation as compared to existing implementations in other frameworks. You can find a list of already implemented primitives here. The description on how to contribute a novel circuit implementation can be found in the respective folder of the framework.
+
+This task comprises the following steps:
+
+1. Choose a primitive to implement in a given framework
+2. Read the tutorial on “How to contribute a new circuit” in the chosen framework
+3. If the library is not yet supported, follow steps X-Y of #4
+4. Create Tests for your circuit
+
 #### Designated Tasks
+
+Comparative Evaluation / implementation of one of the following primitives:
+
+- SHA-256
+- Blake 2
+- AES-128
+- ECDSA (see here)
+
+in the following frameworks:
+
+- circom
+- gnark
+- halo2
+
+Prize: X$
 
 ### Supporting New Libraries
 
 #### Goal
 
+Integrate a framework into the zk-Harness for benchmarking.
+
 #### Task Description / Steps Involved
 
+There are plenty of implementations of SNARKs that we intend to include in the benchmarking framework. Hence, we encourage hackathon participants to integrate novel libraries that are not yet supported to support a holistic comparison of heterogeneous SNARK implementations.
+
+This task comprises the following steps:
+
+1. Choose a framework to implement (e.g. artworks / plonky2 / halo2)2. Support the data loading of configuration files
+3. Configure the framework behavior based on the configuration file
+4. Generate logs for a specified logging format (see logging formats here)
+5. Integrate the logs in the frontend implementation
+6. Create a pull request to integrate your framework in the harness and display the evaluation results on the public website.
+
+You can find the detailed description on how to add a new library here. You can find the standardized, cross framework, log format which is consumed by the log analyzer here and the description of the generic config files here. To fully integrate a framework, you’ll need to adapt the config reader to invoke your benchmarking script and adapt the log analyzer to display your benchmarks on the webpage.
+
 #### Designated Tasks
+
+Integrate one or more of the following libraries into the zk-Harness:
+
+- plonky2
+- jellyfish
+- arkworks
 
 ### Benchmarking Recursion
 
 #### Goal
 
+Benchmark implementations of recursive proofs.
+
 #### Task Description / Steps Involved
 
+Commonly, proof recursion can be achieved through the following approaches:
+
+1. Encoding arithmetic statements of a field into equations over a different field (described above as non-native field arithmetic, e.g. here)
+2. 2-chains and cycles of elliptic curves - use matching base fields to implement one curve inside the other
+
+In this task, you should benchmark common implementations of recursion in popular frameworks.
+
 #### Designated Tasks
+
+Comparative Evaluation of recursion as implemented in the following frameworks:
+
+- plonky2
+- halo2
+- Nova
+- gnark (BW6 on BLS12-381 - see here)
+
+Prize: X$
+
+## Hackthon Awards and Prize
+
+In the hackathon, there are two types of projects: self-selected projects and designated tasks. Teams can come up with their own creative project ideas and independently submit contributions beyond the ones specified in the sections “Recommended Starting Points” in each of the challenges above. Each category has its own prize, which is detailed below.
+In the case of designated tasks, specific tasks critical to the ZK bridge have been identified. Detailed instructions and awards are provided for these tasks.
+
+### Self-selected project
+
+1. Grand Prize: The team that develops the best overall project, as evaluated by the panel of judges, will receive a grand prize of $10,000.
+
+2. Runner-Up Prize: The team that develops the second-best project, as evaluated by the panel of judges, will receive a runner-up prize of $5,000.
+
+3. Most Creative Idea: The team that develops the most creative idea, as evaluated by the panel of judges, will receive a prize of $2,000.
+
+### Designated Tasks
+
+Each designated task is assigned a prize value, based on the estimated difficulty and work effort.
+
+## Review Mechanism
+
+We will carefully review the correctness of benchmarks to integrate in the benchmarking framework. On completing a novel benchmark that is not yet integrated in the zk-Harness, we recommend that you create a pull request that can be independently reviewed.
+Your implementation will be evaluated based on the following criteria:
+
+1. Correctness of the implementation.
+2. Efficiency of the implementation.
+3. Quality of the documentation.
