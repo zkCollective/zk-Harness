@@ -52,12 +52,13 @@ portable_proc() {
 
 get_time_results() {
     timeRes=$1
-    ram=$(grep maximum ${timeRes} | xargs | cut -d " " -f1 | awk '{$1/=1024;printf "%d\n",$1}')
+    ram=$(grep maximum ${timeRes} | xargs | cut -d " " -f1) 
+    ramMb=$(echo ${ram}/1024/1024 | bc)
     realTime=$(grep real ${timeRes} | xargs | cut -d " " -f1)
     realTime=${realTime::${#realTime}-1}
     milisecs=$(echo "$realTime * 1000" | bc)
     milisecs=${milisecs::${#milisecs}-3}
-    echo "$ram,$milisecs"
+    echo "$ramMb,$milisecs"
 }
 
 get_phase_stats() {
