@@ -1,10 +1,10 @@
 framework,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),nbPhysicalCores,nbLogicalCores,cpu
-groth16,BN254,mimc,path/to/input.json,setup,274,1,2,19,40,1,1,VirtualApple @ 2.50GHz
-groth16,BN254,mimc,path/to/input.json,prove,274,1,2,19,8,1,1,VirtualApple @ 2.50GHz
-groth16,BN254,mimc,path/to/input.json,verify,274,1,2,19,1,1,1,VirtualApple @ 2.50GHz
-groth16,bls12_377,mimc,path/to/input.json,setup,92,1,2,19,31,1,1,VirtualApple @ 2.50GHz
-groth16,bls12_377,mimc,path/to/input.json,prove,92,1,2,19,9,1,1,VirtualApple @ 2.50GHz
-groth16,bls12_377,mimc,path/to/input.json,verify,92,1,2,19,2,1,1,VirtualApple @ 2.50GHz
-groth16,bls24_315,mimc,path/to/input.json,setup,274,1,2,19,87,1,1,VirtualApple @ 2.50GHz
-groth16,bls24_315,mimc,path/to/input.json,prove,274,1,2,19,18,1,1,VirtualApple @ 2.50GHz
-groth16,bls24_315,mimc,path/to/input.json,verify,274,1,2,19,4,1,1,VirtualApple @ 2.50GHz
+gnark,groth16,BN254,mimc,path/to/input.json,setup,274,1,2,19,39,1,1,VirtualApple @ 2.50GHz
+gnark,groth16,BN254,mimc,path/to/input.json,prove,274,1,2,23,13,1,1,VirtualApple @ 2.50GHz
+gnark,groth16,BN254,mimc,path/to/input.json,verify,274,1,2,19,1,1,1,VirtualApple @ 2.50GHz
+gnark,groth16,bls12_377,mimc,path/to/input.json,setup,92,1,2,23,38,1,1,VirtualApple @ 2.50GHz
+gnark,groth16,bls12_377,mimc,path/to/input.json,prove,92,1,2,23,12,1,1,VirtualApple @ 2.50GHz
+gnark,groth16,bls12_377,mimc,path/to/input.json,verify,92,1,2,23,3,1,1,VirtualApple @ 2.50GHz
+gnark,groth16,bls24_315,mimc,path/to/input.json,setup,274,1,2,23,92,1,1,VirtualApple @ 2.50GHz
+gnark,groth16,bls24_315,mimc,path/to/input.json,prove,274,1,2,19,21,1,1,VirtualApple @ 2.50GHz
+gnark,groth16,bls24_315,mimc,path/to/input.json,verify,274,1,2,23,5,1,1,VirtualApple @ 2.50GHz

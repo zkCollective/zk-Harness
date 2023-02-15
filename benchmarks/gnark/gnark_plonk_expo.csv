@@ -1,13 +1,13 @@
 framework,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),nbPhysicalCores,nbLogicalCores,cpu
-plonk,BN254,expo,path/to/input.json,setup,10001,1,1,81,261,1,1,VirtualApple @ 2.50GHz
-plonk,BN254,expo,path/to/input.json,prove,10001,1,1,97,415,1,1,VirtualApple @ 2.50GHz
-plonk,BN254,expo,path/to/input.json,verify,10001,1,1,85,3,1,1,VirtualApple @ 2.50GHz
-plonk,bls12_377,expo,path/to/input.json,setup,10001,1,1,59,547,1,1,VirtualApple @ 2.50GHz
-plonk,bls12_377,expo,path/to/input.json,prove,10001,1,1,109,768,1,1,VirtualApple @ 2.50GHz
-plonk,bls12_377,expo,path/to/input.json,verify,10001,1,1,81,4,1,1,VirtualApple @ 2.50GHz
-plonk,BW6_761,expo,path/to/input.json,setup,10001,1,1,71,7501,1,1,VirtualApple @ 2.50GHz
-plonk,BW6_761,expo,path/to/input.json,prove,10001,1,1,147,9258,1,1,VirtualApple @ 2.50GHz
-plonk,BW6_761,expo,path/to/input.json,verify,10001,1,1,109,72,1,1,VirtualApple @ 2.50GHz
-plonk,bls24_315,expo,path/to/input.json,setup,10001,1,1,81,348,1,1,VirtualApple @ 2.50GHz
-plonk,bls24_315,expo,path/to/input.json,prove,10001,1,1,113,579,1,1,VirtualApple @ 2.50GHz
-plonk,bls24_315,expo,path/to/input.json,verify,10001,1,1,81,6,1,1,VirtualApple @ 2.50GHz
+gnark,plonk,BN254,expo,path/to/input.json,setup,10001,1,1,67,264,1,1,VirtualApple @ 2.50GHz
+gnark,plonk,BN254,expo,path/to/input.json,prove,10001,1,1,113,430,1,1,VirtualApple @ 2.50GHz
+gnark,plonk,BN254,expo,path/to/input.json,verify,10001,1,1,81,3,1,1,VirtualApple @ 2.50GHz
+gnark,plonk,bls12_377,expo,path/to/input.json,setup,10001,1,1,81,454,1,1,VirtualApple @ 2.50GHz
+gnark,plonk,bls12_377,expo,path/to/input.json,prove,10001,1,1,105,665,1,1,VirtualApple @ 2.50GHz
+gnark,plonk,bls12_377,expo,path/to/input.json,verify,10001,1,1,81,4,1,1,VirtualApple @ 2.50GHz
+gnark,plonk,BW6_761,expo,path/to/input.json,setup,10001,1,1,71,6456,1,1,VirtualApple @ 2.50GHz
+gnark,plonk,BW6_761,expo,path/to/input.json,prove,10001,1,1,137,8679,1,1,VirtualApple @ 2.50GHz
+gnark,plonk,BW6_761,expo,path/to/input.json,verify,10001,1,1,105,37,1,1,VirtualApple @ 2.50GHz
+gnark,plonk,bls24_315,expo,path/to/input.json,setup,10001,1,1,81,347,1,1,VirtualApple @ 2.50GHz
+gnark,plonk,bls24_315,expo,path/to/input.json,prove,10001,1,1,113,516,1,1,VirtualApple @ 2.50GHz
+gnark,plonk,bls24_315,expo,path/to/input.json,verify,10001,1,1,81,5,1,1,VirtualApple @ 2.50GHz
