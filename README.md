@@ -4,7 +4,7 @@ We cordially invite the zk SNARK community to join us in creating a comprehensiv
 
 Google drive link: <https://drive.google.com/drive/u/0/folders/1zkiGrN1xA4FIfAk4N3P8v-\_QIeA8P4Jb>
 
-![Alt text](/HarnessSpecification.png?raw=true "Title")
+![Alt text](/HarnessSpecification.jpg?raw=true "Title")
 
 ## Introduction
 
