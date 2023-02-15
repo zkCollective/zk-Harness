@@ -40,3 +40,6 @@ go.work
 
 # Automated Creation of Readme TOC
 gh-md-toc
+
+env/
+index.html
