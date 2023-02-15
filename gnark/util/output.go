@@ -45,6 +45,7 @@ func (bData BenchData) Headers() []string {
 func (bData BenchData) Values() []string {
 
 	return []string{
+		bData.Framework,
 		bData.Backend,
 		bData.Curve,
 		bData.Circuit,
@@ -55,15 +56,16 @@ func (bData BenchData) Values() []string {
 		strconv.Itoa(int(bData.NbPublicVariables)),
 		strconv.Itoa(int(bData.MaxRAM)),
 		strconv.Itoa(int(bData.RunTime)),
+		strconv.Itoa(CPU.PhysicalCores),
+		strconv.Itoa(CPU.LogicalCores),
+		CPU.BrandName,
 
 		// strconv.Itoa(int(bData.NbInternalVariables)),
 		// strconv.Itoa(bData.NbCoefficients),
 		// strconv.Itoa(bData.Throughput),
 		// strconv.Itoa(bData.Throughput / CPU.LogicalCores),
 
-		strconv.Itoa(CPU.PhysicalCores),
 		// strconv.Itoa(CPU.ThreadsPerCore),
-		strconv.Itoa(CPU.LogicalCores),
 		// strconv.Itoa(CPU.CacheLine),
 		// strconv.Itoa(CPU.Cache.L1D),
 		// strconv.Itoa(CPU.Cache.L1I),
@@ -71,7 +73,6 @@ func (bData BenchData) Values() []string {
 		// strconv.Itoa(CPU.Cache.L3),
 		// strconv.Itoa(int(CPU.Hz / 1000000)),
 		// fmt.Sprintf("%v", CPU.Supports(ADX) && CPU.Supports(BMI2)),
-		CPU.BrandName,
 		// fmt.Sprintf("%v", amd64_adx),
 	}
 }
