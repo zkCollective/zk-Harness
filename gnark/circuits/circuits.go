@@ -22,7 +22,7 @@ var BenchCircuits map[string]BenchCircuit
 
 type BenchCircuit interface {
 	Circuit(size int, name string) frontend.Circuit
-	Witness(size int, curveID ecc.ID, name string) *witness.Witness
+	Witness(size int, curveID ecc.ID, name string) witness.Witness
 }
 
 type TemplateCircuit struct {
@@ -179,7 +179,7 @@ func (d *defaultCircuit) Circuit(size int, name string) frontend.Circuit {
 	}
 }
 
-func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string) *witness.Witness {
+func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string) witness.Witness {
 
 	switch name {
 	case "cubic":
@@ -187,7 +187,7 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string) *witness
 		witness.X = (3)
 		witness.Y = (35)
 
-		w, err := frontend.NewWitness(&witness, curveID)
+		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {
 			panic(err)
 		}
@@ -197,7 +197,7 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string) *witness
 		witness.X = (2)
 		witness.Y = preCalc(size, curveID)
 
-		w, err := frontend.NewWitness(&witness, curveID)
+		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {
 			panic(err)
 		}
@@ -208,7 +208,7 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string) *witness
 		witness.E = (12)
 		witness.Y = (4096)
 
-		w, err := frontend.NewWitness(&witness, curveID)
+		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {
 			panic(err)
 		}
@@ -220,7 +220,7 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string) *witness
 		witness.Hash = preCalcMIMC(curveID, witness.PreImage)
 		// witness.Hash = ("8674594860895598770446879254410848023850744751986836044725552747672873438975")
 
-		w, err := frontend.NewWitness(&witness, curveID)
+		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {
 			panic(err)
 		}

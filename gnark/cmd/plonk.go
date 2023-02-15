@@ -22,6 +22,7 @@ import (
 	"time"
 
 	"github.com/consensys/gnark/backend/plonk"
+	"github.com/consensys/gnark/constraint"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/scs"
 	"github.com/consensys/gnark/test"
@@ -52,7 +53,7 @@ func runPlonk(cmd *cobra.Command, args []string) {
 		os.Exit(-1)
 	}
 
-	writeResults := func(took time.Duration, ccs frontend.CompiledConstraintSystem) {
+	writeResults := func(took time.Duration, ccs constraint.ConstraintSystem) {
 		// check memory usage, max ram requested from OS
 		var m runtime.MemStats
 		runtime.ReadMemStats(&m)
@@ -102,9 +103,9 @@ func runPlonk(cmd *cobra.Command, args []string) {
 	if *fAlgo == "compile" {
 		startProfile()
 		var err error
-		var ccs frontend.CompiledConstraintSystem
+		var ccs constraint.ConstraintSystem
 		for i := 0; i < *fCount; i++ {
-			ccs, err = frontend.Compile(curveID, scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
+			ccs, err = frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -112,7 +113,7 @@ func runPlonk(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	ccs, err := frontend.Compile(curveID, scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
+	ccs, err := frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
 	assertNoError(err)
 
 	// create srs

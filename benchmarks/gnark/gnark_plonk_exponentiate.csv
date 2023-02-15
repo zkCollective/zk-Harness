@@ -11,3 +11,15 @@ gnark,circuit,plonk,BW6_761,exponentiate,path/to/input.json,verify,55,1,2,43,36,
 gnark,circuit,plonk,bls24_315,exponentiate,path/to/input.json,setup,55,1,2,27,6,1,1,VirtualApple @ 2.50GHz
 gnark,circuit,plonk,bls24_315,exponentiate,path/to/input.json,prove,55,1,2,27,8,1,1,VirtualApple @ 2.50GHz
 gnark,circuit,plonk,bls24_315,exponentiate,path/to/input.json,verify,55,1,2,27,5,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bn254,exponentiate,path/to/input.json,setup,55,1,2,23,5,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bn254,exponentiate,path/to/input.json,prove,55,1,2,27,8,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bn254,exponentiate,path/to/input.json,verify,55,1,2,27,3,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,exponentiate,path/to/input.json,setup,55,1,2,31,9,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,exponentiate,path/to/input.json,prove,55,1,2,31,11,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,exponentiate,path/to/input.json,verify,55,1,2,32,4,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bw6_761,exponentiate,path/to/input.json,setup,55,1,2,35,61,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bw6_761,exponentiate,path/to/input.json,prove,55,1,2,36,92,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bw6_761,exponentiate,path/to/input.json,verify,55,1,2,36,31,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,exponentiate,path/to/input.json,setup,55,1,2,27,7,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,exponentiate,path/to/input.json,prove,55,1,2,27,9,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,exponentiate,path/to/input.json,verify,55,1,2,27,7,1,1,VirtualApple @ 2.50GHz

@@ -8,3 +8,12 @@ gnark,circuit,plonk,bls12_377,mimc,path/to/input.json,verify,184,1,1,31,4,1,1,Vi
 gnark,circuit,plonk,bls24_315,mimc,path/to/input.json,setup,366,1,1,27,20,1,1,VirtualApple @ 2.50GHz
 gnark,circuit,plonk,bls24_315,mimc,path/to/input.json,prove,366,1,1,27,28,1,1,VirtualApple @ 2.50GHz
 gnark,circuit,plonk,bls24_315,mimc,path/to/input.json,verify,366,1,1,27,5,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bn254,mimc,path/to/input.json,setup,442,1,1,27,20,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bn254,mimc,path/to/input.json,prove,442,1,1,27,25,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bn254,mimc,path/to/input.json,verify,442,1,1,23,3,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,mimc,path/to/input.json,setup,374,1,1,31,32,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,mimc,path/to/input.json,prove,374,1,1,31,43,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,mimc,path/to/input.json,verify,374,1,1,31,4,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,mimc,path/to/input.json,setup,438,1,1,27,24,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,mimc,path/to/input.json,prove,438,1,1,27,35,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,mimc,path/to/input.json,verify,438,1,1,27,5,1,1,VirtualApple @ 2.50GHz

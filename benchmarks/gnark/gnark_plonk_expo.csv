@@ -11,3 +11,15 @@ gnark,circuit,plonk,BW6_761,expo,path/to/input.json,verify,10001,1,1,105,37,1,1,
 gnark,circuit,plonk,bls24_315,expo,path/to/input.json,setup,10001,1,1,59,356,1,1,VirtualApple @ 2.50GHz
 gnark,circuit,plonk,bls24_315,expo,path/to/input.json,prove,10001,1,1,109,520,1,1,VirtualApple @ 2.50GHz
 gnark,circuit,plonk,bls24_315,expo,path/to/input.json,verify,10001,1,1,89,5,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bn254,expo,path/to/input.json,setup,10001,1,1,89,265,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bn254,expo,path/to/input.json,prove,10001,1,1,113,395,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bn254,expo,path/to/input.json,verify,10001,1,1,93,3,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,expo,path/to/input.json,setup,10001,1,1,82,410,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,expo,path/to/input.json,prove,10001,1,1,97,588,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,expo,path/to/input.json,verify,10001,1,1,94,5,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bw6_761,expo,path/to/input.json,setup,10001,1,1,129,3423,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bw6_761,expo,path/to/input.json,prove,10001,1,1,179,5011,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bw6_761,expo,path/to/input.json,verify,10001,1,1,141,33,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,expo,path/to/input.json,setup,10001,1,1,89,345,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,expo,path/to/input.json,prove,10001,1,1,117,504,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,expo,path/to/input.json,verify,10001,1,1,97,6,1,1,VirtualApple @ 2.50GHz
