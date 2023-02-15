@@ -60,6 +60,7 @@ func runPlonk(cmd *cobra.Command, args []string) {
 		_, secret, public := ccs.GetNbVariables()
 		bData := util.BenchData{
 			Framework:         "gnark",
+			Category:          "circuit",
 			Backend:           "plonk",
 			Curve:             curveID.String(),
 			Circuit:           *fCircuit,

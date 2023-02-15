@@ -1,10 +1,10 @@
-framework,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),nbPhysicalCores,nbLogicalCores,cpu
-gnark,plonk,BN254,mimc,path/to/input.json,setup,366,1,1,27,17,1,1,VirtualApple @ 2.50GHz
-gnark,plonk,BN254,mimc,path/to/input.json,prove,366,1,1,27,21,1,1,VirtualApple @ 2.50GHz
-gnark,plonk,BN254,mimc,path/to/input.json,verify,366,1,1,27,3,1,1,VirtualApple @ 2.50GHz
-gnark,plonk,bls12_377,mimc,path/to/input.json,setup,184,1,1,31,19,1,1,VirtualApple @ 2.50GHz
-gnark,plonk,bls12_377,mimc,path/to/input.json,prove,184,1,1,31,23,1,1,VirtualApple @ 2.50GHz
-gnark,plonk,bls12_377,mimc,path/to/input.json,verify,184,1,1,31,5,1,1,VirtualApple @ 2.50GHz
-gnark,plonk,bls24_315,mimc,path/to/input.json,setup,366,1,1,31,23,1,1,VirtualApple @ 2.50GHz
-gnark,plonk,bls24_315,mimc,path/to/input.json,prove,366,1,1,31,31,1,1,VirtualApple @ 2.50GHz
-gnark,plonk,bls24_315,mimc,path/to/input.json,verify,366,1,1,27,5,1,1,VirtualApple @ 2.50GHz
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),nbPhysicalCores,nbLogicalCores,cpu
+gnark,circuit,plonk,BN254,mimc,path/to/input.json,setup,366,1,1,27,17,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,BN254,mimc,path/to/input.json,prove,366,1,1,27,26,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,BN254,mimc,path/to/input.json,verify,366,1,1,27,2,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,mimc,path/to/input.json,setup,184,1,1,31,18,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,mimc,path/to/input.json,prove,184,1,1,31,25,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,mimc,path/to/input.json,verify,184,1,1,31,4,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,mimc,path/to/input.json,setup,366,1,1,27,20,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,mimc,path/to/input.json,prove,366,1,1,27,28,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,mimc,path/to/input.json,verify,366,1,1,27,5,1,1,VirtualApple @ 2.50GHz

@@ -60,6 +60,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		// TODO - Input Path is currently placeholder
 		bData := util.BenchData{
 			Framework:         "gnark",
+			Category:          "circuit",
 			Backend:           "groth16",
 			Curve:             curveID.String(),
 			Circuit:           *fCircuit,

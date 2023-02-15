@@ -8,6 +8,7 @@ import (
 
 type BenchData struct {
 	Framework         string
+	Category          string
 	Backend           string
 	Curve             string
 	Circuit           string
@@ -39,13 +40,14 @@ type BenchData struct {
 }
 
 func (bData BenchData) Headers() []string {
-	return []string{"framework", "backend", "curve", "circuit", "input", "operation", "nbConstraints", "nbSecret", "nbPublic", "ram(mb)", "time(ms)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
+	return []string{"framework", "category", "backend", "curve", "circuit", "input", "operation", "nbConstraints", "nbSecret", "nbPublic", "ram(mb)", "time(ms)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
 }
 
 func (bData BenchData) Values() []string {
 
 	return []string{
 		bData.Framework,
+		bData.Category,
 		bData.Backend,
 		bData.Curve,
 		bData.Circuit,
