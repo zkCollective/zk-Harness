@@ -1,7 +1,7 @@
-backend,curve,algorithm,nbConstraints,nbInternal,nbSecret,nbPublic,nbCoefficients(?),ram(mb),time(ms),cpu
-groth16,bn128,Compiler,2,1,1,1,-,17488,0.06s,Apple M1 Max
-groth16,bn128,WitnessGeneration,2,1,1,1,-,33552,0.06s,Apple M1 Max
-groth16,bn128,Setup,2,1,1,1,-,175632,1.04s,Apple M1 Max
-groth16,bn128,ExportVerificationKey,2,1,1,1,-,151904,1.05s,Apple M1 Max
-groth16,bn128,Proving,2,1,1,1,-,167472,0.76s,Apple M1 Max
-groth16,bn128,Verifying,2,1,1,1,-,135076,0.68s,Apple M1 Max
+framework,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),nbPhysicalCores,nbLogicalCores,cpu
+circom,groth16,bn128,circuit,circom/inputs/benchmarks/cubic/input.json,Compiler,2,1,1,19060,60,1,1,Apple M1 Max
+circom,groth16,bn128,circuit,circom/inputs/benchmarks/cubic/input.json,WitnessGeneration,2,1,1,34424,60,1,1,Apple M1 Max
+circom,groth16,bn128,circuit,circom/inputs/benchmarks/cubic/input.json,Setup,2,1,1,174696,1040,1,1,Apple M1 Max
+circom,groth16,bn128,circuit,circom/inputs/benchmarks/cubic/input.json,ExportVerificationKey,2,1,1,152684,1050,1,1,Apple M1 Max
+circom,groth16,bn128,circuit,circom/inputs/benchmarks/cubic/input.json,Proving,2,1,1,168016,770,1,1,Apple M1 Max
+circom,groth16,bn128,circuit,circom/inputs/benchmarks/cubic/input.json,Verifying,2,1,1,136048,720,1,1,Apple M1 Max
