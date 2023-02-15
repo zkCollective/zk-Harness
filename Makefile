@@ -30,5 +30,8 @@ benchmark-toy-gnark:
 benchmark-prf:
 	python3 -m _scripts.reader --config _input/config/gnark/config_prf.json  
 
+test-simple:
+	python3 -m _scripts.reader --config _input/config/gnark/config_gnark_simple.json  
+
 clean:
 	rm -r $(gnark_benchmarks_directory)/*

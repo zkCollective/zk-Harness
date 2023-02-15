@@ -15,13 +15,13 @@
         ], 
         "circuits": {
             "cubic": {
-                "input_path": "./input/circuit/cubic"
+                "input_path": "_input/circuit/cubic"
             },
             "expo": {
-                "input_path": "./input/circuit/expo"
+                "input_path": "_input/circuit/expo"
             },
             "exponentiate": {
-                "input_path": "./input/circuit/exponentiate"
+                "input_path": "_input/circuit/exponentiate"
             }
         },
         "algorithm": [

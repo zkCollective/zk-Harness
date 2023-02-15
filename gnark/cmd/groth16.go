@@ -65,7 +65,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 			Backend:           "groth16",
 			Curve:             curveID.String(),
 			Circuit:           *fCircuit,
-			Input:             "path/to/input.json",
+			Input:             *fInputPath,
 			Operation:         *fAlgo,
 			NbConstraints:     ccs.GetNbConstraints(),
 			NbSecretVariables: secret,
@@ -128,7 +128,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	witness := c.Witness(*fCircuitSize, curveID, *fCircuit)
+	witness := c.Witness(*fCircuitSize, curveID, *fCircuit, *fInputPath)
 
 	if *fAlgo == "prove" {
 		pk, err := groth16.DummySetup(ccs)

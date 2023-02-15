@@ -4,23 +4,21 @@
     "mode": "circuit",
     "payload": {
         "backend": [
-            "groth16",
-            "plonk"
+            "groth16"
         ],
         "curves": [
-            "bn254",
-            "bls12_377",
-            "bls24_315"
+            "bn254"
         ], 
         "circuits": {
+            "cubic": {
+                "input_path": "_input/circuit/cubic"
+            },
             "mimc": {
                 "input_path": "_input/circuit/mimc"
             }
         },
         "algorithm": [
-            "setup",
-            "prove",
-            "verify"
+            "prove"
         ]
     }    
 }

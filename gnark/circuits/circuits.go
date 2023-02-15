@@ -16,13 +16,14 @@ import (
 	"github.com/tumberger/zk-compilers/gnark/circuits/toy/cubic"
 	"github.com/tumberger/zk-compilers/gnark/circuits/toy/expo"
 	"github.com/tumberger/zk-compilers/gnark/circuits/toy/exponentiate"
+	"github.com/tumberger/zk-compilers/gnark/util"
 )
 
 var BenchCircuits map[string]BenchCircuit
 
 type BenchCircuit interface {
 	Circuit(size int, name string) frontend.Circuit
-	Witness(size int, curveID ecc.ID, name string) witness.Witness
+	Witness(size int, curveID ecc.ID, name string, path string) witness.Witness
 }
 
 type TemplateCircuit struct {
@@ -179,13 +180,18 @@ func (d *defaultCircuit) Circuit(size int, name string) frontend.Circuit {
 	}
 }
 
-func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string) witness.Witness {
+func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, path string) witness.Witness {
+
+	data, err := util.ReadFromInputPath(path)
+	if err != nil {
+		panic(err)
+	}
 
 	switch name {
 	case "cubic":
 		witness := cubic.CubicCircuit{}
-		witness.X = (3)
-		witness.Y = (35)
+		witness.X = (data["X"].(string))
+		witness.Y = (data["Y"].(string))
 
 		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {
@@ -215,10 +221,9 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string) witness.
 		return w
 	case "mimc":
 		witness := mimc.MimcCircuit{}
-		witness.PreImage = ("16130099170765464552823636852555369511329944820189892919423002775646948828469")
-		// Currently - hard coded input and calculation per curve
+		// witness.PreImage = ("16130099170765464552823636852555369511329944820189892919423002775646948828469")
+		witness.PreImage = (data["PreImage"].(string))
 		witness.Hash = preCalcMIMC(curveID, witness.PreImage)
-		// witness.Hash = ("8674594860895598770446879254410848023850744751986836044725552747672873438975")
 
 		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {

@@ -65,7 +65,7 @@ func runPlonk(cmd *cobra.Command, args []string) {
 			Backend:           "plonk",
 			Curve:             curveID.String(),
 			Circuit:           *fCircuit,
-			Input:             "path/to/input.json",
+			Input:             *fInputPath,
 			Operation:         *fAlgo,
 			NbConstraints:     ccs.GetNbConstraints(),
 			NbSecretVariables: secret,
@@ -132,7 +132,7 @@ func runPlonk(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	witness := c.Witness(*fCircuitSize, curveID, *fCircuit)
+	witness := c.Witness(*fCircuitSize, curveID, *fCircuit, *fInputPath)
 	pk, vk, err := plonk.Setup(ccs, srs)
 	assertNoError(err)
 

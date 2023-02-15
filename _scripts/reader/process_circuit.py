@@ -26,10 +26,10 @@ def build_command_gnark(payload):
     gnark_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'gnark'))
 
     if payload.backend is not None and payload.curves is not None:
-        commands = [f"./gnark {backend} --circuit={circuit} --algo={algo} --curve={curve}\n"
+        commands = [f"./gnark {backend} --circuit={circ} --algo={algo} --curve={curve} --input={input_path}\n"
                     for backend in payload.backend
                     for curve in payload.curves
-                    for circuit in payload.circuit
+                    for circ, input_path in payload.circuit.items()
                     for algo in payload.algo]
 
         # Join the commands into a single string
@@ -93,13 +93,17 @@ def get_payload(config):
     # Extract the relevant fields from the configuration data
     backend = config['payload']['backend']
     curves = config['payload']['curves']
-    circuit = list(config['payload']['circuits'].keys())
+    circuits = config['payload']['circuits'].keys()
     algo = config['payload']['algorithm']
+    input_path = [list(config['payload']['circuits'][c].values())[0] for c in circuits]
 
+    # Map circuit names onto input paths
+    circuit = dict(zip(circuits, input_path))
+    
     # Define a named tuple for the payload
-    Payload = namedtuple('Payload', ['backend', 'curves', 'circuit', 'algo'])
+    Payload = namedtuple('Payload', ['backend', 'curves', 'circuit', 'algo', 'input_path'])
 
     # Return a new instance of the named tuple with the extracted values
-    return Payload(backend, curves, circuit, algo)
+    return Payload(backend, curves, circuit, algo, input_path)
 
         

@@ -35,6 +35,7 @@ var (
 	fCount       *int
 	fCurve       *string
 	fFileType    *string
+	fInputPath   *string
 )
 
 var (
@@ -58,6 +59,7 @@ func init() {
 	fProfile = rootCmd.PersistentFlags().String("profile", "none", "type of profile. must be none, trace, cpu or mem")
 	fCurve = rootCmd.PersistentFlags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
 	fFileType = rootCmd.PersistentFlags().String("filetype", "csv", "Type of file to output for benchmarks")
+	fInputPath = rootCmd.PersistentFlags().String("input", "none", "input path to the dedicated input")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
