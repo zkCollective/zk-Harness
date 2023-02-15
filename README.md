@@ -1,4 +1,4 @@
-# zk-Harness - Benchmarking Hackathon
+# zk-Harness
 
 We cordially invite the zk SNARK community to join us in creating a comprehensive benchmarking framework for zk SNARKs. As part of our efforts to further advance the technology and promote its widespread adoption, we have organized a Hackathon to bring together experts and enthusiasts from the community to collaborate and contribute to the establishment of a standardized benchmarking framework. This is a crucial step in our mission to create a reference point for non-experts and experts alike on what zkSNARK scheme best suits their needs, and to also promote further research by identifying performance gaps. We believe that the collective efforts of the community will help to achieve this goal. Whether you are a researcher, developer, or simply passionate about zk SNARKs, we welcome your participation and contribution in this exciting initiative.
 
@@ -6,7 +6,7 @@ Google drive link: <https://drive.google.com/drive/u/0/folders/1zkiGrN1xA4FIfAk4
 
 ![Alt text](/HarnessSpecification.jpg?raw=true "Title")
 
-## Introduction
+## BENCHMARKING HACKATHON
 
 There is a large and ever-increasing number of SNARK implementations. Although the theoretical complexity of the underlying proof systems is well understood, the concrete costs rely on a number of factors that depend on the underlying computation model and its compatibility with the specific application. The difference in implementation is evident in multiple layers of the SNARK stack, summarized as follows:
 

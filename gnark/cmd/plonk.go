@@ -57,19 +57,19 @@ func runPlonk(cmd *cobra.Command, args []string) {
 		var m runtime.MemStats
 		runtime.ReadMemStats(&m)
 
-		internal, secret, public := ccs.GetNbVariables()
+		_, secret, public := ccs.GetNbVariables()
 		bData := util.BenchData{
-			Backend:             "plonk",
-			Curve:               curveID.String(),
-			Algorithm:           *fAlgo,
-			NbCoefficients:      ccs.GetNbCoefficients(),
-			NbConstraints:       ccs.GetNbConstraints(),
-			NbInternalVariables: internal,
-			NbSecretVariables:   secret,
-			NbPublicVariables:   public,
-			RunTime:             took.Milliseconds(),
-			MaxRAM:              (m.Sys / 1024 / 1024),
-			Throughput:          int(float64(ccs.GetNbConstraints()) / took.Seconds()),
+			Framework:         "gnark",
+			Backend:           "plonk",
+			Curve:             curveID.String(),
+			Circuit:           *fCircuit,
+			Input:             "path/to/input.json",
+			Operation:         *fAlgo,
+			NbConstraints:     ccs.GetNbConstraints(),
+			NbSecretVariables: secret,
+			NbPublicVariables: public,
+			MaxRAM:            (m.Sys / 1024 / 1024),
+			RunTime:           took.Milliseconds(),
 		}
 
 		if err := util.WriteData("csv", bData, filename); err != nil {

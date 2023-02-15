@@ -1,13 +1,13 @@
-backend,curve,algorithm,nbConstraints,nbInternal,nbSecret,nbPublic,nbCoefficients,ram(mb),time(ms),throughput(constraints/s),througputPerCore(constraints/s),nbPhysicalCores,nbThreadsPerCore,nbLogicalCores,cacheLine,l1d,l1i,l2,l3,freq,adx,cpu
-groth16,BN254,setup,3,2,1,2,5,18,2,1158,1158,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-groth16,BN254,prove,3,2,1,2,5,18,2,1401,1401,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-groth16,BN254,verify,3,2,1,2,5,18,1,2060,2060,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-groth16,bls12_377,setup,3,2,1,2,5,18,3,750,750,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-groth16,bls12_377,prove,3,2,1,2,5,18,2,1237,1237,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-groth16,bls12_377,verify,3,2,1,2,5,19,2,1200,1200,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-groth16,BW6_761,setup,3,2,1,2,5,18,20,147,147,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-groth16,BW6_761,prove,3,2,1,2,5,19,10,283,283,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-groth16,BW6_761,verify,3,2,1,2,5,19,21,141,141,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-groth16,bls24_315,setup,3,2,1,2,5,18,6,479,479,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-groth16,bls24_315,prove,3,2,1,2,5,19,4,625,625,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
-groth16,bls24_315,verify,3,2,1,2,5,19,4,626,626,1,1,1,64,131072,131072,8388608,0,2500,false,VirtualApple @ 2.50GHz
+framework,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),nbPhysicalCores,nbLogicalCores,cpu
+groth16,BN254,cubic,path/to/input.json,setup,3,1,2,18,2,1,1,VirtualApple @ 2.50GHz
+groth16,BN254,cubic,path/to/input.json,prove,3,1,2,18,2,1,1,VirtualApple @ 2.50GHz
+groth16,BN254,cubic,path/to/input.json,verify,3,1,2,19,1,1,1,VirtualApple @ 2.50GHz
+groth16,bls12_377,cubic,path/to/input.json,setup,3,1,2,18,4,1,1,VirtualApple @ 2.50GHz
+groth16,bls12_377,cubic,path/to/input.json,prove,3,1,2,19,2,1,1,VirtualApple @ 2.50GHz
+groth16,bls12_377,cubic,path/to/input.json,verify,3,1,2,18,2,1,1,VirtualApple @ 2.50GHz
+groth16,BW6_761,cubic,path/to/input.json,setup,3,1,2,18,20,1,1,VirtualApple @ 2.50GHz
+groth16,BW6_761,cubic,path/to/input.json,prove,3,1,2,19,10,1,1,VirtualApple @ 2.50GHz
+groth16,BW6_761,cubic,path/to/input.json,verify,3,1,2,19,21,1,1,VirtualApple @ 2.50GHz
+groth16,bls24_315,cubic,path/to/input.json,setup,3,1,2,19,6,1,1,VirtualApple @ 2.50GHz
+groth16,bls24_315,cubic,path/to/input.json,prove,3,1,2,18,3,1,1,VirtualApple @ 2.50GHz
+groth16,bls24_315,cubic,path/to/input.json,verify,3,1,2,19,4,1,1,VirtualApple @ 2.50GHz
