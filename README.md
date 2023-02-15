@@ -1,302 +1,138 @@
-# ZK Compilers
+ ZK Compilers
 
-This is a software to benchmark various implementations of polynomial commitment schemes, curve implementations, circuit implementations that leverage different proving schemes.
+We cordially invite the zk SNARK community to join us in creating a comprehensive benchmarking framework for zk SNARKs. As part of our efforts to further advance the technology and promote its widespread adoption, we have organized a Hackathon to bring together experts and enthusiasts from the community to collaborate and contribute to the establishment of a standardized benchmarking framework. This is a crucial step in our mission to create a reference point for non-experts and experts alike on what zkSNARK scheme best suits their needs, and to also promote further research by identifying performance gaps. We believe that the collective efforts of the community will help to achieve this goal. Whether you are a researcher, developer, or simply passionate about zk SNARKs, we welcome your participation and contribution in this exciting initiative.
 
 Google drive link: <https://drive.google.com/drive/u/0/folders/1zkiGrN1xA4FIfAk4N3P8v-\_QIeA8P4Jb>
 
 ![Alt text](/HarnessSpecification.png?raw=true "Title")
 
-<!--ts-->
-- [ZK Compilers](#zk-compilers)
-  - [Benchmarks](#benchmarks)
-    - [Toy Examples](#toy-examples)
-  - [Overview of ZK SNARK Compilers](#overview-of-zk-snark-compilers)
-  - [Overview of ZK STARK Compilers](#overview-of-zk-stark-compilers)
-  - [Overview of Compilers for Dedicated Verifier Proofs](#overview-of-compilers-for-dedicated-verifier-proofs)
-  - [General Purpose Frameworks](#general-purpose-frameworks)
-  - [Implementations leveraging different ZK Compilers](#implementations-leveraging-different-zk-compilers)
-    - [PLONK](#plonk)
-    - [Halo2](#halo2)
-    - [Circom](#circom)
-    - [Bulletproofs](#bulletproofs)
-    - [Sigma Protocols](#sigma-protocols)
-  - [Polynomial Commitments](#polynomial-commitments)
-    - [Additional Info on Polynomial Commitments and Multilinear Extenstions](#additional-info-on-polynomial-commitments-and-multilinear-extenstions)
-  - [Curves and Pairings](#curves-and-pairings)
-  - [Hardware Accelerations](#hardware-accelerations)
-    - [GPU-based Hardware acceleration](#gpu-based-hardware-acceleration)
-    - [FPGA-based Hardware acceleration](#fpga-based-hardware-acceleration)
-  - [Trusted Setup](#trusted-setup)
-  - [Toy Examples](#toy-examples-1)
-  - [Cryptographic Primitives](#cryptographic-primitives)
-    - [Optimized for SNARKs](#optimized-for-snarks)
-    - [Traditional Schemes](#traditional-schemes)
-  - [Existing Performance Comparisons](#existing-performance-comparisons)
-  - [What are questions that we should answer in the paper?](#what-are-questions-that-we-should-answer-in-the-paper)
-  - [Questions for us to resolve in order to determine the focus](#questions-for-us-to-resolve-in-order-to-determine-the-focus)
-    - [Questions to focus on](#questions-to-focus-on)
-    - [Micro-Benchmark Metrics](#micro-benchmark-metrics)
+## Introduction
 
-<!-- Created by https://github.com/ekalinin/github-markdown-toc -->
-<!-- Added by: serious, at: Mon Feb  6 13:44:17 CET 2023 -->
+There is a large and ever-increasing number of SNARK implementations. Although the theoretical complexity of the underlying proof systems is well understood, the concrete costs rely on a number of factors that depend on the underlying computation model and its compatibility with the specific application. The difference in implementation is evident in multiple layers of the SNARK stack, summarized as follows:
 
-<!--te-->
+### Field Arithmetic
 
-## Benchmarks
+- Native Field Arithmetic
 
-TODO:
+  Proof systems encode a polynomial equation over a finite field F_r, where r is generally a prime number. In order to perform arithmetic operations in finite fields, it is often necessary to work with large integers, which can have hundreds or thousands of digits. SNARKs rely on the use of finite fields for their construction, and native field arithmetic is used to perform arithmetic operations on the elements of the field (for a reference implementation - see here). Benchmarking native field arithmetic involves benchmarking the following operations:
 
-Gnark:
-- [] MIMC - Variable Input evaluation
-- [] SHA256 - Fix such that compatible with testing framework as provided in gnark, currently SHA256 assigns byte slices and tests do not pass 
+      - Addition
+      - Subtraction
+      - Multiplication
+      - Division
+      - (Modular) Exponentiation
+      - Inverse Exponentiation
 
-Benchmarks can be run through the Makefile. Currently, the following benchmarks are supported:
+- Non-Native Field Arithmetic
 
-### Toy Examples
+  Encoding programs that are not designed to operate over F_r is generally expensive. This problem is generally solved by simulating the operations in the target field in the base field F_r (for a reference on how this is done in practice, see here). Benchmarking non-native field arithmetic involves benchmarking the same operations as for native field arithmetic.
 
-The benchmarks for Toy examples can be run by executing ``` make benchmarks-toy-<library> ```
-The following Toy example benchmarks will be executed:
+### Operations over Elliptic Curves
 
-- Circom
-  - Cubic
-- Gnark
-  - Cubic
-  - Exponentiation
-  - Modular Exponentiation
+- Scalar Multiplication
 
-The benchmarks for PRF examples can be run by executing ``` make benchmarks-prf ```
-The following PRF example benchmarks will be executed
+  Scalar multiplication involves multiplying a single point on an elliptic curve by a scalar value, which is typically an integer. The result is another point on the curve. Scalar multiplication is a fundamental operation in elliptic curve cryptography, and is used in many cryptographic protocols such as key exchange, digital signatures, and encryption.
 
-- Gnark
-  - MIMC Hash function with fixed size input
+- Multi-Scalar Multiplication (MSM)
 
+  Large MSMs over points on an elliptic curve are required for instance in the Setup and Prove algorithms of common proving systems. For example, Groth16 requires (3n G_1 + m G_2) MSMs in the per-circuit setup phase, where n is the number of multiplication gates and m is the number of wires. Therefore, an efficient implementation of MSM is an important feature in general purpose SNARK framework. If you are unfamiliar with the problem of Multi-Scalar Multiplication, you can find a good introduction here.
 
-## Overview of ZK SNARK Compilers
+- Pairings
 
-In the following, we initially separate between *Succinct Non-Interactive Arguments of Knowledge* (SNARKs), *Succinct Transparent Arguments of Knowledge* (STARKs) and *Dedicated Verifier Proofs*, which may require interaction with a dedicated verifier and therefore lose non-interactivity.
+  Pairing operations over pairing-friendly elliptic curves are essential in the verification algorithm of pairing-based SNARKs, such as PLONK and Groth16. For example, the verification algorithm of PLONK with KZG polynomial commitments requires computing 2 pairings.
 
-| Name                                                                  | Lang.     | Arith.  | IOP     | Front/Back    |
-| :---                                                                  | :----:    | :----:  | :---:    |   ---:   |
-| [libsnark](https://github.com/scipr-lab/libsnark)                     | C++       | R1CS    | Groth16 | Back          |
-| [Bellman](https://github.com/zkcrypto/bellman)                        | Rust      | R1CS    | Groth16 | Back          |
-| [jsnark](https://github.com/akosba/jsnark)                            | JS        | libsnark    |  libsnark  | Front          |
-| [snarky](https://github.com/o1-labs/snarky)                           | OCAML     | libsnark    |  libsnark  | Front          |
-| [gnark](https://github.com/ConsenSys/gnark)                           | Go        | Plonk    |  Plonk  | Front + Back          |
-| [PLONK Dusk Network](https://github.com/dusk-network/plonk)           | Rust      | Plonk    |  Plonk  | Front + Back          |
-| [circom](https://github.com/iden3/circom)                             | Rust      | R1CS    |  Groth16  | Front + Back          |
-| [arkworks](https://github.com/arkworks-rs)                            | Rust      | R1CS    |  Groth16/Spartan/Marlin  | Front + Back          |
-| [jellyfish](https://github.com/EspressoSystems/jellyfish)             | Rust      | Plonk    |  Plonk  | Front + Back          |
-| [halo2](https://github.com/zcash/halo2)                               | Rust      | UltraPlonk    |  Halo2  | Front + Back          |
-| [adjoint-io bulletproofs](https://github.com/sdiehl/bulletproofs)     | Rust      | - (DLOG)    |  Bulletproof  | Front + Back          |
-| [DIZK](https://github.com/scipr-lab/dizk)                             | Java      | R1CS    |  Groth16  | Front + Back          |
-| [Spartan](https://github.com/microsoft/Spartan)                       | Rust      | R1CS    |  Spartan  | Front + Back          |
-| [Anoma Vamp-IR](https://github.com/anoma/vamp-ir)                     | Rust      | ?    |  X  | Front          |
-| [VIRGO](https://github.com/sunblaze-ucb/Virgo)                        | C++       | ?    |  ?  | ?          |
-| [Hyperplonk](https://github.com/EspressoSystems/hyperplonk)           | Rust      | Plonk    |  ?  | ?          |
-| [Nova](https://github.com/microsoft/Nova)                             | Rust      | Relaxed R1CS    |  ?  | ?          |
-| [CirC](https://github.com/circify/circ)                               | Rust        | Mult.    |  ?  | ?          |
+### Circuits
 
+- Circuits for SNARK-optimized primitives
 
-## Overview of ZK STARK Compilers
+- Circuits for CPU-optimized primitives
 
-| Name                                                          | ZK Type       | Arithmetization       | Commitment Scheme         |
-| :---                                                          |    :----:     |          ---:         |          ---:             |
-| [libstark](https://github.com/elibensasson/libSTARK)          | Title         | Here's this           |                           |
-| [OpenZKP](https://github.com/0xProject/OpenZKP)               | Text          | Here's this           |                           |
-| [genSTARK](https://github.com/GuildOfWeavers/genSTARK)        | Text          | Here's this           |                           |
-| [Hodor](https://github.com/matter-labs/hodor)                 | Text          | Here's this           |                           |
-| [Winterfell](https://github.com/facebook/winterfell)          | Text          | Here's this           |                           |
-| [ethSTARK](https://github.com/starkware-libs/ethSTARK)        | Text          | Here's this           |                           |
+  Even though it would be beneficial to only rely on SNARK optimized primitives, practical applications often don’t allow for the usage of e.g. Poseidon hash functions or SNARK friendly signature schemes. For example, verifying ECDSA signatures in SNARKs is crucial when building e.g. zkOracles, however an implementation requires for non-native field arithmetic and  in-circuit (see #2 and here), and therefore yields many constraints. Similarly, for building applications such as TLS Notary, one has to prove SHA-256 hash functions and AES-128 encryption which yields many constraints.
 
-## Overview of Compilers for Dedicated Verifier Proofs
+We integrated gnark to exemplify how to integrate libraries into the benchmarking harness. You can find a description on how to run benchmarks for gnark here.
 
-| Name                                                      | ZK Type       | Arithmetization       | Commitment Scheme         |
-| :---                                                      |    :----:     |          ---:         |          ---:             |
-| [emp-zk](https://github.com/emp-toolkit/emp-zk)           | Text          | Here's this           |                           |
-| [FETA](https://github.com/KULeuven-COSIC/Feta)            | Text          | Here's this           |                           |
+## Review Mechanism
 
-## General Purpose Frameworks
+We will carefully review the correctness of benchmarks to integrate in the benchmarking framework. On completing a novel benchmark that is not yet integrated in the zk-Harness, we recommend that you create a pull request that can be independently reviewed.
+Your implementation will be evaluated based on the following criteria:
 
-We should have a discussion section describing frontend approach implementing
-circuits that essentially execute step-by-step some simple CPU, also called a 
-virtual machine (VM). Such approaches are: StarkWare's (Cairo), zkEVMS,
-Polygon's VM, RISC-V (?), and zkLLVM.
+1. Correctness of the implementation.
+2. Efficiency of the implementation.
+3. Quality of the documentation.
 
-## Implementations leveraging different ZK Compilers
+## Program Desctiption
 
-### PLONK
+### Benchmarking Mathematical Operations
 
-Plonk is commonly used in:
+#### Goal
 
-- Plonk Aztex 2.0 Monorepo [here](https://github.com/neidis/plonk-plookup)
-- Barretenberg (Aztec), an optimized elliptic curve library for the bn128 curve, and PLONK SNARK prover [here](https://github.com/AztecProtocol/barretenberg)
-- Sec-Bit implementation of Plonk & Plookup with arkworks libraries [here](https://github.com/sec-bit/plonk) 
-- zk Garage PLONK compatible with the arkworks library [here](https://github.com/ZK-Garage/plonk)
-- Plonky - Recursive arguments based on PLONK and Halo [archived here](https://github.com/mir-protocol/plonky)
-  - Documentation for Plonky can be found [here](https://mirprotocol.org/blog/Fast-recursive-arguments-based-on-Plonk-and-Halo)
-- Plonky2 - Recursive arguments based on PLONK and FRI polynomial commitments [here](https://github.com/mir-protocol/plonky2)
-  - Writeup documenting details about Plonky2 can be found [here](https://github.com/mir-protocol/plonky2/blob/main/plonky2/plonky2.pdf)
+Benchmark framework specific implementations of native / non-native field arithmetic and elliptic curve group operations
 
-Recent research work on PLONK:
+#### Task Description / Steps Involved
 
-- HyperPlonk - Plonk with multilinear polynomial commitments [here](https://github.com/darkrenaissance/darkfi)
+The purpose of this task is to benchmark the performance of implementation of field arithmetic and elliptic curve group operations, in order to assess their efficiency and identify areas for improvement.
 
-### Halo2
+Benchmarking native & non-native field arithmetic involves benchmarking the following operations:
 
-- combines efficient accumulation scheme with PLONKish arithmetization and needs no trusted setup
-- based on IPA commitment scheme
-- flourishing developer ecosystem
-- prover time: O(N*log N)
-- verifier time: O(1)>Groth16
-- proof size: O(log N)
-- assumption: discrete log
-
-The arithemtization for Halo2 comes from PLONK, more precisely UltraPlonk, which is an extended version of Plonk that supports both lookup arguments and custom gates.
-
-Detailed Informations about Halo2:
-
-- The Halo2 Book [here](https://zcash.github.io/halo2/)
-
-Halo2 is commonly used in:
-
-- [zk-EVM circuits Privacy Scaling Explorations](https://github.com/privacy-scaling-explorations/zkevm-circuits)
-- Privacy Scaling Explorations - halo2 with KZG instead of IPA [here](https://github.com/privacy-scaling-explorations/halo2wrong)
-- halo2 with FRI instead of IPA [here](https://github.com/Orbis-Tertius/halo2)
-- Scroll zk-EVM recursive aggregation [here](https://github.com/scroll-tech/halo2-snark-aggregator)
-  - This library leverages recursive aggregation for constructing a zkEVM by using Halo2 with KZG polynomial commitments
-  - At the time of writing, Halo2 does not yet support recursive aggregation
-- Orbis zkEVM on Cardano [here](https://github.com/Orbis-Tertius)
-- DarkFi Layer1
-
-### Circom
-
-- [circomlib](https://github.com/iden3/circomlib/tree/master/circuits) provides loads or circuit templates for use in applications (see detailed list in the sheets)
-- Sismo Hydra S1 ZKPS [here](https://github.com/sismo-core/hydra-s1-zkps)
- 
-### Bulletproofs
-
-### Sigma Protocols
-
-Sigma protocols are commonly used in:
-
-- Signal for group chats [see details here](https://signal.org/blog/signal-private-group-system/)
-- Proving the equality of discrete logarithms & Proofs of Knowledge of discrete log (see the paper by Dan Boneh [here](https://eprint.iacr.org/2018/1188.pdf)
-
-## Polynomial Commitments
-
-Example of an univariate polynomial:    p = x^4 - 4*x^2 - 7*x + 9
-
-Example of a multivariate polynomial:   p = 2*xz^4 - 4*xz^2 - 7*xy
-
-Example of a multilinear polynomial:    p = 2*xz - 4*xz - 7*xy
-
-- Hyrax ([Paper](https://eprint.iacr.org/2017/1132.pdf) / [Code](https://github.com/TAMUCrypto/hyrax-bls12-381))
-- KZG ([Paper]())
-  - Prima One - Simple KZG implementation [here](https://github.com/proxima-one/kzg)
-  - Espresso Systems - Implementation of Multilinear KZG commitments [here](https://github.com/EspressoSystems/hyperplonk)
-- Arkworks Polynomial Commitment implementations [here](https://github.com/arkworks-rs/poly-commit/tree/master/src) (KZG, IPA, Marlin KZG, Sonic KZG)
-- FRI (Risc0, Plonky2, Winterfell) [Paper](Fast Reed-Solomon Interactive Oracle Proofs of Proximity)
-  - Risc0 [implementation](https://github.com/risc0/risc0/blob/main/risc0/zkp/src/prove/fri.rs) / [Description](https://www.risczero.com/docs/reference-docs/about-fri) of FRI
-
-### Additional Info on Polynomial Commitments and Multilinear Extenstions
-
-- Interactive Proofs & Arguments, Low-Degree & Multilinear Extensions - Justin Thaler [here](https://people.cs.georgetown.edu/jthaler/IPsandextensions.pdf)
-
-## Curves and Pairings
-
-<!-- https://github.com/supranational/blst BLS12-381 -->
-<!-- 2-adicity of curves see https://www.cryptologie.net/article/559/whats-two-adicity/ -->
-
-## Hardware Accelerations
-
-### GPU-based Hardware acceleration
-
-- Mina GPU Groth16 accelerated prover [here](https://github.com/MinaProtocol/gpu-groth16-prover-3x)
-
-### FPGA-based Hardware acceleration
-
-<!-- TODO -->
-
-## Trusted Setup
-
-Pairing-based SNARKs require a trusted setup (universal/per-circuit) to achieve high efficiency.
-The parameters generated during a trusted setup procedure have to remain secret to ensure the security of the overall system.
-Commonly, trusted setup procedures are instantiated through MPC in a distributed manner.
-Whereas e.g. Groth16 demands for a trusted setup per circuit, e.g. PLONK requires a universal trusted setup ceremony to instantiate the 
-
-- Aleo Setup procedure [here](https://github.com/AleoHQ/aleo-setup)
-
-## Toy Examples
-
-Potential Toy Examples that we can evaluate in the paper:
-
+- Addition
+- Subtraction
 - Multiplication
-- Cubic polynomial
-- Dot product
-- Inner product
-- Sorting
-- Modulo
-- Exponentiation
+- Division
+- (Modular) Exponentiation
+- Inverse Exponentiation
 
-## Cryptographic Primitives
+Benchmarking elliptic curve group operations involves benchmarking the following operations:
 
-### Optimized for SNARKs
+- Scalar Multiplication
+- Multi-Scalar Multiplication (MSM)
+- Pairing
 
-- MIMC hash function [here](https://byt3bit.github.io/primesym/mimc/)
-- Poseidon hash function []() 
-  - Scroll implementation can be found [here](https://github.com/scroll-tech/poseidon-circuit))
-  - Arkworks implementation can be found [here](https://github.com/arkworks-rs/crypto-primitives/tree/main/src/sponge)
+#### Designated Tasks
 
-### Traditional Schemes
+Comparative Evaluation of native field arithmetic in the following frameworks:
 
-- Merkle Patricia Tree [docs](https://ethereum.org/en/developers/docs/data-structures-and-encoding/patricia-merkle-trie/) 
-  - Implemenation by Scroll can be found [here](https://github.com/scroll-tech/mpt-circuit)
-- SHA-256 [RFC](https://www.rfc-editor.org/rfc/rfc6234)
-  - Arkworks implementation can be found [here](https://github.com/arkworks-rs/crypto-primitives/tree/main/src/crh)
-  - Risc0 implementation can be found [here](https://github.com/risc0/risc0-rust-examples/tree/main/sha)
+- circom
+- gnark
+- halo2
 
-## Existing Performance Comparisons
+Prize: X$
 
-- Comparison pairings in gnark/arkworks [here](https://eprint.iacr.org/2022/1162.pdf)
-- Polynomial Commitment benchmark can be found [here](https://2π.com/23/pc-bench/index.html)
-- SHA-256 comparison for halo2, plonky2, circom [here](https://github.com/Sladuca/sha256-prover-comparison)
-- Master Thesis on a theoretical / practical Overview of SNARKs [here](https://is.muni.cz/th/ovl3c/SNARKs_STARKs_introduction.pdf)
-- ZKP Test Repository [here](https://github.com/spalladino/zkp-tests)
+Comparative Evaluation of non-native field arithmetic in the following frameworks:
 
-## What are questions that we should answer in the paper?
+- circom
+- gnark
+- halo2
 
-- Which compilers are mostly used?
-- Which compiler should a developer choose given a specific project in mind?
-  - E.g. Recursion
-- What is the state-of-the-art in current ZKP implementations?
-  - Leave hands of off this
-- As a designer of a compiler, what are limitations of existing approaches?
-  - Leave as discussion
-- As policy makers - what are the assurances that ZKPs can provide - and where can they fail?
-  - Leave as discussion
-  - Search in Repos where they fixed any bugs
+Prize: X$
 
-- What is the performance of different Curve implementations for SNARKs that apply bilinear pairings?
-  - Can do that - very important primitive
-- What is the performance of different polynomial commitment schemes? (For SNARKs that rely on polynomial commitment schemes)
-- How do optimizations, such as lookups and custom gates, influence the performance of the baseline SNARK?
-- What are current bottlenecks to SNARKs?
-  - Multi Scalar Multiplication
-  - Fast Fourier Transformation
-  - Trusted Setup Ceremony
+Comparative Evaluation of the above mentioned operations over all curves as supported by the following frameworks:
 
-## Questions for us to resolve in order to determine the focus
+- circom
+- gnark
+- halo2
 
-### Questions to focus on
+Prize: X$
 
-1. Performance Toy Examples
-   1. Create a Table of availabel toy examples
-   2. Decide which ones to compare
-      1. circom
-      2. gnark
-2. What are the current bottlenecks in SNARKs?
-3. Which are the most commonly use libraries / compilers / HDLs?
-  
-### Micro-Benchmark Metrics
+### Benchmarking Circuit Implementations
 
-- What are impor
+#### Goal
+
+#### Task Description / Steps Involved
+
+#### Designated Tasks
+
+### Supporting New Libraries
+
+#### Goal
+
+#### Task Description / Steps Involved
+
+#### Designated Tasks
+
+### Benchmarking Recursion
+
+#### Goal
+
+#### Task Description / Steps Involved
+
+#### Designated Tasks
