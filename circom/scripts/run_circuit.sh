@@ -66,7 +66,7 @@ get_phase_stats() {
     ramtime="$(get_time_results $phaseTimeFile)"
     physical=1
     virtual=1
-    echo "circom,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtime,$physical,$virtual,$PROC"
+    echo "circom,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtime,$physical,$virtual,$PROC"
 
 }
 
@@ -99,7 +99,7 @@ if [ ! -z "$RES" ]; then
                      )
     arraylength=${#stages[@]}
 
-    echo "framework,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),nbPhysicalCores,nbLogicalCores,cpu" > ${RES}
+    echo "framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),nbPhysicalCores,nbLogicalCores,cpu" > ${RES}
     for (( i=0; i<${arraylength}; i++ ));
     do
       echo "$(get_phase_stats ${stages[$i]} ${times[$i]})" >> ${RES}
