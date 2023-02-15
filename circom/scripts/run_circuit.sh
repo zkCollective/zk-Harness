@@ -54,14 +54,19 @@ get_time_results() {
     timeRes=$1
     ram=$(grep maximum ${timeRes} | xargs | cut -d " " -f1 | awk '{$1/=1024;printf "%d\n",$1}')
     realTime=$(grep real ${timeRes} | xargs | cut -d " " -f1)
-    echo "$ram,$realTime"
+    realTime=${realTime::${#realTime}-1}
+    milisecs=$(echo "$realTime * 1000" | bc)
+    milisecs=${milisecs::${#milisecs}-3}
+    echo "$ram,$milisecs"
 }
 
 get_phase_stats() {
     phase=$1
     phaseTimeFile=$2
     ramtime="$(get_time_results $phaseTimeFile)"
-    echo "groth16,bn128,$phase,$nbConstraints,$nbIntermediateSignals,$nbPrivateInputSignals,$nbPublicInputSignals,-,$ramtime,$PROC"
+    physical=1
+    virtual=1
+    echo "circom,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtime,$physical,$virtual,$PROC"
 
 }
 
@@ -94,7 +99,7 @@ if [ ! -z "$RES" ]; then
                      )
     arraylength=${#stages[@]}
 
-    echo "backend,curve,algorithm,nbConstraints,nbInternal,nbSecret,nbPublic,nbCoefficients(?),ram(mb),time(ms),cpu" > ${RES}
+    echo "framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),nbPhysicalCores,nbLogicalCores,cpu" > ${RES}
     for (( i=0; i<${arraylength}; i++ ));
     do
       echo "$(get_phase_stats ${stages[$i]} ${times[$i]})" >> ${RES}

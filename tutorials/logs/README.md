@@ -30,6 +30,7 @@ In the following sections, we describe the columns in the CSV file for each benc
 The following information is recorded for each field arithmetic benchmark:
 
 * Framework: the name of the framework (e.g., gnark)
+* Category: the category of the benchmark (i.e., arithmetic)
 * Field: the benchmarked field (e.g., Native)
 * p: the order of the field
 * Operation: the operation performed
@@ -44,6 +45,7 @@ The following information is recorded for each field arithmetic benchmark:
 The following information is recorded for each elliptic curve group operation benchmark:
 
 * Framework: the name of the framework (e.g., gnark)
+* Category: the category of the benchmark (i.e., ec)
 * Curve: the benchmarked curve
 * Operation: the operation performed -- MSM, FFT/NTT, Pairing
 * Input: file path of the input used 
@@ -57,6 +59,7 @@ The following information is recorded for each elliptic curve group operation be
 The following information is recorded for each circuit benchmark:
 
 * Framework: the name of the framework (e.g., gnark)
+* Category: the category of the benchmark (i.e., circuit)
 * Backend: the backend used (e.g., groth16)
 * Curve: the curve used (e.g., bn256)
 * Circuit: the circuit being run
