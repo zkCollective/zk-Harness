@@ -58,7 +58,6 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		runtime.ReadMemStats(&m)
 
 		_, secret, public := ccs.GetNbVariables()
-		// TODO - Input Path is currently placeholder
 		bData := util.BenchData{
 			Framework:         "gnark",
 			Category:          "circuit",

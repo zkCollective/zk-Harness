@@ -9,17 +9,7 @@ from collections import namedtuple
 
 def build_command_gnark(payload):
     """
-    Build the command to execute gnark for the given payload of type "circuit".
-    
-    Args:
-    - payload: A namedtuple containing the following fields:
-        - backend (str or list): The name of the backend to use or a list of names of backends to use.
-        - curves (str or list): The name of the curve to use or a list of names of curves to use.
-        - circuit (str): The name of the circuit to use.
-        - algo (str or list): The name of the algorithm to use or a list of names of algorithms to use.
-    
-    Returns:
-    - command (str): A string containing the command to execute gnark with the given payload.
+    Build the command to invoke the gnark ZKP-framework given the payload
     """
 
     # Get the absolute path to the gnark directory
@@ -43,13 +33,10 @@ def build_command_gnark(payload):
 
 
 def default_case():
-    """
-    Raise a ValueError with the message "Framework not integrated into the benchmarking framework!".
-    """
     raise ValueError("Framework not integrated into the benchmarking framework!")
 
 
-# List of implemented projects in the zk-Harness
+# List ZKP-frameworks in the zk-Harness
 projects = {
     "gnark":    build_command_gnark
     # "circom":   circom_processing
@@ -59,36 +46,15 @@ projects = {
 def build_command(project, payload):
     """
     Build the command to execute the given project with the given payload.
-    
-    Args:
-    - project (str): The name of the project to execute.
-    - payload: A namedtuple containing the following fields:
-        - backend (str or list): The name of the backend to use or a list of names of backends to use.
-        - curves (str or list): The name of the curve to use or a list of names of curves to use.
-        - circuit (str): The name of the circuit to use.
-        - algo (str or list): The name of the algorithm to use or a list of names of algorithms to use.
-    
-    Returns:
-    - command (str): A string containing the command to execute the given project with the given payload.
+    Input: project (e.g. gnark) + payload (config.json)
     """
     commands = projects.get(project, default_case)(payload)
     return commands
 
 
-def get_payload(config):
+def get_circuit_payload(config):
     """
-    Extract the relevant fields from the given configuration data and return them as a named tuple.
-    
-    Args:
-    - config: A dictionary containing the configuration data.
-    
-    Returns:
-    - payload (namedtuple): A namedtuple containing the following fields:
-        - backend (str or list): The name of the backend to use or a list of names of backends to use.
-        - curves (str or list): The name of the curve to use or a list of names of curves to use.
-        - circuit (str): The name of the circuit to use.
-        - algo (str or list): The name of the
-        algorithm to use or a list of names of algorithms to use.
+    Extract the payload for category "circuit" given a config.json
     """
     # Extract the relevant fields from the configuration data
     backend = config['payload']['backend']

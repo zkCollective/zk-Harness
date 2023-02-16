@@ -1,7 +1,7 @@
 {
     "project": "gnark",
     "project_url": "https://github.com/ConsenSys/gnark",
-    "mode": "circuit",
+    "category": "circuit",
     "payload": {
         "backend": [
             "groth16",
