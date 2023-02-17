@@ -71,7 +71,8 @@ The following information is recorded for each circuit benchmark:
 * Ram: memory consumed in bytes
 * Time: elapsed time in milliseconds
 * ProofSize: the size of the proof -- empty value when Operation != proving
-* nbCores: number of cores used
+* nbPhysicalCores: number of physical cores used
+* nbLogicalCores: number of logical cores used
 * Machine: the machine used for benchmarking
 
 ### Recursion
