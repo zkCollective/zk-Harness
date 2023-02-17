@@ -33,9 +33,25 @@ The category for which the zk-Harness should benchmark a ZKP-framework. Supports
 
 #### ``payload`` specification for ``mode``==``arithmetic``
 
-```diff
-- TODO - Specify payload for arithmetic mode
-```
+##### ``operation``
+
+##### ``fields``
+
+``fields`` specifies the fields that should be benchmarked. The current values are supported for the different ZKP-frameworks:
+
+- ``gnark`` - Benchmarks are executed over the subgroup of prime order ``r`` of the based field F_p.
+  - ``bn254``, ``bls12_381``, ``bls12_377``, ``bls24_315``, ``bw6_633``, ``bw6_761``
+
+##### ``operations``
+
+``operations`` specifies the operations that should be benchmarkes. The current values should be supported by a newly added ZKP-framework:
+
+- ``Add`` (Addition)
+- ``Sub`` (Subtraction)
+- ``Mul`` (Multiplication)
+- ``Div`` (Division)
+- ``Exp`` (Modular Exponentiation)
+
 
 #### ``payload`` specification for ``mode``==``curve_operation``
 

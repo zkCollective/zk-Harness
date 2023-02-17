@@ -12,7 +12,7 @@
         ], 
         "circuits": {
             "cubic": {
-                "input_path": "./input/circuit/cubic"
+                "input_path": "_input/circuit/cubic"
             }
         },
         "algorithm": [

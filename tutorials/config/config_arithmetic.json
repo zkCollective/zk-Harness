@@ -1,0 +1,32 @@
+{
+    "project": "gnark",
+    "project_url": "https://github.com/ConsenSys/gnark",
+    "mode": "arithmetic",
+    "payload": {
+        "fields": [
+            "bn254",
+            "bls12_381",
+            "bls12_377",
+            "bls24_315",
+            "bw6_633",
+            "bw6_761"
+        ], 
+        "operations": {
+            "Add": {
+                "input_path": "_input/arithmetic/add"
+            },
+            "Sub": {
+                "input_path": "_input/arithmetic/sub"
+            },
+            "Mul": {
+                "input_path": "_input/arithmetic/mul"
+            },
+            "Div": {
+                "input_path": "_input/arithmetic/div"
+            },
+            "Exp": {
+                "input_path": "_input/arithmetic/exp"
+            }
+        }
+    }    
+}
