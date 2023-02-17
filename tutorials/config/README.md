@@ -34,20 +34,20 @@ The category for which the zk-Harness should benchmark a ZKP-framework. Supports
 - ``payload`` specification for ``mode``==``arithmetic``
   - ``fields``
 
-  ``fields`` specifies the fields that should be benchmarked. The current values are supported for the different ZKP-frameworks:
+    ``fields`` specifies the fields that should be benchmarked. The current values are supported for the different ZKP-frameworks:
 
   - ``gnark`` - Benchmarks are executed over the subgroup of prime order ``r`` of the based field F_p.
     - ``bn254``, ``bls12_381``, ``bls12_377``, ``bls24_315``, ``bw6_633``, ``bw6_761``
 
   - ``operations``
 
-  ``operations`` specifies the operations that should be benchmarkes. The current values should be supported by a newly added ZKP-framework:
+    ``operations`` specifies the operations that should be benchmarkes. The current values should be supported by a newly added ZKP-framework:
 
-  - ``Add`` (Addition)
-  - ``Sub`` (Subtraction)
-  - ``Mul`` (Multiplication)
-  - ``Div`` (Division)
-  - ``Exp`` (Modular Exponentiation)
+    - ``Add`` (Addition)
+    - ``Sub`` (Subtraction)
+    - ``Mul`` (Multiplication)
+    - ``Div`` (Division)
+    - ``Exp`` (Modular Exponentiation)
 
 - ``payload`` specification for ``mode``==``curve_operation``
 
@@ -58,27 +58,27 @@ The category for which the zk-Harness should benchmark a ZKP-framework. Supports
 - ``payload`` specification for ``mode``==``circuit``
   - ``backend``
 
-  The backend algorithm(s) to use for proving the specified circuit(s).
+    The backend algorithm(s) to use for proving the specified circuit(s).
 
   - ``curves``
 
-  The curve(s) for which the ZKP-framework should be benchmarked.
+    The curve(s) for which the ZKP-framework should be benchmarked.
 
   - ``circuits``
 
-  The name of the circuit to benchmark. The circuit name used as an input here should be equivalent to the name of the file stored in ``<framework>/circuits/X/<circuit_name>.<extension>``.
-  Equivalent circuits across frameworks should have the same naming scheme for ease of comparison.
+    The name of the circuit to benchmark. The circuit name used as an input here should be equivalent to the name of the file stored in ``<framework>/circuits/X/<circuit_name>.<extension>``.
+    Equivalent circuits across frameworks should have the same naming scheme for ease of comparison.
 
-  If a new circuit is added, which does not yet exist in any framework, one should create a new input specification in the ``/_input/<circuit_name>/input_<circuit_name>.json``.
+    If a new circuit is added, which does not yet exist in any framework, one should create a new input specification in the ``/_input/<circuit_name>/input_<circuit_name>.json``.
 
   - ``algorithm``
 
-  The algorithm to execute.
-  Valid algorithms to execute in a given framework are currently:
+    The algorithm to execute.
+    Valid algorithms to execute in a given framework are currently:
 
-  - ``compile``
-  - ``setup``
-  - ``prove``
-  - ``verify``
+    - ``compile``
+    - ``setup``
+    - ``prove``
+    - ``verify``
 
-  If a given algorithm is not specified for the configured framework, the execution of ``make config=/path/to/config.json`` will fail.
+    If a given algorithm is not specified for the configured framework, the execution of ``make config=/path/to/config.json`` will fail.
