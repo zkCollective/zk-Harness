@@ -28,6 +28,7 @@ func Execute() {
 }
 
 var (
+	// Variables Circuit
 	fCircuit     *string
 	fCircuitSize *int
 	fAlgo        *string
@@ -39,6 +40,7 @@ var (
 
 	// Variables Arithmetic
 	fOperation *string
+	fOrder     *string
 )
 
 var (
@@ -51,16 +53,6 @@ func init() {
 
 	fInputPath = rootCmd.PersistentFlags().String("input", "none", "input path to the dedicated input")
 	rootCmd.MarkPersistentFlagRequired("input")
-
-	// fCircuit = rootCmd.PersistentFlags().String("circuit", "expo", "name of the circuit to use")
-	// fCircuitSize = rootCmd.PersistentFlags().Int("size", 10000, "size of the circuit, parameter to circuit constructor")
-	// fCount = rootCmd.PersistentFlags().Int("count", 2, "bench count (time is averaged on number of executions)")
-	// fAlgo = rootCmd.PersistentFlags().String("algo", "prove", "name of the algorithm to benchmark. must be compile, setup, prove or verify")
-	// fProfile = rootCmd.PersistentFlags().String("profile", "none", "type of profile. must be none, trace, cpu or mem")
-	// fCurve = rootCmd.PersistentFlags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
-	// fFileType = rootCmd.PersistentFlags().String("filetype", "csv", "Type of file to output for benchmarks")
-	// fInputPath = rootCmd.PersistentFlags().String("input", "none", "input path to the dedicated input")
-	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
