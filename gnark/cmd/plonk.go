@@ -19,8 +19,10 @@ import (
 	"fmt"
 	"os"
 	"runtime"
+	"strings"
 	"time"
 
+	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/plonk"
 	"github.com/consensys/gnark/constraint"
 	"github.com/consensys/gnark/frontend"
@@ -43,8 +45,6 @@ func runPlonk(cmd *cobra.Command, args []string) {
 	var filename = "../benchmarks/gnark/gnark_" +
 		"plonk" + "_" +
 		*fCircuit + "." +
-		// *fAlgo + "_" +
-		// *fCurve + "." +
 		*fFileType
 
 	if err := parseFlags(); err != nil {
@@ -59,7 +59,7 @@ func runPlonk(cmd *cobra.Command, args []string) {
 		runtime.ReadMemStats(&m)
 
 		_, secret, public := ccs.GetNbVariables()
-		bData := util.BenchData{
+		bData := util.BenchDataCircuit{
 			Framework:         "gnark",
 			Category:          "circuit",
 			Backend:           "plonk",
@@ -169,15 +169,21 @@ func runPlonk(cmd *cobra.Command, args []string) {
 }
 
 func init() {
+	// Here the commands for the "circuit" category with Plonk are defined
+
+	_curves := ecc.Implemented()
+	curves := make([]string, len(_curves))
+	for i := 0; i < len(_curves); i++ {
+		curves[i] = strings.ToLower(_curves[i].String())
+	}
+
+	fCircuit = plonkCmd.Flags().String("circuit", "expo", "name of the circuit to use")
+	fCircuitSize = plonkCmd.Flags().Int("size", 10000, "size of the circuit, parameter to circuit constructor")
+	fCount = plonkCmd.Flags().Int("count", 2, "bench count (time is averaged on number of executions)")
+	fAlgo = plonkCmd.Flags().String("algo", "prove", "name of the algorithm to benchmark. must be compile, setup, prove or verify")
+	fProfile = plonkCmd.Flags().String("profile", "none", "type of profile. must be none, trace, cpu or mem")
+	fCurve = plonkCmd.Flags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
+	fFileType = plonkCmd.Flags().String("filetype", "csv", "Type of file to output for benchmarks")
+
 	rootCmd.AddCommand(plonkCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// plonkCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// plonkCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

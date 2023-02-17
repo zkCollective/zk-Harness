@@ -19,8 +19,10 @@ import (
 	"fmt"
 	"os"
 	"runtime"
+	"strings"
 	"time"
 
+	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/consensys/gnark/constraint"
 	"github.com/consensys/gnark/frontend"
@@ -42,8 +44,6 @@ func runGroth16(cmd *cobra.Command, args []string) {
 	var filename = "../benchmarks/gnark/gnark_" +
 		"groth16" + "_" +
 		*fCircuit + "." +
-		// *fAlgo + "_" +
-		// *fCurve + "." +
 		*fFileType
 
 	if err := parseFlags(); err != nil {
@@ -58,7 +58,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		runtime.ReadMemStats(&m)
 
 		_, secret, public := ccs.GetNbVariables()
-		bData := util.BenchData{
+		bData := util.BenchDataCircuit{
 			Framework:         "gnark",
 			Category:          "circuit",
 			Backend:           "groth16",
@@ -171,6 +171,21 @@ func assertNoError(err error) {
 }
 
 func init() {
-	rootCmd.AddCommand(groth16Cmd)
+	// Here the commands for the "circuit" category with Groth16 are defined
 
+	_curves := ecc.Implemented()
+	curves := make([]string, len(_curves))
+	for i := 0; i < len(_curves); i++ {
+		curves[i] = strings.ToLower(_curves[i].String())
+	}
+
+	fCircuit = groth16Cmd.Flags().String("circuit", "expo", "name of the circuit to use")
+	fCircuitSize = groth16Cmd.Flags().Int("size", 10000, "size of the circuit, parameter to circuit constructor")
+	fCount = groth16Cmd.Flags().Int("count", 2, "bench count (time is averaged on number of executions)")
+	fAlgo = groth16Cmd.Flags().String("algo", "prove", "name of the algorithm to benchmark. must be compile, setup, prove or verify")
+	fProfile = groth16Cmd.Flags().String("profile", "none", "type of profile. must be none, trace, cpu or mem")
+	fCurve = groth16Cmd.Flags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
+	fFileType = groth16Cmd.Flags().String("filetype", "csv", "Type of file to output for benchmarks")
+
+	rootCmd.AddCommand(groth16Cmd)
 }

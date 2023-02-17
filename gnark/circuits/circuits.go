@@ -26,17 +26,15 @@ type BenchCircuit interface {
 	Witness(size int, curveID ecc.ID, name string, path string) witness.Witness
 }
 
-type TemplateCircuit struct {
-	X frontend.Variable
-	Y frontend.Variable `gnark:",public"`
-}
-
 func init() {
 	BenchCircuits = make(map[string]BenchCircuit)
+
+	// Toy Circuits
 	BenchCircuits["cubic"] = &defaultCircuit{}
 	BenchCircuits["expo"] = &defaultCircuit{}
 	BenchCircuits["exponentiate"] = &defaultCircuit{}
 
+	// Hashes
 	BenchCircuits["mimc"] = &defaultCircuit{}
 }
 

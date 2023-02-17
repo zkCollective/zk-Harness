@@ -8,7 +8,7 @@ import (
 )
 
 // WriteData writes the data to a file in either CSV or JSON format, based on the file format specified.
-func WriteData(fileFormat string, data BenchData, filename ...string) error {
+func WriteData(fileFormat string, data interface{}, filename ...string) error {
 
 	var writer *csv.Writer
 	var jsonEncoder *json.Encoder
@@ -50,18 +50,20 @@ func WriteData(fileFormat string, data BenchData, filename ...string) error {
 	return err
 }
 
-func writeDataToCSV(exists bool, data BenchData, writer *csv.Writer) error {
+func writeDataToCSV(exists bool, data interface{}, writer *csv.Writer) error {
 	if exists == false {
-		writer.Write(data.Headers())
-		writer.Write(data.Values())
+		if headers, ok := data.(HeadersProvider); ok {
+			writer.Write(headers.Headers())
+		}
+		writer.Write(data.(ValuesProvider).Values())
 	} else {
-		writer.Write(data.Values())
+		writer.Write(data.(ValuesProvider).Values())
 	}
 	writer.Flush()
 	return nil
 }
 
-func writeDataToJSON(data BenchData, encoder *json.Encoder) error {
+func writeDataToJSON(data interface{}, encoder *json.Encoder) error {
 	// TODO
 	return nil
 }

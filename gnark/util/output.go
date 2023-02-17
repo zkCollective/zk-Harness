@@ -6,7 +6,15 @@ import (
 	. "github.com/klauspost/cpuid/v2"
 )
 
-type BenchData struct {
+type HeadersProvider interface {
+	Headers() []string
+}
+
+type ValuesProvider interface {
+	Values() []string
+}
+
+type BenchDataCircuit struct {
 	Framework         string
 	Category          string
 	Backend           string
@@ -19,62 +27,59 @@ type BenchData struct {
 	NbPublicVariables int
 	MaxRAM            uint64
 	RunTime           int64
-
-	// Currently removed to fit log structure:
-	// NbInternalVariables int
-	// NbCoefficients      int
-	// Throughput          int
-
-	// CPU             info
-	// NbPhysicalCores int
-	// ThreadsPerCore  int
-	// LogicalCores    int
-	// CachelineBytes  int
-	// L1DataBytes     int
-	// L1InstrBytes    int
-	// L2DataBytes     int
-	// L3DataBytes     int
-	// Frequency       int
-	// SupportsADX     int
-	// CPUName         string
 }
 
-func (bData BenchData) Headers() []string {
+func (bDataCirc BenchDataCircuit) Headers() []string {
 	return []string{"framework", "category", "backend", "curve", "circuit", "input", "operation", "nbConstraints", "nbSecret", "nbPublic", "ram(mb)", "time(ms)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
 }
 
-func (bData BenchData) Values() []string {
-
+func (bDataCirc BenchDataCircuit) Values() []string {
 	return []string{
-		bData.Framework,
-		bData.Category,
-		bData.Backend,
-		bData.Curve,
-		bData.Circuit,
-		bData.Input,
-		bData.Operation,
-		strconv.Itoa(int(bData.NbConstraints)),
-		strconv.Itoa(int(bData.NbSecretVariables)),
-		strconv.Itoa(int(bData.NbPublicVariables)),
-		strconv.Itoa(int(bData.MaxRAM)),
-		strconv.Itoa(int(bData.RunTime)),
+		bDataCirc.Framework,
+		bDataCirc.Category,
+		bDataCirc.Backend,
+		bDataCirc.Curve,
+		bDataCirc.Circuit,
+		bDataCirc.Input,
+		bDataCirc.Operation,
+		strconv.Itoa(int(bDataCirc.NbConstraints)),
+		strconv.Itoa(int(bDataCirc.NbSecretVariables)),
+		strconv.Itoa(int(bDataCirc.NbPublicVariables)),
+		strconv.Itoa(int(bDataCirc.MaxRAM)),
+		strconv.Itoa(int(bDataCirc.RunTime)),
 		strconv.Itoa(CPU.PhysicalCores),
 		strconv.Itoa(CPU.LogicalCores),
 		CPU.BrandName,
+	}
+}
 
-		// strconv.Itoa(int(bData.NbInternalVariables)),
-		// strconv.Itoa(bData.NbCoefficients),
-		// strconv.Itoa(bData.Throughput),
-		// strconv.Itoa(bData.Throughput / CPU.LogicalCores),
+type BenchDataArithmetic struct {
+	Framework string
+	Category  string
+	Field     string // native / non-native
+	Order     int
+	Operation string
+	Input     string
+	MaxRAM    uint64
+	RunTime   int64
+}
 
-		// strconv.Itoa(CPU.ThreadsPerCore),
-		// strconv.Itoa(CPU.CacheLine),
-		// strconv.Itoa(CPU.Cache.L1D),
-		// strconv.Itoa(CPU.Cache.L1I),
-		// strconv.Itoa(CPU.Cache.L2),
-		// strconv.Itoa(CPU.Cache.L3),
-		// strconv.Itoa(int(CPU.Hz / 1000000)),
-		// fmt.Sprintf("%v", CPU.Supports(ADX) && CPU.Supports(BMI2)),
-		// fmt.Sprintf("%v", amd64_adx),
+func (bDataArith BenchDataArithmetic) Headers() []string {
+	return []string{"framework", "category", "field", "p(bitlength)", "operation", "input", "ram(mb)", "time(ns)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
+}
+
+func (bDataArith BenchDataArithmetic) Values() []string {
+	return []string{
+		bDataArith.Framework,
+		bDataArith.Category,
+		bDataArith.Field,
+		strconv.Itoa(int(bDataArith.Order)),
+		bDataArith.Operation,
+		bDataArith.Input,
+		strconv.Itoa(int(bDataArith.MaxRAM)),
+		strconv.Itoa(int(bDataArith.RunTime)),
+		strconv.Itoa(CPU.PhysicalCores),
+		strconv.Itoa(CPU.LogicalCores),
+		CPU.BrandName,
 	}
 }

@@ -13,3 +13,10 @@ test-toy:
 
 test-prf:
 	go test $(directory)/circuits/prf/mimc
+
+bench-arithmetic-test:
+	./gnark arithmetic --input="none" --operation="add"
+	./gnark arithmetic --input="none" --operation="sub"
+	./gnark arithmetic --input="none" --operation="mul"
+	./gnark arithmetic --input="none" --operation="div"
+	./gnark arithmetic --input="none" --operation="exp"

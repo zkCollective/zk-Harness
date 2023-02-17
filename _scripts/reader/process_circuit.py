@@ -24,7 +24,6 @@ def build_command_gnark(payload):
 
         # Join the commands into a single string
         command = "".join(commands)
-
         # Prepend the command to change the working directory to the gnark directory
         command = f"cd {gnark_dir}; {command}"
     else:
