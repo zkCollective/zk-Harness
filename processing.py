@@ -112,6 +112,10 @@ class Result:
 
     def get_circuit_rows_as_df(self):
         headers = CircuitLogRow.get_headers()
+        headers.remove("category")
+        # TODO Merge rows that measure the exact same thing in a single row
+        # by taking the mean to all related values
+        # TODO should we keep a counter of the number of benchs?
         rows = [
             r.row for r in self.rows if isinstance(r, CircuitLogRow)
         ]
@@ -123,25 +127,55 @@ class LogRow:
         self.framework = framework
 
     @staticmethod
-    def new(args):
-        if args[1] == "arithmetic":
-            raise NotImplementedError
-        if args[1] == "ec":
-            raise NotImplementedError
-        if args[1] == "circuit":
-            return CircuitLogRow(*args)
-        raise Exception("category (column 2) should be arithmetic, ec, or circuit")
+    def new_rows(reader, headers):
+        """Read all lines and return a list with parsed rows.
+        """
+        rows = []
+        cls = None
+        for row in reader:
+            if cls is None:
+                if row[1] == "arithmetic":
+                    raise NotImplementedError("Arithmetic not implemented")
+                elif row[1] == "ec":
+                    raise NotImplementedError("EC not implemented")
+                elif row[1] == "circuit":
+                    cls = CircuitLogRow
+                else:
+                    raise Exception("category (column 2) should be arithmetic, ec, or circuit")
+                # Headers mapping
+                def mapping(s):
+                    mappings = [
+                        ("input", "input_path"),
+                        ("nbConstraints", "nb_constraints"),
+                        ("nbSecret", "nb_secret"),
+                        ("nbPublic", "nb_public"),
+                        ("nbPhysicalCores", "nb_physical_cores"),
+                        ("nbLogicalCores", "nb_logical_cores"),
+                        ("ram(mb)", "ram"),
+                        ("time(ms)", "time")
+                    ]
+                    for i, t in mappings:
+                        s = s.replace(i, t)
+                    return s
+                # Check headers
+                headers = list(map(mapping, headers))
+                if headers != cls.get_headers():
+                    raise Exception("Wrong headers:\nExpected: {}\nFound: {}".format(
+                        cls.get_headers(), headers
+                    ))
+            rows.append(cls(*row))
+        return rows
 
     @classmethod
     def get_headers(cls):
         header = inspect.getfullargspec(cls.__init__).args
-        return list(filter(lambda x: x not in ('self', '_category'), header))
+        return list(filter(lambda x: x != 'self', header))
 
 
 class CircuitLogRow(LogRow):
     # We need catrgory to easily verify that we pass the correct number of args.
     def __init__(
-        self, framework, _category, backend, curve, circuit, input_path, operation,
+        self, framework, category, backend, curve, circuit, input_path, operation,
         nb_constraints, nb_secret, nb_public, ram, time, nb_physical_cores,
         nb_logical_cores, cpu
     ):
@@ -168,9 +202,9 @@ def parse_logs(log_files):
                     raise Exception(
                         "First row should contain the header and first column should be framework"
                     )
-                for row in reader:
-                    res.append(LogRow.new(row))
-        except Exception as e:
+                # Check if the given headers match the expected headers
+                res.extend(LogRow.new_rows(reader, header))
+        except NotImplementedError as e:
             logging.error(f"Cannot parse file: {lf}")
             print("Exception:")
             print(e)
