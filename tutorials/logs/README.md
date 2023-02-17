@@ -31,12 +31,12 @@ The following information is recorded for each field arithmetic benchmark:
 
 * Framework: the name of the framework (e.g., gnark)
 * Category: the category of the benchmark (i.e., arithmetic)
-* Field: the benchmarked field (e.g., Native)
+* Field: the benchmarked field (e.g., native)
 * p: the order of the field
 * Operation: the operation performed
 * Input: file path of the input used 
 * Ram: memory consumed in bytes
-* Time: elapsed time in milliseconds
+* Time: elapsed time in nanoseconds
 * nbCores: number of cores used
 * Machine: the machine used for benchmarking
 
@@ -64,7 +64,7 @@ The following information is recorded for each circuit benchmark:
 * Curve: the curve used (e.g., bn256)
 * Circuit: the circuit being run
 * Input: file path of the input used 
-* Operation: the step being measured -- compile, witness, setup, proving, verifying 
+* Operation: the step being measured -- compile, witness, setup, prove, verify 
 * nbConstraints: the number of constraints in the circuit
 * nbSecret: number of secret inputs
 * nbPublic: number of public inputs
