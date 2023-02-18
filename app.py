@@ -23,7 +23,7 @@ View Source on <a href="{}">Github</a>
 LOGS = "benchmarks"
 
 
-circuits_df = analyse_logs(LOGS, logging.CRITICAL)
+circuits_df, arithmetics_df = analyse_logs(LOGS, logging.CRITICAL)
 
 app = Dash(__name__)
 
@@ -31,6 +31,10 @@ curves = list(set(circuits_df['curve']))
 backends = list(set(circuits_df['backend']))
 frameworks = list(set(circuits_df['framework']))
 circuits = list(set(circuits_df['circuit']))
+
+
+frameworks_arithmetics = list(set(arithmetics_df['framework']))
+operation_arithmetics = list(set(arithmetics_df['operation']))
 
 app.layout = html.Div([
     html.H4('ZKP Benchmarking'),
@@ -68,10 +72,29 @@ app.layout = html.Div([
                 value='time',
                 multi=False
             ),
-            dcc.Graph(id="graph"),
+            dcc.Graph(id="circuits-box-graph"),
         ]),
         dcc.Tab(label='Arithmetics Benchmarks', children=[
-            
+            html.Br(),
+            dcc.Dropdown(
+                id="frameworks-arithmetics-dropdown",
+                options=frameworks_arithmetics,
+                value=frameworks_arithmetics,
+                multi=True
+            ),
+            dcc.Dropdown(
+                id="opetation-arithmetics-dropdown",
+                options=operation_arithmetics,
+                value=operation_arithmetics,
+                multi=True
+            ),
+            dcc.Dropdown(
+                id="y-axis-line-dropdown",
+                options=['time', 'ram'],
+                value='time',
+                multi=False
+            ),
+            dcc.Graph(id="arithmetics-line-graph"),
         ]),
         dcc.Tab(label='Elliptic Curves Benchmarks', children=[
             
@@ -83,7 +106,7 @@ app.layout = html.Div([
 
 
 @app.callback(
-    Output("graph", "figure"), 
+    Output("circuits-box-graph", "figure"), 
     Input("curves-dropdown", "value"),
     Input("backends-dropdown", "value"),
     Input("frameworks-dropdown", "value"),
@@ -101,6 +124,23 @@ def update_bar_chart(curves_options, backends_options, framework_options, circui
                           facet_col="framework", facet_row="backend",
                           barmode="group",
                  )
+    return fig
+
+@app.callback(
+    Output("arithmetics-line-graph", "figure"),
+    Input("frameworks-arithmetics-dropdown", "value"),
+    Input("opetation-arithmetics-dropdown", "value"),
+    Input("y-axis-line-dropdown", "value"))
+def update_arithmetics_line_chart(framework_options, operations_options, y_axis):
+    ndf = arithmetics_df[
+        (arithmetics_df['framework'].isin(framework_options)) &
+        (arithmetics_df['operation'].isin(operations_options)) &
+        (arithmetics_df['field'] == 'native')
+    ]
+    ndf = ndf.sort_values('p')
+    fig = px.line(ndf, x='p', y=y_axis, color='operation',
+                           facet_col="framework"
+                )
     return fig
 
 
