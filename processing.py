@@ -43,22 +43,23 @@ class Result:
     def __init__(self, rows):
         self.rows = rows
 
-    def get_circuit_rows_as_df(self):
+    def get_rows_as_df(self, cls):
         rows = []
-        headers = CircuitLogRow.get_headers()
+        headers = cls.get_headers()
         headers.remove("category")
         # TODO Merge rows that measure the exact same thing in a single row
         # by taking the mean to all related values
         # TODO should we keep a counter of the number of benchs?
         same_rows = defaultdict(list)
         for row in self.rows:
-            if isinstance(row, CircuitLogRow):
-                # If two rows have the same values for the following columns
+            # Get only rows of cls
+            if isinstance(row, cls):
+                # If two rows have the same values for the static columns
                 # then we should merge them.
                 sig = row.get_static_rows()
                 same_rows[sig].append(row)
         for v in same_rows.values():
-            row = v[0] if len(v) == 1 else CircuitLogRow.merge_rows(v)
+            row = v[0] if len(v) == 1 else cls.merge_rows(v)
             rows.append(row.get_row())
         return pd.DataFrame(rows, columns=headers)
 
@@ -76,7 +77,7 @@ class LogRow:
         for row in reader:
             if cls is None:
                 if row[1] == "arithmetic":
-                    raise NotImplementedError("Arithmetic not implemented")
+                    cls = ArithmeticLogRow
                 elif row[1] == "ec":
                     raise NotImplementedError("EC not implemented")
                 elif row[1] == "circuit":
@@ -93,7 +94,9 @@ class LogRow:
                         ("nbPhysicalCores", "nb_physical_cores"),
                         ("nbLogicalCores", "nb_logical_cores"),
                         ("ram(mb)", "ram"),
-                        ("time(ms)", "time")
+                        ("time(ms)", "time"),
+                        ("p(bitlength)", "p"),
+                        ("time(ns)", "time")
                     ]
                     for i, t in mappings:
                         s = s.replace(i, t)
@@ -122,10 +125,23 @@ class LogRow:
         raise NotImplementedError
 
     @classmethod
-    def merge_rows(cls):
+    def merge_rows(cls, rows):
         """Merge multiple rows by returning the mean value for each column
         that can be variable
         """
+        # TODO we can perform a sanity check to check if the non-variable values
+        # are the same across all rows.
+        time_values = []
+        ram_values = []
+        for row in rows:
+            time_values.append(row.time)
+            ram_values.append(row.ram)
+        time = int(sum(time_values)/len(time_values))
+        ram = int(sum(ram_values)/len(ram_values))
+        row = rows[0]
+        row.time = time
+        row.ram = ram
+        return row
 
 
 class CircuitLogRow(LogRow):
@@ -156,23 +172,32 @@ class CircuitLogRow(LogRow):
         return (f"{self.framework},{self.backend},{self.curve},{self.circuit},"
                 f"{self.input_path},{self.operation},{self.nb_constraints},"
                 f"{self.nb_secret},{self.nb_public},{self.nb_physical_cores},"
-                f"{self.nb_logical_cores}")
+                f"{self.nb_logical_cores},{self.cpu}")
 
-    @classmethod
-    def merge_rows(cls, rows):
-        # TODO we can perform a sanity check to check if the non-variable values
-        # are the same across all rows.
-        time_values = []
-        ram_values = []
-        for row in rows:
-            time_values.append(row.time)
-            ram_values.append(row.ram)
-        time = int(sum(time_values)/len(time_values))
-        ram = int(sum(ram_values)/len(ram_values))
-        row = rows[0]
-        row.time = time
-        row.ram = ram
-        return row
+
+class ArithmeticLogRow(LogRow):
+    # We need category to easily verify that we pass the correct number of args.
+    def __init__(
+        self, framework, category, field, p, operation, input_path, ram, time,
+        nb_physical_cores, nb_logical_cores, cpu
+    ):
+        super().__init__(framework)
+        # TODO sanity checks
+        # Check for caps
+        self.field =  field
+        self.p = p
+        self.operation = operation
+        self.input_path = input_path
+        self.ram = int(ram)
+        self.time = int(time)
+        self.nb_physical_cores = int(nb_physical_cores)
+        self.nb_logical_cores = int(nb_logical_cores)
+        self.cpu = cpu
+
+    def get_static_rows(self):
+        return (f"{self.framework},{self.field},{self.p},{self.operation},"
+                f"{self.input_path},{self.nb_physical_cores},"
+                f"{self.nb_logical_cores},{self.cpu}")
 
 
 def parse_logs(log_files):
@@ -232,8 +257,9 @@ def analyse_logs(logs, level=logging.INFO):
     logs = parse_logs(log_files)
 
     # Circuits analyses
-    circuits_df = logs.get_circuit_rows_as_df()
-    return circuits_df
+    circuits_df = logs.get_rows_as_df(CircuitLogRow)
+    arithmetics_df = logs.get_rows_as_df(ArithmeticLogRow)
+    return circuits_df, arithmetics_df
 
 
 def main():
