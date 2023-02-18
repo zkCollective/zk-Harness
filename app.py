@@ -34,37 +34,51 @@ circuits = list(set(circuits_df['circuit']))
 
 app.layout = html.Div([
     html.H4('ZKP Benchmarking'),
-    dcc.Dropdown(
-        id="curves-dropdown",
-        options=curves,
-        value=curves,
-        multi=True
-    ),
-    dcc.Dropdown(
-        id="backends-dropdown",
-        options=backends,
-        value=backends,
-        multi=True
-    ),
-    dcc.Dropdown(
-        id="frameworks-dropdown",
-        options=frameworks,
-        value=frameworks,
-        multi=True
-    ),
-    dcc.Dropdown(
-        id="circuit-dropdown",
-        options=circuits,
-        value='cubic',
-        multi=False
-    ),
-    dcc.Dropdown(
-        id="y-axis-dropdown",
-        options=['time', 'ram'],
-        value='time',
-        multi=False
-    ),
-    dcc.Graph(id="graph"),
+
+    dcc.Tabs([
+        dcc.Tab(label='Circuits Benchmarks', children=[
+            html.Br(),
+            dcc.Dropdown(
+                id="curves-dropdown",
+                options=curves,
+                value=curves,
+                multi=True
+            ),
+            dcc.Dropdown(
+                id="backends-dropdown",
+                options=backends,
+                value=backends,
+                multi=True
+            ),
+            dcc.Dropdown(
+                id="frameworks-dropdown",
+                options=frameworks,
+                value=frameworks,
+                multi=True
+            ),
+            dcc.Dropdown(
+                id="circuit-dropdown",
+                options=circuits,
+                value='cubic',
+                multi=False
+            ),
+            dcc.Dropdown(
+                id="y-axis-dropdown",
+                options=['time', 'ram'],
+                value='time',
+                multi=False
+            ),
+            dcc.Graph(id="graph"),
+        ]),
+        dcc.Tab(label='Arithmetics Benchmarks', children=[
+            
+        ]),
+        dcc.Tab(label='Elliptic Curves Benchmarks', children=[
+            
+        ]),
+    ]),
+
+
 ])
 
 
