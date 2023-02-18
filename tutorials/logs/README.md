@@ -29,51 +29,53 @@ In the following sections, we describe the columns in the CSV file for each benc
 
 The following information is recorded for each field arithmetic benchmark:
 
-* Framework: the name of the framework (e.g., gnark)
-* Category: the category of the benchmark (i.e., arithmetic)
-* Field: the benchmarked field (e.g., native)
+* framework: the name of the framework (e.g., gnark)
+* category: the category of the benchmark (i.e., arithmetic)
+* field: the benchmarked field (e.g., native)
 * p: the order of the field
-* Operation: the operation performed
+* operation: the operation performed
 * Input: file path of the input used 
-* Ram: memory consumed in bytes
-* Time: elapsed time in nanoseconds
-* nbCores: number of cores used
-* Machine: the machine used for benchmarking
+* ram: memory consumed in bytes
+* time: elapsed time in nanoseconds
+* nbPhysicalCores: number of physical cores used
+* nbLogicalCores: number of logical cores used
+* machine: the machine used for benchmarking
 
 ### Elliptic Curve Group Operations
 
 The following information is recorded for each elliptic curve group operation benchmark:
 
-* Framework: the name of the framework (e.g., gnark)
-* Category: the category of the benchmark (i.e., ec)
-* Curve: the benchmarked curve
-* Operation: the operation performed -- MSM, FFT/NTT, Pairing
-* Input: file path of the input used 
-* Ram: memory consumed in bytes
-* Time: elapsed time in milliseconds
-* nbCores: number of cores used
-* Machine: the machine used for benchmarking
+* framework: the name of the framework (e.g., gnark)
+* category: the category of the benchmark (i.e., ec)
+* curve: the benchmarked curve
+* operation: the operation performed -- MSM, FFT/NTT, Pairing
+* input: file path of the input used 
+* ram: memory consumed in bytes
+* time: elapsed time in milliseconds
+* nbPhysicalCores: number of physical cores used
+* nbLogicalCores: number of logical cores used
+* machine: the machine used for benchmarking
 
 ### Circuits
 
 The following information is recorded for each circuit benchmark:
 
-* Framework: the name of the framework (e.g., gnark)
-* Category: the category of the benchmark (i.e., circuit)
-* Backend: the backend used (e.g., groth16)
-* Curve: the curve used (e.g., bn256)
-* Circuit: the circuit being run
-* Input: file path of the input used 
-* Operation: the step being measured -- compile, witness, setup, prove, verify 
+* framework: the name of the framework (e.g., gnark)
+* category: the category of the benchmark (i.e., circuit)
+* backend: the backend used (e.g., groth16)
+* curve: the curve used (e.g., bn256)
+* circuit: the circuit being run
+* input: file path of the input used 
+* operation: the step being measured -- compile, witness, setup, prove, verify 
 * nbConstraints: the number of constraints in the circuit
 * nbSecret: number of secret inputs
 * nbPublic: number of public inputs
-* Ram: memory consumed in bytes
-* Time: elapsed time in milliseconds
-* ProofSize: the size of the proof -- empty value when Operation != proving
+* ram: memory consumed in bytes
+* time: elapsed time in milliseconds
+* proofSize: the size of the proof -- empty value when Operation != proving
 * nbPhysicalCores: number of physical cores used
 * nbLogicalCores: number of logical cores used
-* Machine: the machine used for benchmarking
+* machine: the machine used for benchmarking
 
 ### Recursion
 
