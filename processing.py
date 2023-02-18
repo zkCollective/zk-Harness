@@ -1,49 +1,28 @@
 #!/usr/bin/env python3
 """
-This script recursively reads the logs from a specific path and generates 
-a report with the results.
+This script recursively reads the logs from a specific path and produces 
+pandas dataframes for circuits, arithmetics, and elliptic curves logs.
 
 The script works as follows:
     1. Detects CSV files
     2. Parse logs from CSV files into LogRow objects
     3. Save the results to a Result object
     4. Retrieve pandas dataframes for each benchmark category
-    5. Perfom the following analyses per category:
-        A. Arithmetic
-        B. EC
-        C. Circuit 
-            i. 
 
 Deps:
-    pip install altair-viewer altair pandas matplotlib
+    pip install pandas 
 """
 import argparse
-from copy import deepcopy
 import logging
 import os
 import csv
 import inspect
-import sys
 
 from dataclasses import dataclass
+from collections import defaultdict
 
 import pandas as pd
-import matplotlib.pyplot as plt
-import altair as alt
-import datapane as dp
-import plotly.graph_objects as go
-import plotly.express as px
-import ipywidgets as widgets
 
-GITHUB_REPO = "https://github.com/XXX/YYY"
-HTML_HEADER = """
-<h1 style="text-align:center;font-family:Georgia;font-variant:small-caps;font-size: 70px;color:#0F1419;">
-ZKP Libraries Benchmarking
-</h1>
-<div><div style ="float:right;font-family: Courier New, monospace;">
-View Source on <a href="{}">Github</a>
-</div></div>
-""".format(GITHUB_REPO)
 
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s', 
@@ -60,65 +39,27 @@ class CircuitsResults:
     multiple_curves_barcharts: list
 
 
-def produce_html(output, stats_group, circuits_results):
-    app = dp.Report(
-            HTML_HEADER,
-            stats_group,
-            # FIXME
-            dp.Plot(circuits_results.multiple_curves_barcharts[0], responsive=True)
-    )
-    app.save(path = output,
-        formatting=dp.ReportFormatting(
-        bg_color="#EEE"
-    ))
-
-
-def analyze_circuits(df):
-    # General Statistics
-    unique_frameworks = df['framework'].unique()
-    unique_backends = df['backend'].unique()
-    unique_circuits = df['circuit'].unique()
-
-    # TODO FIXME
-    # Filter the dataframe to only include rows where framework = 'gnark', circuit = 'cubic', and backend = 'groth16'
-    gnark_cubic_groth16_df = df[(df['framework'] == 'gnark') & (df['circuit'] == 'cubic') & (df['backend'] == 'groth16')]
-
-    # Create a bar chart using Plotly
-    fig = go.Figure()
-    colors = ['blue', 'orange', 'green']
-    for i, op in enumerate(gnark_cubic_groth16_df['operation'].unique()):
-        curve_values = gnark_cubic_groth16_df[gnark_cubic_groth16_df['operation'] == op]['curve'].tolist()
-        time_values = gnark_cubic_groth16_df[gnark_cubic_groth16_df['operation'] == op]['time'].tolist()
-        fig.add_trace(go.Bar(x=curve_values,
-                             y=time_values,
-                             name=op,
-                             marker_color=colors[i]))
-    fig.update_layout(title='Time vs Curve for Gnark operations on Cubic circuit with Groth16 backend',
-                      xaxis_title='Curve',
-                      yaxis_title='Time',
-                      barmode='relative',
-                      bargap=0.1)
-    # For every framework supporting multiple curves, get a barchart to compare
-    # them
-    return CircuitsResults(
-        len(unique_frameworks), len(unique_backends), len(unique_circuits), 
-        [fig]
-    )
-
-
 class Result:
     def __init__(self, rows):
         self.rows = rows
 
     def get_circuit_rows_as_df(self):
+        rows = []
         headers = CircuitLogRow.get_headers()
         headers.remove("category")
         # TODO Merge rows that measure the exact same thing in a single row
         # by taking the mean to all related values
         # TODO should we keep a counter of the number of benchs?
-        rows = [
-            r.row for r in self.rows if isinstance(r, CircuitLogRow)
-        ]
+        same_rows = defaultdict(list)
+        for row in self.rows:
+            if isinstance(row, CircuitLogRow):
+                # If two rows have the same values for the following columns
+                # then we should merge them.
+                sig = row.get_static_rows()
+                same_rows[sig].append(row)
+        for v in same_rows.values():
+            row = v[0] if len(v) == 1 else CircuitLogRow.merge_rows(v)
+            rows.append(row.get_row())
         return pd.DataFrame(rows, columns=headers)
 
 
@@ -171,6 +112,21 @@ class LogRow:
         header = inspect.getfullargspec(cls.__init__).args
         return list(filter(lambda x: x != 'self', header))
 
+    def get_row(self):
+        return [getattr(self, h) for h in self.get_headers() if h != "category"]
+
+    def get_static_rows(self):
+        """Return the values that should remain same across all executions
+        in the same machine as string
+        """
+        raise NotImplementedError
+
+    @classmethod
+    def merge_rows(cls):
+        """Merge multiple rows by returning the mean value for each column
+        that can be variable
+        """
+
 
 class CircuitLogRow(LogRow):
     # We need catrgory to easily verify that we pass the correct number of args.
@@ -182,12 +138,41 @@ class CircuitLogRow(LogRow):
         super().__init__(framework)
         # TODO sanity checks
         # Check for caps
-        # The order should be the exact same order we use in parameters
-        self.row = [
-            framework, backend, curve, circuit, input_path, operation,
-            int(nb_constraints), int(nb_secret), int(nb_public), int(ram), 
-            int(time), int(nb_physical_cores), int(nb_logical_cores), cpu
-        ]
+        self.backend =  backend
+        self.curve = curve
+        self.circuit = circuit
+        self.input_path = input_path
+        self.operation = operation
+        self.nb_constraints = int(nb_constraints)
+        self.nb_secret = int(nb_secret)
+        self.nb_public = int(nb_public)
+        self.ram = int(ram)
+        self.time = int(time)
+        self.nb_physical_cores = int(nb_physical_cores)
+        self.nb_logical_cores = int(nb_logical_cores)
+        self.cpu = cpu
+
+    def get_static_rows(self):
+        return (f"{self.framework},{self.backend},{self.curve},{self.circuit},"
+                f"{self.input_path},{self.operation},{self.nb_constraints},"
+                f"{self.nb_secret},{self.nb_public},{self.nb_physical_cores},"
+                f"{self.nb_logical_cores}")
+
+    @classmethod
+    def merge_rows(cls, rows):
+        # TODO we can perform a sanity check to check if the non-variable values
+        # are the same across all rows.
+        time_values = []
+        ram_values = []
+        for row in rows:
+            time_values.append(row.time)
+            ram_values.append(row.ram)
+        time = int(sum(time_values)/len(time_values))
+        ram = int(sum(ram_values)/len(ram_values))
+        row = rows[0]
+        row.time = time
+        row.ram = ram
+        return row
 
 
 def parse_logs(log_files):
@@ -232,21 +217,14 @@ def parse_arguments():
     parser.add_argument(
         "logs", help="Path that contains the logs (it will search recursively)"
     )
-    parser.add_argument(
-        "-o",
-        "--output",
-        default="index.html",
-        help="Html file to save the report (default: index.html)"
-    )
     return parser.parse_args()
 
 
-def main():
-    args = parse_arguments()
-
+def analyse_logs(logs, level=logging.INFO):
+    logging.getLogger().setLevel(level)
     # Detect files
-    logging.info(f"Process {args.logs}")
-    log_files = detect_files_to_process(args.logs)
+    logging.info(f"Process {logs}")
+    log_files = detect_files_to_process(logs)
     logging.info(f"Files to process: {len(log_files)}")
 
     # Parse logs
@@ -255,16 +233,14 @@ def main():
 
     # Circuits analyses
     circuits_df = logs.get_circuit_rows_as_df()
-    circuits_results = analyze_circuits(circuits_df)
+    return circuits_df
 
-    stats_group = dp.Group(
-        dp.BigNumber(heading="ZKP Languages / Libraries", value=circuits_results.nr_zkp),
-        dp.BigNumber(heading="Nr. of Backends", value=circuits_results.nr_backends),
-        dp.BigNumber(heading="Nr. of Test Circuits", value=circuits_results.nr_circuits),
-        columns=3,
-    )
-    
-    produce_html(args.output, stats_group, circuits_results)
+
+def main():
+    args = parse_arguments()
+    # TODO print some stats
+    analyse_logs(args.logs)
+
 
 if __name__ == "__main__":
     main()
