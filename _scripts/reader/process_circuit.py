@@ -20,7 +20,7 @@ CIRCOM_CIRCUITS_DIR = os.path.join(CIRCOM_DIR, "circuits", "benchmarks")
 CIRCOM_PTAU = os.path.join(CIRCOM_DIR, "phase1", "powersOfTau28_hez_final_16.ptau")
 
 
-def get_all_input_files(input_path):
+def get_all_input_files(input_path, abspath=False):
     """
     Given a input_path return the full path of the file or if it is a directory
     return the full paths of all JSON files in this directory
@@ -30,14 +30,14 @@ def get_all_input_files(input_path):
     if os.path.isfile(input_path):
         if not input_path.endswith(".json"):
             raise ValueError(f"Input: {input_path} is not a JSON file")
-        return [os.path.abspath(input_path)]
+        return [os.path.abspath(input_path)] if abspath else [input_path]
     # input_path is a directory
     files = []
     # NOTE this operation is not recursive 
     for f in os.listdir(input_path):
         file = os.path.join(input_path, f)
         if os.path.isfile(file) and file.endswith(".json"):
-            files.append(os.path.abspath(file))
+            files.append(os.path.abspath(file) if abspath else file)
     if len(files) == 0:
         raise ValueError(f"Input: no input file detected in {input_path}")
     return files
