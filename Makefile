@@ -19,7 +19,7 @@ benchmark-toy-circom:
 	$(info --------------------------------------------)
 	$(info ---------- CIRCOM TOY BENCHMARKS -----------)
 	$(info --------------------------------------------)
-	$(circom_script) $(circom_circuits)/cubic/circuit.circom $(circom_inputs)/cubic/input.json $(circom_ptau) $(circom_benchmarks_directory)/circom_cubic.csv; rm -rf tmp
+	python3 -m _scripts.reader --config _input/config/circom/config_all_toy.json  
 
 benchmark-toy-gnark:
 	$(info --------------------------------------------)
