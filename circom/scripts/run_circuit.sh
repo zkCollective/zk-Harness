@@ -1,22 +1,24 @@
 #!/bin/bash
 #
 # Compile, setup, prove, and verify a proof for a circom circuit.
+# If the .csv files already exist, then just append the results
 # TODO add C++ witness generation support
 # TODO try add PLONK and FFLONKsupport
 
-if [ $# -lt 3 ]; then
-    echo $0: usage: run_circuit.sh circuit.circom input.json powersOfTau.ptau results.csv tmp
+if [ $# -lt 5 ]; then
+    echo $0: usage: run_circuit.sh circuit.circom circuit_name input.json powersOfTau.ptau results.csv tmp
     exit 1
 fi
 
 CIRCUIT=$1
-CIRCUIT_NAME=${CIRCUIT##*/}
-CIRCUIT_NAME=${CIRCUIT_NAME%.circom}
-INPUT=$2
-TAU=$3
-RES=$4
-if [ ! -z "$5" ]; then
-    TMP=$5
+CIRCUIT_NAME=$2
+CIRCUIT_NAME_INT=${CIRCUIT##*/}
+CIRCUIT_NAME_INT=${CIRCUIT_NAME_INT%.circom}
+INPUT=$3
+TAU=$4
+RES=$5
+if [ ! -z "$6" ]; then
+    TMP=$6
 else
     TMP=tmp
 fi
@@ -27,18 +29,18 @@ rm -rf ${TMP} && mkdir ${TMP} && \
 echo ">>>Step 1: compiling the circuit" && \
 /usr/bin/time -h -l -o ${TMP}/compiler_times.txt circom ${CIRCUIT} --r1cs --wasm --sym --c --output ${TMP} | tee ${TMP}/circom_output && \
 echo ">>>Step 2: generating the witness JS" && \
-/usr/bin/time -h -l -o ${TMP}/witness_times.txt node  ${TMP}/${CIRCUIT_NAME}_js/generate_witness.js ${TMP}/${CIRCUIT_NAME}_js/${CIRCUIT_NAME}.wasm ${INPUT} ${TMP}/witness.wtns && \
+/usr/bin/time -h -l -o ${TMP}/witness_times.txt node  ${TMP}/${CIRCUIT_NAME_INT}_js/generate_witness.js ${TMP}/${CIRCUIT_NAME_INT}_js/${CIRCUIT_NAME_INT}.wasm ${INPUT} ${TMP}/witness.wtns && \
 # We only care about phase 2 which is circuit-specific
 # .zkey file that will contain the proving and verification keys together with 
 # all phase 2 contributions.
 echo ">>>Step 3: Setup" && \
-/usr/bin/time -h -l -o ${TMP}/setup_times.txt snarkjs groth16 setup ${TMP}/${CIRCUIT_NAME}.r1cs ${TAU} ${TMP}/${CIRCUIT_NAME}_0.zkey && \
+/usr/bin/time -h -l -o ${TMP}/setup_times.txt snarkjs groth16 setup ${TMP}/${CIRCUIT_NAME_INT}.r1cs ${TAU} ${TMP}/${CIRCUIT_NAME_INT}_0.zkey && \
 # TODO Should we contribute here?
 # We could contribute here using: snarkjs zkey contribute ${TMP}/${CIRCUIT_NAME}_0.zkey ${TMP}/${CIRCUIT_NAME}_1.zkey --name="1st Contributor Name" -v
 echo ">>>Step 4: Export verification key" && \
-/usr/bin/time -h -l -o ${TMP}/export_times.txt snarkjs zkey export verificationkey ${TMP}/${CIRCUIT_NAME}_0.zkey ${TMP}/verification_key.json && \
+/usr/bin/time -h -l -o ${TMP}/export_times.txt snarkjs zkey export verificationkey ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/verification_key.json && \
 echo ">>>Step 5: Prove" && \
-/usr/bin/time -h -l -o ${TMP}/prove_times.txt snarkjs groth16 prove ${TMP}/${CIRCUIT_NAME}_0.zkey ${TMP}/witness.wtns ${TMP}/proof.json ${TMP}/public.json && \
+/usr/bin/time -h -l -o ${TMP}/prove_times.txt snarkjs groth16 prove ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/witness.wtns ${TMP}/proof.json ${TMP}/public.json && \
 echo ">>>Step 6: Verify" && \
 /usr/bin/time -h -l -o ${TMP}/verify_times.txt snarkjs groth16 verify ${TMP}/verification_key.json ${TMP}/public.json ${TMP}/proof.json
 
@@ -106,6 +108,7 @@ get_phase_stats() {
         ramtimeFinal=$ramtime
     fi
     # TODO add proof size before phyical cores
+    # We don't want to print the whole input file but only the part that it is
     echo "circom,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtimeFinal,$physical,$virtual,$PROC"
 
 }
@@ -137,8 +140,11 @@ if [ ! -z "$RES" ]; then
                      )
     arraylength=${#stages[@]}
 
-    # TODO add proof size before phyical cores
-    echo "framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),nbPhysicalCores,nbLogicalCores,cpu" > ${RES}
+    # Check if RES file already exist.
+    if [ ! -f "$RES" ]; then
+        # TODO add proof size before phyical cores
+        echo "framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),nbPhysicalCores,nbLogicalCores,cpu" > ${RES}
+    fi
     for (( i=0; i<${arraylength}; i++ ));
     do
       echo "$(get_phase_stats ${stages[$i]} ${times[$i]})" >> ${RES}

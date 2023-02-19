@@ -78,9 +78,10 @@ def build_command_circom(payload):
     for circuit, input_path in payload.circuit.items():
         # TODO check if circuit exists
         for inp in get_all_input_files(input_path):
-            command = "{script} {circuit_file} {input_path} {ptau} {benchmark}\n".format(
+            command = "{script} {circuit_file} {circuit_name} {input_path} {ptau} {benchmark}\n".format(
                 script=CIRCOM_SCRIPT,
                 circuit_file=os.path.join(CIRCOM_CIRCUITS_DIR, circuit, "circuit.circom"),
+                circuit_name=circuit,
                 input_path=inp,
                 ptau=CIRCOM_PTAU,
                 benchmark=os.path.join(CIRCOM_BENCHMAKR_DIR, "circom_" + circuit + ".csv")
