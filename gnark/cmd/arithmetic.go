@@ -23,10 +23,6 @@ import (
 	"github.com/tumberger/zk-compilers/gnark/util"
 )
 
-// Fields:
-// Goldilocks
-
-// plonkCmd represents the plonk command
 var arithmeticCmd = &cobra.Command{
 	Use:   "arithmetic",
 	Short: "runs benchmarks and profiles for the gnark arithmetic operations",

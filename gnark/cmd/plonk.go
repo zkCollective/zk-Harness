@@ -19,10 +19,8 @@ import (
 	"fmt"
 	"os"
 	"runtime"
-	"strings"
 	"time"
 
-	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/plonk"
 	"github.com/consensys/gnark/constraint"
 	"github.com/consensys/gnark/frontend"
@@ -40,7 +38,7 @@ var plonkCmd = &cobra.Command{
 	Run:   runPlonk,
 }
 
-func runPlonk(cmd *cobra.Command, args []string) {
+func runPlonk(plonkCmd *cobra.Command, args []string) {
 
 	var filename = "../benchmarks/gnark/gnark_" +
 		"plonk" + "_" +
@@ -49,7 +47,7 @@ func runPlonk(cmd *cobra.Command, args []string) {
 
 	if err := parseFlags(); err != nil {
 		fmt.Println("error: ", err.Error())
-		cmd.Help()
+		plonkCmd.Help()
 		os.Exit(-1)
 	}
 
@@ -132,6 +130,18 @@ func runPlonk(cmd *cobra.Command, args []string) {
 		return
 	}
 
+	if *fAlgo == "witness" {
+		startProfile()
+		var err error
+		for i := 0; i < *fCount; i++ {
+			c.Witness(*fCircuitSize, curveID, *fCircuit, *fInputPath)
+		}
+		stopProfile()
+		assertNoError(err)
+		writeResults(took, ccs)
+		return
+	}
+
 	witness := c.Witness(*fCircuitSize, curveID, *fCircuit, *fInputPath)
 	pk, vk, err := plonk.Setup(ccs, srs)
 	assertNoError(err)
@@ -169,21 +179,5 @@ func runPlonk(cmd *cobra.Command, args []string) {
 }
 
 func init() {
-	// Here the commands for the "circuit" category with Plonk are defined
-
-	_curves := ecc.Implemented()
-	curves := make([]string, len(_curves))
-	for i := 0; i < len(_curves); i++ {
-		curves[i] = strings.ToLower(_curves[i].String())
-	}
-
-	fCircuit = plonkCmd.Flags().String("circuit", "expo", "name of the circuit to use")
-	fCircuitSize = plonkCmd.Flags().Int("size", 10000, "size of the circuit, parameter to circuit constructor")
-	fCount = plonkCmd.Flags().Int("count", 2, "bench count (time is averaged on number of executions)")
-	fAlgo = plonkCmd.Flags().String("algo", "prove", "name of the algorithm to benchmark. must be compile, setup, prove or verify")
-	fProfile = plonkCmd.Flags().String("profile", "none", "type of profile. must be none, trace, cpu or mem")
-	fCurve = plonkCmd.Flags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
-	fFileType = plonkCmd.Flags().String("filetype", "csv", "Type of file to output for benchmarks")
-
 	rootCmd.AddCommand(plonkCmd)
 }

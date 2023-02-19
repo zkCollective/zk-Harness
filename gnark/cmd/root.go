@@ -51,16 +51,22 @@ var (
 
 func init() {
 
+	_curves := ecc.Implemented()
+	curves := make([]string, len(_curves))
+	for i := 0; i < len(_curves); i++ {
+		curves[i] = strings.ToLower(_curves[i].String())
+	}
+
 	fInputPath = rootCmd.PersistentFlags().String("input", "none", "input path to the dedicated input")
 	rootCmd.MarkPersistentFlagRequired("input")
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// plonkCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// plonkCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	fCircuit = rootCmd.PersistentFlags().String("circuit", "expo", "name of the circuit to use")
+	fCircuitSize = rootCmd.PersistentFlags().Int("size", 10000, "size of the circuit, parameter to circuit constructor")
+	fCount = rootCmd.PersistentFlags().Int("count", 2, "bench count (time is averaged on number of executions)")
+	fAlgo = rootCmd.PersistentFlags().String("algo", "prove", "name of the algorithm to benchmark. must be compile, setup, prove or verify")
+	fProfile = rootCmd.PersistentFlags().String("profile", "none", "type of profile. must be none, trace, cpu or mem")
+	fCurve = rootCmd.PersistentFlags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
+	fFileType = rootCmd.PersistentFlags().String("filetype", "csv", "Type of file to output for benchmarks")
 }
 
 func parseFlags() error {
@@ -72,7 +78,7 @@ func parseFlags() error {
 	}
 
 	switch *fAlgo {
-	case "compile", "setup", "prove", "verify":
+	case "compile", "setup", "witness", "prove", "verify":
 	default:
 		return errors.New("invalid algo")
 	}

@@ -7,7 +7,7 @@
             "groth16"
         ],
         "curves": [
-            "bn254"
+            "bls12_377"
         ], 
         "circuits": {
             "cubic": {
