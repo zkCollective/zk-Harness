@@ -49,16 +49,18 @@ def build_command_gnark(payload):
     """
 
     if payload.backend is not None and payload.curves is not None:
-        commands = [f"./gnark {backend} --circuit={circ} --algo={op} --curve={curve} --input={input_path}\n"
+        commands = [f"./gnark {backend} --circuit={circ} --algo={op} --curve={curve} --input={inp}\n"
                     for backend in payload.backend
                     for curve in payload.curves
                     for circ, input_path in payload.circuit.items()
+                    for inp in get_all_input_files(input_path)
                     for op in payload.operation]
 
         # Join the commands into a single string
         command = "".join(commands)
         # Prepend the command to change the working directory to the gnark directory
         command = f"cd {GNARK_DIR}; {command}"
+        print(command)
     else:
         raise ValueError("Missing payload fields for circuit mode")
     return command

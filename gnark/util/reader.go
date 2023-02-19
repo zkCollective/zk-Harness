@@ -9,10 +9,8 @@ import (
 
 func ReadFromInputPath(pathInput string) (map[string]interface{}, error) {
 
-	// TODO read all input files from a single directory
-
 	// Construct the absolute path to the file
-	absPath := filepath.Join("../", pathInput, "/input_1.json")
+	absPath := filepath.Join("../", pathInput)
 	absPath, err := filepath.Abs(absPath)
 	if err != nil {
 		fmt.Println("Error constructing absolute path:", err)
