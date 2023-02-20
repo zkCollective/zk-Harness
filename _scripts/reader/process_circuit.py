@@ -43,13 +43,13 @@ def get_all_input_files(input_path, abspath=False):
     return files
 
 
-def build_command_gnark(payload):
+def build_command_gnark(payload, count):
     """
     Build the command to invoke the gnark ZKP-framework given the payload
     """
-
+    
     if payload.backend is not None and payload.curves is not None:
-        commands = [f"./gnark {backend} --circuit={circ} --algo={op} --curve={curve} --input={inp}\n"
+        commands = [f"./gnark {backend} --circuit={circ} --algo={op} --curve={curve} --input={inp} --count={count}\n"
                     for backend in payload.backend
                     for curve in payload.curves
                     for circ, input_path in payload.circuit.items()
@@ -66,10 +66,12 @@ def build_command_gnark(payload):
     return command
 
 
-def build_command_circom(payload):
+def build_command_circom(payload, count):
     """
     Build the command to invoke the circom ZKP-framework given the payload
     """
+
+    # TODO - Add count to command creation
     
     if len(payload.backend) != 1 or payload.backend[0] != "groth16":
         raise ValueError("Circom benchmark only supports groth16 backend")
@@ -104,12 +106,12 @@ projects = {
 }
 
 
-def build_command(project, payload):
+def build_command(project, payload, count):
     """
     Build the command to execute the given project with the given payload.
     Input: project (e.g. gnark) + payload (config.json)
     """
-    commands = projects.get(project, default_case)(payload)
+    commands = projects.get(project, default_case)(payload, count)
     return commands
 
 

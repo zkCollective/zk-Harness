@@ -2,6 +2,7 @@
     "project": "gnark",
     "project_url": "https://github.com/ConsenSys/gnark",
     "category": "circuit",
+    "count": 1,
     "payload": {
         "backend": [
             "groth16"
@@ -19,6 +20,7 @@
         },
         "algorithm": [
             "prove"
-        ]
+        ],
+        "custom": {}
     }    
 }

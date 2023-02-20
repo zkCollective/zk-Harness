@@ -4,10 +4,10 @@ import subprocess
 
 from . import process_circuit
 
-def circuit_processing(project, config):
+def circuit_processing(project, config, count):
     # Extract relevant fields from config, build & execute command
     payload = process_circuit.get_circuit_payload(config)
-    commands = process_circuit.build_command(project, payload)
+    commands = process_circuit.build_command(project, payload, count)
     subprocess.run(commands, shell=True, check=True)
 
 def default_case():
@@ -25,7 +25,8 @@ def parse_config(config_path):
 
     project = config['project']
     category = config['category']
-    categories.get(category, default_case)(project, config)
+    count = config['count']
+    categories.get(category, default_case)(project, config, count)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
