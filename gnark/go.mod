@@ -13,6 +13,7 @@ require (
 )
 
 require (
+	github.com/DmitriyVTitov/size v1.5.0 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
 	github.com/consensys/bavard v0.1.13 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -27,6 +28,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.9.0 // indirect
 	github.com/rs/zerolog v1.29.0 // indirect
+	github.com/shenwei356/util v0.5.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.8.1 // indirect
 	github.com/x448/float16 v0.8.4 // indirect

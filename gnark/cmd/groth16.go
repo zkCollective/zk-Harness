@@ -21,6 +21,7 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/DmitriyVTitov/size"
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/consensys/gnark/constraint"
 	"github.com/consensys/gnark/frontend"
@@ -50,7 +51,8 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		os.Exit(-1)
 	}
 
-	writeResults := func(took time.Duration, ccs constraint.ConstraintSystem) {
+	writeResults := func(took time.Duration, ccs constraint.ConstraintSystem, proof_size int) {
+
 		// check memory usage, max ram requested from OS
 		var m runtime.MemStats
 		runtime.ReadMemStats(&m)
@@ -67,6 +69,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 			NbConstraints:     ccs.GetNbConstraints(),
 			NbSecretVariables: secret,
 			NbPublicVariables: public,
+			ProofSize:         proof_size,
 			MaxRAM:            (m.Sys / 1024 / 1024),
 			RunTime:           took.Milliseconds(),
 		}
@@ -106,7 +109,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		}
 		stopProfile()
 		assertNoError(err)
-		writeResults(took, ccs)
+		writeResults(took, ccs, 0)
 		return
 	}
 
@@ -121,7 +124,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		}
 		stopProfile()
 		assertNoError(err)
-		writeResults(took, ccs)
+		writeResults(took, ccs, 0)
 		return
 	}
 
@@ -133,7 +136,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		}
 		stopProfile()
 		assertNoError(err)
-		writeResults(took, ccs)
+		writeResults(took, ccs, 0)
 		return
 	}
 
@@ -143,13 +146,15 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		pk, err := groth16.DummySetup(ccs)
 		assertNoError(err)
 
+		var proof interface{}
 		startProfile()
 		for i := 0; i < *fCount; i++ {
-			_, err = groth16.Prove(ccs, pk, witness)
+			proof, err = groth16.Prove(ccs, pk, witness)
 		}
 		stopProfile()
 		assertNoError(err)
-		writeResults(took, ccs)
+		proof_size := size.Of(proof)
+		writeResults(took, ccs, proof_size)
 		return
 	}
 
@@ -162,6 +167,9 @@ func runGroth16(cmd *cobra.Command, args []string) {
 	proof, err := groth16.Prove(ccs, pk, witness)
 	assertNoError(err)
 
+	// print(proof_size)
+	// writeResults(took, ccs, proof_size)
+
 	publicWitness, err := witness.Public()
 	assertNoError(err)
 	startProfile()
@@ -170,7 +178,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 	}
 	stopProfile()
 	assertNoError(err)
-	writeResults(took, ccs)
+	writeResults(took, ccs, 0)
 
 }
 

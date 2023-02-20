@@ -25,12 +25,13 @@ type BenchDataCircuit struct {
 	NbConstraints     int
 	NbSecretVariables int
 	NbPublicVariables int
+	ProofSize         int
 	MaxRAM            uint64
 	RunTime           int64
 }
 
 func (bDataCirc BenchDataCircuit) Headers() []string {
-	return []string{"framework", "category", "backend", "curve", "circuit", "input", "operation", "nbConstraints", "nbSecret", "nbPublic", "ram(mb)", "time(ms)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
+	return []string{"framework", "category", "backend", "curve", "circuit", "input", "operation", "nbConstraints", "nbSecret", "nbPublic", "proofSize", "ram(mb)", "time(ms)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
 }
 
 func (bDataCirc BenchDataCircuit) Values() []string {
@@ -45,6 +46,7 @@ func (bDataCirc BenchDataCircuit) Values() []string {
 		strconv.Itoa(int(bDataCirc.NbConstraints)),
 		strconv.Itoa(int(bDataCirc.NbSecretVariables)),
 		strconv.Itoa(int(bDataCirc.NbPublicVariables)),
+		strconv.Itoa(int(bDataCirc.ProofSize)),
 		strconv.Itoa(int(bDataCirc.MaxRAM)),
 		strconv.Itoa(int(bDataCirc.RunTime)),
 		strconv.Itoa(CPU.PhysicalCores),
