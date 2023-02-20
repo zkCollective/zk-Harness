@@ -27,17 +27,25 @@ The category for which the zk-Harness should benchmark a ZKP-framework. Supports
 - ``circuit``
   - Benchmarks common circuit implementations of cryptographic primitives
 
+### ``count``
+
+The number of runs over which a given computation specified by the config should be averaged.
+
 ### ``payload``
 
 ``payload`` specifies the exact algorithms to benchmark. The format of the payload depends on the mode the zk-Harness operates in.
 
 - ``payload`` specification for ``mode``==``arithmetic``
-  - ``fields``
+  - ``curves``
 
-    ``fields`` specifies the fields that should be benchmarked. The current values are supported for the different ZKP-frameworks:
+    ``curves`` specifies the fields that should be benchmarked. The current values are supported for the different ZKP-frameworks:
 
   - ``gnark`` - Benchmarks are executed over the subgroup of prime order ``r`` of the based field F_p.
     - ``bn254``, ``bls12_381``, ``bls12_377``, ``bls24_315``, ``bw6_633``, ``bw6_761``
+
+  - ``fields``
+
+    ``fields`` specifies whether the arithmetic should be benchmarked over the ``scalar`` or ``base`` field associated with the respective curve
 
   - ``operations``
 

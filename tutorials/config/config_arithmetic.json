@@ -1,9 +1,10 @@
 {
     "project": "gnark",
     "project_url": "https://github.com/ConsenSys/gnark",
-    "mode": "arithmetic",
+    "category": "arithmetic",
+    "count": 1,
     "payload": {
-        "fields": [
+        "curves": [
             "bn254",
             "bls12_381",
             "bls12_377",
@@ -11,6 +12,10 @@
             "bw6_633",
             "bw6_761"
         ], 
+        "fields": [
+            "base",
+            "scalar"
+        ],
         "operations": {
             "Add": {
                 "input_path": "_input/arithmetic/add"
