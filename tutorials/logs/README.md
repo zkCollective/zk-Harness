@@ -31,9 +31,9 @@ The following information is recorded for each field arithmetic benchmark:
 
 * framework: the name of the framework (e.g., gnark)
 * category: the category of the benchmark (i.e., arithmetic)
-* field: the benchmarked field (e.g., native)
-* p: the order of the field
-* operation: the operation performed
+* field: the benchmarked field (base or scalar)
+* curve: the curve of which field we use
+* operation: the operation performed (add, sub, mul, inv, exp)
 * Input: file path of the input used 
 * ram: memory consumed in bytes
 * time: elapsed time in nanoseconds
