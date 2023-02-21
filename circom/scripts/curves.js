@@ -115,7 +115,7 @@ async function run () {
         throw new Error(`Directory ${dir_name} does not exist`);
     }
     if (!fs.existsSync(path_name)) {
-        result_string = "framework,category,curve,operation,input,ram,time,nbPhysicalCores,nbLogicalCores,machine\n";
+        result_string = "framework,category,curve,operation,input,ram,time,nbPhysicalCores,nbLogicalCores,cpu\n";
     }
 
     // Execute benchmark
