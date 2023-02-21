@@ -17,19 +17,19 @@
             "scalar"
         ],
         "operations": {
-            "Add": {
+            "add": {
                 "input_path": "_input/arithmetic/add"
             },
-            "Sub": {
+            "sub": {
                 "input_path": "_input/arithmetic/sub"
             },
-            "Mul": {
+            "mul": {
                 "input_path": "_input/arithmetic/mul"
             },
-            "Div": {
-                "input_path": "_input/arithmetic/div"
+            "inv": {
+                "input_path": "_input/arithmetic/inv"
             },
-            "Exp": {
+            "exp": {
                 "input_path": "_input/arithmetic/exp"
             }
         }
