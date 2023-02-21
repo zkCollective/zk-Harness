@@ -11,7 +11,7 @@ def circuit_processing(project, config, count):
     commands = process_circuit.build_command(project, payload, count)
     subprocess.run(commands, shell=True, check=True)
 
-def arithmeric_processing(project, config, count):
+def arithmetic_processing(project, config, count):
     # Extract relevant fields from config, build & execute command
     payload = process_arithmetic.get_arithmetic_payload(config)
     commands = process_arithmetic.build_command(project, payload, count)
@@ -23,7 +23,7 @@ def default_case():
 # TODO - Add other modes (arithmetic & curves)
 categories = {
     "circuit": circuit_processing,
-    "arithmetic": arithmeric_processing
+    "arithmetic": arithmetic_processing
 }
 
 def parse_config(config_path):
