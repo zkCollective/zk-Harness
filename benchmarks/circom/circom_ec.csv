@@ -1,13 +1,13 @@
 framework,category,curve,operation,input,ram,time,nbPhysicalCores,nbLogicalCores,cpu
-circom,ec,bn128,g1-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,7846672,186,1,1,Apple M1 Max
-circom,ec,bn128,g2-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,15192392,183,1,1,Apple M1 Max
-circom,ec,bls12381,g1-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8206912,229,1,1,Apple M1 Max
-circom,ec,bls12381,g2-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8206456,222,1,1,Apple M1 Max
-circom,ec,bn128,g1-multi-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8026160,4272,1,1,Apple M1 Max
-circom,ec,bn128,g2-multi-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,15349864,5585,1,1,Apple M1 Max
-circom,ec,bls12381,g1-multi-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8413112,4890,1,1,Apple M1 Max
-circom,ec,bls12381,g2-multi-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8413896,5914,1,1,Apple M1 Max
-circom,ec,bn128,pairing,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,7851296,5642,1,1,Apple M1 Max
-circom,ec,bn128,pairing,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,15376632,5632,1,1,Apple M1 Max
-circom,ec,bls12381,pairing,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8210736,6672,1,1,Apple M1 Max
-circom,ec,bls12381,pairing,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8212784,6606,1,1,Apple M1 Max
+circom,ec,bn128,g1-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,7772584,168,1,1,Apple M1 Max
+circom,ec,bn128,g2-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,7845824,185,1,1,Apple M1 Max
+circom,ec,bls12_381,g1-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8205104,199,1,1,Apple M1 Max
+circom,ec,bls12_381,g2-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8208304,232,1,1,Apple M1 Max
+circom,ec,bn128,g1-multi-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8027168,4114,1,1,Apple M1 Max
+circom,ec,bn128,g2-multi-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8025440,4424,1,1,Apple M1 Max
+circom,ec,bls12_381,g1-multi-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8412720,4798,1,1,Apple M1 Max
+circom,ec,bls12_381,g2-multi-scalar-multiplication,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8414080,5862,1,1,Apple M1 Max
+circom,ec,bn128,pairing,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,15066856,5648,1,1,Apple M1 Max
+circom,ec,bn128,pairing,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,7849432,5661,1,1,Apple M1 Max
+circom,ec,bls12_381,pairing,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8211872,6689,1,1,Apple M1 Max
+circom,ec,bls12_381,pairing,/Users/schaliasos/Documents/Projects/zk-compilers/benchmarks/circom/circom_ec.csv,8213680,6617,1,1,Apple M1 Max
