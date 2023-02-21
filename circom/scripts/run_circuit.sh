@@ -107,9 +107,8 @@ get_phase_stats() {
     else
         ramtimeFinal=$ramtime
     fi
-    # TODO add proof size before phyical cores
     # We don't want to print the whole input file but only the part that it is
-    echo "circom,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtimeFinal,$physical,$virtual,$PROC"
+    echo "circom,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtimeFinal,$proofSize,$physical,$virtual,$PROC"
 
 }
 
@@ -142,8 +141,7 @@ if [ ! -z "$RES" ]; then
 
     # Check if RES file already exist.
     if [ ! -f "$RES" ]; then
-        # TODO add proof size before phyical cores
-        echo "framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),nbPhysicalCores,nbLogicalCores,cpu" > ${RES}
+        echo "framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,machine" > ${RES}
     fi
     for (( i=0; i<${arraylength}; i++ ));
     do
