@@ -19,7 +19,7 @@ CIRCOM_EC_SCRIPT = os.path.join(CIRCOM_DIR, "scripts", "curves.js")
 ARITHMETIC_FIELDS = ["base", "scalar"]
 GROUPS = ["g1", "g2"]
 # CIRCOM CURVES
-CIRCOM_CURVES = ["bn128", "bls12381"]
+CIRCOM_CURVES = ["bn128", "bls12_381"]
 
 
 def get_all_input_files(input_path, abspath=False):

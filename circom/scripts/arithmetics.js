@@ -13,7 +13,7 @@ const F1Field = ffjs.F1Field;
 async function getCurve(curve_name, singleThread) {
     if (curve_name == "bn128") {
         curve = await buildBn128(singleThread);
-    } else if (curve_name == "bls12381") {
+    } else if (curve_name == "bls12_381") {
         curve = await buildBls12381(singleThread);
     } else {
         throw new Error(`Curve not supported: ${curve}`);
