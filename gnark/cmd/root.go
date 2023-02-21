@@ -14,7 +14,7 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "gnark-toy-bench",
+	Use:   "gnark-harness",
 	Short: "runs benchmarks and profiles using gnark",
 }
 
@@ -41,6 +41,7 @@ var (
 	// Variables Arithmetic
 	fOperation *string
 	fField     *string
+	fGroup     *string
 )
 
 var (

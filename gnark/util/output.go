@@ -56,7 +56,7 @@ type BenchDataCurve struct {
 }
 
 func (bDataCurve BenchDataCurve) Headers() []string {
-	return []string{"framework", "category", "curve", "operation", "input", "ram(mb)", "time(ns)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
+	return []string{"framework", "category", "curve", "operation", "input", "ram(mb)", "time(ms)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
 }
 
 func (bDataCurve BenchDataCurve) Values() []string {
