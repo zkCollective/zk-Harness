@@ -58,8 +58,8 @@ func (bDataCirc BenchDataCircuit) Values() []string {
 type BenchDataArithmetic struct {
 	Framework string
 	Category  string
-	Field     string // native / non-native
-	Order     int
+	Curve     string
+	Field     string
 	Operation string
 	Input     string
 	MaxRAM    uint64
@@ -67,15 +67,15 @@ type BenchDataArithmetic struct {
 }
 
 func (bDataArith BenchDataArithmetic) Headers() []string {
-	return []string{"framework", "category", "field", "p(bitlength)", "operation", "input", "ram(mb)", "time(ns)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
+	return []string{"framework", "category", "curve", "field", "operation", "input", "ram(mb)", "time(ns)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
 }
 
 func (bDataArith BenchDataArithmetic) Values() []string {
 	return []string{
 		bDataArith.Framework,
 		bDataArith.Category,
+		bDataArith.Curve,
 		bDataArith.Field,
-		strconv.Itoa(int(bDataArith.Order)),
 		bDataArith.Operation,
 		bDataArith.Input,
 		strconv.Itoa(int(bDataArith.MaxRAM)),

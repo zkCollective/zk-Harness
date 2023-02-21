@@ -40,7 +40,7 @@ var (
 
 	// Variables Arithmetic
 	fOperation *string
-	fOrder     *string
+	fField     *string
 )
 
 var (

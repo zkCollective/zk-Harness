@@ -10,11 +10,17 @@ import (
 	"strings"
 	"time"
 
+	bls12377fp "github.com/consensys/gnark-crypto/ecc/bls12-377/fp"
 	bls12377fr "github.com/consensys/gnark-crypto/ecc/bls12-377/fr"
+	bls12381fp "github.com/consensys/gnark-crypto/ecc/bls12-381/fp"
 	bls12381fr "github.com/consensys/gnark-crypto/ecc/bls12-381/fr"
+	bls24315fp "github.com/consensys/gnark-crypto/ecc/bls24-315/fp"
 	bls24315fr "github.com/consensys/gnark-crypto/ecc/bls24-315/fr"
+	bn254fp "github.com/consensys/gnark-crypto/ecc/bn254/fp"
 	bn254fr "github.com/consensys/gnark-crypto/ecc/bn254/fr"
+	bw6633fp "github.com/consensys/gnark-crypto/ecc/bw6-633/fp"
 	bw6633fr "github.com/consensys/gnark-crypto/ecc/bw6-633/fr"
+	bw6761fp "github.com/consensys/gnark-crypto/ecc/bw6-761/fp"
 	bw6761fr "github.com/consensys/gnark-crypto/ecc/bw6-761/fr"
 	"github.com/pkg/profile"
 
@@ -50,393 +56,814 @@ func stopProfile() {
 	took /= time.Duration(*fCount)
 }
 
-func ExecuteOperation254(operation string) (time.Duration, *big.Int) {
+// TODO
+// Currently solved very ugly, need to refactor
+// Similar to below, requires handling reflection
+// func newElement(curveID ecc.ID, field string) (reflect.Type, reflect.Type, error) {
+//     if field == “scalar” {
+//         switch curveID {
+//         case ecc.BN254:
+//             return reflect.TypeOf(bn254fr.Element{}), reflect.TypeOf(bn254fr.Element{}), nil
+//         case ecc.BLS12_377:
+//             return reflect.TypeOf(bls12377fr.Element{}), reflect.TypeOf(bls12377fr.Element{}), nil
+//         case ecc.BLS12_381:
+//             return reflect.TypeOf(bls12381fr.Element{}), reflect.TypeOf(bls12381fr.Element{}), nil
+//         case ecc.BW6_761:
+//             return reflect.TypeOf(bw6761fr.Element{}), reflect.TypeOf(bw6761fr.Element{}), nil
+//         case ecc.BLS24_315:
+//             return reflect.TypeOf(bls24315fr.Element{}), reflect.TypeOf(bls24315fr.Element{}), nil
+//         case ecc.BW6_633:
+//             return reflect.TypeOf(bw6633fr.Element{}), reflect.TypeOf(bw6633fr.Element{}), nil
+//         default:
+//             return nil, nil, errors.New(“unsupported curve)
+//         }
+//     } else {
+//         return nil, nil, errors.New(“unsupported field”)
+//     }
+// }
 
-	switch operation {
-	case "add":
-		var x, y bn254fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Add(&x, &y)
+func ExecuteOperation254(operation string) (time.Duration, *big.Int) {
+	if *fField == "scalar" {
+		switch operation {
+		case "add":
+			var x, y bn254fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Add(&x, &y)
+			}
+			stopProfile()
+			order := bn254fr.Modulus()
+			return took, order
+		case "sub":
+			var x, y bn254fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Sub(&x, &y)
+			}
+			stopProfile()
+			order := bn254fr.Modulus()
+			return took, order
+		case "mul":
+			var x, y bn254fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Mul(&x, &y)
+			}
+			stopProfile()
+			order := bn254fr.Modulus()
+			return took, order
+		case "div":
+			var x, y bn254fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Div(&x, &y)
+			}
+			stopProfile()
+			order := bn254fr.Modulus()
+			return took, order
+		case "exp":
+			var x bn254fr.Element
+			x.SetRandom()
+			max := big.NewInt(1000000)
+			k, err := rand.Int(rand.Reader, max)
+			if err != nil {
+				panic(err)
+			}
+			startProfile()
+			x.Exp(x, k)
+			stopProfile()
+			order := bn254fr.Modulus()
+			return took, order
+		default:
+			panic("arithmetic operation not implemented")
 		}
-		stopProfile()
-		order := bn254fr.Modulus()
-		return took, order
-	case "sub":
-		var x, y bn254fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Sub(&x, &y)
+	} else if *fField == "base" {
+		switch operation {
+		case "add":
+			var x, y bn254fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Add(&x, &y)
+			}
+			stopProfile()
+			order := bn254fp.Modulus()
+			return took, order
+		case "sub":
+			var x, y bn254fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Sub(&x, &y)
+			}
+			stopProfile()
+			order := bn254fp.Modulus()
+			return took, order
+		case "mul":
+			var x, y bn254fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Mul(&x, &y)
+			}
+			stopProfile()
+			order := bn254fp.Modulus()
+			return took, order
+		case "div":
+			var x, y bn254fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Div(&x, &y)
+			}
+			stopProfile()
+			order := bn254fp.Modulus()
+			return took, order
+		case "exp":
+			var x bn254fp.Element
+			x.SetRandom()
+			max := big.NewInt(1000000)
+			k, err := rand.Int(rand.Reader, max)
+			if err != nil {
+				panic(err)
+			}
+			startProfile()
+			x.Exp(x, k)
+			stopProfile()
+			order := bn254fp.Modulus()
+			return took, order
+		default:
+			panic("arithmetic operation not implemented")
 		}
-		stopProfile()
-		order := bn254fr.Modulus()
-		return took, order
-	case "mul":
-		var x, y bn254fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Mul(&x, &y)
-		}
-		stopProfile()
-		order := bn254fr.Modulus()
-		return took, order
-	case "div":
-		var x, y bn254fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Div(&x, &y)
-		}
-		stopProfile()
-		order := bn254fr.Modulus()
-		return took, order
-	case "exp":
-		var x bn254fr.Element
-		x.SetRandom()
-		max := big.NewInt(1000000)
-		k, err := rand.Int(rand.Reader, max)
-		if err != nil {
-			panic(err)
-		}
-		startProfile()
-		x.Exp(x, k)
-		stopProfile()
-		order := bn254fr.Modulus()
-		return took, order
-	default:
-		panic("arithmetic operation not implemented")
+	} else {
+		panic("field not valid")
 	}
 }
 
 func ExecuteOperationBLS12381(operation string) (time.Duration, *big.Int) {
 
-	switch operation {
-	case "add":
-		var x, y bls12381fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Add(&x, &y)
+	if *fField == "scalar" {
+		switch operation {
+		case "add":
+			var x, y bls12381fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Add(&x, &y)
+			}
+			stopProfile()
+			order := bls12381fr.Modulus()
+			return took, order
+		case "sub":
+			var x, y bls12381fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Sub(&x, &y)
+			}
+			stopProfile()
+			order := bls12381fr.Modulus()
+			return took, order
+		case "mul":
+			var x, y bls12381fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Mul(&x, &y)
+			}
+			stopProfile()
+			order := bls12381fr.Modulus()
+			return took, order
+		case "div":
+			var x, y bls12381fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Div(&x, &y)
+			}
+			stopProfile()
+			order := bls12381fr.Modulus()
+			return took, order
+		case "exp":
+			var x bls12381fr.Element
+			x.SetRandom()
+			max := big.NewInt(1000000)
+			k, err := rand.Int(rand.Reader, max)
+			if err != nil {
+				panic(err)
+			}
+			startProfile()
+			x.Exp(x, k)
+			stopProfile()
+			order := bls12381fr.Modulus()
+			return took, order
+		default:
+			panic("arithmetic operation not implemented")
 		}
-		stopProfile()
-		order := bls12381fr.Modulus()
-		return took, order
-	case "sub":
-		var x, y bls12381fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Sub(&x, &y)
+	} else if *fField == "base" {
+		switch operation {
+		case "add":
+			var x, y bls12381fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Add(&x, &y)
+			}
+			stopProfile()
+			order := bls12381fp.Modulus()
+			return took, order
+		case "sub":
+			var x, y bls12381fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Sub(&x, &y)
+			}
+			stopProfile()
+			order := bls12381fp.Modulus()
+			return took, order
+		case "mul":
+			var x, y bls12381fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Mul(&x, &y)
+			}
+			stopProfile()
+			order := bls12381fp.Modulus()
+			return took, order
+		case "div":
+			var x, y bls12381fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Div(&x, &y)
+			}
+			stopProfile()
+			order := bls12381fp.Modulus()
+			return took, order
+		case "exp":
+			var x bls12381fp.Element
+			x.SetRandom()
+			max := big.NewInt(1000000)
+			k, err := rand.Int(rand.Reader, max)
+			if err != nil {
+				panic(err)
+			}
+			startProfile()
+			x.Exp(x, k)
+			stopProfile()
+			order := bls12381fp.Modulus()
+			return took, order
+		default:
+			panic("arithmetic operation not implemented")
 		}
-		stopProfile()
-		order := bls12381fr.Modulus()
-		return took, order
-	case "mul":
-		var x, y bls12381fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Mul(&x, &y)
-		}
-		stopProfile()
-		order := bls12381fr.Modulus()
-		return took, order
-	case "div":
-		var x, y bls12381fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Div(&x, &y)
-		}
-		stopProfile()
-		order := bls12381fr.Modulus()
-		return took, order
-	case "exp":
-		var x bls12381fr.Element
-		x.SetRandom()
-		max := big.NewInt(1000000)
-		k, err := rand.Int(rand.Reader, max)
-		if err != nil {
-			panic(err)
-		}
-		startProfile()
-		x.Exp(x, k)
-		stopProfile()
-		order := bls12381fr.Modulus()
-		return took, order
-	default:
-		panic("arithmetic operation not implemented")
+	} else {
+		panic("field not valid")
 	}
 }
 
 func ExecuteOperationBLS12377(operation string) (time.Duration, *big.Int) {
 
-	switch operation {
-	case "add":
-		var x, y bls12377fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Add(&x, &y)
+	if *fField == "scalar" {
+		switch operation {
+		case "add":
+			var x, y bls12377fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Add(&x, &y)
+			}
+			stopProfile()
+			order := bls12377fr.Modulus()
+			return took, order
+		case "sub":
+			var x, y bls12377fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Sub(&x, &y)
+			}
+			stopProfile()
+			order := bls12377fr.Modulus()
+			return took, order
+		case "mul":
+			var x, y bls12377fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Mul(&x, &y)
+			}
+			stopProfile()
+			order := bls12377fr.Modulus()
+			return took, order
+		case "div":
+			var x, y bls12377fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Div(&x, &y)
+			}
+			stopProfile()
+			order := bls12377fr.Modulus()
+			return took, order
+		case "exp":
+			var x bls12377fr.Element
+			x.SetRandom()
+			max := big.NewInt(1000000)
+			k, err := rand.Int(rand.Reader, max)
+			if err != nil {
+				panic(err)
+			}
+			startProfile()
+			x.Exp(x, k)
+			stopProfile()
+			order := bls12377fr.Modulus()
+			return took, order
+		default:
+			panic("arithmetic operation not implemented")
 		}
-		stopProfile()
-		order := bls12377fr.Modulus()
-		return took, order
-	case "sub":
-		var x, y bls12377fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Sub(&x, &y)
+	} else if *fField == "base" {
+		switch operation {
+		case "add":
+			var x, y bls12377fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Add(&x, &y)
+			}
+			stopProfile()
+			order := bls12377fp.Modulus()
+			return took, order
+		case "sub":
+			var x, y bls12377fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Sub(&x, &y)
+			}
+			stopProfile()
+			order := bls12377fp.Modulus()
+			return took, order
+		case "mul":
+			var x, y bls12377fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Mul(&x, &y)
+			}
+			stopProfile()
+			order := bls12377fp.Modulus()
+			return took, order
+		case "div":
+			var x, y bls12377fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Div(&x, &y)
+			}
+			stopProfile()
+			order := bls12377fp.Modulus()
+			return took, order
+		case "exp":
+			var x bls12377fp.Element
+			x.SetRandom()
+			max := big.NewInt(1000000)
+			k, err := rand.Int(rand.Reader, max)
+			if err != nil {
+				panic(err)
+			}
+			startProfile()
+			x.Exp(x, k)
+			stopProfile()
+			order := bls12377fp.Modulus()
+			return took, order
+		default:
+			panic("arithmetic operation not implemented")
 		}
-		stopProfile()
-		order := bls12377fr.Modulus()
-		return took, order
-	case "mul":
-		var x, y bls12377fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Mul(&x, &y)
-		}
-		stopProfile()
-		order := bls12377fr.Modulus()
-		return took, order
-	case "div":
-		var x, y bls12377fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Div(&x, &y)
-		}
-		stopProfile()
-		order := bls12377fr.Modulus()
-		return took, order
-	case "exp":
-		var x bls12377fr.Element
-		x.SetRandom()
-		max := big.NewInt(1000000)
-		k, err := rand.Int(rand.Reader, max)
-		if err != nil {
-			panic(err)
-		}
-		startProfile()
-		x.Exp(x, k)
-		stopProfile()
-		order := bls12377fr.Modulus()
-		return took, order
-	default:
-		panic("arithmetic operation not implemented")
+	} else {
+		panic("field not valid")
 	}
 }
 
 func ExecuteOperationBLS24315(operation string) (time.Duration, *big.Int) {
 
-	switch operation {
-	case "add":
-		var x, y bls24315fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Add(&x, &y)
+	if *fField == "scalar" {
+		switch operation {
+		case "add":
+			var x, y bls24315fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Add(&x, &y)
+			}
+			stopProfile()
+			order := bls24315fr.Modulus()
+			return took, order
+		case "sub":
+			var x, y bls24315fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Sub(&x, &y)
+			}
+			stopProfile()
+			order := bls24315fr.Modulus()
+			return took, order
+		case "mul":
+			var x, y bls24315fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Mul(&x, &y)
+			}
+			stopProfile()
+			order := bls24315fr.Modulus()
+			return took, order
+		case "div":
+			var x, y bls24315fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Div(&x, &y)
+			}
+			stopProfile()
+			order := bls24315fr.Modulus()
+			return took, order
+		case "exp":
+			var x bls24315fr.Element
+			x.SetRandom()
+			max := big.NewInt(1000000)
+			k, err := rand.Int(rand.Reader, max)
+			if err != nil {
+				panic(err)
+			}
+			startProfile()
+			x.Exp(x, k)
+			stopProfile()
+			order := bls24315fr.Modulus()
+			return took, order
+		default:
+			panic("arithmetic operation not implemented")
 		}
-		stopProfile()
-		order := bls24315fr.Modulus()
-		return took, order
-	case "sub":
-		var x, y bls24315fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Sub(&x, &y)
+	} else if *fField == "base" {
+		switch operation {
+		case "add":
+			var x, y bls24315fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Add(&x, &y)
+			}
+			stopProfile()
+			order := bls24315fp.Modulus()
+			return took, order
+		case "sub":
+			var x, y bls24315fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Sub(&x, &y)
+			}
+			stopProfile()
+			order := bls24315fp.Modulus()
+			return took, order
+		case "mul":
+			var x, y bls24315fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Mul(&x, &y)
+			}
+			stopProfile()
+			order := bls24315fp.Modulus()
+			return took, order
+		case "div":
+			var x, y bls24315fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Div(&x, &y)
+			}
+			stopProfile()
+			order := bls24315fp.Modulus()
+			return took, order
+		case "exp":
+			var x bls24315fp.Element
+			x.SetRandom()
+			max := big.NewInt(1000000)
+			k, err := rand.Int(rand.Reader, max)
+			if err != nil {
+				panic(err)
+			}
+			startProfile()
+			x.Exp(x, k)
+			stopProfile()
+			order := bls24315fp.Modulus()
+			return took, order
+		default:
+			panic("arithmetic operation not implemented")
 		}
-		stopProfile()
-		order := bls24315fr.Modulus()
-		return took, order
-	case "mul":
-		var x, y bls24315fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Mul(&x, &y)
-		}
-		stopProfile()
-		order := bls24315fr.Modulus()
-		return took, order
-	case "div":
-		var x, y bls24315fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Div(&x, &y)
-		}
-		stopProfile()
-		order := bls24315fr.Modulus()
-		return took, order
-	case "exp":
-		var x bls24315fr.Element
-		x.SetRandom()
-		max := big.NewInt(1000000)
-		k, err := rand.Int(rand.Reader, max)
-		if err != nil {
-			panic(err)
-		}
-		startProfile()
-		x.Exp(x, k)
-		stopProfile()
-		order := bls24315fr.Modulus()
-		return took, order
-	default:
-		panic("arithmetic operation not implemented")
+	} else {
+		panic("field not valid")
 	}
 }
 
 func ExecuteOperationBW6633(operation string) (time.Duration, *big.Int) {
 
-	switch operation {
-	case "add":
-		var x, y bw6633fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Add(&x, &y)
+	if *fField == "scalar" {
+		switch operation {
+		case "add":
+			var x, y bw6633fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Add(&x, &y)
+			}
+			stopProfile()
+			order := bw6633fr.Modulus()
+			return took, order
+		case "sub":
+			var x, y bw6633fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Sub(&x, &y)
+			}
+			stopProfile()
+			order := bw6633fr.Modulus()
+			return took, order
+		case "mul":
+			var x, y bw6633fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Mul(&x, &y)
+			}
+			stopProfile()
+			order := bw6633fr.Modulus()
+			return took, order
+		case "div":
+			var x, y bw6633fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Div(&x, &y)
+			}
+			stopProfile()
+			order := bw6633fr.Modulus()
+			return took, order
+		case "exp":
+			var x bw6633fr.Element
+			x.SetRandom()
+			max := big.NewInt(1000000)
+			k, err := rand.Int(rand.Reader, max)
+			if err != nil {
+				panic(err)
+			}
+			startProfile()
+			x.Exp(x, k)
+			stopProfile()
+			order := bw6633fr.Modulus()
+			return took, order
+		default:
+			panic("arithmetic operation not implemented")
 		}
-		stopProfile()
-		order := bw6633fr.Modulus()
-		return took, order
-	case "sub":
-		var x, y bw6633fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Sub(&x, &y)
+	} else if *fField == "base" {
+		switch operation {
+		case "add":
+			var x, y bw6633fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Add(&x, &y)
+			}
+			stopProfile()
+			order := bw6633fp.Modulus()
+			return took, order
+		case "sub":
+			var x, y bw6633fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Sub(&x, &y)
+			}
+			stopProfile()
+			order := bw6633fp.Modulus()
+			return took, order
+		case "mul":
+			var x, y bw6633fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Mul(&x, &y)
+			}
+			stopProfile()
+			order := bw6633fp.Modulus()
+			return took, order
+		case "div":
+			var x, y bw6633fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Div(&x, &y)
+			}
+			stopProfile()
+			order := bw6633fp.Modulus()
+			return took, order
+		case "exp":
+			var x bw6633fp.Element
+			x.SetRandom()
+			max := big.NewInt(1000000)
+			k, err := rand.Int(rand.Reader, max)
+			if err != nil {
+				panic(err)
+			}
+			startProfile()
+			x.Exp(x, k)
+			stopProfile()
+			order := bw6633fp.Modulus()
+			return took, order
+		default:
+			panic("arithmetic operation not implemented")
 		}
-		stopProfile()
-		order := bw6633fr.Modulus()
-		return took, order
-	case "mul":
-		var x, y bw6633fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Mul(&x, &y)
-		}
-		stopProfile()
-		order := bw6633fr.Modulus()
-		return took, order
-	case "div":
-		var x, y bw6633fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Div(&x, &y)
-		}
-		stopProfile()
-		order := bw6633fr.Modulus()
-		return took, order
-	case "exp":
-		var x bw6633fr.Element
-		x.SetRandom()
-		max := big.NewInt(1000000)
-		k, err := rand.Int(rand.Reader, max)
-		if err != nil {
-			panic(err)
-		}
-		startProfile()
-		x.Exp(x, k)
-		stopProfile()
-		order := bw6633fr.Modulus()
-		return took, order
-	default:
-		panic("arithmetic operation not implemented")
+	} else {
+		panic("field not valid")
 	}
 }
 
 func ExecuteOperationBW6761(operation string) (time.Duration, *big.Int) {
 
-	switch operation {
-	case "add":
-		var x, y bw6761fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Add(&x, &y)
+	if *fField == "scalar" {
+		switch operation {
+		case "add":
+			var x, y bw6761fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Add(&x, &y)
+			}
+			stopProfile()
+			order := bw6761fr.Modulus()
+			return took, order
+		case "sub":
+			var x, y bw6761fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Sub(&x, &y)
+			}
+			stopProfile()
+			order := bw6761fr.Modulus()
+			return took, order
+		case "mul":
+			var x, y bw6761fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Mul(&x, &y)
+			}
+			stopProfile()
+			order := bw6761fr.Modulus()
+			return took, order
+		case "div":
+			var x, y bw6761fr.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Div(&x, &y)
+			}
+			stopProfile()
+			order := bw6761fr.Modulus()
+			return took, order
+		case "exp":
+			var x bw6761fr.Element
+			x.SetRandom()
+			max := big.NewInt(1000000)
+			k, err := rand.Int(rand.Reader, max)
+			if err != nil {
+				panic(err)
+			}
+			startProfile()
+			x.Exp(x, k)
+			stopProfile()
+			order := bw6761fr.Modulus()
+			return took, order
+		default:
+			panic("arithmetic operation not implemented")
 		}
-		stopProfile()
-		order := bw6761fr.Modulus()
-		return took, order
-	case "sub":
-		var x, y bw6761fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Sub(&x, &y)
+	} else if *fField == "base" {
+		switch operation {
+		case "add":
+			var x, y bw6761fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Add(&x, &y)
+			}
+			stopProfile()
+			order := bw6761fp.Modulus()
+			return took, order
+		case "sub":
+			var x, y bw6761fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Sub(&x, &y)
+			}
+			stopProfile()
+			order := bw6761fp.Modulus()
+			return took, order
+		case "mul":
+			var x, y bw6761fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Mul(&x, &y)
+			}
+			stopProfile()
+			order := bw6761fp.Modulus()
+			return took, order
+		case "div":
+			var x, y bw6761fp.Element
+			x.SetRandom()
+			y.SetRandom()
+			startProfile()
+			for i := 0; i < *fCount; i++ {
+				x.Div(&x, &y)
+			}
+			stopProfile()
+			order := bw6761fp.Modulus()
+			return took, order
+		case "exp":
+			var x bw6761fp.Element
+			x.SetRandom()
+			max := big.NewInt(1000000)
+			k, err := rand.Int(rand.Reader, max)
+			if err != nil {
+				panic(err)
+			}
+			startProfile()
+			x.Exp(x, k)
+			stopProfile()
+			order := bw6761fp.Modulus()
+			return took, order
+		default:
+			panic("arithmetic operation not implemented")
 		}
-		stopProfile()
-		order := bw6761fr.Modulus()
-		return took, order
-	case "mul":
-		var x, y bw6761fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Mul(&x, &y)
-		}
-		stopProfile()
-		order := bw6761fr.Modulus()
-		return took, order
-	case "div":
-		var x, y bw6761fr.Element
-		x.SetRandom()
-		y.SetRandom()
-		startProfile()
-		for i := 0; i < *fCount; i++ {
-			x.Div(&x, &y)
-		}
-		stopProfile()
-		order := bw6761fr.Modulus()
-		return took, order
-	case "exp":
-		var x bw6761fr.Element
-		x.SetRandom()
-		max := big.NewInt(1000000)
-		k, err := rand.Int(rand.Reader, max)
-		if err != nil {
-			panic(err)
-		}
-		startProfile()
-		x.Exp(x, k)
-		stopProfile()
-		order := bw6761fr.Modulus()
-		return took, order
-	default:
-		panic("arithmetic operation not implemented")
+	} else {
+		panic("field not valid")
 	}
 }
 
@@ -468,8 +895,8 @@ func benchArithmetic(cmd *cobra.Command, args []string) {
 		bDataArith := util.BenchDataArithmetic{
 			Framework: "gnark",
 			Category:  "arithmetic",
-			Field:     "native",
-			Order:     p.BitLen(),
+			Curve:     curveID.String(),
+			Field:     *fField,
 			Operation: *fOperation,
 			Input:     *fInputPath,
 			MaxRAM:    (m.Sys / 1024 / 1024),
@@ -481,23 +908,23 @@ func benchArithmetic(cmd *cobra.Command, args []string) {
 		}
 	}
 
-	switch *fOrder {
-	case "bn254":
+	switch curveID {
+	case ecc.BN254:
 		took, order := ExecuteOperation254(*fOperation)
 		writeResults(took, *order)
-	case "bls12381":
+	case ecc.BLS12_381:
 		took, order := ExecuteOperationBLS12381(*fOperation)
 		writeResults(took, *order)
-	case "bls12377":
+	case ecc.BLS12_377:
 		took, order := ExecuteOperationBLS12377(*fOperation)
 		writeResults(took, *order)
-	case "bls24315":
+	case ecc.BLS24_315:
 		took, order := ExecuteOperationBLS24315(*fOperation)
 		writeResults(took, *order)
-	case "bw6633":
+	case ecc.BW6_633:
 		took, order := ExecuteOperationBW6633(*fOperation)
 		writeResults(took, *order)
-	case "bw6761":
+	case ecc.BW6_761:
 		took, order := ExecuteOperationBW6761(*fOperation)
 		writeResults(took, *order)
 	default:
@@ -517,7 +944,7 @@ func init() {
 
 	// Possible Operations: add, sub, mul, div, exp
 	fOperation = arithmeticCmd.Flags().String("operation", "add", "operation to benchmark")
-	fOrder = arithmeticCmd.Flags().String("field", "bn254", "operation to benchmark")
+	fField = arithmeticCmd.Flags().String("field", "scalar", "field to benchmark over")
 	fCount = arithmeticCmd.Flags().Int("count", 1, "bench count (time is averaged on number of executions)")
 
 	rootCmd.AddCommand(arithmeticCmd)
