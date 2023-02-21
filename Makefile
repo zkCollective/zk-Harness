@@ -16,6 +16,12 @@ benchmark-circom-arithmetics:
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/circom/config_arithmetics.json  
 
+benchmark-circom-ec:
+	$(info --------------------------------------------)
+	$(info ----------- CIRCOM EC BENCHMARKS -----------)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/circom/config_ec.json  
+
 benchmark-toy-circom:
 	$(info --------------------------------------------)
 	$(info ---------- CIRCOM TOY BENCHMARKS -----------)
