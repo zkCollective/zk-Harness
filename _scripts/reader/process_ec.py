@@ -18,7 +18,22 @@ def build_command_gnark(payload, count):
     """
     Build the command to invoke the gnark ZKP-framework given the payload
     """
-    raise NotImplementedError
+    if payload.groups is not None and payload.curves is not None:
+        commands = [f"./gnark ec --input={inp} --group={group} --operation={op} --curve={curve} --count={count}\n"
+                    for curve in payload.curves
+                    for group in payload.groups
+                    for op, input_path in payload.operations.items()
+                    for inp in helper.get_all_input_files(input_path)
+                    ]
+
+        # Join the commands into a single string
+        command = "".join(commands)
+        # Prepend the command to change the working directory to the gnark directory
+        command = f"cd {helper.GNARK_DIR}; {command}"
+        print(command)
+    else:
+        raise ValueError("Missing payload fields for arithmetic mode")
+    return command
 
 def build_command_circom(payload, count):
     """

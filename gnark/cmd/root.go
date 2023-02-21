@@ -38,7 +38,7 @@ var (
 	fFileType    *string
 	fInputPath   *string
 
-	// Variables Arithmetic
+	// Variables Arithmetic / Curve
 	fOperation *string
 	fField     *string
 	fGroup     *string
@@ -68,6 +68,8 @@ func init() {
 	fProfile = rootCmd.PersistentFlags().String("profile", "none", "type of profile. must be none, trace, cpu or mem")
 	fCurve = rootCmd.PersistentFlags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
 	fFileType = rootCmd.PersistentFlags().String("filetype", "csv", "Type of file to output for benchmarks")
+
+	fOperation = rootCmd.PersistentFlags().String("operation", "None", "operation to benchmark")
 }
 
 func parseFlags() error {

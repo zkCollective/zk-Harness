@@ -82,13 +82,13 @@ func stopProfile() {
 //     }
 // }
 
-func ExecuteOperation254(operation string, x_int float64, y_int float64) (time.Duration, *big.Int) {
+func ExecuteOperation254(operation string, x float64, y float64) (time.Duration, *big.Int) {
 	if *fField == "scalar" {
 		switch operation {
 		case "add":
 			var x, y bn254fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Add(&x, &y)
@@ -98,8 +98,8 @@ func ExecuteOperation254(operation string, x_int float64, y_int float64) (time.D
 			return took, order
 		case "sub":
 			var x, y bn254fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Sub(&x, &y)
@@ -109,8 +109,8 @@ func ExecuteOperation254(operation string, x_int float64, y_int float64) (time.D
 			return took, order
 		case "mul":
 			var x, y bn254fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Mul(&x, &y)
@@ -120,8 +120,8 @@ func ExecuteOperation254(operation string, x_int float64, y_int float64) (time.D
 			return took, order
 		case "div":
 			var x, y bn254fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Div(&x, &y)
@@ -149,8 +149,8 @@ func ExecuteOperation254(operation string, x_int float64, y_int float64) (time.D
 		switch operation {
 		case "add":
 			var x, y bn254fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Add(&x, &y)
@@ -160,8 +160,8 @@ func ExecuteOperation254(operation string, x_int float64, y_int float64) (time.D
 			return took, order
 		case "sub":
 			var x, y bn254fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Sub(&x, &y)
@@ -171,8 +171,8 @@ func ExecuteOperation254(operation string, x_int float64, y_int float64) (time.D
 			return took, order
 		case "mul":
 			var x, y bn254fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Mul(&x, &y)
@@ -182,8 +182,8 @@ func ExecuteOperation254(operation string, x_int float64, y_int float64) (time.D
 			return took, order
 		case "div":
 			var x, y bn254fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Div(&x, &y)
@@ -212,14 +212,14 @@ func ExecuteOperation254(operation string, x_int float64, y_int float64) (time.D
 	}
 }
 
-func ExecuteOperationBLS12381(operation string, x_int float64, y_int float64) (time.Duration, *big.Int) {
+func ExecuteOperationBLS12381(operation string, x float64, y float64) (time.Duration, *big.Int) {
 
 	if *fField == "scalar" {
 		switch operation {
 		case "add":
 			var x, y bls12381fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Add(&x, &y)
@@ -229,8 +229,8 @@ func ExecuteOperationBLS12381(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "sub":
 			var x, y bls12381fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Sub(&x, &y)
@@ -240,8 +240,8 @@ func ExecuteOperationBLS12381(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "mul":
 			var x, y bls12381fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Mul(&x, &y)
@@ -251,8 +251,8 @@ func ExecuteOperationBLS12381(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "div":
 			var x, y bls12381fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Div(&x, &y)
@@ -280,8 +280,8 @@ func ExecuteOperationBLS12381(operation string, x_int float64, y_int float64) (t
 		switch operation {
 		case "add":
 			var x, y bls12381fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Add(&x, &y)
@@ -291,8 +291,8 @@ func ExecuteOperationBLS12381(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "sub":
 			var x, y bls12381fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Sub(&x, &y)
@@ -302,8 +302,8 @@ func ExecuteOperationBLS12381(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "mul":
 			var x, y bls12381fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Mul(&x, &y)
@@ -313,8 +313,8 @@ func ExecuteOperationBLS12381(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "div":
 			var x, y bls12381fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Div(&x, &y)
@@ -343,14 +343,14 @@ func ExecuteOperationBLS12381(operation string, x_int float64, y_int float64) (t
 	}
 }
 
-func ExecuteOperationBLS12377(operation string, x_int float64, y_int float64) (time.Duration, *big.Int) {
+func ExecuteOperationBLS12377(operation string, x float64, y float64) (time.Duration, *big.Int) {
 
 	if *fField == "scalar" {
 		switch operation {
 		case "add":
 			var x, y bls12377fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Add(&x, &y)
@@ -360,8 +360,8 @@ func ExecuteOperationBLS12377(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "sub":
 			var x, y bls12377fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Sub(&x, &y)
@@ -371,8 +371,8 @@ func ExecuteOperationBLS12377(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "mul":
 			var x, y bls12377fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Mul(&x, &y)
@@ -382,8 +382,8 @@ func ExecuteOperationBLS12377(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "div":
 			var x, y bls12377fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Div(&x, &y)
@@ -411,8 +411,8 @@ func ExecuteOperationBLS12377(operation string, x_int float64, y_int float64) (t
 		switch operation {
 		case "add":
 			var x, y bls12377fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Add(&x, &y)
@@ -422,8 +422,8 @@ func ExecuteOperationBLS12377(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "sub":
 			var x, y bls12377fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Sub(&x, &y)
@@ -433,8 +433,8 @@ func ExecuteOperationBLS12377(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "mul":
 			var x, y bls12377fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Mul(&x, &y)
@@ -444,8 +444,8 @@ func ExecuteOperationBLS12377(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "div":
 			var x, y bls12377fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Div(&x, &y)
@@ -474,14 +474,14 @@ func ExecuteOperationBLS12377(operation string, x_int float64, y_int float64) (t
 	}
 }
 
-func ExecuteOperationBLS24315(operation string, x_int float64, y_int float64) (time.Duration, *big.Int) {
+func ExecuteOperationBLS24315(operation string, x float64, y float64) (time.Duration, *big.Int) {
 
 	if *fField == "scalar" {
 		switch operation {
 		case "add":
 			var x, y bls24315fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Add(&x, &y)
@@ -491,8 +491,8 @@ func ExecuteOperationBLS24315(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "sub":
 			var x, y bls24315fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Sub(&x, &y)
@@ -502,8 +502,8 @@ func ExecuteOperationBLS24315(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "mul":
 			var x, y bls24315fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Mul(&x, &y)
@@ -513,8 +513,8 @@ func ExecuteOperationBLS24315(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "div":
 			var x, y bls24315fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Div(&x, &y)
@@ -542,8 +542,8 @@ func ExecuteOperationBLS24315(operation string, x_int float64, y_int float64) (t
 		switch operation {
 		case "add":
 			var x, y bls24315fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Add(&x, &y)
@@ -553,8 +553,8 @@ func ExecuteOperationBLS24315(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "sub":
 			var x, y bls24315fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Sub(&x, &y)
@@ -564,8 +564,8 @@ func ExecuteOperationBLS24315(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "mul":
 			var x, y bls24315fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Mul(&x, &y)
@@ -575,8 +575,8 @@ func ExecuteOperationBLS24315(operation string, x_int float64, y_int float64) (t
 			return took, order
 		case "div":
 			var x, y bls24315fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Div(&x, &y)
@@ -605,14 +605,14 @@ func ExecuteOperationBLS24315(operation string, x_int float64, y_int float64) (t
 	}
 }
 
-func ExecuteOperationBW6633(operation string, x_int float64, y_int float64) (time.Duration, *big.Int) {
+func ExecuteOperationBW6633(operation string, x float64, y float64) (time.Duration, *big.Int) {
 
 	if *fField == "scalar" {
 		switch operation {
 		case "add":
 			var x, y bw6633fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Add(&x, &y)
@@ -622,8 +622,8 @@ func ExecuteOperationBW6633(operation string, x_int float64, y_int float64) (tim
 			return took, order
 		case "sub":
 			var x, y bw6633fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Sub(&x, &y)
@@ -633,8 +633,8 @@ func ExecuteOperationBW6633(operation string, x_int float64, y_int float64) (tim
 			return took, order
 		case "mul":
 			var x, y bw6633fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Mul(&x, &y)
@@ -644,8 +644,8 @@ func ExecuteOperationBW6633(operation string, x_int float64, y_int float64) (tim
 			return took, order
 		case "div":
 			var x, y bw6633fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Div(&x, &y)
@@ -673,8 +673,8 @@ func ExecuteOperationBW6633(operation string, x_int float64, y_int float64) (tim
 		switch operation {
 		case "add":
 			var x, y bw6633fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Add(&x, &y)
@@ -684,8 +684,8 @@ func ExecuteOperationBW6633(operation string, x_int float64, y_int float64) (tim
 			return took, order
 		case "sub":
 			var x, y bw6633fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Sub(&x, &y)
@@ -695,8 +695,8 @@ func ExecuteOperationBW6633(operation string, x_int float64, y_int float64) (tim
 			return took, order
 		case "mul":
 			var x, y bw6633fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Mul(&x, &y)
@@ -706,8 +706,8 @@ func ExecuteOperationBW6633(operation string, x_int float64, y_int float64) (tim
 			return took, order
 		case "div":
 			var x, y bw6633fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Div(&x, &y)
@@ -736,14 +736,14 @@ func ExecuteOperationBW6633(operation string, x_int float64, y_int float64) (tim
 	}
 }
 
-func ExecuteOperationBW6761(operation string, x_int float64, y_int float64) (time.Duration, *big.Int) {
+func ExecuteOperationBW6761(operation string, x float64, y float64) (time.Duration, *big.Int) {
 
 	if *fField == "scalar" {
 		switch operation {
 		case "add":
 			var x, y bw6761fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Add(&x, &y)
@@ -753,8 +753,8 @@ func ExecuteOperationBW6761(operation string, x_int float64, y_int float64) (tim
 			return took, order
 		case "sub":
 			var x, y bw6761fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Sub(&x, &y)
@@ -764,8 +764,8 @@ func ExecuteOperationBW6761(operation string, x_int float64, y_int float64) (tim
 			return took, order
 		case "mul":
 			var x, y bw6761fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Mul(&x, &y)
@@ -775,8 +775,8 @@ func ExecuteOperationBW6761(operation string, x_int float64, y_int float64) (tim
 			return took, order
 		case "div":
 			var x, y bw6761fr.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Div(&x, &y)
@@ -804,8 +804,8 @@ func ExecuteOperationBW6761(operation string, x_int float64, y_int float64) (tim
 		switch operation {
 		case "add":
 			var x, y bw6761fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Add(&x, &y)
@@ -815,8 +815,8 @@ func ExecuteOperationBW6761(operation string, x_int float64, y_int float64) (tim
 			return took, order
 		case "sub":
 			var x, y bw6761fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Sub(&x, &y)
@@ -826,8 +826,8 @@ func ExecuteOperationBW6761(operation string, x_int float64, y_int float64) (tim
 			return took, order
 		case "mul":
 			var x, y bw6761fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Mul(&x, &y)
@@ -837,8 +837,8 @@ func ExecuteOperationBW6761(operation string, x_int float64, y_int float64) (tim
 			return took, order
 		case "div":
 			var x, y bw6761fp.Element
-			x.SetInterface(x_int)
-			y.SetInterface(y_int)
+			x.SetInterface(x)
+			y.SetInterface(y)
 			startProfile()
 			for i := 0; i < *fCount; i++ {
 				x.Div(&x, &y)
@@ -948,7 +948,6 @@ func init() {
 	}
 
 	// Possible Operations: add, sub, mul, exp
-	fOperation = arithmeticCmd.Flags().String("operation", "add", "operation to benchmark")
 	fField = arithmeticCmd.Flags().String("field", "scalar", "field to benchmark over")
 
 	rootCmd.AddCommand(arithmeticCmd)

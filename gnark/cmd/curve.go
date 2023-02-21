@@ -691,7 +691,7 @@ func benchCurveOperations(cmd *cobra.Command, args []string) {
 
 		bDataArith := util.BenchDataCurve{
 			Framework: "gnark",
-			Category:  "arithmetic",
+			Category:  "curve",
 			Curve:     curveID.String(),
 			Operation: operationString,
 			Input:     *fInputPath,
@@ -738,7 +738,6 @@ func init() {
 
 	// Possible Operations: add, sub, mul, div, exp
 	fGroup = curveCmd.Flags().String("group", "None", "group to benchmark")
-	fOperation = curveCmd.Flags().String("operation", "scalar-multiplication", "operation to benchmark")
 
 	rootCmd.AddCommand(curveCmd)
 }
