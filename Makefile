@@ -22,6 +22,12 @@ benchmark-toy-circom:
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/circom/config_all_toy.json  
 
+benchmark-gnark-arithmetics:
+	$(info --------------------------------------------)
+	$(info ------ CIRCOM ARITHMETICS BENCHMARKS -------)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/gnark/config_arithmetics.json  
+
 benchmark-toy-gnark:
 	$(info --------------------------------------------)
 	$(info ----------- GNARK TOY BENCHMARKS -----------)
