@@ -2,6 +2,7 @@
     "project": "circom",
     "project_url": "https://github.com/iden3/circom",
     "category": "circuit",
+    "count": 1,
     "payload": {
         "backend": [
             "groth16"
