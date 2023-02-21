@@ -35,6 +35,7 @@ circuits = list(set(circuits_df['circuit']))
 
 frameworks_arithmetics = list(set(arithmetics_df['framework']))
 operation_arithmetics = list(set(arithmetics_df['operation']))
+field_arithmetics = list(set(arithmetics_df['field']))
 
 app.layout = html.Div([
     html.H4('ZKP Benchmarking'),
@@ -89,6 +90,12 @@ app.layout = html.Div([
                 multi=True
             ),
             dcc.Dropdown(
+                id="field-arithmetics-dropdown",
+                options=field_arithmetics,
+                value='base',
+                multi=False
+            ),
+            dcc.Dropdown(
                 id="y-axis-line-dropdown",
                 options=['time', 'ram'],
                 value='time',
@@ -130,15 +137,16 @@ def update_bar_chart(curves_options, backends_options, framework_options, circui
     Output("arithmetics-line-graph", "figure"),
     Input("frameworks-arithmetics-dropdown", "value"),
     Input("opetation-arithmetics-dropdown", "value"),
+    Input("field-arithmetics-dropdown", "value"),
     Input("y-axis-line-dropdown", "value"))
-def update_arithmetics_line_chart(framework_options, operations_options, y_axis):
+def update_arithmetics_line_chart(framework_options, operations_options, field_option, y_axis):
     ndf = arithmetics_df[
         (arithmetics_df['framework'].isin(framework_options)) &
         (arithmetics_df['operation'].isin(operations_options)) &
-        (arithmetics_df['field'] == 'native')
+        (arithmetics_df['field'] == field_option)
     ]
-    ndf = ndf.sort_values('p')
-    fig = px.line(ndf, x='p', y=y_axis, color='operation',
+    # TODO sort by curve fields given a lookup
+    fig = px.line(ndf, x='curve', y=y_axis, color='operation',
                            facet_col="framework"
                 )
     return fig

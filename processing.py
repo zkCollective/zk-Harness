@@ -178,26 +178,26 @@ class CircuitLogRow(LogRow):
 class ArithmeticLogRow(LogRow):
     # We need category to easily verify that we pass the correct number of args.
     def __init__(
-        self, framework, category, field, p, operation, input_path, ram, time,
-        nb_physical_cores, nb_logical_cores, cpu
+        self, framework, category, curve, field, operation, input_path, ram, time,
+        nb_physical_cores, nb_logical_cores, machine
     ):
         super().__init__(framework)
         # TODO sanity checks
         # Check for caps
+        self.curve =  curve
         self.field =  field
-        self.p = p
         self.operation = operation
         self.input_path = input_path
         self.ram = int(ram)
         self.time = int(time)
         self.nb_physical_cores = int(nb_physical_cores)
         self.nb_logical_cores = int(nb_logical_cores)
-        self.cpu = cpu
+        self.machine = machine
 
     def get_static_rows(self):
-        return (f"{self.framework},{self.field},{self.p},{self.operation},"
+        return (f"{self.framework},{self.curve},{self.field},{self.operation},"
                 f"{self.input_path},{self.nb_physical_cores},"
-                f"{self.nb_logical_cores},{self.cpu}")
+                f"{self.nb_logical_cores},{self.machine}")
 
 
 def parse_logs(log_files):
