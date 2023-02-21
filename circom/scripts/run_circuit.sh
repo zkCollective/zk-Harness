@@ -141,7 +141,7 @@ if [ ! -z "$RES" ]; then
 
     # Check if RES file already exist.
     if [ ! -f "$RES" ]; then
-        echo "framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,machine" > ${RES}
+        echo "framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,cpu" > ${RES}
     fi
     for (( i=0; i<${arraylength}; i++ ));
     do

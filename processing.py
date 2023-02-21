@@ -150,7 +150,7 @@ class CircuitLogRow(LogRow):
     def __init__(
         self, framework, category, backend, curve, circuit, input_path, operation,
         nb_constraints, nb_secret, nb_public, ram, time, proof, nb_physical_cores,
-        nb_logical_cores, machine
+        nb_logical_cores, cpu
     ):
         super().__init__(framework)
         # TODO sanity checks
@@ -168,20 +168,20 @@ class CircuitLogRow(LogRow):
         self.proof = int(proof) if proof != '' else 0
         self.nb_physical_cores = int(nb_physical_cores)
         self.nb_logical_cores = int(nb_logical_cores)
-        self.machine = machine
+        self.cpu = cpu
 
     def get_static_rows(self):
         return (f"{self.framework},{self.backend},{self.curve},{self.circuit},"
                 f"{self.input_path},{self.operation},{self.nb_constraints},"
                 f"{self.nb_secret},{self.nb_public},{self.proof},"
-                f"{self.nb_physical_cores},{self.nb_logical_cores},{self.machine}")
+                f"{self.nb_physical_cores},{self.nb_logical_cores},{self.cpu}")
 
 
 class ArithmeticLogRow(LogRow):
     # We need category to easily verify that we pass the correct number of args.
     def __init__(
         self, framework, category, curve, field, operation, input_path, ram, time,
-        nb_physical_cores, nb_logical_cores, machine
+        nb_physical_cores, nb_logical_cores, cpu
     ):
         super().__init__(framework)
         # TODO sanity checks
@@ -194,12 +194,12 @@ class ArithmeticLogRow(LogRow):
         self.time = int(time)
         self.nb_physical_cores = int(nb_physical_cores)
         self.nb_logical_cores = int(nb_logical_cores)
-        self.machine = machine
+        self.cpu = cpu
 
     def get_static_rows(self):
         return (f"{self.framework},{self.curve},{self.field},{self.operation},"
                 f"{self.input_path},{self.nb_physical_cores},"
-                f"{self.nb_logical_cores},{self.machine}")
+                f"{self.nb_logical_cores},{self.cpu}")
 
 
 def parse_logs(log_files):

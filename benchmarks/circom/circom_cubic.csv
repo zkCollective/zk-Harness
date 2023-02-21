@@ -1,6 +1,6 @@
-framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,machine
-circom,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,18,70,,1,1,Apple M1 Max
-circom,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,32,60,,1,1,Apple M1 Max
-circom,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,172,2060,,1,1,Apple M1 Max
-circom,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,154,760,802,1,1,Apple M1 Max
-circom,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,133,680,,1,1,Apple M1 Max
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,cpu
+circom,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,16,130,,1,1,Apple M1 Max
+circom,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,32,50,,1,1,Apple M1 Max
+circom,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,171,2090,,1,1,Apple M1 Max
+circom,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,161,750,806,1,1,Apple M1 Max
+circom,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,131,680,,1,1,Apple M1 Max

@@ -41,4 +41,4 @@ test-simple:
 	python3 -m _scripts.reader --config _input/config/gnark/config_gnark_simple.json  
 
 clean:
-	rm -r $(gnark_benchmarks_directory)/*  $(circom_benchmarks_directory)/*
+	rm -rf $(gnark_benchmarks_directory)/*  $(circom_benchmarks_directory)/*
