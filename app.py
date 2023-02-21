@@ -23,7 +23,7 @@ View Source on <a href="{}">Github</a>
 LOGS = "benchmarks"
 
 
-circuits_df, arithmetics_df = analyse_logs(LOGS, logging.CRITICAL)
+circuits_df, arithmetics_df, ec_df = analyse_logs(LOGS, logging.CRITICAL)
 
 app = Dash(__name__)
 
@@ -35,6 +35,9 @@ circuits = list(set(circuits_df['circuit']))
 frameworks_arithmetics = list(set(arithmetics_df['framework']))
 operation_arithmetics = list(set(arithmetics_df['operation']))
 field_arithmetics = list(set(arithmetics_df['field']))
+
+frameworks_ec = list(set(ec_df['framework']))
+operation_ec = list(set(ec_df['operation']))
 
 app.layout = html.Div([
     html.H4('ZKP Benchmarking'),
@@ -103,6 +106,26 @@ app.layout = html.Div([
             dcc.Graph(id="arithmetics-line-graph"),
         ]),
         dcc.Tab(label='Elliptic Curves Benchmarks', children=[
+            html.Br(),
+            dcc.Dropdown(
+                id="frameworks-ec-dropdown",
+                options=frameworks_ec,
+                value=frameworks_ec,
+                multi=True
+            ),
+            dcc.Dropdown(
+                id="opetation-ec-dropdown",
+                options=operation_ec,
+                value=operation_ec,
+                multi=True
+            ),
+            dcc.Dropdown(
+                id="y-axis-line-ec-dropdown",
+                options=['time', 'ram'],
+                value='time',
+                multi=False
+            ),
+            dcc.Graph(id="ec-line-graph"),
             
         ]),
     ]),
@@ -143,6 +166,23 @@ def update_arithmetics_line_chart(framework_options, operations_options, field_o
         (arithmetics_df['framework'].isin(framework_options)) &
         (arithmetics_df['operation'].isin(operations_options)) &
         (arithmetics_df['field'] == field_option)
+    ]
+    # TODO sort by curve fields given a lookup
+    fig = px.line(ndf, x='curve', y=y_axis, color='operation',
+                           facet_col="framework"
+                )
+    return fig
+
+
+@app.callback(
+    Output("ec-line-graph", "figure"),
+    Input("frameworks-ec-dropdown", "value"),
+    Input("opetation-ec-dropdown", "value"),
+    Input("y-axis-line-ec-dropdown", "value"))
+def update_ec_line_chart(framework_options, operations_options, y_axis):
+    ndf = ec_df[
+        (ec_df['framework'].isin(framework_options)) &
+        (ec_df['operation'].isin(operations_options))
     ]
     # TODO sort by curve fields given a lookup
     fig = px.line(ndf, x='curve', y=y_axis, color='operation',
