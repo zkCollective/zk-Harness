@@ -128,7 +128,7 @@ async function run () {
     const ram = process.memoryUsage().heapUsed;
     const machine = os.cpus()[0].model;
 
-    result_string += "circom,arithmetics," + curve_name + "," + field_name + "," + operation + "," + ram + "," + elapsed + ",1,1," + machine + "\n";
+    result_string += "circom,arithmetic," + curve_name + "," + field_name + "," + operation + "," + path_name + "," + ram + "," + elapsed + ",1,1," + machine + "\n";
 
     fs.appendFileSync(path_name, result_string, function(err) {
         if(err) {
