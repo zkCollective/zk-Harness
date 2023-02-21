@@ -79,7 +79,7 @@ class LogRow:
                 if row[1] == "arithmetic":
                     cls = ArithmeticLogRow
                 elif row[1] == "ec":
-                    raise NotImplementedError("EC not implemented")
+                    cls = ECLogRow
                 elif row[1] == "circuit":
                     cls = CircuitLogRow
                 else:
@@ -202,6 +202,30 @@ class ArithmeticLogRow(LogRow):
                 f"{self.nb_logical_cores},{self.cpu}")
 
 
+class ECLogRow(LogRow):
+    # We need category to easily verify that we pass the correct number of args.
+    def __init__(
+        self, framework, category, curve, operation, input_path, ram, time,
+        nb_physical_cores, nb_logical_cores, cpu
+    ):
+        super().__init__(framework)
+        # TODO sanity checks
+        # Check for caps
+        self.curve =  curve
+        self.operation = operation
+        self.input_path = input_path
+        self.ram = int(ram)
+        self.time = int(time)
+        self.nb_physical_cores = int(nb_physical_cores)
+        self.nb_logical_cores = int(nb_logical_cores)
+        self.cpu = cpu
+
+    def get_static_rows(self):
+        return (f"{self.framework},{self.curve},{self.operation},"
+                f"{self.input_path},{self.nb_physical_cores},"
+                f"{self.nb_logical_cores},{self.cpu}")
+
+
 def parse_logs(log_files):
     res = []
     for lf in log_files:
@@ -261,7 +285,8 @@ def analyse_logs(logs, level=logging.INFO):
     # Circuits analyses
     circuits_df = logs.get_rows_as_df(CircuitLogRow)
     arithmetics_df = logs.get_rows_as_df(ArithmeticLogRow)
-    return circuits_df, arithmetics_df
+    ec_df = logs.get_rows_as_df(ECLogRow)
+    return circuits_df, arithmetics_df, ec_df
 
 
 def main():
