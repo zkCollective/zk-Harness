@@ -6,7 +6,7 @@
     "payload": {
         "curves": [
             "bn128",
-            "bls12381"
+            "bls12_381"
         ], 
         "groups": [
             "g1",
