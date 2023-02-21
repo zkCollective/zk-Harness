@@ -3,6 +3,7 @@ import json
 import subprocess
 
 from . import process_circuit
+from . import process_arithmetic
 
 def circuit_processing(project, config, count):
     # Extract relevant fields from config, build & execute command
@@ -10,12 +11,19 @@ def circuit_processing(project, config, count):
     commands = process_circuit.build_command(project, payload, count)
     subprocess.run(commands, shell=True, check=True)
 
+def arithmeric_processing(project, config, count):
+    # Extract relevant fields from config, build & execute command
+    payload = process_arithmetic.get_arithmetic_payload(config)
+    commands = process_arithmetic.build_command(project, payload, count)
+    subprocess.run(commands, shell=True, check=True)
+
 def default_case():
     raise ValueError("Benchmark category not integrated into the benchmarking framework!")
 
 # TODO - Add other modes (arithmetic & curves)
 categories = {
-    "circuit": circuit_processing
+    "circuit": circuit_processing,
+    "arithmetic": arithmeric_processing
 }
 
 def parse_config(config_path):

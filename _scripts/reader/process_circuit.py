@@ -4,43 +4,11 @@ import os
 
 from collections import namedtuple
 
+from . import helper
+
 OPERATIONS = [
     "compile", "setup", "witness", "prove", "verify"
 ]
-# GENERAL PATHS
-MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-BENCHMARKS_DIR = os.path.join(MAIN_DIR, "benchmarks")
-# GNARK PATHS
-GNARK_DIR = os.path.join(MAIN_DIR, "gnark")
-# CIRCOM PATHS
-CIRCOM_DIR = os.path.join(MAIN_DIR, "circom")
-CIRCOM_BENCHMAKR_DIR = os.path.join(BENCHMARKS_DIR, "circom")
-CIRCOM_SCRIPT = os.path.join(CIRCOM_DIR, "scripts", "run_circuit.sh")
-CIRCOM_CIRCUITS_DIR = os.path.join(CIRCOM_DIR, "circuits", "benchmarks")
-CIRCOM_PTAU = os.path.join(CIRCOM_DIR, "phase1", "powersOfTau28_hez_final_16.ptau")
-
-
-def get_all_input_files(input_path, abspath=False):
-    """
-    Given a input_path return the full path of the file or if it is a directory
-    return the full paths of all JSON files in this directory
-    """
-    if not os.path.exists(input_path):
-        raise ValueError(f"Input: {input_path} does not exist")
-    if os.path.isfile(input_path):
-        if not input_path.endswith(".json"):
-            raise ValueError(f"Input: {input_path} is not a JSON file")
-        return [os.path.abspath(input_path)] if abspath else [input_path]
-    # input_path is a directory
-    files = []
-    # NOTE this operation is not recursive 
-    for f in os.listdir(input_path):
-        file = os.path.join(input_path, f)
-        if os.path.isfile(file) and file.endswith(".json"):
-            files.append(os.path.abspath(file) if abspath else file)
-    if len(files) == 0:
-        raise ValueError(f"Input: no input file detected in {input_path}")
-    return files
 
 
 def build_command_gnark(payload, count):
@@ -53,13 +21,13 @@ def build_command_gnark(payload, count):
                     for backend in payload.backend
                     for curve in payload.curves
                     for circ, input_path in payload.circuit.items()
-                    for inp in get_all_input_files(input_path)
+                    for inp in helper.get_all_input_files(input_path)
                     for op in payload.operation]
 
         # Join the commands into a single string
         command = "".join(commands)
         # Prepend the command to change the working directory to the gnark directory
-        command = f"cd {GNARK_DIR}; {command}"
+        command = f"cd {helper.GNARK_DIR}; {command}"
         print(command)
     else:
         raise ValueError("Missing payload fields for circuit mode")
@@ -81,14 +49,14 @@ def build_command_circom(payload, count):
     commands = []
     for circuit, input_path in payload.circuit.items():
         # TODO check if circuit exists
-        for inp in get_all_input_files(input_path):
+        for inp in helper.get_all_input_files(input_path):
             command = "{script} {circuit_file} {circuit_name} {input_path} {ptau} {benchmark}\n".format(
-                script=CIRCOM_SCRIPT,
-                circuit_file=os.path.join(CIRCOM_CIRCUITS_DIR, circuit, "circuit.circom"),
+                script=helper.CIRCOM_SCRIPT,
+                circuit_file=os.path.join(helper.CIRCOM_CIRCUITS_DIR, circuit, "circuit.circom"),
                 circuit_name=circuit,
                 input_path=inp,
-                ptau=CIRCOM_PTAU,
-                benchmark=os.path.join(CIRCOM_BENCHMAKR_DIR, "circom_" + circuit + ".csv")
+                ptau=helper.CIRCOM_PTAU,
+                benchmark=os.path.join(helper.CIRCOM_BENCHMAKR_DIR, "circom_" + circuit + ".csv")
             )
             commands.append(command)
     command = "".join(commands)
