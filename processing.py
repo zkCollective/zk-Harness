@@ -93,6 +93,7 @@ class LogRow:
                         ("nbPublic", "nb_public"),
                         ("nbPhysicalCores", "nb_physical_cores"),
                         ("nbLogicalCores", "nb_logical_cores"),
+                        ("proofSize", "proof"),
                         ("ram(mb)", "ram"),
                         ("time(ms)", "time"),
                         ("p(bitlength)", "p"),
@@ -148,8 +149,8 @@ class CircuitLogRow(LogRow):
     # We need catrgory to easily verify that we pass the correct number of args.
     def __init__(
         self, framework, category, backend, curve, circuit, input_path, operation,
-        nb_constraints, nb_secret, nb_public, ram, time, nb_physical_cores,
-        nb_logical_cores, cpu
+        nb_constraints, nb_secret, nb_public, ram, time, proof, nb_physical_cores,
+        nb_logical_cores, machine
     ):
         super().__init__(framework)
         # TODO sanity checks
@@ -164,15 +165,16 @@ class CircuitLogRow(LogRow):
         self.nb_public = int(nb_public)
         self.ram = int(ram)
         self.time = int(time)
+        self.proof = int(proof) if proof != '' else 0
         self.nb_physical_cores = int(nb_physical_cores)
         self.nb_logical_cores = int(nb_logical_cores)
-        self.cpu = cpu
+        self.machine = machine
 
     def get_static_rows(self):
         return (f"{self.framework},{self.backend},{self.curve},{self.circuit},"
                 f"{self.input_path},{self.operation},{self.nb_constraints},"
-                f"{self.nb_secret},{self.nb_public},{self.nb_physical_cores},"
-                f"{self.nb_logical_cores},{self.cpu}")
+                f"{self.nb_secret},{self.nb_public},{self.proof},"
+                f"{self.nb_physical_cores},{self.nb_logical_cores},{self.machine}")
 
 
 class ArithmeticLogRow(LogRow):

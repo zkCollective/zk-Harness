@@ -32,7 +32,6 @@ backends = list(set(circuits_df['backend']))
 frameworks = list(set(circuits_df['framework']))
 circuits = list(set(circuits_df['circuit']))
 
-
 frameworks_arithmetics = list(set(arithmetics_df['framework']))
 operation_arithmetics = list(set(arithmetics_df['operation']))
 field_arithmetics = list(set(arithmetics_df['field']))
@@ -69,7 +68,7 @@ app.layout = html.Div([
             ),
             dcc.Dropdown(
                 id="y-axis-dropdown",
-                options=['time', 'ram'],
+                options=['time', 'ram', 'proof'],
                 value='time',
                 multi=False
             ),
