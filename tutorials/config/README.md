@@ -40,8 +40,8 @@ The number of runs over which a given computation specified by the config should
 
     ``curves`` specifies the fields that should be benchmarked. The current values are supported for the different ZKP-frameworks:
 
-  - ``gnark`` - Benchmarks are executed over the subgroup of prime order ``r`` of the based field F_p.
-    - ``bn254``, ``bls12_381``, ``bls12_377``, ``bls24_315``, ``bw6_633``, ``bw6_761``
+    - ``gnark`` - Benchmarks are executed over the subgroup of prime order ``r`` of the based field F_p.
+      - ``bn254``, ``bls12_381``, ``bls12_377``, ``bls24_315``, ``bw6_633``, ``bw6_761``
 
   - ``fields``
 
@@ -59,9 +59,17 @@ The number of runs over which a given computation specified by the config should
 
 - ``payload`` specification for ``mode``==``curve_operation``
 
-```diff
-- TODO - Specify payload for arithmetic mode
-```
+  - ``curves``
+
+    ``curves`` specifies the fields that should be benchmarked.
+  
+  - ``groups``
+
+    ``groups`` specifies the groups over which to benchmark the given operations
+
+  - ``operations``
+
+    ``operations`` specifies the operations to benchmark over the specified groups / curve combination. This value can take the values ``scalar-multiplication``, ``multi-scalar-multiplication``, ``pairing``
 
 - ``payload`` specification for ``mode``==``circuit``
   - ``backend``
