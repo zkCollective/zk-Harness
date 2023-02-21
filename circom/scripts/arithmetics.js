@@ -10,11 +10,11 @@ const buildBn128 = ffjs.buildBn128;
 const buildBls12381 = ffjs.buildBls12381;
 const F1Field = ffjs.F1Field;
 
-async function getCurve(curve_name) {
+async function getCurve(curve_name, singleThread) {
     if (curve_name == "bn128") {
-        curve = await buildBn128();
+        curve = await buildBn128(singleThread);
     } else if (curve_name == "bls12381") {
-        curve = await buildBls12381();
+        curve = await buildBls12381(singleThread);
     } else {
         throw new Error(`Curve not supported: ${curve}`);
     }
@@ -67,6 +67,7 @@ function benchmark(field, operation, x, y, count) {
 
 
 async function run () {
+    const singleThread = true;
     var result_string = "";
     // Read Arguments
     // The first two arguments are node and app.js
@@ -76,7 +77,7 @@ async function run () {
     console.log("Process Arithmetics: " + process.argv[2] + " " + process.argv[3] + " " + process.argv[4] + " " + process.argv[5] + " " + process.argv[6] + " " + process.argv[7]);
     // Curve of which we should measure the native or scalar field operations
     const curve_name = process.argv[2];
-    const curve = await getCurve(curve_name);
+    const curve = await getCurve(curve_name, singleThread);
     // Field scalr or base 
     const field_name = process.argv[3];
     var field;
