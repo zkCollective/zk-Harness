@@ -1,0 +1,13 @@
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,cpu
+gnark,circuit,plonk,bn254,exponentiate,_input/circuit/exponentiate/input_1.json,setup,55,1,2,24,7,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bn254,exponentiate,_input/circuit/exponentiate/input_1.json,prove,55,1,2,27,14,856,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bn254,exponentiate,_input/circuit/exponentiate/input_1.json,verify,55,1,2,27,4,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,exponentiate,_input/circuit/exponentiate/input_1.json,setup,55,1,2,27,10,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,exponentiate,_input/circuit/exponentiate/input_1.json,prove,55,1,2,31,14,1144,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls12_377,exponentiate,_input/circuit/exponentiate/input_1.json,verify,55,1,2,31,5,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bw6_761,exponentiate,_input/circuit/exponentiate/input_1.json,setup,55,1,2,35,63,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bw6_761,exponentiate,_input/circuit/exponentiate/input_1.json,prove,55,1,2,35,88,2136,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bw6_761,exponentiate,_input/circuit/exponentiate/input_1.json,verify,55,1,2,35,31,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,exponentiate,_input/circuit/exponentiate/input_1.json,setup,55,1,2,27,8,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,exponentiate,_input/circuit/exponentiate/input_1.json,prove,55,1,2,27,10,1000,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,plonk,bls24_315,exponentiate,_input/circuit/exponentiate/input_1.json,verify,55,1,2,27,6,0,1,1,VirtualApple @ 2.50GHz

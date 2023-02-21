@@ -1,0 +1,25 @@
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,cpu
+gnark,circuit,groth16,bn254,mimc,_input/circuit/mimc/input_1.json,setup,331,1,2,19,52,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,mimc,_input/circuit/mimc/input_1.json,witness,331,1,2,14,0,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,mimc,_input/circuit/mimc/input_1.json,prove,331,1,2,19,12,384,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,mimc,_input/circuit/mimc/input_1.json,verify,331,1,2,19,1,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,mimc,_input/circuit/mimc/input_2.json,setup,331,1,2,19,53,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,mimc,_input/circuit/mimc/input_2.json,witness,331,1,2,18,0,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,mimc,_input/circuit/mimc/input_2.json,prove,331,1,2,19,10,384,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,mimc,_input/circuit/mimc/input_2.json,verify,331,1,2,19,1,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,mimc,_input/circuit/mimc/input_1.json,setup,311,1,2,19,93,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,mimc,_input/circuit/mimc/input_1.json,witness,311,1,2,14,0,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,mimc,_input/circuit/mimc/input_1.json,prove,311,1,2,19,17,576,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,mimc,_input/circuit/mimc/input_1.json,verify,311,1,2,20,2,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,mimc,_input/circuit/mimc/input_2.json,setup,311,1,2,19,88,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,mimc,_input/circuit/mimc/input_2.json,witness,311,1,2,13,0,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,mimc,_input/circuit/mimc/input_2.json,prove,311,1,2,19,17,576,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,mimc,_input/circuit/mimc/input_2.json,verify,311,1,2,19,2,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,mimc,_input/circuit/mimc/input_1.json,setup,328,1,2,23,118,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,mimc,_input/circuit/mimc/input_1.json,witness,328,1,2,13,0,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,mimc,_input/circuit/mimc/input_1.json,prove,328,1,2,19,22,640,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,mimc,_input/circuit/mimc/input_1.json,verify,328,1,2,19,4,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,mimc,_input/circuit/mimc/input_2.json,setup,328,1,2,23,114,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,mimc,_input/circuit/mimc/input_2.json,witness,328,1,2,17,0,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,mimc,_input/circuit/mimc/input_2.json,prove,328,1,2,19,22,640,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,mimc,_input/circuit/mimc/input_2.json,verify,328,1,2,19,4,0,1,1,VirtualApple @ 2.50GHz
