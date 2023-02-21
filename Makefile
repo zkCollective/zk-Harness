@@ -5,13 +5,6 @@ benchmark_directory = benchmarks
 gnark_directory = gnark
 gnark_benchmarks_directory = $(benchmark_directory)/$(gnark_directory)
 
-circom_directory = circom
-circom_benchmarks_directory = $(benchmark_directory)/$(circom_directory)
-circom_script = $(circom_directory)/scripts/run_circuit.sh
-circom_circuits = $(circom_directory)/circuits/benchmarks
-circom_inputs = $(circom_directory)/inputs/benchmarks
-circom_ptau = $(circom_directory)/phase1/powersOfTau28_hez_final_16.ptau 
-
 
 all: benchmark-toy
 
