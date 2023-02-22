@@ -691,7 +691,7 @@ func benchCurveOperations(cmd *cobra.Command, args []string) {
 
 		bDataArith := util.BenchDataCurve{
 			Framework: "gnark",
-			Category:  "curve",
+			Category:  "ec",
 			Curve:     curveID.String(),
 			Operation: operationString,
 			Input:     *fInputPath,
