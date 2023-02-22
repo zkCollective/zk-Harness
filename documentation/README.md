@@ -1,4 +1,4 @@
-# Tutorials  for the zk-Harness benchmarking framework
+# Documentation for the zk-Harness benchmarking framework
 
 Our benchmarking framework is designed to support all types of different frameworks.
 We specify a generic set of interfaces, such that benchmarks can be invoked through a configuration file `config.json`, which produces a standardized output for a given benchmarking scenario.
