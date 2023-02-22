@@ -22,7 +22,7 @@ To integrate a new framework, one should follow the following steps:
 4. Modify scripts `process_arithmetic.py`, `process_ec.py`, and `process_circuit.py` in `_scripts/reader` directory. Specifically, you should add a function named `build_command_project_name` that given a `Payload` object (read from the config) produces commands to be executed (using the script described in step 3) that will run the benchmarks.
 5. Create three configuration files in `_input/config/project_name` for running the default benchmarks for arithmetic, elliptic curve, and circuit.
 6. Add rules for running the benchmarks in the main Makefile.
-7. Create a documentation in the `<framework_name>/tutorial.md` directory to outline how others can include new benchmarks in the framework. Depending on the project you pursue, it should contain documentation on either, or all, of the following:
+7. Create a documentation in the `<framework_name>/TUTORIAL.md` directory to outline how others can include new benchmarks in the framework. Depending on the project you pursue, it should contain documentation on either, or all, of the following:
    1. How to add a new circuit implementation
    2. How to run tests for integrated circuits
 
