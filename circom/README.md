@@ -3,9 +3,7 @@
 [Circom](https://github.com/iden3/circom) is a comiler (Hardware Description Language / HDL) written in Rust.
 The compiler outputs the representation of the circuit as R1CS. Successively, one can apply the respective proof system.
 
-## Plain Setup
-
-### Installation
+## Installation
 
 Installation and setup descriptions can be found [here](https://docs.circom.io/getting-started/installation/#installing-dependencies)
 
@@ -25,7 +23,7 @@ required library.
 npm install ffjavascript
 ```
 
-### Compilation & Proof - Toy Examples
+## Compilation & Proof - Toy Examples
 
 To produce and verify a circom circuit you need to perform 6 steps:
 
@@ -41,7 +39,7 @@ For example, to prove and verify `circuits/toy/sudoku.circom` using as input `in
 you can run the following command:
 
 ```
-./scripts/run_circuit.sh circuits/toy/sudoku.circom inputs/toy/sudoku.input.json phase1/powersOfTau28_hez_final_16.ptau res.csv sudoku_output
+./scripts/run_circuit.sh circuits/toy/sudoku.circom sudoku inputs/toy/sudoku.input.json phase1/powersOfTau28_hez_final_16.ptau res.csv sudoku_output
 ```
 
 This script will produce the following files:
@@ -64,5 +62,8 @@ This script will produce the following files:
 Finally, `res.csv` will contain statistics about the execution of each step.
 
 __Note__: We currently using the precomputed ceremony from `phase1/powersOfTau28_hez_final_16.ptau`, but in order to safely prove a circuit using Circom you need to safely run a setup ceremony. 
+Furthermore, to execute larger circuits you might need a larger powers of tau.
 
-## Docker Setup
+## Adding new circuits
+
+See `TUTORIAL.md`
