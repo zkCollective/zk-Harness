@@ -26,6 +26,7 @@ LOGS = "benchmarks"
 circuits_df, arithmetics_df, ec_df = analyse_logs(LOGS, logging.CRITICAL)
 
 app = Dash(__name__)
+server = app.server
 
 curves = list(set(circuits_df['curve']))
 backends = list(set(circuits_df['backend']))
