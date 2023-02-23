@@ -192,4 +192,4 @@ def update_ec_line_chart(framework_options, operations_options, y_axis):
     return fig
 
 
-app.run_server(debug=True)
+# app.run_server(debug=True)
