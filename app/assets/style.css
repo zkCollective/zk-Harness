@@ -37,3 +37,9 @@
 .home a:visited {
   color: black;
 }
+
+@media (min-width: 2800px){
+  .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    max-width: 1600px;
+  }
+}

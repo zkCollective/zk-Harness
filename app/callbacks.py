@@ -20,7 +20,7 @@ circuits_df = data.circuits_df
     [Output('circuits-input-dropdown', 'options'),
     Output('circuits-input-dropdown', 'value'),],
     [Input('circuits-circuit', 'value')])
-def select_era(selected_circuit):
+def update_circuit_dropdown(selected_circuit):
     ndf = circuits_df[circuits_df['circuit'] == selected_circuit]
     circuit_inputs = list(set(ndf['input_path']))
     circuit_input = circuit_inputs[0]
@@ -29,7 +29,7 @@ def select_era(selected_circuit):
 
 # Callback to circuit bar chart, takes data request from dropdown
 @app.callback(
-    Output('circuits-bar', 'figure'),
+    Output('circuits-bar', 'children'),
     Input("circuits-curves", "value"),
     Input("circuits-backends", "value"),
     Input("circuits-frameworks", "value"),
@@ -46,27 +46,52 @@ def update_bar_chart(
         (circuits_df['framework'].isin(framework_options)) &
         (circuits_df['backend'].isin(backends_options)) &
         (circuits_df['input_path'] == circuit_input)]
-
+    
+    if len(ndf) == 0:
+        return [html.Div(dbc.Alert('The bar chart is empty given the selected options.', color='warning'),)]
+    
     # Create a bar chart using Plotly
     fig = px.bar(ndf, x="curve", y=metric_option, color="operation", 
                           facet_col="framework", facet_row="backend",
-                          barmode="group", opacity=0.8
+                          barmode="group", opacity=0.8, height=800
                  )
-    return fig
+    
+    return[
+            dbc.Row(dbc.Col(
+                dcc.Graph(
+                    id='circuits-bar-graph', 
+                    figure=fig,
+                    config={'displayModeBar': False}), 
+                xs={'size':12, 'offset':0}, 
+                sm={'size':12, 'offset':0}, 
+                md={'size': 12, 'offset': 0},
+                lg={'size': 12, 'offset': 0}
+        ))]
 
 # Constraints table 
 @app.callback(
     [Output('circuits-data', 'children')],
-    [Input('circuits-circuit', 'value')])
-def update_circuit_table(selected_circuit):
+    [Input('circuits-circuit', 'value'), 
+     Input("circuits-backends", "value"),
+     Input("circuits-frameworks", "value"),
+     Input("circuits-curves", "value"),
+     Input("circuits-input-dropdown", "value")])
+def update_circuit_table(selected_circuit, selected_backends, selected_frameworks, selected_curves, selected_input):
     ndf = circuits_df[
-        circuits_df['circuit'] == selected_circuit
+        (circuits_df['circuit'] == selected_circuit) &
+        (circuits_df['backend'].isin(selected_backends)) & 
+        (circuits_df['framework'].isin(selected_frameworks)) & 
+        (circuits_df['curve'].isin(selected_curves)) &
+        (circuits_df['input_path'] == selected_input)
     ]
     # Filter unneccessary data
     circuit_data = ndf[['circuit', 'input_path', 'framework', 'backend', 'curve', 'nb_constraints']]
     circuit_data = circuit_data.drop_duplicates()
 
     data_note = []
+    if len(ndf) == 0:
+        return [html.Div(dbc.Alert('The table content is empty given the selected options.', color='warning'),)]
+
     data_note.append(html.Div(dash_table.DataTable(
         data= circuit_data.to_dict('records'),
         columns= [{'name': x, 'id': x} for x in circuit_data],

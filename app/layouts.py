@@ -110,6 +110,7 @@ circuitMenu = html.Div([
                 lg={'size':'auto', 'offset':0}, xl={'size':'auto', 'offset':0}),
         ],
     ),
+    html.Br(),
     dbc.Row(
         [
             dbc.Col(html.H4(style={'text-align': 'center'}, children='Select Input:'),
@@ -127,12 +128,13 @@ circuitMenu = html.Div([
 circuitLayout = html.Div([
     # Cicrcuit Constraint Table
     dbc.Row(dbc.Col(html.Div(id='circuits-data'), xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':7, 'offset':0}, lg={'size':'auto', 'offset':0},
-            xl={'size':'auto', 'offset':0}),justify="center"),
+            xl={'size':10, 'offset':0}),justify="center"),
     # Bar Chart of Benchmarks
-    dbc.Row(dbc.Col(dcc.Graph(id='circuits-bar', config={'displayModeBar': False}), xs={'size':12, 'offset':0}, sm={'size':12, 'offset':0}, md={'size': 12, 'offset': 0},lg={'size': 12, 'offset': 0})),
+    dbc.Row(dbc.Col(html.Div(id='circuits-bar'), xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':7, 'offset':0}, lg={'size':'auto', 'offset':0},
+            xl={'size':10, 'offset':0}),justify="center"),
     # Line Chart
     dbc.Row(dbc.Col(html.Div(id='circuits-line'), xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':7, 'offset':0}, lg={'size':'auto', 'offset':0},
-            xl={'size':'auto', 'offset':0}),justify="center"),
+            xl={'size':10, 'offset':0}),justify="center"),
     ]
 ,className='app-page')
 
