@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 This script recursively reads the logs from a specific path and produces 
 pandas dataframes for circuits, arithmetics, and elliptic curves logs.
@@ -297,3 +296,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+else:
+    circuits_df, arithmetics_df, ec_df = analyse_logs("../benchmarks", logging.ERROR)
