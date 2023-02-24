@@ -1,1 +1,1 @@
-web: gunicorn app.app:srv benchmarks
+web: gunicorn --pythonpath app.app:srv benchmarks --preload
