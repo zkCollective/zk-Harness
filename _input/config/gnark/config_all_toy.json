@@ -27,6 +27,7 @@
         },
         "algorithm": [
             "setup",
+            "witness",
             "prove",
             "verify"
         ],
