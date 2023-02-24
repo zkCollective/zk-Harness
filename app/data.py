@@ -297,4 +297,6 @@ def main():
 if __name__ == "__main__":
     main()
 else:
-    circuits_df, arithmetics_df, ec_df = analyse_logs("../benchmarks", logging.ERROR)
+    current_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    benchmarks_dir = current_dir + "/benchmarks"
+    circuits_df, arithmetics_df, ec_df = analyse_logs(benchmarks_dir, logging.ERROR)

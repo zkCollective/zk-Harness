@@ -14,7 +14,7 @@ from navbar import Navbar
 # Import app
 from app import app as application
 # Import server for deployment
-from app import srv as server
+# from app import srv as server
 
 app = application
 
@@ -89,4 +89,7 @@ app.layout = index()
 # Call app server
 if __name__ == '__main__':
     # set debug to false when deploying app
+    srv = app.server
     app.run_server(debug=True)
+else:
+    srv = app.server
