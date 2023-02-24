@@ -12,9 +12,11 @@ import callbacks
 
 from navbar import Navbar
 # Import app
-from app import app
+from app import app as application
 # Import server for deployment
 from app import srv as server
+
+app = application
 
 # Layout variables, navbar, header, content, and container
 nav = Navbar()
