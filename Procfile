@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath app app:server benchmarks
+web: gunicorn --pythonpath app app:srv benchmarks
