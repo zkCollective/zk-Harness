@@ -27,6 +27,13 @@ arithmetics_default_operation = "add"
 arithmetics_metrics = ["time", "ram"]
 arithmetics_default_metric = "time"
 
+ec_curves = list(set(ec_df['curve']))
+ec_frameworks = list(set(ec_df['framework']))
+ec_operations = list(set(ec_df['operation']))
+ec_default_operation = "pairing"
+ec_metrics = ["time", "ram"]
+ec_default_metric = "time"
+
 ################################# CIRCUITS #####################################
 circuitMenu = html.Div([
     # Curves
@@ -256,8 +263,112 @@ arithmeticsLayout = html.Div([
     # Bar Chart of Benchmarks
     dbc.Row(dbc.Col(html.Div(id='arithmetics-bar'), xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':7, 'offset':0}, lg={'size':'auto', 'offset':0},
             xl={'size':10, 'offset':0}),justify="center"),
-    # Line Chart
-    dbc.Row(dbc.Col(html.Div(id='arithmetics-line'), xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':7, 'offset':0}, lg={'size':'auto', 'offset':0},
+    ]
+,className='app-page')
+
+################################################################################
+
+################################### EC #########################################
+ecMenu = html.Div([
+    dbc.Row([dbc.Col(html.H2(children='Elliptic Curves Benchmarks'))]),
+    # Curves
+    dbc.Row(
+        [
+            dbc.Col(html.H4(style={'text-align': 'center'}, children='Select Curve(s):'),
+                xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':'auto', 'offset':3},
+                lg={'size':'auto', 'offset':0}, xl={'size':'auto', 'offset':0}),
+            dbc.Col(dcc.Dropdown(
+                #style = {'text-align': 'center', 'font-size': '18px', 'width': '210px'},
+                id='ec-curves',
+                options=ec_curves,
+                value=ec_curves,
+                clearable=False,
+                multi=True),
+                xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':'auto', 'offset':0},
+                lg={'size':'auto', 'offset':0}, xl={'size':'auto', 'offset':0}),
+        ],
+    ),
+    dbc.Row(dbc.Col(html.P(style={'font-size': '16px', 'opacity': '70%'},
+        children='''Select which curves to display'''
+    ))),
+    # Frameworks
+    dbc.Row(
+        [
+            dbc.Col(html.H4(style={'text-align': 'center'}, children='Select Framework(s):'),
+                xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':'auto', 'offset':3},
+                lg={'size':'auto', 'offset':0}, xl={'size':'auto', 'offset':0}),
+            dbc.Col(dcc.Dropdown(
+                #style = {'text-align': 'center', 'font-size': '18px', 'width': '210px'},
+                id='ec-frameworks',
+                options=ec_frameworks,
+                value=ec_frameworks,
+                clearable=False,
+                multi=True),
+                xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':'auto', 'offset':0},
+                lg={'size':'auto', 'offset':0}, xl={'size':'auto', 'offset':0}),
+        ],
+    ),
+    dbc.Row(dbc.Col(html.P(style={'font-size': '16px', 'opacity': '70%'},
+        children='''Select which frameworks to display'''
+    ))),
+    # Operation
+    dbc.Row(
+        [
+            dbc.Col(html.H4(style={'text-align': 'center'}, children='Select Operation:'),
+                xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':'auto', 'offset':3},
+                lg={'size':'auto', 'offset':0}, xl={'size':'auto', 'offset':0}),
+            dbc.Col(dcc.Dropdown(
+                style = {'text-align': 'center', 'font-size': '18px', 'width': '300px'},
+                id='ec-operation',
+                options=ec_operations,
+                value=ec_default_operation,
+                clearable=False,
+                multi=False),
+                xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':'auto', 'offset':0},
+                lg={'size':'auto', 'offset':0}, xl={'size':'auto', 'offset':0}),
+        ],
+    ),
+    dbc.Row(dbc.Col(html.P(style={'font-size': '16px', 'opacity': '70%'},
+        children='''Select which operation to display'''
+    ))),
+    # Metric
+    dbc.Row(
+        [
+            dbc.Col(html.H4(style={'text-align': 'center'}, children='Select Metric:'),
+                xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':'auto', 'offset':3},
+                lg={'size':'auto', 'offset':0}, xl={'size':'auto', 'offset':0}),
+            dbc.Col(dcc.Dropdown(
+                style = {'text-align': 'center', 'font-size': '18px', 'width': '210px'},
+                id='ec-metric',
+                options=ec_metrics,
+                value=ec_default_metric,
+                clearable=False,
+                multi=False),
+                xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':'auto', 'offset':0},
+                lg={'size':'auto', 'offset':0}, xl={'size':'auto', 'offset':0}),
+        ],
+    ),
+    dbc.Row(dbc.Col(html.P(style={'font-size': '16px', 'opacity': '70%'},
+        children='''Select which metric to display'''
+    ))),
+    html.Br(),
+    dbc.Row(
+        [
+            dbc.Col(html.H4(style={'text-align': 'center'}, children='Select Input:'),
+                xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':'auto', 'offset':3},
+                lg={'size':'auto', 'offset':0}, xl={'size':'auto', 'offset':0}),
+            dbc.Col(dcc.Dropdown(
+                style = {'text-align': 'center', 'font-size': '18px', 'width': '500px'},
+                id='ec-input-dropdown',
+                clearable=False),
+                xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':'auto', 'offset':0},
+                lg={'size':'auto', 'offset':0}, xl={'size':'auto', 'offset':0})
+    ])
+], className='menu')
+
+ecLayout = html.Div([
+    # Bar Chart of Benchmarks
+    dbc.Row(dbc.Col(html.Div(id='ec-bar'), xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':7, 'offset':0}, lg={'size':'auto', 'offset':0},
             xl={'size':10, 'offset':0}),justify="center"),
     ]
 ,className='app-page')

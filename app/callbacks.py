@@ -14,6 +14,7 @@ import data
 
 circuits_df = data.circuits_df
 arithmetics_df = data.arithmetics_df
+ec_df = data.ec_df
 
 #################################### CIRCUITS #################################
 # This will update the circuits input dropdown 
@@ -201,6 +202,59 @@ def update_bar_chart(
             dbc.Row(dbc.Col(
                 dcc.Graph(
                     id='arithmetics-bar-graph', 
+                    figure=fig,
+                    config={'displayModeBar': False}), 
+                xs={'size':12, 'offset':0}, 
+                sm={'size':12, 'offset':0}, 
+                md={'size': 12, 'offset': 0},
+                lg={'size': 12, 'offset': 0}
+        ))]
+
+################################################################################
+
+###################################### EC ######################################
+# This will update the circuits input dropdown 
+@app.callback(
+    [Output('ec-input-dropdown', 'options'),
+    Output('ec-input-dropdown', 'value'),],
+    [Input('ec-operation', 'value')])
+def update_ec_dropdown(selected_operation):
+    ndf = ec_df[ec_df['operation'] == selected_operation]
+    operation_inputs = list(set(ndf['input_path']))
+    operation_input = operation_inputs[0]
+    # Return the selected input (first input of operation), and the options
+    return operation_inputs, operation_input
+
+@app.callback(
+    Output('ec-bar', 'children'),
+    Input("ec-curves", "value"),
+    Input("ec-frameworks", "value"),
+    Input("ec-operation", "value"),
+    Input("ec-metric", "value"),
+    Input("ec-input-dropdown", "value"),)
+def update_bar_chart(
+        curves_options, framework_options, 
+        operation_option, metric_option, ec_input
+    ):
+    ndf = ec_df[
+        (ec_df['operation'] == operation_option) & 
+        (ec_df['curve'].isin(curves_options)) &
+        (ec_df['framework'].isin(framework_options)) &
+        (ec_df['input_path'] == ec_input)]
+    
+    if len(ndf) == 0:
+        return [html.Div(dbc.Alert('The bar chart is empty given the selected options.', color='warning'),)]
+    
+    # Create a bar chart using Plotly
+    fig = px.bar(ndf, x="curve", y=metric_option, color="operation", 
+                          facet_col="framework", 
+                          barmode="group", opacity=0.8, height=800
+                 )
+    
+    return[
+            dbc.Row(dbc.Col(
+                dcc.Graph(
+                    id='ec-bar-graph', 
                     figure=fig,
                     config={'displayModeBar': False}), 
                 xs={'size':12, 'offset':0}, 
