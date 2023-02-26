@@ -683,10 +683,10 @@ func benchCurveOperations(cmd *cobra.Command, args []string) {
 		var m runtime.MemStats
 		runtime.ReadMemStats(&m)
 
-		if *fGroup != "None" {
-			operationString = string(*fGroup) + "-" + string(*fOperation)
-		} else {
+		if *fOperation == "pairing" {
 			operationString = string(*fOperation)
+		} else {
+			operationString = string(*fGroup) + "-" + string(*fOperation)
 		}
 
 		bDataArith := util.BenchDataCurve{

@@ -34,6 +34,12 @@ benchmark-gnark-arithmetics:
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_arithmetics.json  
 
+benchmark-gnark-ec:
+	$(info --------------------------------------------)
+	$(info ------ CIRCOM EC BENCHMARKS ----------------)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/gnark/config_ec.json  
+
 benchmark-toy-gnark:
 	$(info --------------------------------------------)
 	$(info ----------- GNARK TOY BENCHMARKS -----------)
