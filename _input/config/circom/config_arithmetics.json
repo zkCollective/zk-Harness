@@ -2,7 +2,7 @@
     "project": "circom",
     "project_url": "https://github.com/iden3/circom",
     "category": "arithmetic",
-    "count": 1,
+    "count": 10000,
     "payload": {
         "curves": [
             "bn128",

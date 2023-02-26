@@ -2,7 +2,7 @@
     "project": "gnark",
     "project_url": "https://github.com/ConsenSys/gnark",
     "category": "arithmetic",
-    "count": 1,
+    "count": 10000,
     "payload": {
         "curves": [
             "bn254",
