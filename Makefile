@@ -30,7 +30,7 @@ benchmark-toy-circom:
 
 benchmark-gnark-arithmetics:
 	$(info --------------------------------------------)
-	$(info ------ CIRCOM ARITHMETICS BENCHMARKS -------)
+	$(info ------- GNARK ARITHMETICS BENCHMARKS -------)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_arithmetics.json  
 
