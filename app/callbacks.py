@@ -13,8 +13,9 @@ from app import app
 import data
 
 circuits_df = data.circuits_df
+arithmetics_df = data.arithmetics_df
 
-
+#################################### CIRCUITS #################################
 # This will update the circuits input dropdown 
 @app.callback(
     [Output('circuits-input-dropdown', 'options'),
@@ -26,47 +27,6 @@ def update_circuit_dropdown(selected_circuit):
     circuit_input = circuit_inputs[0]
     # Return the selected input (first input of circuit), and the options
     return circuit_inputs, circuit_input
-
-# Callback to circuit bar chart, takes data request from dropdown
-@app.callback(
-    Output('circuits-bar', 'children'),
-    Input("circuits-curves", "value"),
-    Input("circuits-backends", "value"),
-    Input("circuits-frameworks", "value"),
-    Input("circuits-circuit", "value"),
-    Input("circuits-metric", "value"),
-    Input("circuits-input-dropdown", "value"),)
-def update_bar_chart(
-        curves_options, backends_options, framework_options, 
-        circuit_option, metric_option, circuit_input
-    ):
-    ndf = circuits_df[
-        (circuits_df['circuit'] == circuit_option) & 
-        (circuits_df['curve'].isin(curves_options)) &
-        (circuits_df['framework'].isin(framework_options)) &
-        (circuits_df['backend'].isin(backends_options)) &
-        (circuits_df['input_path'] == circuit_input)]
-    
-    if len(ndf) == 0:
-        return [html.Div(dbc.Alert('The bar chart is empty given the selected options.', color='warning'),)]
-    
-    # Create a bar chart using Plotly
-    fig = px.bar(ndf, x="curve", y=metric_option, color="operation", 
-                          facet_col="framework", facet_row="backend",
-                          barmode="group", opacity=0.8, height=800
-                 )
-    
-    return[
-            dbc.Row(dbc.Col(
-                dcc.Graph(
-                    id='circuits-bar-graph', 
-                    figure=fig,
-                    config={'displayModeBar': False}), 
-                xs={'size':12, 'offset':0}, 
-                sm={'size':12, 'offset':0}, 
-                md={'size': 12, 'offset': 0},
-                lg={'size': 12, 'offset': 0}
-        ))]
 
 # Constraints table 
 @app.callback(
@@ -113,6 +73,47 @@ def update_circuit_table(selected_circuit, selected_backends, selected_framework
     )))
     return data_note
 
+# Callback to circuit bar chart, takes data request from dropdown
+@app.callback(
+    Output('circuits-bar', 'children'),
+    Input("circuits-curves", "value"),
+    Input("circuits-backends", "value"),
+    Input("circuits-frameworks", "value"),
+    Input("circuits-circuit", "value"),
+    Input("circuits-metric", "value"),
+    Input("circuits-input-dropdown", "value"),)
+def update_bar_chart(
+        curves_options, backends_options, framework_options, 
+        circuit_option, metric_option, circuit_input
+    ):
+    ndf = circuits_df[
+        (circuits_df['circuit'] == circuit_option) & 
+        (circuits_df['curve'].isin(curves_options)) &
+        (circuits_df['framework'].isin(framework_options)) &
+        (circuits_df['backend'].isin(backends_options)) &
+        (circuits_df['input_path'] == circuit_input)]
+    
+    if len(ndf) == 0:
+        return [html.Div(dbc.Alert('The bar chart is empty given the selected options.', color='warning'),)]
+    
+    # Create a bar chart using Plotly
+    fig = px.bar(ndf, x="curve", y=metric_option, color="operation", 
+                          facet_col="framework", facet_row="backend",
+                          barmode="group", opacity=0.8, height=800
+                 )
+    
+    return[
+            dbc.Row(dbc.Col(
+                dcc.Graph(
+                    id='circuits-bar-graph', 
+                    figure=fig,
+                    config={'displayModeBar': False}), 
+                xs={'size':12, 'offset':0}, 
+                sm={'size':12, 'offset':0}, 
+                md={'size': 12, 'offset': 0},
+                lg={'size': 12, 'offset': 0}
+        ))]
+
 # Circuit line chart
 @app.callback(
     Output('circuits-line', 'children'),
@@ -152,3 +153,60 @@ def update_line_chart(
         )))
         return res
     return fig1
+
+################################################################################
+
+################################# ARITHMETICS ##################################
+# This will update the circuits input dropdown 
+@app.callback(
+    [Output('arithmetics-input-dropdown', 'options'),
+    Output('arithmetics-input-dropdown', 'value'),],
+    [Input('arithmetics-operation', 'value')])
+def update_arithmetics_dropdown(selected_operation):
+    ndf = arithmetics_df[arithmetics_df['operation'] == selected_operation]
+    operation_inputs = list(set(ndf['input_path']))
+    operation_input = operation_inputs[0]
+    # Return the selected input (first input of operation), and the options
+    return operation_inputs, operation_input
+
+@app.callback(
+    Output('arithmetics-bar', 'children'),
+    Input("arithmetics-curves", "value"),
+    Input("arithmetics-fields", "value"),
+    Input("arithmetics-frameworks", "value"),
+    Input("arithmetics-operation", "value"),
+    Input("arithmetics-metric", "value"),
+    Input("arithmetics-input-dropdown", "value"),)
+def update_bar_chart(
+        curves_options, fields_options, framework_options, 
+        operation_option, metric_option, arithmetics_input
+    ):
+    ndf = arithmetics_df[
+        (arithmetics_df['operation'] == operation_option) & 
+        (arithmetics_df['curve'].isin(curves_options)) &
+        (arithmetics_df['framework'].isin(framework_options)) &
+        (arithmetics_df['field'].isin(fields_options)) &
+        (arithmetics_df['input_path'] == arithmetics_input)]
+    
+    if len(ndf) == 0:
+        return [html.Div(dbc.Alert('The bar chart is empty given the selected options.', color='warning'),)]
+    
+    # Create a bar chart using Plotly
+    fig = px.bar(ndf, x="curve", y=metric_option, color="operation", 
+                          facet_col="framework", facet_row="field",
+                          barmode="group", opacity=0.8, height=800
+                 )
+    
+    return[
+            dbc.Row(dbc.Col(
+                dcc.Graph(
+                    id='arithmetics-bar-graph', 
+                    figure=fig,
+                    config={'displayModeBar': False}), 
+                xs={'size':12, 'offset':0}, 
+                sm={'size':12, 'offset':0}, 
+                md={'size': 12, 'offset': 0},
+                lg={'size': 12, 'offset': 0}
+        ))]
+
+################################################################################

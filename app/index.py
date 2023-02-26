@@ -6,7 +6,7 @@ from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 
 # Navbar, layouts, custom callbacks
-from layouts import circuitMenu, circuitLayout
+from layouts import circuitMenu, circuitLayout, arithmeticsMenu, arithmeticsLayout
 # Need to import it here so callbacks are loaded
 import callbacks
 
@@ -61,7 +61,7 @@ def display_page(pathname):
     elif pathname == '/circuit':
         return circuitMenu, circuitLayout
     elif pathname == '/arithmetic':
-        return 
+        return arithmeticsMenu, arithmeticsLayout
     elif pathname == '/ec':
         return 
     else:
