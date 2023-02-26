@@ -28,13 +28,17 @@ async function getCurve(curve_name, singleThread) {
 //         return res >= this.p ? res-this.p : res;
 async function benchmark(curve, G, operation, x, y, count) {
     var start;
+    var time;
+    var hrTime;
     switch (operation) {
         case "scalar-multiplication":
             start = process.hrtime();
             for (let step = 0; step < count; step++) {
                 var r = G.timesScalar(G.g, x)
             }
-            return process.hrtime(start)[1] / count / 1024; // milli seconds
+            hrTime = process.hrtime(start)
+            time = hrTime[0] * 1000000000 + hrTime[1];
+            return time / count; // nano seconds
         case "multi-scalar-multiplication":
             start = process.hrtime();
             const N = x;
@@ -43,7 +47,9 @@ async function benchmark(curve, G, operation, x, y, count) {
             for (let step = 0; step < count; step++) {
                 var r = await G.multiExpAffine(bases, scalars, false, "");
             }
-            return process.hrtime(start)[1] / count / 1024; // milli seconds
+            hrTime = process.hrtime(start)
+            time = hrTime[0] * 1000000000 + hrTime[1];
+            return time / count; // nano seconds
         case "pairing":
             start = process.hrtime();
             const g1 = curve.G1.timesScalar(curve.G1.g, x);
@@ -54,7 +60,9 @@ async function benchmark(curve, G, operation, x, y, count) {
                 const r1 = curve.millerLoop(pre1, pre2);
                 const r2 = curve.finalExponentiation(r1);
             }
-            return process.hrtime(start)[1] / count / 1024; // milli seconds
+            hrTime = process.hrtime(start)
+            time = hrTime[0] * 1000000000 + hrTime[1];
+            return time / count; // nano seconds
         default:
             throw new Error(`Operation not supported: ${operation}`);
     }

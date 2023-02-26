@@ -29,37 +29,49 @@ function benchmark(field, operation, x, y, count) {
     x = field.e(x);
     y = field.e(y);
     var start;
+    var time;
+    var hrTime;
     switch (operation) {
         case "add":
             start = process.hrtime();
             for (let step = 0; step < count; step++) {
                 field.add(x, y);
             }
-            return process.hrtime(start)[1] / count; // nano seconds
+            hrTime = process.hrtime(start)
+            time = hrTime[0] * 1000000000 + hrTime[1];
+            return time / count; // nano seconds
         case "sub":
             start = process.hrtime();
             for (let step = 0; step < count; step++) {
                 field.sub(x, y);
             }
-            return process.hrtime(start)[1] / count; // nano seconds
+            hrTime = process.hrtime(start)
+            time = hrTime[0] * 1000000000 + hrTime[1];
+            return time / count; // nano seconds
         case "mul":
             start = process.hrtime();
             for (let step = 0; step < count; step++) {
                 field.mul(x, y);
             }
-            return process.hrtime(start)[1] / count; // nano seconds
+            hrTime = process.hrtime(start)
+            time = hrTime[0] * 1000000000 + hrTime[1];
+            return time / count; // nano seconds
         case "inv":
             start = process.hrtime();
             for (let step = 0; step < count; step++) {
                 field.inv(x);
             }
-            return process.hrtime(start)[1] / count; // nano seconds
+            hrTime = process.hrtime(start)
+            time = hrTime[0] * 1000000000 + hrTime[1];
+            return time / count; // nano seconds
         case "exp":
             start = process.hrtime();
             for (let step = 0; step < count; step++) {
                 field.exp(x, y);
             }
-            return process.hrtime(start)[1] / count; // nano seconds
+            hrTime = process.hrtime(start)
+            time = hrTime[0] * 1000000000 + hrTime[1];
+            return time / count; // nano seconds
         default:
             throw new Error(`Operation not supported: ${operation}`);
     }
