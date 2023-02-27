@@ -1,21 +1,21 @@
 framework,category,curve,field,operation,input,ram,time,nbPhysicalCores,nbLogicalCores,cpu
-circom,arithmetic,bn128,base,add,_input/arithmetic/add/input_1.json,16279048,76,1,1,Apple M1 Max
-circom,arithmetic,bn128,scalar,add,_input/arithmetic/add/input_1.json,13389512,79,1,1,Apple M1 Max
-circom,arithmetic,bls12_381,base,add,_input/arithmetic/add/input_1.json,9376720,78,1,1,Apple M1 Max
-circom,arithmetic,bls12_381,scalar,add,_input/arithmetic/add/input_1.json,13458608,87,1,1,Apple M1 Max
-circom,arithmetic,bn128,base,sub,_input/arithmetic/sub/input_1.json,11843448,243,1,1,Apple M1 Max
-circom,arithmetic,bn128,scalar,sub,_input/arithmetic/sub/input_1.json,14544664,132,1,1,Apple M1 Max
-circom,arithmetic,bls12_381,base,sub,_input/arithmetic/sub/input_1.json,10416408,125,1,1,Apple M1 Max
-circom,arithmetic,bls12_381,scalar,sub,_input/arithmetic/sub/input_1.json,14138832,140,1,1,Apple M1 Max
-circom,arithmetic,bn128,base,mul,_input/arithmetic/mul/input_1.json,8763256,101,1,1,Apple M1 Max
-circom,arithmetic,bn128,scalar,mul,_input/arithmetic/mul/input_1.json,10569480,91,1,1,Apple M1 Max
-circom,arithmetic,bls12_381,base,mul,_input/arithmetic/mul/input_1.json,9376288,101,1,1,Apple M1 Max
-circom,arithmetic,bls12_381,scalar,mul,_input/arithmetic/mul/input_1.json,13577984,101,1,1,Apple M1 Max
-circom,arithmetic,bn128,base,inv,_input/arithmetic/inv/input_1.json,13702728,1504,1,1,Apple M1 Max
-circom,arithmetic,bn128,scalar,inv,_input/arithmetic/inv/input_1.json,18496432,1640,1,1,Apple M1 Max
-circom,arithmetic,bls12_381,base,inv,_input/arithmetic/inv/input_1.json,13997712,1834,1,1,Apple M1 Max
-circom,arithmetic,bls12_381,scalar,inv,_input/arithmetic/inv/input_1.json,16689016,1367,1,1,Apple M1 Max
-circom,arithmetic,bn128,base,exp,_input/arithmetic/exp/input_1.json,13450104,1774,1,1,Apple M1 Max
-circom,arithmetic,bn128,scalar,exp,_input/arithmetic/exp/input_1.json,13575224,1632,1,1,Apple M1 Max
-circom,arithmetic,bls12_381,base,exp,_input/arithmetic/exp/input_1.json,9209840,1566,1,1,Apple M1 Max
-circom,arithmetic,bls12_381,scalar,exp,_input/arithmetic/exp/input_1.json,16866552,1562,1,1,Apple M1 Max
+circom,arithmetic,bn128,base,add,_input/arithmetic/add/input_1.json,8761928,33,1,1,Apple M2
+circom,arithmetic,bn128,scalar,add,_input/arithmetic/add/input_1.json,13172200,37,1,1,Apple M2
+circom,arithmetic,bls12_381,base,add,_input/arithmetic/add/input_1.json,9320384,35,1,1,Apple M2
+circom,arithmetic,bls12_381,scalar,add,_input/arithmetic/add/input_1.json,13427432,36,1,1,Apple M2
+circom,arithmetic,bn128,base,sub,_input/arithmetic/sub/input_1.json,9558672,50,1,1,Apple M2
+circom,arithmetic,bn128,scalar,sub,_input/arithmetic/sub/input_1.json,13847672,60,1,1,Apple M2
+circom,arithmetic,bls12_381,base,sub,_input/arithmetic/sub/input_1.json,10443328,55,1,1,Apple M2
+circom,arithmetic,bls12_381,scalar,sub,_input/arithmetic/sub/input_1.json,14142232,60,1,1,Apple M2
+circom,arithmetic,bn128,base,mul,_input/arithmetic/mul/input_1.json,8761344,33,1,1,Apple M2
+circom,arithmetic,bn128,scalar,mul,_input/arithmetic/mul/input_1.json,12944264,37,1,1,Apple M2
+circom,arithmetic,bls12_381,base,mul,_input/arithmetic/mul/input_1.json,9328728,33,1,1,Apple M2
+circom,arithmetic,bls12_381,scalar,mul,_input/arithmetic/mul/input_1.json,13342384,35,1,1,Apple M2
+circom,arithmetic,bn128,base,inv,_input/arithmetic/inv/input_1.json,10355336,409,1,1,Apple M2
+circom,arithmetic,bn128,scalar,inv,_input/arithmetic/inv/input_1.json,11853936,503,1,1,Apple M2
+circom,arithmetic,bls12_381,base,inv,_input/arithmetic/inv/input_1.json,14990016,515,1,1,Apple M2
+circom,arithmetic,bls12_381,scalar,inv,_input/arithmetic/inv/input_1.json,16827232,457,1,1,Apple M2
+circom,arithmetic,bn128,base,exp,_input/arithmetic/exp/input_1.json,8614840,631,1,1,Apple M2
+circom,arithmetic,bn128,scalar,exp,_input/arithmetic/exp/input_1.json,16189176,604,1,1,Apple M2
+circom,arithmetic,bls12_381,base,exp,_input/arithmetic/exp/input_1.json,9232984,660,1,1,Apple M2
+circom,arithmetic,bls12_381,scalar,exp,_input/arithmetic/exp/input_1.json,16625800,600,1,1,Apple M2

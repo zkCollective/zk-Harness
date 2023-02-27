@@ -1,13 +1,13 @@
 framework,category,curve,operation,input,ram,time,nbPhysicalCores,nbLogicalCores,cpu
-circom,ec,bn128,g1-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,10725072,6437,1,1,Apple M1 Max
-circom,ec,bn128,g2-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,14932840,15927,1,1,Apple M1 Max
-circom,ec,bls12_381,g1-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,10962152,9915,1,1,Apple M1 Max
-circom,ec,bls12_381,g2-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,10964408,26714,1,1,Apple M1 Max
-circom,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,7890848,719234,1,1,Apple M1 Max
-circom,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,6877408,1038845,1,1,Apple M1 Max
-circom,ec,bls12_381,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,6896344,842022,1,1,Apple M1 Max
-circom,ec,bls12_381,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,7088856,1273605,1,1,Apple M1 Max
-circom,ec,bn128,pairing,_input/ec/pairing/input_1.json,6601472,4732696,1,1,Apple M1 Max
-circom,ec,bn128,pairing,_input/ec/pairing/input_1.json,6138176,4711714,1,1,Apple M1 Max
-circom,ec,bls12_381,pairing,_input/ec/pairing/input_1.json,7120176,5739931,1,1,Apple M1 Max
-circom,ec,bls12_381,pairing,_input/ec/pairing/input_1.json,7222456,5743970,1,1,Apple M1 Max
+circom,ec,bn128,g1-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,10681288,4980,1,1,Apple M2
+circom,ec,bn128,g2-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,10682656,15223,1,1,Apple M2
+circom,ec,bls12_381,g1-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,11035104,9775,1,1,Apple M2
+circom,ec,bls12_381,g2-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,11012152,30628,1,1,Apple M2
+circom,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,7801584,459196,1,1,Apple M2
+circom,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,7792896,755914,1,1,Apple M2
+circom,ec,bls12_381,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,7088744,597453,1,1,Apple M2
+circom,ec,bls12_381,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,7192464,940069,1,1,Apple M2
+circom,ec,bn128,pairing,_input/ec/pairing/input_1.json,7827664,5234807,1,1,Apple M2
+circom,ec,bn128,pairing,_input/ec/pairing/input_1.json,7794688,5198683,1,1,Apple M2
+circom,ec,bls12_381,pairing,_input/ec/pairing/input_1.json,8631576,7095330,1,1,Apple M2
+circom,ec,bls12_381,pairing,_input/ec/pairing/input_1.json,8593272,7079954,1,1,Apple M2
