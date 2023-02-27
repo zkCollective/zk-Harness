@@ -1,0 +1,14 @@
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,cpu
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_1.json,prove,68824,11,33,226285880,283,384,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_1.json,setup,68824,11,33,203214120,9660,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_1.json,witness,68824,11,33,91734296,0,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_1.json,prove,68824,11,33,190369064,357,384,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_1.json,verify,68824,11,33,255449400,2,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_1.json,setup,68824,11,33,230480184,16481,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_1.json,witness,68824,11,33,91930904,0,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_1.json,prove,68824,11,33,225761592,416,576,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_1.json,verify,68824,11,33,268294456,3,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_1.json,setup,68824,11,33,230611256,20708,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_1.json,witness,68824,11,33,91734296,0,0,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_1.json,prove,68824,11,33,247322936,433,640,1,1,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_1.json,verify,68824,11,33,255646008,5,0,1,1,VirtualApple @ 2.50GHz
