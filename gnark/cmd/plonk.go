@@ -26,6 +26,7 @@ import (
 	"github.com/consensys/gnark/constraint"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/scs"
+	"github.com/consensys/gnark/logger"
 	"github.com/consensys/gnark/test"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
@@ -40,6 +41,9 @@ var plonkCmd = &cobra.Command{
 }
 
 func runPlonk(plonkCmd *cobra.Command, args []string) {
+
+	log := logger.Logger()
+	log.Info().Msg("Benchmarking " + *fCircuit + " - gnark, plonk: " + *fAlgo + " " + *fCurve + " " + *fInputPath)
 
 	var filename = "../benchmarks/gnark/gnark_" +
 		"plonk" + "_" +

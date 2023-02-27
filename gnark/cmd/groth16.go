@@ -26,6 +26,7 @@ import (
 	"github.com/consensys/gnark/constraint"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/r1cs"
+	"github.com/consensys/gnark/logger"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
 	"github.com/tumberger/zk-compilers/gnark/util"
@@ -39,6 +40,9 @@ var groth16Cmd = &cobra.Command{
 }
 
 func runGroth16(cmd *cobra.Command, args []string) {
+
+	log := logger.Logger()
+	log.Info().Msg("Benchmarking " + *fCircuit + " - gnark, groth16: " + *fAlgo + " " + *fCurve + " " + *fInputPath)
 
 	var filename = "../benchmarks/gnark/gnark_" +
 		"groth16" + "_" +

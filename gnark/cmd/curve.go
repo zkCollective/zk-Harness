@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/consensys/gnark-crypto/ecc"
+	"github.com/consensys/gnark/logger"
 	"github.com/spf13/cobra"
 	"github.com/tumberger/zk-compilers/gnark/util"
 
@@ -666,6 +667,10 @@ func CurveOperationBW6761(operation string) time.Duration {
 }
 
 func benchCurveOperations(cmd *cobra.Command, args []string) {
+
+	log := logger.Logger()
+	log.Info().Msg("Benchmarking curve operations - gnark: " + *fCurve + " " + *fOperation + " " + *fInputPath)
+
 	var filename = "../benchmarks/gnark/gnark_" +
 		"curve" +
 		"." +
