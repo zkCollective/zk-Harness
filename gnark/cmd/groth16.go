@@ -74,7 +74,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 			NbSecretVariables: secret,
 			NbPublicVariables: public,
 			ProofSize:         proof_size,
-			MaxRAM:            (m.Sys / 1024 / 1024),
+			MaxRAM:            (m.Sys),
 			RunTime:           took.Milliseconds(),
 		}
 
@@ -105,9 +105,9 @@ func runGroth16(cmd *cobra.Command, args []string) {
 	}
 
 	if *fAlgo == "compile" {
-		startProfile()
 		var err error
 		var ccs constraint.ConstraintSystem
+		startProfile()
 		for i := 0; i < *fCount; i++ {
 			ccs, err = frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
 		}
