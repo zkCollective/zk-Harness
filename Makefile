@@ -3,7 +3,7 @@ SHELL = zsh
 benchmark_directory = benchmarks
 
 gnark_directory = gnark
-circom_directory = gnark
+circom_directory = circom
 gnark_benchmarks_directory = $(benchmark_directory)/$(gnark_directory)
 circom_benchmarks_directory = $(benchmark_directory)/$(circom_directory)
 
