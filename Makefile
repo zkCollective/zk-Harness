@@ -36,7 +36,7 @@ benchmark-gnark-arithmetics:
 
 benchmark-gnark-ec:
 	$(info --------------------------------------------)
-	$(info ------ CIRCOM EC BENCHMARKS ----------------)
+	$(info ------ GNARK EC BENCHMARKS -----------------)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_ec.json  
 
