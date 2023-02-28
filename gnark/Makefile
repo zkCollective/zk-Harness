@@ -4,7 +4,7 @@ directory = github.com/tumberger/zk-compilers/gnark
 
 .PHONY = test
 
-all: test-toy
+all: test-toy test-prf
 
 test-toy:
 	go test $(directory)/circuits/toy/cubic
@@ -13,10 +13,4 @@ test-toy:
 
 test-prf:
 	go test $(directory)/circuits/prf/mimc
-
-bench-arithmetic-test:
-	./gnark arithmetic --input="none" --operation="add" --count=20
-	./gnark arithmetic --input="none" --operation="sub" --count=20
-	./gnark arithmetic --input="none" --operation="mul" --count=20
-	./gnark arithmetic --input="none" --operation="div" --count=20
-	./gnark arithmetic --input="none" --operation="exp" --count=20
+	go test $(directory)/circuits/prf/sha256

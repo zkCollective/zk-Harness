@@ -1,6 +1,7 @@
-# gnark Library
+# Benchmarking the gnark Library
 
-The development version documentation of gnark can be found [gnark](https://docs.gnark.consensys.net/en/latest/Concepts/schemes_curves/)
+The development version documentation of gnark can be found [here](https://docs.gnark.consensys.net/en/latest/Concepts/schemes_curves/).
+Note: this is an integration of the [gnark-bench](https://github.com/ConsenSys/gnark-bench), extended and adapted to zk-Harness.
 
 ## Plain Setup
 
@@ -19,4 +20,18 @@ To run the provided code you can leverage the ``` Makefile ``` with the followin
 
 - ``` make test-toy```
   - Runs all toy examples provided in the ``` /toy ``` directory for gnark
-  - By default, this this tests on all curves and proving schemes supported by gnark by leveraging the ``` github.com/ConsenSys/gnark/test ``` package and the ``` AssertNew ``` method. See detailed descriptiont on what exactly is tested in ``` toy/cubic/cubic_test.go ```
+  - By default, this tests on all curves and proving schemes supported by gnark by leveraging the ``` github.com/ConsenSys/gnark/test ``` package and the ``` AssertNew ``` method. See detailed descriptiont on what exactly is tested in ``` toy/cubic/cubic_test.go ```.
+
+- ``` make test-toy```
+  - Test all prf implementations
+
+Running a benchmark can be facilitated through the exposed Cobra CLI:
+
+``./gnark groth16 --circuit=sha256 --input=_input/circuit/sha256/input_3.json --curve=bn254``
+
+would run an evaluation of SHA-256 circuit with the specified input over curve BN254.
+
+## Adding new circuits
+
+See `TUTORIAL.md`
+
