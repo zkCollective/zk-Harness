@@ -74,7 +74,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 			NbSecretVariables: secret,
 			NbPublicVariables: public,
 			ProofSize:         proof_size,
-			MaxRAM:            (m.Sys),
+			MaxRAM:            (m.Sys / 1024 / 1024),
 			RunTime:           took.Milliseconds(),
 		}
 
