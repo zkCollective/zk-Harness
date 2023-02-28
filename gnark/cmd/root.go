@@ -52,12 +52,15 @@ var (
 
 func init() {
 
+	cobra.OnInitialize()
+
 	_curves := ecc.Implemented()
 	curves := make([]string, len(_curves))
 	for i := 0; i < len(_curves); i++ {
 		curves[i] = strings.ToLower(_curves[i].String())
 	}
 
+	// Binding the input path to a variable
 	fInputPath = rootCmd.PersistentFlags().String("input", "none", "input path to the dedicated input")
 	rootCmd.MarkPersistentFlagRequired("input")
 

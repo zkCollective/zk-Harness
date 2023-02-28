@@ -26,7 +26,7 @@ type BenchDataArithmetic struct {
 }
 
 func (bDataArith BenchDataArithmetic) Headers() []string {
-	return []string{"framework", "category", "curve", "field", "operation", "input", "ram(mb)", "time(ns)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
+	return []string{"framework", "category", "curve", "field", "operation", "input", "ram", "time(ns)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
 }
 
 func (bDataArith BenchDataArithmetic) Values() []string {
@@ -56,7 +56,7 @@ type BenchDataCurve struct {
 }
 
 func (bDataCurve BenchDataCurve) Headers() []string {
-	return []string{"framework", "category", "curve", "operation", "input", "ram(mb)", "time(ms)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
+	return []string{"framework", "category", "curve", "operation", "input", "ram", "time(ms)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
 }
 
 func (bDataCurve BenchDataCurve) Values() []string {
@@ -91,7 +91,7 @@ type BenchDataCircuit struct {
 }
 
 func (bDataCirc BenchDataCircuit) Headers() []string {
-	return []string{"framework", "category", "backend", "curve", "circuit", "input", "operation", "nbConstraints", "nbSecret", "nbPublic", "ram(mb)", "time(ms)", "proofSize", "nbPhysicalCores", "nbLogicalCores", "cpu"}
+	return []string{"framework", "category", "backend", "curve", "circuit", "input", "operation", "nbConstraints", "nbSecret", "nbPublic", "ram", "time(ms)", "proofSize", "nbPhysicalCores", "nbLogicalCores", "cpu"}
 }
 
 func (bDataCirc BenchDataCircuit) Values() []string {

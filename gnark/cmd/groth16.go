@@ -109,7 +109,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		var ccs constraint.ConstraintSystem
 		startProfile()
 		for i := 0; i < *fCount; i++ {
-			ccs, err = frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
+			ccs, err = frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -117,7 +117,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	ccs, err := frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
+	ccs, err := frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
 	assertNoError(err)
 
 	if *fAlgo == "setup" {
@@ -194,4 +194,6 @@ func assertNoError(err error) {
 
 func init() {
 	rootCmd.AddCommand(groth16Cmd)
+	// groth16Cmd.Flags().StringVar(&inputPath, "input", "none", "input path to the dedicated input")
+	// print(inputPath)
 }

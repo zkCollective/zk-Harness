@@ -75,7 +75,7 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 			NbSecretVariables: secret,
 			NbPublicVariables: public,
 			ProofSize:         proof_size,
-			MaxRAM:            (m.Sys / 1024 / 1024),
+			MaxRAM:            (m.Sys),
 			RunTime:           took.Milliseconds(),
 		}
 
@@ -110,7 +110,7 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		var err error
 		var ccs constraint.ConstraintSystem
 		for i := 0; i < *fCount; i++ {
-			ccs, err = frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
+			ccs, err = frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -118,7 +118,7 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		return
 	}
 
-	ccs, err := frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
+	ccs, err := frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
 	assertNoError(err)
 
 	// create srs
