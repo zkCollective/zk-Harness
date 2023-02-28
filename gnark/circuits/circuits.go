@@ -25,7 +25,7 @@ import (
 var BenchCircuits map[string]BenchCircuit
 
 type BenchCircuit interface {
-	Circuit(size int, name string) frontend.Circuit
+	Circuit(size int, name string, path string) frontend.Circuit
 	Witness(size int, curveID ecc.ID, name string, path string) witness.Witness
 }
 
@@ -167,7 +167,13 @@ func preCalcMIMC(curveID ecc.ID, preImage frontend.Variable) interface{} {
 type defaultCircuit struct {
 }
 
-func (d *defaultCircuit) Circuit(size int, name string) frontend.Circuit {
+func (d *defaultCircuit) Circuit(size int, name string, path string) frontend.Circuit {
+
+	data, err := util.ReadFromInputPath(path)
+	if err != nil {
+		panic(err)
+	}
+
 	switch name {
 	case "cubic":
 		return &cubic.CubicCircuit{}
@@ -179,7 +185,7 @@ func (d *defaultCircuit) Circuit(size int, name string) frontend.Circuit {
 		return &mimc.MimcCircuit{}
 	case "sha256":
 		return &sha256.Sha256Circuit{
-			PreImage: make([]frontend.Variable, 11),
+			PreImage: make([]frontend.Variable, (len(data["PreImage"].(string)) / 2)),
 		}
 	default:
 		panic("not implemented")
