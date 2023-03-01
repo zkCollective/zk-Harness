@@ -1,17 +1,17 @@
-framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,cpu
-gnark,circuit,groth16,bn254,cubic,_input/circuit/cubic/input_1.json,setup,3,1,2,18,4,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,cubic,_input/circuit/cubic/input_1.json,witness,3,1,2,13,0,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,cubic,_input/circuit/cubic/input_1.json,prove,3,1,2,18,3,384,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,cubic,_input/circuit/cubic/input_1.json,verify,3,1,2,19,1,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,cubic,_input/circuit/cubic/input_1.json,setup,3,1,2,18,5,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,cubic,_input/circuit/cubic/input_1.json,witness,3,1,2,13,0,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,cubic,_input/circuit/cubic/input_1.json,prove,3,1,2,19,4,576,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,cubic,_input/circuit/cubic/input_1.json,verify,3,1,2,19,2,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bw6_761,cubic,_input/circuit/cubic/input_1.json,setup,3,1,2,19,20,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bw6_761,cubic,_input/circuit/cubic/input_1.json,witness,3,1,2,13,0,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bw6_761,cubic,_input/circuit/cubic/input_1.json,prove,3,1,2,18,9,960,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bw6_761,cubic,_input/circuit/cubic/input_1.json,verify,3,1,2,19,13,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,cubic,_input/circuit/cubic/input_1.json,setup,3,1,2,18,8,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,cubic,_input/circuit/cubic/input_1.json,witness,3,1,2,13,0,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,cubic,_input/circuit/cubic/input_1.json,prove,3,1,2,18,4,640,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,cubic,_input/circuit/cubic/input_1.json,verify,3,1,2,19,6,0,1,1,VirtualApple @ 2.50GHz
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram,time(ms),proofSize,nbPhysicalCores,nbLogicalCores,count,cpu
+gnark,circuit,groth16,bn254,cubic,_input/circuit/cubic/input_1.json,setup,3,1,2,19,2,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,cubic,_input/circuit/cubic/input_1.json,witness,3,1,2,13,0,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,cubic,_input/circuit/cubic/input_1.json,prove,3,1,2,20,1,384,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,cubic,_input/circuit/cubic/input_1.json,verify,3,1,2,19,1,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,cubic,_input/circuit/cubic/input_1.json,setup,3,1,2,19,3,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,cubic,_input/circuit/cubic/input_1.json,witness,3,1,2,13,0,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,cubic,_input/circuit/cubic/input_1.json,prove,3,1,2,20,2,576,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,cubic,_input/circuit/cubic/input_1.json,verify,3,1,2,19,2,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bw6_761,cubic,_input/circuit/cubic/input_1.json,setup,3,1,2,19,17,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bw6_761,cubic,_input/circuit/cubic/input_1.json,witness,3,1,2,13,0,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bw6_761,cubic,_input/circuit/cubic/input_1.json,prove,3,1,2,24,8,960,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bw6_761,cubic,_input/circuit/cubic/input_1.json,verify,3,1,2,24,15,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,cubic,_input/circuit/cubic/input_1.json,setup,3,1,2,19,6,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,cubic,_input/circuit/cubic/input_1.json,witness,3,1,2,13,0,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,cubic,_input/circuit/cubic/input_1.json,prove,3,1,2,23,4,640,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,cubic,_input/circuit/cubic/input_1.json,verify,3,1,2,23,5,0,1,1,10,VirtualApple @ 2.50GHz

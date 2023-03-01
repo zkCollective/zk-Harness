@@ -1,13 +1,13 @@
-framework,category,curve,operation,input,ram,time,nbPhysicalCores,nbLogicalCores,cpu
-snarkjs,ec,bn128,g1-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,65957888,6520,1,1,Apple M1 Max
-snarkjs,ec,bn128,g2-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,72953856,15801,1,1,Apple M1 Max
-snarkjs,ec,bls12_381,g1-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,73588736,9692,1,1,Apple M1 Max
-snarkjs,ec,bls12_381,g2-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,73863168,25834,1,1,Apple M1 Max
-snarkjs,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,311726080,692827,1,1,Apple M1 Max
-snarkjs,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,324718592,993830,1,1,Apple M1 Max
-snarkjs,ec,bls12_381,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,245796864,789871,1,1,Apple M1 Max
-snarkjs,ec,bls12_381,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,329674752,1202626,1,1,Apple M1 Max
-snarkjs,ec,bn128,pairing,_input/ec/pairing/input_1.json,110383104,4595176,1,1,Apple M1 Max
-snarkjs,ec,bn128,pairing,_input/ec/pairing/input_1.json,112005120,4606342,1,1,Apple M1 Max
-snarkjs,ec,bls12_381,pairing,_input/ec/pairing/input_1.json,115138560,5555916,1,1,Apple M1 Max
-snarkjs,ec,bls12_381,pairing,_input/ec/pairing/input_1.json,104882176,5619314,1,1,Apple M1 Max
+framework,category,curve,operation,input,ram,time,nbPhysicalCores,nbLogicalCores,count,cpu
+snarkjs,ec,bn128,g1-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,70737920,6703,1,1,10000,Apple M1 Max
+snarkjs,ec,bn128,g2-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,72499200,16124,1,1,10000,Apple M1 Max
+snarkjs,ec,bls12_381,g1-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,76460032,9688,1,1,10000,Apple M1 Max
+snarkjs,ec,bls12_381,g2-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,78589952,26101,1,1,10000,Apple M1 Max
+snarkjs,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,262811648,688457,1,1,10000,Apple M1 Max
+snarkjs,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,265658368,993372,1,1,10000,Apple M1 Max
+snarkjs,ec,bls12_381,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,331571200,819074,1,1,10000,Apple M1 Max
+snarkjs,ec,bls12_381,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,299364352,1227698,1,1,10000,Apple M1 Max
+snarkjs,ec,bn128,pairing,_input/ec/pairing/input_1.json,119259136,4646045,1,1,10000,Apple M1 Max
+snarkjs,ec,bn128,pairing,_input/ec/pairing/input_1.json,100745216,4632484,1,1,10000,Apple M1 Max
+snarkjs,ec,bls12_381,pairing,_input/ec/pairing/input_1.json,99655680,5570737,1,1,10000,Apple M1 Max
+snarkjs,ec,bls12_381,pairing,_input/ec/pairing/input_1.json,123060224,5590935,1,1,10000,Apple M1 Max

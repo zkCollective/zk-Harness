@@ -1,17 +1,17 @@
-framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,cpu
-gnark,circuit,groth16,bn254,expo,_input/circuit/expo/input_1.json,setup,10001,1,2,39,1442,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,expo,_input/circuit/expo/input_1.json,witness,10001,1,2,23,1,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,expo,_input/circuit/expo/input_1.json,prove,10001,1,2,35,100,384,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,expo,_input/circuit/expo/input_1.json,verify,10001,1,2,47,2,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,expo,_input/circuit/expo/input_1.json,setup,10001,1,2,47,2585,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,expo,_input/circuit/expo/input_1.json,witness,10001,1,2,23,0,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,expo,_input/circuit/expo/input_1.json,prove,10001,1,2,47,164,576,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,expo,_input/circuit/expo/input_1.json,verify,10001,1,2,51,3,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bw6_761,expo,_input/circuit/expo/input_1.json,setup,10001,1,2,63,18180,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bw6_761,expo,_input/circuit/expo/input_1.json,witness,10001,1,2,23,1,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bw6_761,expo,_input/circuit/expo/input_1.json,prove,10001,1,2,75,825,960,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bw6_761,expo,_input/circuit/expo/input_1.json,verify,10001,1,2,121,17,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,expo,_input/circuit/expo/input_1.json,setup,10001,1,2,47,3834,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,expo,_input/circuit/expo/input_1.json,witness,10001,1,2,23,0,0,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,expo,_input/circuit/expo/input_1.json,prove,10001,1,2,75,257,640,1,1,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,expo,_input/circuit/expo/input_1.json,verify,10001,1,2,81,5,0,1,1,VirtualApple @ 2.50GHz
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram,time(ms),proofSize,nbPhysicalCores,nbLogicalCores,count,cpu
+gnark,circuit,groth16,bn254,expo,_input/circuit/expo/input_1.json,setup,10001,1,2,52,1064,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,expo,_input/circuit/expo/input_1.json,witness,10001,1,2,23,0,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,expo,_input/circuit/expo/input_1.json,prove,10001,1,2,48,68,384,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bn254,expo,_input/circuit/expo/input_1.json,verify,10001,1,2,44,1,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,expo,_input/circuit/expo/input_1.json,setup,10001,1,2,60,1844,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,expo,_input/circuit/expo/input_1.json,witness,10001,1,2,23,0,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,expo,_input/circuit/expo/input_1.json,prove,10001,1,2,60,106,576,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_377,expo,_input/circuit/expo/input_1.json,verify,10001,1,2,60,2,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bw6_761,expo,_input/circuit/expo/input_1.json,setup,10001,1,2,76,11988,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bw6_761,expo,_input/circuit/expo/input_1.json,witness,10001,1,2,23,0,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bw6_761,expo,_input/circuit/expo/input_1.json,prove,10001,1,2,76,552,960,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bw6_761,expo,_input/circuit/expo/input_1.json,verify,10001,1,2,68,15,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,expo,_input/circuit/expo/input_1.json,setup,10001,1,2,60,2840,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,expo,_input/circuit/expo/input_1.json,witness,10001,1,2,23,0,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,expo,_input/circuit/expo/input_1.json,prove,10001,1,2,82,183,640,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls24_315,expo,_input/circuit/expo/input_1.json,verify,10001,1,2,86,5,0,1,1,10,VirtualApple @ 2.50GHz
