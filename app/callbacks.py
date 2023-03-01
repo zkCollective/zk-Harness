@@ -47,7 +47,7 @@ def update_circuit_table(selected_circuit, selected_backends, selected_framework
         (circuits_df['input_path'] == selected_input)
     ]
     # Filter unneccessary data
-    circuit_data = ndf[['circuit', 'input_path', 'framework', 'backend', 'curve', 'nb_constraints']]
+    circuit_data = ndf[['circuit', 'input_path', 'framework', 'backend', 'curve', 'nb_constraints', 'count']]
     circuit_data = circuit_data.drop_duplicates()
 
     data_note = []
