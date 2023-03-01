@@ -8,7 +8,7 @@ gnark_benchmarks_directory = $(benchmark_directory)/$(gnark_directory)
 circom_benchmarks_directory = $(benchmark_directory)/$(circom_directory)
 
 
-all: benchmark-toy
+all: benchmark-gnark-arithmetics benchmark-gnark-ec benchmark-gnark-circuits benchmark-snarkjs-arithmetics benchmark-snarkjs-ec benchmark-circom-circuits
 
 benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
@@ -28,6 +28,8 @@ benchmark-toy-circom:
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/circom/config_all_toy.json  
 
+benchmark-circom-circuits: benchmark-toy-circom
+
 benchmark-gnark-arithmetics:
 	$(info --------------------------------------------)
 	$(info ------- GNARK ARITHMETICS BENCHMARKS -------)
@@ -46,8 +48,10 @@ benchmark-toy-gnark:
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_all_toy.json  
 
-benchmark-prf:
-	python3 -m _scripts.reader --config _input/config/gnark/config_prf.json  
+benchmark-hash:
+	python3 -m _scripts.reader --config _input/config/gnark/config_hash.json  
+
+benchmark-gnark-circuits: benchmark-toy-gnark benchmark-hash
 
 test-simple:
 	python3 -m _scripts.reader --config _input/config/gnark/config_gnark_simple.json  
