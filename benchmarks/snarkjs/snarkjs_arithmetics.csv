@@ -1,0 +1,21 @@
+framework,category,curve,field,operation,input,ram,time,nbPhysicalCores,nbLogicalCores,cpu
+snarkjs,arithmetic,bn128,base,add,_input/arithmetic/add/input_1.json,60645376,79,1,1,Apple M1 Max
+snarkjs,arithmetic,bn128,scalar,add,_input/arithmetic/add/input_1.json,65921024,295,1,1,Apple M1 Max
+snarkjs,arithmetic,bls12_381,base,add,_input/arithmetic/add/input_1.json,63623168,80,1,1,Apple M1 Max
+snarkjs,arithmetic,bls12_381,scalar,add,_input/arithmetic/add/input_1.json,69484544,80,1,1,Apple M1 Max
+snarkjs,arithmetic,bn128,base,sub,_input/arithmetic/sub/input_1.json,61136896,96,1,1,Apple M1 Max
+snarkjs,arithmetic,bn128,scalar,sub,_input/arithmetic/sub/input_1.json,67563520,330,1,1,Apple M1 Max
+snarkjs,arithmetic,bls12_381,base,sub,_input/arithmetic/sub/input_1.json,64118784,99,1,1,Apple M1 Max
+snarkjs,arithmetic,bls12_381,scalar,sub,_input/arithmetic/sub/input_1.json,71819264,131,1,1,Apple M1 Max
+snarkjs,arithmetic,bn128,base,mul,_input/arithmetic/mul/input_1.json,62488576,91,1,1,Apple M1 Max
+snarkjs,arithmetic,bn128,scalar,mul,_input/arithmetic/mul/input_1.json,64651264,114,1,1,Apple M1 Max
+snarkjs,arithmetic,bls12_381,base,mul,_input/arithmetic/mul/input_1.json,63741952,91,1,1,Apple M1 Max
+snarkjs,arithmetic,bls12_381,scalar,mul,_input/arithmetic/mul/input_1.json,70090752,92,1,1,Apple M1 Max
+snarkjs,arithmetic,bn128,base,inv,_input/arithmetic/inv/input_1.json,61927424,1284,1,1,Apple M1 Max
+snarkjs,arithmetic,bn128,scalar,inv,_input/arithmetic/inv/input_1.json,71606272,1707,1,1,Apple M1 Max
+snarkjs,arithmetic,bls12_381,base,inv,_input/arithmetic/inv/input_1.json,71634944,1878,1,1,Apple M1 Max
+snarkjs,arithmetic,bls12_381,scalar,inv,_input/arithmetic/inv/input_1.json,74694656,1288,1,1,Apple M1 Max
+snarkjs,arithmetic,bn128,base,exp,_input/arithmetic/exp/input_1.json,63131648,1429,1,1,Apple M1 Max
+snarkjs,arithmetic,bn128,scalar,exp,_input/arithmetic/exp/input_1.json,72617984,1618,1,1,Apple M1 Max
+snarkjs,arithmetic,bls12_381,base,exp,_input/arithmetic/exp/input_1.json,68726784,1519,1,1,Apple M1 Max
+snarkjs,arithmetic,bls12_381,scalar,exp,_input/arithmetic/exp/input_1.json,74600448,1530,1,1,Apple M1 Max

@@ -108,7 +108,7 @@ get_phase_stats() {
         ramtimeFinal=$ramtime
     fi
     # We don't want to print the whole input file but only the part that it is
-    echo "circom,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtimeFinal,$proofSize,$physical,$virtual,$PROC"
+    echo "circom/snarkjs,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtimeFinal,$proofSize,$physical,$virtual,$PROC"
 
 }
 

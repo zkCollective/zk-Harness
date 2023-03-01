@@ -69,7 +69,7 @@ def default_case():
 # List ZKP-frameworks in the zk-Harness
 projects = {
     "gnark":    build_command_gnark,
-    "circom":   build_command_circom
+    "circom/snarkjs":   build_command_circom
 }
 
 

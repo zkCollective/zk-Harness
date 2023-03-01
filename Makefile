@@ -10,17 +10,17 @@ circom_benchmarks_directory = $(benchmark_directory)/$(circom_directory)
 
 all: benchmark-toy
 
-benchmark-circom-arithmetics:
+benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
-	$(info ------ CIRCOM ARITHMETICS BENCHMARKS -------)
+	$(info ------ SNARKJS ARITHMETICS BENCHMARKS ------)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/circom/config_arithmetics.json  
+	python3 -m _scripts.reader --config _input/config/snarkjs/config_arithmetics.json  
 
-benchmark-circom-ec:
+benchmark-snarkjs-ec:
 	$(info --------------------------------------------)
-	$(info ----------- CIRCOM EC BENCHMARKS -----------)
+	$(info ---------- SNARKJS EC BENCHMARKS -----------)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/circom/config_ec.json  
+	python3 -m _scripts.reader --config _input/config/snarkjs/config_ec.json  
 
 benchmark-toy-circom:
 	$(info --------------------------------------------)

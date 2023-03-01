@@ -34,9 +34,9 @@ def build_command_gnark(payload, count):
         raise ValueError("Missing payload fields for arithmetic mode")
     return command
 
-def build_command_circom(payload, count):
+def build_command_snarkjs(payload, count):
     """
-    Build the command to invoke the circom ZKP-framework given the payload
+    Build the command to invoke the snarkjs ZKP-framework given the payload
     """
     for c in payload.curves: 
         if c not in helper.CIRCOM_CURVES:
@@ -52,7 +52,7 @@ def build_command_circom(payload, count):
             operation=operation,
             count=count,
             input_path=inp,
-            benchmark=os.path.join(helper.CIRCOM_BENCHMAKR_DIR, "circom_arithmetics.csv")
+            benchmark=os.path.join(helper.SNARKJS_BENCHMAKR_DIR, "snarkjs_arithmetics.csv")
         )
         for operation, input_path in payload.operations.items()
         for inp in helper.get_all_input_files(input_path)
@@ -70,7 +70,7 @@ def default_case():
 # List ZKP-frameworks in the zk-Harness
 projects = {
     "gnark":    build_command_gnark,
-    "circom":   build_command_circom
+    "snarkjs":   build_command_snarkjs
 }
 
 
