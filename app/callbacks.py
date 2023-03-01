@@ -82,16 +82,18 @@ def update_circuit_table(selected_circuit, selected_backends, selected_framework
     Input("circuits-frameworks", "value"),
     Input("circuits-circuit", "value"),
     Input("circuits-metric", "value"),
+    Input("circuits-operation", "value"),
     Input("circuits-input-dropdown", "value"),)
 def update_bar_chart(
         curves_options, backends_options, framework_options, 
-        circuit_option, metric_option, circuit_input
+        circuit_option, metric_option, circuit_operations, circuit_input
     ):
     ndf = circuits_df[
         (circuits_df['circuit'] == circuit_option) & 
         (circuits_df['curve'].isin(curves_options)) &
         (circuits_df['framework'].isin(framework_options)) &
         (circuits_df['backend'].isin(backends_options)) &
+        (circuits_df['operation'].isin(circuit_operations)) &
         (circuits_df['input_path'] == circuit_input)]
     
     if len(ndf) == 0:
@@ -122,15 +124,17 @@ def update_bar_chart(
      Input("circuits-backends", "value"),
      Input("circuits-frameworks", "value"),
      Input("circuits-circuit", "value"),
+    Input("circuits-operation", "value"),
      Input("circuits-metric", "value"),)
 def update_line_chart(
         curves_options, backends_options, framework_options, 
-        circuit_option, metric_option
+        circuit_option, circuits_operations, metric_option
     ):
     ndf = circuits_df[
         (circuits_df['circuit'] == circuit_option) & 
         (circuits_df['curve'].isin(curves_options)) &
         (circuits_df['framework'].isin(framework_options)) &
+        (circuits_df['operation'].isin(circuits_operations)) &
         (circuits_df['backend'].isin(backends_options))]
     res = []
     if len(ndf['input_path'].drop_duplicates()) <= 1:

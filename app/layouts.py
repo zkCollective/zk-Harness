@@ -15,6 +15,14 @@ circuits_curves = list(set(circuits_df['curve']))
 circuits_backends = list(set(circuits_df['backend']))
 circuits_frameworks = list(set(circuits_df['framework']))
 circuits_circuits = list(set(circuits_df['circuit']))
+circuits_operations = list(set(circuits_df['operation']))
+circuits_operations_options = [
+        {
+            "label": html.P([op], style={'font-size': 20, 'margin-left': '10px', 'margin-right': '10px', 'margin-bottom': '.5rem', 'display': 'inline-block'}),
+            "value": op,
+        }
+    for op in circuits_operations
+]
 circuits_default_circuit = "cubic"
 circuits_metrics = ["time", "ram", "proof"]
 circuits_default_metric = "time"
@@ -124,6 +132,22 @@ circuitMenu = html.Div([
                 lg={'size':'auto', 'offset':0}, xl={'size':'auto', 'offset':0}),
         ],
     ),
+    html.Br(),
+    # Curve operations checkboxes
+    dbc.Row(
+        [
+            dbc.Col(html.H4(style={'text-align': 'center'}, children='Select Operation(s):'),
+                xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':'auto', 'offset':3},
+                lg={'size':'auto', 'offset':0}, xl={'size':'auto', 'offset':0}),
+            dbc.Col(dcc.Checklist(
+                    circuits_operations_options,
+                    id='circuits-operation',
+                    value=circuits_operations,
+                    inline=True,
+                ),
+                xs={'size':'auto', 'offset':0}, sm={'size':'auto', 'offset':0}, md={'size':'auto', 'offset':0},
+                lg={'size':'auto', 'offset':0}, xl={'size':'auto', 'offset':0})
+    ]),
     html.Br(),
     dbc.Row(
         [
