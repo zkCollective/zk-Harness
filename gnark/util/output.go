@@ -22,11 +22,12 @@ type BenchDataArithmetic struct {
 	Operation string
 	Input     string
 	MaxRAM    uint64
+	Count     int
 	RunTime   int64
 }
 
 func (bDataArith BenchDataArithmetic) Headers() []string {
-	return []string{"framework", "category", "curve", "field", "operation", "input", "ram", "time(ns)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
+	return []string{"framework", "category", "curve", "field", "operation", "input", "ram", "time(ns)", "nbPhysicalCores", "nbLogicalCores", "count", "cpu"}
 }
 
 func (bDataArith BenchDataArithmetic) Values() []string {
@@ -41,6 +42,7 @@ func (bDataArith BenchDataArithmetic) Values() []string {
 		strconv.Itoa(int(bDataArith.RunTime)),
 		strconv.Itoa(CPU.PhysicalCores),
 		strconv.Itoa(CPU.LogicalCores),
+        strconv.Itoa(int(bDataArith.Count)),
 		CPU.BrandName,
 	}
 }
@@ -52,11 +54,12 @@ type BenchDataCurve struct {
 	Operation string
 	Input     string
 	MaxRAM    uint64
+    Count     int
 	RunTime   int64
 }
 
 func (bDataCurve BenchDataCurve) Headers() []string {
-	return []string{"framework", "category", "curve", "operation", "input", "ram", "time(ms)", "nbPhysicalCores", "nbLogicalCores", "cpu"}
+	return []string{"framework", "category", "curve", "operation", "input", "ram", "time(ms)", "nbPhysicalCores", "nbLogicalCores", "count", "cpu"}
 }
 
 func (bDataCurve BenchDataCurve) Values() []string {
@@ -70,6 +73,7 @@ func (bDataCurve BenchDataCurve) Values() []string {
 		strconv.Itoa(int(bDataCurve.RunTime)),
 		strconv.Itoa(CPU.PhysicalCores),
 		strconv.Itoa(CPU.LogicalCores),
+        strconv.Itoa(int(bDataCurve.Count)),
 		CPU.BrandName,
 	}
 }
@@ -86,12 +90,13 @@ type BenchDataCircuit struct {
 	NbSecretVariables int
 	NbPublicVariables int
 	MaxRAM            uint64
+    Count             int
 	RunTime           int64
 	ProofSize         int
 }
 
 func (bDataCirc BenchDataCircuit) Headers() []string {
-	return []string{"framework", "category", "backend", "curve", "circuit", "input", "operation", "nbConstraints", "nbSecret", "nbPublic", "ram", "time(ms)", "proofSize", "nbPhysicalCores", "nbLogicalCores", "cpu"}
+	return []string{"framework", "category", "backend", "curve", "circuit", "input", "operation", "nbConstraints", "nbSecret", "nbPublic", "ram", "time(ms)", "proofSize", "nbPhysicalCores", "nbLogicalCores", "count", "cpu"}
 }
 
 func (bDataCirc BenchDataCircuit) Values() []string {
@@ -111,6 +116,7 @@ func (bDataCirc BenchDataCircuit) Values() []string {
 		strconv.Itoa(int(bDataCirc.ProofSize)),
 		strconv.Itoa(CPU.PhysicalCores),
 		strconv.Itoa(CPU.LogicalCores),
+        strconv.Itoa(int(bDataCirc.Count)),
 		CPU.BrandName,
 	}
 }

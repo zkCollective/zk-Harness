@@ -47,17 +47,18 @@ def build_command_circom(payload, count):
     # TODO handle diffent operations
     commands = []
     for circuit, input_path in payload.circuit.items():
-        # TODO check if circuit exists
-        for inp in helper.get_all_input_files(input_path):
-            command = "{script} {circuit_file} {circuit_name} {input_path} {ptau} {benchmark}\n".format(
-                script=helper.CIRCOM_SCRIPT,
-                circuit_file=os.path.join(helper.CIRCOM_CIRCUITS_DIR, circuit, "circuit.circom"),
-                circuit_name=circuit,
-                input_path=inp,
-                ptau=helper.CIRCOM_PTAU,
-                benchmark=os.path.join(helper.CIRCOM_BENCHMAKR_DIR, "circom_" + circuit + ".csv")
-            )
-            commands.append(command)
+        for _ in range(0, count):
+            # TODO check if circuit exists
+            for inp in helper.get_all_input_files(input_path):
+                command = "{script} {circuit_file} {circuit_name} {input_path} {ptau} {benchmark}\n".format(
+                    script=helper.CIRCOM_SCRIPT,
+                    circuit_file=os.path.join(helper.CIRCOM_CIRCUITS_DIR, circuit, "circuit.circom"),
+                    circuit_name=circuit,
+                    input_path=inp,
+                    ptau=helper.CIRCOM_PTAU,
+                    benchmark=os.path.join(helper.CIRCOM_BENCHMAKR_DIR, "circom_" + circuit + ".csv")
+                )
+                commands.append(command)
     command = "".join(commands)
     return command
 

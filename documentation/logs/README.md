@@ -39,6 +39,7 @@ The following information is recorded for each field arithmetic benchmark:
 * time: elapsed time in nanoseconds
 * nbPhysicalCores: number of physical cores used
 * nbLogicalCores: number of logical cores used
+* count: number of times that we run the benchmark
 * cpu: the cpu type used for benchmarking
 
 ### Elliptic Curve Group Operations
@@ -54,6 +55,7 @@ The following information is recorded for each elliptic curve group operation be
 * time: elapsed time in milliseconds
 * nbPhysicalCores: number of physical cores used
 * nbLogicalCores: number of logical cores used
+* count: number of times that we run the benchmark
 * cpu: the cpu type used for benchmarking
 
 ### Circuits
@@ -75,6 +77,7 @@ The following information is recorded for each circuit benchmark:
 * proofSize: the size of the proof in bytes -- empty value when Operation != proving
 * nbPhysicalCores: number of physical cores used
 * nbLogicalCores: number of logical cores used
+* count: number of times that we run the benchmark
 * cpu: the cpu type used for benchmarking
 
 ### Recursion

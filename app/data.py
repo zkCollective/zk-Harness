@@ -60,7 +60,9 @@ class Result:
         for v in same_rows.values():
             row = v[0] if len(v) == 1 else cls.merge_rows(v)
             rows.append(row.get_row())
-        return pd.DataFrame(rows, columns=headers)
+        df = pd.DataFrame(rows, columns=headers)
+        cls.check_count(df)
+        return df
 
 
 class LogRow:
@@ -133,15 +135,23 @@ class LogRow:
         # are the same across all rows.
         time_values = []
         ram_values = []
+        count_values = []
         for row in rows:
             time_values.append(row.time)
             ram_values.append(row.ram)
+            count_values.append(row.count)
         time = int(sum(time_values)/len(time_values))
         ram = int(sum(ram_values)/len(ram_values))
+        count = int(sum(count_values))
         row = rows[0]
         row.time = time
         row.ram = ram
+        row.count = count
         return row
+
+    @classmethod
+    def check_count(cls, df):
+        raise NotImplementedError()
 
 
 class CircuitLogRow(LogRow):
@@ -149,7 +159,7 @@ class CircuitLogRow(LogRow):
     def __init__(
         self, framework, category, backend, curve, circuit, input_path, operation,
         nb_constraints, nb_secret, nb_public, ram, time, proof, nb_physical_cores,
-        nb_logical_cores, cpu
+        nb_logical_cores, count, cpu
     ):
         super().__init__(framework)
         # TODO sanity checks
@@ -167,20 +177,30 @@ class CircuitLogRow(LogRow):
         self.proof = int(proof) if proof != '' else 0
         self.nb_physical_cores = int(nb_physical_cores)
         self.nb_logical_cores = int(nb_logical_cores)
+        self.count = int(count)
         self.cpu = cpu
 
     def get_static_rows(self):
         return (f"{self.framework},{self.backend},{self.curve},{self.circuit},"
                 f"{self.input_path},{self.operation},{self.nb_constraints},"
-                f"{self.nb_secret},{self.nb_public},{self.proof},"
-                f"{self.nb_physical_cores},{self.nb_logical_cores},{self.cpu}")
+                f"{self.nb_secret},{self.nb_public},"
+                f"{self.nb_physical_cores},{self.nb_logical_cores},{self.count},"
+                f"{self.cpu}")
+
+    @classmethod
+    def check_count(cls, df):
+        dff = df[['circuit', 'input_path', 'operation', 'count']]
+        dff_grouped = dff.groupby(['circuit', 'input_path', 'operation'])
+        for name, group in dff_grouped:
+            if len(group['count'].unique()) != 1:
+                raise AssertionError(f"Each experiment in group `{name}` should have the same count")
 
 
 class ArithmeticLogRow(LogRow):
     # We need category to easily verify that we pass the correct number of args.
     def __init__(
         self, framework, category, curve, field, operation, input_path, ram, time,
-        nb_physical_cores, nb_logical_cores, cpu
+        nb_physical_cores, nb_logical_cores, count, cpu
     ):
         super().__init__(framework)
         # TODO sanity checks
@@ -193,19 +213,29 @@ class ArithmeticLogRow(LogRow):
         self.time = int(time)
         self.nb_physical_cores = int(nb_physical_cores)
         self.nb_logical_cores = int(nb_logical_cores)
+        self.count = int(count)
         self.cpu = cpu
 
     def get_static_rows(self):
         return (f"{self.framework},{self.curve},{self.field},{self.operation},"
                 f"{self.input_path},{self.nb_physical_cores},"
-                f"{self.nb_logical_cores},{self.cpu}")
+                f"{self.nb_logical_cores},{self.count},{self.cpu}")
+
+
+    @classmethod
+    def check_count(cls, df):
+        dff = df[['field', 'input_path', 'operation', 'count']]
+        dff_grouped = dff.groupby(['field', 'input_path', 'operation'])
+        for name, group in dff_grouped:
+            if len(group['count'].unique()) != 1:
+                raise AssertionError(f"Each experiment in group `{name}` should have the same count")
 
 
 class ECLogRow(LogRow):
     # We need category to easily verify that we pass the correct number of args.
     def __init__(
         self, framework, category, curve, operation, input_path, ram, time,
-        nb_physical_cores, nb_logical_cores, cpu
+        nb_physical_cores, nb_logical_cores, count, cpu
     ):
         super().__init__(framework)
         # TODO sanity checks
@@ -217,12 +247,21 @@ class ECLogRow(LogRow):
         self.time = int(time)
         self.nb_physical_cores = int(nb_physical_cores)
         self.nb_logical_cores = int(nb_logical_cores)
+        self.count = int(count)
         self.cpu = cpu
 
     def get_static_rows(self):
         return (f"{self.framework},{self.curve},{self.operation},"
                 f"{self.input_path},{self.nb_physical_cores},"
-                f"{self.nb_logical_cores},{self.cpu}")
+                f"{self.nb_logical_cores},{self.count},{self.cpu}")
+
+    @classmethod
+    def check_count(cls, df):
+        dff = df[['input_path', 'operation', 'count']]
+        dff_grouped = dff.groupby(['input_path', 'operation'])
+        for name, group in dff_grouped:
+            if len(group['count'].unique()) != 1:
+                raise AssertionError(f"Each experiment in group `{name}` should have the same count")
 
 
 def parse_logs(log_files):
