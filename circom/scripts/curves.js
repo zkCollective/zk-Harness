@@ -130,7 +130,7 @@ async function run () {
     elapsed = Math.floor(await benchmark(curve, G, operation, x, y, count));
 
     // Detect peripheral info
-    const ram = process.memoryUsage().heapUsed;
+    const ram = process.memoryUsage().rss;
     const machine = os.cpus()[0].model;
 
     // Prepend g1 or g2

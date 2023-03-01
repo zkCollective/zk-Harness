@@ -138,7 +138,7 @@ async function run () {
     elapsed = Math.floor(benchmark(field, operation, x, y, count));
 
     // Detect peripheral info
-    const ram = process.memoryUsage().heapUsed;
+    const ram = process.memoryUsage().rss;
     const machine = os.cpus()[0].model;
 
     const input_path = input_file.substring(input_file.indexOf("input_file"));
