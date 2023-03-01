@@ -332,6 +332,35 @@ def get_input(_id):
     ])
 
 
+def get_count(_id):
+    return html.Div([
+        dbc.Row([
+            dbc.Col(
+                html.H4(
+                    style={'text-align': 'center'},
+                    children='Number of benchmarks executed: ',
+                    className='select-curve'
+                ),
+                xs={'size': 'auto', 'offset': 0},
+                sm={'size': 'auto', 'offset': 0},
+                md={'size': 'auto', 'offset': 3},
+                lg={'size': 'auto', 'offset': 0},
+                xl={'size': 'auto', 'offset': 0}
+            ),
+            dbc.Col(
+                html.H5(
+                    id=_id,
+                    className='select-curve'
+                ),
+                xs={'size': 'auto', 'offset': 0},
+                sm={'size': 'auto', 'offset': 0},
+                md={'size': 'auto', 'offset': 0},
+                lg={'size': 'auto', 'offset': 0},
+                xl={'size': 'auto', 'offset': 0}
+            )
+        ])
+    ])
+
 
 ################################# CIRCUITS #####################################
 circuitMenu = html.Div([
@@ -376,6 +405,8 @@ arithmeticsMenu = html.Div([
     get_metric(arithmetics_metrics, 'arithmetics-metric', 'operation'),
     html.Br(),
     get_input('arithmetics-input-dropdown'),
+    html.Br(),
+    get_count('arithmetics-count'),
     ]
     , className='menu'
 )
@@ -400,6 +431,8 @@ ecMenu = html.Div([
     get_metric(ec_metrics, 'ec-metric', 'operation'),
     html.Br(),
     get_input('ec-input-dropdown'),
+    html.Br(),
+    get_count('ec-count'),
     ]
     , className='menu'
 )

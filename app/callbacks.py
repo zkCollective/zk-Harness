@@ -163,6 +163,26 @@ def update_line_chart(
 ################################################################################
 
 ################################# ARITHMETICS ##################################
+@app.callback(
+    Output('arithmetics-count', 'children'),
+    Input("arithmetics-curves", "value"),
+    Input("arithmetics-fields", "value"),
+    Input("arithmetics-frameworks", "value"),
+    Input("arithmetics-operation", "value"),
+    Input("arithmetics-input-dropdown", "value"),)
+def update_arithmetics_count(
+        curves_options, fields_options, framework_options, 
+        operation_option, arithmetics_input
+    ):
+    ndf = arithmetics_df[
+        (arithmetics_df['operation'] == operation_option) & 
+        (arithmetics_df['curve'].isin(curves_options)) &
+        (arithmetics_df['framework'].isin(framework_options)) &
+        (arithmetics_df['field'].isin(fields_options)) &
+        (arithmetics_df['input_path'] == arithmetics_input)]
+    
+    return ndf['count'].iloc[0]
+
 # This will update the circuits input dropdown 
 @app.callback(
     [Output('arithmetics-input-dropdown', 'options'),
@@ -218,6 +238,23 @@ def update_bar_chart(
 ################################################################################
 
 ###################################### EC ######################################
+@app.callback(
+    Output('ec-count', 'children'),
+    Input("ec-curves", "value"),
+    Input("ec-frameworks", "value"),
+    Input("ec-operation", "value"),
+    Input("ec-input-dropdown", "value"),)
+def update_ec_count(
+        curves_options, framework_options, operation_option, arithmetics_input
+    ):
+    ndf = ec_df[
+        (ec_df['operation'] == operation_option) & 
+        (ec_df['curve'].isin(curves_options)) &
+        (ec_df['framework'].isin(framework_options)) &
+        (ec_df['input_path'] == arithmetics_input)]
+    
+    return ndf['count'].iloc[0]
+
 # This will update the circuits input dropdown 
 @app.callback(
     [Output('ec-input-dropdown', 'options'),
