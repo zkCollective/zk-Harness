@@ -38,6 +38,40 @@
   color: black;
 }
 
+.navbar-toggler-custom {
+  border-color: #003262;
+}
+
+.navbar-toggler-custom:focus,
+.navbar-toggler-custom:hover {
+  border-color: #003262;
+}
+
+.navbar-toggler-custom-icon {
+  background-color: #003262;
+}
+
+.navbar-toggler-custom-icon::before,
+.navbar-toggler-custom-icon::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: white;
+  position: absolute;
+  left: 0;
+}
+
+.navbar-toggler-custom-icon::before {
+  top: 10px;
+}
+
+.navbar-toggler-custom-icon::after {
+  bottom: 10px;
+}
+
+
+
 @media (min-width: 2800px){
   .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
     max-width: 1600px;

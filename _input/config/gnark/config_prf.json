@@ -5,8 +5,7 @@
     "count": 1,
     "payload": {
         "backend": [
-            "groth16",
-            "plonk"
+            "groth16"
         ],
         "curves": [
             "bn254",
@@ -14,8 +13,8 @@
             "bls24_315"
         ], 
         "circuits": {
-            "mimc": {
-                "input_path": "_input/circuit/mimc"
+            "sha256": {
+                "input_path": "_input/circuit/sha256"
             }
         },
         "algorithm": [

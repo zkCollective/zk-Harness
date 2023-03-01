@@ -26,6 +26,7 @@ import (
 	"github.com/consensys/gnark/constraint"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/scs"
+	"github.com/consensys/gnark/logger"
 	"github.com/consensys/gnark/test"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
@@ -40,6 +41,9 @@ var plonkCmd = &cobra.Command{
 }
 
 func runPlonk(plonkCmd *cobra.Command, args []string) {
+
+	log := logger.Logger()
+	log.Info().Msg("Benchmarking " + *fCircuit + " - gnark, plonk: " + *fAlgo + " " + *fCurve + " " + *fInputPath)
 
 	var filename = "../benchmarks/gnark/gnark_" +
 		"plonk" + "_" +
@@ -106,7 +110,7 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		var err error
 		var ccs constraint.ConstraintSystem
 		for i := 0; i < *fCount; i++ {
-			ccs, err = frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
+			ccs, err = frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -114,7 +118,7 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		return
 	}
 
-	ccs, err := frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
+	ccs, err := frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
 	assertNoError(err)
 
 	// create srs

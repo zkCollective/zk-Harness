@@ -22,6 +22,7 @@ import (
 	bw6633fr "github.com/consensys/gnark-crypto/ecc/bw6-633/fr"
 	bw6761fp "github.com/consensys/gnark-crypto/ecc/bw6-761/fp"
 	bw6761fr "github.com/consensys/gnark-crypto/ecc/bw6-761/fr"
+	"github.com/consensys/gnark/logger"
 	"github.com/pkg/profile"
 
 	"github.com/consensys/gnark-crypto/ecc"
@@ -869,6 +870,9 @@ func ExecuteOperationBW6761(operation string, x float64, y float64) (time.Durati
 
 func benchArithmetic(cmd *cobra.Command, args []string) {
 
+	log := logger.Logger()
+	log.Info().Msg("Benchmarking arithmetics - gnark: " + *fCurve + " " + *fField + " " + *fOperation + " " + *fInputPath)
+
 	var filename = "../benchmarks/gnark/gnark_" +
 		"arithmetic" +
 		"." +
@@ -899,7 +903,7 @@ func benchArithmetic(cmd *cobra.Command, args []string) {
 			Field:     *fField,
 			Operation: *fOperation,
 			Input:     *fInputPath,
-			MaxRAM:    (m.Sys / 1024 / 1024),
+			MaxRAM:    (m.Sys),
 			RunTime:   took.Nanoseconds(),
 		}
 

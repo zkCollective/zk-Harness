@@ -28,7 +28,6 @@ def build_command_gnark(payload, count):
         command = "".join(commands)
         # Prepend the command to change the working directory to the gnark directory
         command = f"cd {helper.GNARK_DIR}; {command}"
-        print(command)
     else:
         raise ValueError("Missing payload fields for circuit mode")
     return command

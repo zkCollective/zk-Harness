@@ -26,6 +26,7 @@ import (
 	"github.com/consensys/gnark/constraint"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/r1cs"
+	"github.com/consensys/gnark/logger"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
 	"github.com/tumberger/zk-compilers/gnark/util"
@@ -39,6 +40,9 @@ var groth16Cmd = &cobra.Command{
 }
 
 func runGroth16(cmd *cobra.Command, args []string) {
+
+	log := logger.Logger()
+	log.Info().Msg("Benchmarking " + *fCircuit + " - gnark, groth16: " + *fAlgo + " " + *fCurve + " " + *fInputPath)
 
 	var filename = "../benchmarks/gnark/gnark_" +
 		"groth16" + "_" +
@@ -101,11 +105,11 @@ func runGroth16(cmd *cobra.Command, args []string) {
 	}
 
 	if *fAlgo == "compile" {
-		startProfile()
 		var err error
 		var ccs constraint.ConstraintSystem
+		startProfile()
 		for i := 0; i < *fCount; i++ {
-			ccs, err = frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
+			ccs, err = frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -113,7 +117,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	ccs, err := frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit), frontend.WithCapacity(*fCircuitSize))
+	ccs, err := frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
 	assertNoError(err)
 
 	if *fAlgo == "setup" {
@@ -190,4 +194,6 @@ func assertNoError(err error) {
 
 func init() {
 	rootCmd.AddCommand(groth16Cmd)
+	// groth16Cmd.Flags().StringVar(&inputPath, "input", "none", "input path to the dedicated input")
+	// print(inputPath)
 }
