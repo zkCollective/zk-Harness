@@ -36,15 +36,13 @@ def update_circuit_dropdown(selected_circuit):
     [Input('circuits-circuit', 'value'), 
      Input("circuits-backends", "value"),
      Input("circuits-frameworks", "value"),
-     Input("circuits-curves", "value"),
-     Input("circuits-input-dropdown", "value")])
-def update_circuit_table(selected_circuit, selected_backends, selected_frameworks, selected_curves, selected_input):
+     Input("circuits-curves", "value")])
+def update_circuit_table(selected_circuit, selected_backends, selected_frameworks, selected_curves):
     ndf = circuits_df[
         (circuits_df['circuit'] == selected_circuit) &
         (circuits_df['backend'].isin(selected_backends)) & 
         (circuits_df['framework'].isin(selected_frameworks)) & 
-        (circuits_df['curve'].isin(selected_curves)) &
-        (circuits_df['input_path'] == selected_input)
+        (circuits_df['curve'].isin(selected_curves))
     ]
     # Filter unneccessary data
     circuit_data = ndf[['circuit', 'input_path', 'framework', 'backend', 'curve', 'nb_constraints', 'count']]
@@ -55,10 +53,14 @@ def update_circuit_table(selected_circuit, selected_backends, selected_framework
         return [html.Div(dbc.Alert('The table content is empty given the selected options.', color='warning'),)]
 
     data_note.append(html.Div(dash_table.DataTable(
+        sort_action='native',
         data= circuit_data.to_dict('records'),
         columns= [{'name': x, 'id': x} for x in circuit_data],
-        style_as_list_view=True,
         editable=False,
+        filter_action="native",
+        page_action="native",
+        page_current= 0,
+        page_size= 20,
         style_table={
             'overflowY': 'scroll',
             'width': '100%',
