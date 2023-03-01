@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc
 from dash import Input, Output, State, html, dcc
 from app import app
 
-SMALL_LOGO = "/assets/img/mini-logo.png"
+SMALL_LOGO = "/assets/img/logo.png"
 
 # Navigation Bar fucntion
 def Navbar():
@@ -14,7 +14,7 @@ def Navbar():
                 html.A(
                     dbc.Row(
                         [
-                            dbc.Col(html.Img(src=SMALL_LOGO, height="30px")),
+                            dbc.Col(html.Img(src=SMALL_LOGO, height="50px")),
                             dbc.Col(dbc.NavbarBrand("", className="ms-2")),
                         ],
                         align="center",
@@ -38,6 +38,7 @@ def Navbar():
                     id="navbar-collapse",
                     navbar=True,
                     is_open=False,
+                    className="justify-content-end",
                 ),
             ]
         ),

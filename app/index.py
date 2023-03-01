@@ -24,12 +24,12 @@ nav = Navbar()
 header = dbc.Row(
     dbc.Col(
         html.Div([
-            html.H2(children='zk-Harness Benchmarking'),
-            html.Div([
                 "View Source on ",
-                html.A(children="GitHub", href="https://github.com/zkCollective/zk-Harness")
-                ], style={"float": "right", "font-family": "Courier New, monospace"})
-            ])
+                html.A(
+                    href="https://github.com/zkCollective/zk-Harness",
+                    children=html.Img(src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png", style={"height": "1.5em"})
+                ),
+            ], style={"float": "right", "font-family": "Courier New, monospace" , 'color': '#003262'})
         ),className='banner')
 
 content = html.Div([
@@ -56,8 +56,23 @@ def display_page(pathname):
             without extensive developer overhead. zk-Harness has a standardized set of interfaces for configuring 
             benchmark jobs and formatting log outputs.
 
-            __NOTE:__ zk-Harness is a WIP.
-        ''')],className='home')
+            __NOTE:__ zk-Harness is a WIP. We welcome and value contributions from all individuals. You can find our contribution guidelines on [GitHub](https://github.com/zkCollective/zk-Harness).
+
+            ### Main Features
+
+
+            zk-Harness currently includes the following:
+
+
+            - Benchmarks for field arithmetic
+            - Benchmarks for Elliptic curve group operations
+            - Benchmarks for circuit implementations
+            - In the following frameworks:
+                - gnark
+                - circom
+
+            A detailed list of included sub-components and the framework architecture can be found in the [GitHub](https://github.com/zkCollective/zk-Harness) repository.
+        ''')],className='home', style={'text-align': 'justify', 'font-size': '14px', 'color': '#003262'})
     elif pathname == '/circuit':
         return circuitMenu, circuitLayout
     elif pathname == '/arithmetic':
