@@ -21,7 +21,7 @@ app = application
 # Layout variables, navbar, header, content, and container
 nav = Navbar()
 
-header = dbc.Row(
+footer = dbc.Row(
     dbc.Col(
         html.Div([
                 "View Source on ",
@@ -29,7 +29,7 @@ header = dbc.Row(
                     href="https://github.com/zkCollective/zk-Harness",
                     children=html.Img(src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png", style={"height": "1.5em"})
                 ),
-            ], style={"float": "right", "font-family": "Courier New, monospace" , 'color': '#003262'})
+            ], style={"float": "center", "font-family": "Courier New, monospace" , 'color': '#003262'})
         ),className='banner')
 
 content = html.Div([
@@ -38,8 +38,8 @@ content = html.Div([
 ])
 
 container = dbc.Container([
-    header,
     content,
+    footer,
 ])
 
 

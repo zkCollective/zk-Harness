@@ -1,5 +1,5 @@
 # import dash IO and graph objects
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 # Plotly graph objects to render graph plots
 import plotly.express as px
 # Import dash html, bootstrap components, and tables for datatables
@@ -11,6 +11,7 @@ from app import app
 
 # Import custom data.py
 import data
+# from index import questions, answers
 
 circuits_df = data.circuits_df
 arithmetics_df = data.arithmetics_df
