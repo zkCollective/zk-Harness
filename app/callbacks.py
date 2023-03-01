@@ -104,6 +104,11 @@ def update_bar_chart(
     
     # Create a bar chart using Plotly
     fig = px.bar(ndf, x="curve", y=metric_option, color="operation", 
+                          labels={
+                              "time": "time (milliseconds)",
+                              "ram": "ram (mb)",
+                              "proof": "proof (bytes)"
+                          },
                           facet_col="framework", facet_row="backend",
                           barmode="group", opacity=0.8, height=800
                  )
@@ -146,7 +151,12 @@ def update_line_chart(
     else:
         ndf['curve-operation'] = ndf['curve'] + ' ' + ndf['operation']
         fig = px.line(ndf, x="input_path", y=metric_option, color="curve-operation", 
-                      facet_col="framework", facet_row="backend",
+                               labels={
+                                   "time": "time (milliseconds)",
+                                   "ram": "ram (bytes)",
+                                   "proof": "proof (bytes)"
+                               },
+                               facet_col="framework", facet_row="backend",
                  )
         res.append(
                 dbc.Row(dbc.Col(
@@ -222,6 +232,10 @@ def update_bar_chart(
     # Create a bar chart using Plotly
     fig = px.bar(ndf, x="curve", y=metric_option, color="operation", 
                           facet_col="framework", facet_row="field",
+                          labels={
+                              "time": "time (nanoseconds)",
+                              "ram": "ram (bytes)",
+                          },
                           barmode="group", opacity=0.8, height=800
                  )
     
@@ -292,6 +306,10 @@ def update_bar_chart(
     # Create a bar chart using Plotly
     fig = px.bar(ndf, x="curve", y=metric_option, color="operation", 
                           facet_col="framework", 
+                          labels={
+                              "time": "time (milliseconds)",
+                              "ram": "ram (bytes)",
+                          },
                           barmode="group", opacity=0.8, height=800
                  )
     
