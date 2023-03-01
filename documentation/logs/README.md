@@ -35,7 +35,7 @@ The following information is recorded for each field arithmetic benchmark:
 * field: the benchmarked field (base or scalar)
 * operation: the operation performed (add, sub, mul, inv, exp)
 * input: file path of the input used 
-* ram: memory consumed in mb
+* ram: memory consumed in bytes
 * time: elapsed time in nanoseconds
 * nbPhysicalCores: number of physical cores used
 * nbLogicalCores: number of logical cores used
@@ -70,7 +70,7 @@ The following information is recorded for each circuit benchmark:
 * nbConstraints: the number of constraints in the circuit
 * nbSecret: number of secret inputs
 * nbPublic: number of public inputs
-* ram: memory consumed in bytes
+* ram: memory consumed in mb
 * time: elapsed time in milliseconds
 * proofSize: the size of the proof in bytes -- empty value when Operation != proving
 * nbPhysicalCores: number of physical cores used
