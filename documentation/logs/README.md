@@ -35,7 +35,7 @@ The following information is recorded for each field arithmetic benchmark:
 * field: the benchmarked field (base or scalar)
 * operation: the operation performed (add, sub, mul, inv, exp)
 * input: file path of the input used 
-* ram: memory consumed in bytes
+* ram: memory consumed in mb
 * time: elapsed time in nanoseconds
 * nbPhysicalCores: number of physical cores used
 * nbLogicalCores: number of logical cores used
