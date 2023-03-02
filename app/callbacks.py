@@ -307,7 +307,7 @@ def update_bar_chart(
     fig = px.bar(ndf, x="curve", y=metric_option, color="operation", 
                           facet_col="framework", 
                           labels={
-                              "time": "time (milliseconds)",
+                              "time": "time (nanoseconds)",
                               "ram": "ram (bytes)",
                           },
                           barmode="group", opacity=0.8, height=800
