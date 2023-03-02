@@ -1,5 +1,5 @@
 # import dash IO and graph objects
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 # Plotly graph objects to render graph plots
 import plotly.express as px
 # Import dash html, bootstrap components, and tables for datatables
@@ -11,6 +11,7 @@ from app import app
 
 # Import custom data.py
 import data
+# from index import questions, answers
 
 circuits_df = data.circuits_df
 arithmetics_df = data.arithmetics_df
@@ -35,18 +36,16 @@ def update_circuit_dropdown(selected_circuit):
     [Input('circuits-circuit', 'value'), 
      Input("circuits-backends", "value"),
      Input("circuits-frameworks", "value"),
-     Input("circuits-curves", "value"),
-     Input("circuits-input-dropdown", "value")])
-def update_circuit_table(selected_circuit, selected_backends, selected_frameworks, selected_curves, selected_input):
+     Input("circuits-curves", "value")])
+def update_circuit_table(selected_circuit, selected_backends, selected_frameworks, selected_curves):
     ndf = circuits_df[
         (circuits_df['circuit'] == selected_circuit) &
         (circuits_df['backend'].isin(selected_backends)) & 
         (circuits_df['framework'].isin(selected_frameworks)) & 
-        (circuits_df['curve'].isin(selected_curves)) &
-        (circuits_df['input_path'] == selected_input)
+        (circuits_df['curve'].isin(selected_curves))
     ]
     # Filter unneccessary data
-    circuit_data = ndf[['circuit', 'input_path', 'framework', 'backend', 'curve', 'nb_constraints']]
+    circuit_data = ndf[['circuit', 'input_path', 'framework', 'backend', 'curve', 'nb_constraints', 'count']]
     circuit_data = circuit_data.drop_duplicates()
 
     data_note = []
@@ -54,10 +53,14 @@ def update_circuit_table(selected_circuit, selected_backends, selected_framework
         return [html.Div(dbc.Alert('The table content is empty given the selected options.', color='warning'),)]
 
     data_note.append(html.Div(dash_table.DataTable(
+        sort_action='native',
         data= circuit_data.to_dict('records'),
         columns= [{'name': x, 'id': x} for x in circuit_data],
-        style_as_list_view=True,
         editable=False,
+        filter_action="native",
+        page_action="native",
+        page_current= 0,
+        page_size= 20,
         style_table={
             'overflowY': 'scroll',
             'width': '100%',
@@ -82,16 +85,18 @@ def update_circuit_table(selected_circuit, selected_backends, selected_framework
     Input("circuits-frameworks", "value"),
     Input("circuits-circuit", "value"),
     Input("circuits-metric", "value"),
+    Input("circuits-operation", "value"),
     Input("circuits-input-dropdown", "value"),)
 def update_bar_chart(
         curves_options, backends_options, framework_options, 
-        circuit_option, metric_option, circuit_input
+        circuit_option, metric_option, circuit_operations, circuit_input
     ):
     ndf = circuits_df[
         (circuits_df['circuit'] == circuit_option) & 
         (circuits_df['curve'].isin(curves_options)) &
         (circuits_df['framework'].isin(framework_options)) &
         (circuits_df['backend'].isin(backends_options)) &
+        (circuits_df['operation'].isin(circuit_operations)) &
         (circuits_df['input_path'] == circuit_input)]
     
     if len(ndf) == 0:
@@ -99,6 +104,11 @@ def update_bar_chart(
     
     # Create a bar chart using Plotly
     fig = px.bar(ndf, x="curve", y=metric_option, color="operation", 
+                          labels={
+                              "time": "time (milliseconds)",
+                              "ram": "ram (mb)",
+                              "proof": "proof (bytes)"
+                          },
                           facet_col="framework", facet_row="backend",
                           barmode="group", opacity=0.8, height=800
                  )
@@ -122,15 +132,17 @@ def update_bar_chart(
      Input("circuits-backends", "value"),
      Input("circuits-frameworks", "value"),
      Input("circuits-circuit", "value"),
+    Input("circuits-operation", "value"),
      Input("circuits-metric", "value"),)
 def update_line_chart(
         curves_options, backends_options, framework_options, 
-        circuit_option, metric_option
+        circuit_option, circuits_operations, metric_option
     ):
     ndf = circuits_df[
         (circuits_df['circuit'] == circuit_option) & 
         (circuits_df['curve'].isin(curves_options)) &
         (circuits_df['framework'].isin(framework_options)) &
+        (circuits_df['operation'].isin(circuits_operations)) &
         (circuits_df['backend'].isin(backends_options))]
     res = []
     if len(ndf['input_path'].drop_duplicates()) <= 1:
@@ -139,7 +151,12 @@ def update_line_chart(
     else:
         ndf['curve-operation'] = ndf['curve'] + ' ' + ndf['operation']
         fig = px.line(ndf, x="input_path", y=metric_option, color="curve-operation", 
-                      facet_col="framework", facet_row="backend",
+                               labels={
+                                   "time": "time (milliseconds)",
+                                   "ram": "ram (bytes)",
+                                   "proof": "proof (bytes)"
+                               },
+                               facet_col="framework", facet_row="backend",
                  )
         res.append(
                 dbc.Row(dbc.Col(
@@ -158,6 +175,26 @@ def update_line_chart(
 ################################################################################
 
 ################################# ARITHMETICS ##################################
+@app.callback(
+    Output('arithmetics-count', 'children'),
+    Input("arithmetics-curves", "value"),
+    Input("arithmetics-fields", "value"),
+    Input("arithmetics-frameworks", "value"),
+    Input("arithmetics-operation", "value"),
+    Input("arithmetics-input-dropdown", "value"),)
+def update_arithmetics_count(
+        curves_options, fields_options, framework_options, 
+        operation_option, arithmetics_input
+    ):
+    ndf = arithmetics_df[
+        (arithmetics_df['operation'] == operation_option) & 
+        (arithmetics_df['curve'].isin(curves_options)) &
+        (arithmetics_df['framework'].isin(framework_options)) &
+        (arithmetics_df['field'].isin(fields_options)) &
+        (arithmetics_df['input_path'] == arithmetics_input)]
+    
+    return ndf['count'].iloc[0]
+
 # This will update the circuits input dropdown 
 @app.callback(
     [Output('arithmetics-input-dropdown', 'options'),
@@ -195,6 +232,10 @@ def update_bar_chart(
     # Create a bar chart using Plotly
     fig = px.bar(ndf, x="curve", y=metric_option, color="operation", 
                           facet_col="framework", facet_row="field",
+                          labels={
+                              "time": "time (nanoseconds)",
+                              "ram": "ram (bytes)",
+                          },
                           barmode="group", opacity=0.8, height=800
                  )
     
@@ -213,6 +254,23 @@ def update_bar_chart(
 ################################################################################
 
 ###################################### EC ######################################
+@app.callback(
+    Output('ec-count', 'children'),
+    Input("ec-curves", "value"),
+    Input("ec-frameworks", "value"),
+    Input("ec-operation", "value"),
+    Input("ec-input-dropdown", "value"),)
+def update_ec_count(
+        curves_options, framework_options, operation_option, arithmetics_input
+    ):
+    ndf = ec_df[
+        (ec_df['operation'] == operation_option) & 
+        (ec_df['curve'].isin(curves_options)) &
+        (ec_df['framework'].isin(framework_options)) &
+        (ec_df['input_path'] == arithmetics_input)]
+    
+    return ndf['count'].iloc[0]
+
 # This will update the circuits input dropdown 
 @app.callback(
     [Output('ec-input-dropdown', 'options'),
@@ -248,6 +306,10 @@ def update_bar_chart(
     # Create a bar chart using Plotly
     fig = px.bar(ndf, x="curve", y=metric_option, color="operation", 
                           facet_col="framework", 
+                          labels={
+                              "time": "time (milliseconds)",
+                              "ram": "ram (bytes)",
+                          },
                           barmode="group", opacity=0.8, height=800
                  )
     

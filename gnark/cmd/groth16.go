@@ -75,6 +75,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 			NbPublicVariables: public,
 			ProofSize:         proof_size,
 			MaxRAM:            (m.Sys / 1024 / 1024),
+			Count:             *fCount,
 			RunTime:           took.Milliseconds(),
 		}
 
@@ -113,6 +114,10 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		}
 		stopProfile()
 		assertNoError(err)
+		// Set compile time to 1 ms, otherwise 0 in frontend
+		if took < (1024 * 1024) {
+			took = (1024 * 1024)
+		}
 		writeResults(took, ccs, 0)
 		return
 	}
@@ -140,6 +145,10 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		}
 		stopProfile()
 		assertNoError(err)
+		// Set compile time to 1 ms, otherwise 0 in frontend
+		if took < (1024 * 1024) {
+			took = (1024 * 1024)
+		}
 		writeResults(took, ccs, 0)
 		return
 	}

@@ -701,6 +701,7 @@ func benchCurveOperations(cmd *cobra.Command, args []string) {
 			Operation: operationString,
 			Input:     *fInputPath,
 			MaxRAM:    (m.Sys),
+            Count:     *fCount,
 			RunTime:   took.Nanoseconds(),
 		}
 

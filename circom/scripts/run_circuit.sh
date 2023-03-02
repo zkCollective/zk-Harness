@@ -108,7 +108,8 @@ get_phase_stats() {
         ramtimeFinal=$ramtime
     fi
     # We don't want to print the whole input file but only the part that it is
-    echo "circom,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtimeFinal,$proofSize,$physical,$virtual,$PROC"
+    # Count is always 1
+    echo "circom/snarkjs,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtimeFinal,$proofSize,$physical,$virtual,1,$PROC"
 
 }
 
@@ -141,7 +142,7 @@ if [ ! -z "$RES" ]; then
 
     # Check if RES file already exist.
     if [ ! -f "$RES" ]; then
-        echo "framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,cpu" > ${RES}
+        echo "framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,count,cpu" > ${RES}
     fi
     for (( i=0; i<${arraylength}; i++ ));
     do

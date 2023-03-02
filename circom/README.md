@@ -1,7 +1,8 @@
-# Circom Compiler
+# Circom Compiler / snarkjs
 
 [Circom](https://github.com/iden3/circom) is a comiler (Hardware Description Language / HDL) written in Rust.
 The compiler outputs the representation of the circuit as R1CS. Successively, one can apply the respective proof system.
+Circom's output can be used via a backend (typically using [snarkjs](https://github.com/iden3/snarkjs)).
 
 ## Installation
 

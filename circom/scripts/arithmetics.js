@@ -131,7 +131,7 @@ async function run () {
         throw new Error(`Directory ${dir_name} does not exist`);
     }
     if (!fs.existsSync(path_name)) {
-        result_string = "framework,category,curve,field,operation,input,ram,time,nbPhysicalCores,nbLogicalCores,cpu\n";
+        result_string = "framework,category,curve,field,operation,input,ram,time,nbPhysicalCores,nbLogicalCores,count,cpu\n";
     }
 
     // Execute benchmark
@@ -142,7 +142,7 @@ async function run () {
     const machine = os.cpus()[0].model;
 
     const input_path = input_file.substring(input_file.indexOf("input_file"));
-    result_string += "circom,arithmetic," + curve_name + "," + field_name + "," + operation + "," + input_path + "," + ram + "," + elapsed + ",1,1," + machine + "\n";
+    result_string += "snarkjs,arithmetic," + curve_name + "," + field_name + "," + operation + "," + input_path + "," + ram + "," + elapsed + ",1,1," + count + "," + machine + "\n";
 
     fs.appendFileSync(path_name, result_string, function(err) {
         if(err) {

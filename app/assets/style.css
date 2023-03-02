@@ -1,17 +1,25 @@
+html * {
+  font-family:  sans-serif, monospace;
+}
+
+/* Styling of the Footer */
 .banner {
   padding-top: 2%;
   font-style: italic;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
+/* Menu Styling */
 .menu {
   margin-left: auto;
   margin-right: auto;
-  width: 67%;
+  width: 100%%;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 100px;
 }
 
 .era-slider {
@@ -38,8 +46,15 @@
   color: black;
 }
 
+/* Navbar styling */
+
 .navbar-toggler-custom {
   border-color: #003262;
+  background-color: #003262 !important;
+}
+
+.nav-item{
+  text-align: right;
 }
 
 .navbar-toggler-custom:focus,
@@ -57,7 +72,7 @@
   display: block;
   height: 2px;
   width: 100%;
-  background-color: white;
+  background-color: black;
   position: absolute;
   left: 0;
 }
@@ -70,8 +85,82 @@
   bottom: 10px;
 }
 
+/* Styling for the Menu in each circuits, arithmetics, ec */
+
+.subsection-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  font-weight: bold;
+  color: #003262;
+}
+
+.underline {
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: #003262;
+  text-decoration-thickness: 4px;
+  text-underline-position: under;
+}
+
+/* .select-curve {
+  display: flex;
+  color: #003262;
+} */
+
+.select-curve {
+  display: flex;
+  font-size: 1.2em;
+  font-weight: bold;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #003262;
+}
+
+.select-curve h4 {
+  margin: 0;
+}
+
+.select-curve select {
+  margin-top: 10px;
+}
 
 
+/* Options styling */
+
+.multi-option-style .Select--multi .Select-value-icon, .Select--multi .Select-value-label  {
+  color: #003262;
+}
+
+.multi-option-style .Select-control {
+  border-color: rgb(182, 179, 179);
+  border-radius: 50;
+  box-shadow: 200;
+}
+
+
+/* Dropdown styling input */
+
+.dropdown-class-input .Select-value-label,
+.dropdown-class-input .Select-option {
+    font-size: 14px !important;
+}
+
+.dropdown-class-input .Select-menu-outer {
+  font-size: 12px;
+}
+
+.dropdown-class-input .Select-control {
+  border-color: rgb(182, 179, 179);
+  border-radius: 50;
+  box-shadow: 200;
+}
+
+
+/* Container main page styling */
 @media (min-width: 2800px){
   .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
     max-width: 1600px;
