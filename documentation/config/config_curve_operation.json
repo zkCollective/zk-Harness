@@ -1,6 +1,6 @@
 {
-    "project": "circom",
-    "project_url": "https://github.com/iden3/circom",
+    "project": "snarkjs",
+    "project_url": "https://github.com/iden3/snarkjs",
     "category": "ec",
     "count": 1,
     "payload": {
