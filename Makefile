@@ -4,8 +4,10 @@ benchmark_directory = benchmarks
 
 gnark_directory = gnark
 circom_directory = circom
+snarkjs_directory = snarkjs
 gnark_benchmarks_directory = $(benchmark_directory)/$(gnark_directory)
 circom_benchmarks_directory = $(benchmark_directory)/$(circom_directory)
+snarkjs_benchmarks_directory = $(benchmark_directory)/$(snarkjs_directory)
 
 
 all: benchmark-gnark-arithmetics benchmark-gnark-ec benchmark-gnark-circuits benchmark-snarkjs-arithmetics benchmark-snarkjs-ec benchmark-circom-circuits
@@ -57,4 +59,4 @@ test-simple:
 	python3 -m _scripts.reader --config _input/config/gnark/config_gnark_simple.json  
 
 clean:
-	rm -rf $(gnark_benchmarks_directory)/*  $(circom_benchmarks_directory)/*
+	rm -rf $(gnark_benchmarks_directory)/*  $(circom_benchmarks_directory)/* $(snarkjs_benchmarks_directory)/*
