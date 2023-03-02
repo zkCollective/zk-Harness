@@ -49,12 +49,22 @@ container = dbc.Container([
             [Input('url', 'pathname')])
 def display_page(pathname):
     if pathname == '/':
-        return html.Div([dcc.Markdown('''
-            ### What is it?
-            zk-Harness is a benchmarking framework for general purpose zero-knowledge proofs. 
-            It is designed to be modular - new circuit implementations and ZKP-frameworks can be easily added, 
-            without extensive developer overhead. zk-Harness has a standardized set of interfaces for configuring 
-            benchmark jobs and formatting log outputs.
+        return html.Div([
+            dbc.Row(
+                [
+                    dbc.Col(
+                        html.H2(children='zk-Harness'),
+                        className="subsection-header text-6xl md:text-8xl underline text-center"
+                    )
+                ]
+            ),
+            dcc.Markdown('''
+            
+            We cordially invite the zk SNARK community to join us in creating a comprehensive benchmarking framework (zk-Harness) for zk SNARKs. This is a crucial step in the important mission to create a reference point for non-experts and experts alike on what zkSNARK scheme best suits their needs, and to also promote further research by identifying performance gaps. We believe that the collective efforts of the community will help to achieve this goal. Whether you are a researcher, developer, or simply passionate about zk SNARKs, we welcome your participation and contribution in this exciting initiative.
+
+            It is designed to be modular - new circuit implementations and ZKP-frameworks can be easily added, without extensive developer overhead.
+            zk-Harness has a standardized set of interfaces for configuring benchmark jobs and formatting log outputs.
+            Once a new component is included, it's benchmarks will be displayed on this website.
 
             __NOTE:__ zk-Harness is a WIP. We welcome and value contributions from all individuals. You can find our contribution guidelines on [GitHub](https://github.com/zkCollective/zk-Harness).
 
