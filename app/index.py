@@ -77,7 +77,7 @@ def display_page(pathname):
             **What data am I looking at?**
 
             The data you are looking at are measurements of common ZKP frameworks, currently executed on a specific local processor.
-            Our source-code is open-source and you can find the raw data [here](https://github.com/zkCollective/zk-Harness/tree/main/benchmarks/gnark). 
+            Our source-code is open-source and you can find the raw data [here](https://github.com/zkCollective/zk-Harness/tree/main/benchmarks). 
 
             **Which criterias is used to determine whether a ZKP framework is included?**
 
