@@ -72,6 +72,31 @@ def display_page(pathname):
                 - circom
 
             A detailed list of included sub-components and the framework architecture can be found in the [GitHub](https://github.com/zkCollective/zk-Harness) repository.
+
+            ### FAQ
+            **What data am I looking at?**
+
+            The data you are looking at are measurements of common ZKP frameworks, currently executed on a specific local processor.
+            Our source-code is open-source and you can find the raw data [here](https://github.com/zkCollective/zk-Harness/tree/main/benchmarks/gnark). 
+
+            **Which criterias is used to determine whether a ZKP framework is included?**
+
+            We do not favor any proving system over another, we aim for completenes such that developers may benefit from a leveled and standardized comparison.
+
+            **How do you determine the validity of the data?**
+
+            Before including a new set of benchmarks, we ensure the compliance of the benchmarks with our standardized interfaces and specification of metrics.
+            Further, we manually check the sanity of the measurements, such that equivalent measures are applied for comparability.
+            In some cases, such as for Circom and SnarkJS, the comparison is not equal due to the overhead of certain components (e.g., see [this](https://github.com/zkCollective/zk-Harness/issues/1) issue). 
+
+            Of course, there is always the possibility of a bug. If you find something suspicious, please let us know by opening an issue in our [GitHub](https://github.com/zkCollective/zk-Harness).
+
+            **How can I contribute?**
+
+            zk-Harness is an open-source public good developed as initiative by the [zk-Collective](https://zkcollective.org/). 
+            Currently, zk-Harness is a part of the [ZKP/Web3 Hackathon](https://rdi.berkeley.edu/zkp-web3-hackathon/) - you can find dedicated tasks with specific prices [here](https://drive.google.com/file/d/1Igm47dFXSOFAC_wldfUG4Y9OiITqlbQu/view?usp=share_link).
+            If you'd like to make a contribution by including a new system, please see the documentation on [How to contribute?](https://github.com/zkCollective/zk-Harness).
+            
         ''')],className='home', style={'text-align': 'justify', 'font-size': '14px', 'color': '#003262'})
     elif pathname == '/circuit':
         return circuitMenu, circuitLayout
