@@ -94,7 +94,7 @@ def display_page(pathname):
             **How can I contribute?**
 
             zk-Harness is an open-source public good developed as initiative by the [zk-Collective](https://zkcollective.org/). 
-            Currently, zk-Harness is a part of the [ZKP/Web3 Hackathon](https://rdi.berkeley.edu/zkp-web3-hackathon/) - you can find dedicated tasks with specific prices [here](https://drive.google.com/file/d/1Igm47dFXSOFAC_wldfUG4Y9OiITqlbQu/view?usp=share_link).
+            Currently, zk-Harness is a part of the [ZKP/Web3 Hackathon](https://rdi.berkeley.edu/zkp-web3-hackathon/) - you can find dedicated tasks with specific prizes [here](https://drive.google.com/file/d/1Igm47dFXSOFAC_wldfUG4Y9OiITqlbQu/view?usp=share_link).
             If you'd like to make a contribution by including a new system, please see the documentation on [How to contribute?](https://github.com/zkCollective/zk-Harness).
             
         ''')],className='home', style={'text-align': 'justify', 'font-size': '14px', 'color': '#003262'})
