@@ -26,8 +26,8 @@ zk-Harness currently includes the following:
 - Benchmarks for Elliptic curve group operations
 - Benchmarks for circuit implementations
 - In the following frameworks:
- - gnark
- - circom
+  - gnark
+  - circom
 
 
 A detailed list of included sub-components can be found in the respective subdirectory of the ZKP-framework.
