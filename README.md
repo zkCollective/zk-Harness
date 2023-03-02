@@ -10,7 +10,7 @@
 zk-Harness is a benchmarking framework for general purpose zero-knowledge proofs.
 It is designed to be modular - new circuit implementations and ZKP-frameworks can be easily added, without extensive developer overhead.
 zk-Harness has a standardized set of interfaces for configuring benchmark jobs and formatting log outputs.
-Once a new component is included, it's benchmarks will be displayed on [zk-harness.org](zk-harness.org).
+Once a new component is included, it's benchmarks will be displayed on [zk-harness.org](https://zk-harness.herokuapp.com/).
 
 
 **Note: zk-Harness is a WIP. Its architecture may change over time.**
