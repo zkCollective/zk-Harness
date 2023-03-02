@@ -27,6 +27,7 @@
         },
         "algorithm": [
             "setup",
+            "compile",
             "witness",
             "prove",
             "verify"
