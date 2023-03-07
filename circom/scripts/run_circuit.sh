@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Compile, setup, prove, and verify a proof for a circom circuit.
 # If the .csv files already exist, then just append the results
