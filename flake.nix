@@ -26,6 +26,7 @@
                 circom-out
                 gnark-out
                 nodejs-19_x
+                zsh
               ];
               shellHook = ''
 python -m venv pipenv
