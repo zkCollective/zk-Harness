@@ -22,11 +22,14 @@
                 (python3.withPackages python-pkgs)
                 gnumake
                 circom-out
+                nodejs-19_x
               ];
               shellHook = ''
 python -m venv pipenv
 source ./pipenv/bin/activate
 pip install -r requirements.txt
+npm install
+alias snarkjs="npx snarkjs"
               '';
             };
         });
