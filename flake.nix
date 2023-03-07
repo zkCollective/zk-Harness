@@ -16,8 +16,9 @@
         {
           devShells.default =
             pkgs.mkShell {
-              packages = [
-                (pkgs.python3.withPackages python-pkgs)
+              packages = with pkgs; [
+                (python3.withPackages python-pkgs)
+                gnumake
               ];
               shellHook = ''
 python -m venv pipenv
