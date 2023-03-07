@@ -3,28 +3,14 @@
       flake-utils.url = "github:numtide/flake-utils";
     };
 
+  nixConfig.bash-prompt = "[nix-develop-zk-Harness:] ";
+
   outputs = { nixpkgs, flake-utils, ... }@inputs:
     flake-utils.lib.eachDefaultSystem
       (system:
         let pkgs = nixpkgs.legacyPackages.${system};
             python-pkgs = p: with p; [
-              # dash-bootstrap-components
-              brotli
-              click
-              dash
-              dash-core-components
-              dash-html-components
-              dash-table
-              flask
-              flask-compress
-              itsdangerous
-              jinja2
-              markupsafe
-              plotly
-              six
-              tenacity
-              werkzeug
-              pandas
+              pip
             ];
         in
         {
@@ -33,6 +19,11 @@
               packages = [
                 (pkgs.python3.withPackages python-pkgs)
               ];
+              shellHook = ''
+python -m venv pipenv
+source ./pipenv/bin/activate
+pip install -r requirements.txt
+              '';
             };
         });
 }
