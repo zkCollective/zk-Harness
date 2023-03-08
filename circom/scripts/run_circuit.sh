@@ -95,6 +95,7 @@ get_time_results() {
         realTime=$(grep real ${timeRes} | xargs | cut -d " " -f1)
         ramMb=$(echo ${ram}/1024/1024 | bc)
     fi
+    realTime=$(echo "$realTime" | sed 's/s//')
     millisecs=$(echo "${realTime} * 1000" | bc)
     millisecs_without_dec=${millisecs%.*}
     echo "$ramMb,$millisecs_without_dec"
