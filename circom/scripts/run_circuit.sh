@@ -23,26 +23,51 @@ else
     TMP=tmp
 fi
 
+if [[ $(uname) == "Linux" ]]; then
+    TIMECMD='/usr/bin/time -f "Real time (seconds): %e\nMaximum resident set size (bytes): %M" -o'
+    STATCMD='stat --printf="%s" '
+    OS="Linux"
+elif [[ $(uname) == "Darwin" ]]; then
+    TIMECMD="/usr/bin/time -h -l -o"
+    STATCMD='stat -f%z '
+    OS="Darwin"
+else
+    echo "Unsupported operating system."
+    exit 1
+fi
+
 ### EXECUTION ###
 echo ">>>Step 0: cleaning and creating ${TMP}" && \
 rm -rf ${TMP} && mkdir ${TMP} && \
 echo ">>>Step 1: compiling the circuit" && \
-/usr/bin/time -h -l -o ${TMP}/compiler_times.txt circom ${CIRCUIT} --r1cs --wasm --sym --c --output ${TMP} | tee ${TMP}/circom_output && \
+eval """
+$TIMECMD ${TMP}/compiler_times.txt circom ${CIRCUIT} --r1cs --wasm --sym --c --output ${TMP} | tee ${TMP}/circom_output 
+""" && \
 echo ">>>Step 2: generating the witness JS" && \
-/usr/bin/time -h -l -o ${TMP}/witness_times.txt node  ${TMP}/${CIRCUIT_NAME_INT}_js/generate_witness.js ${TMP}/${CIRCUIT_NAME_INT}_js/${CIRCUIT_NAME_INT}.wasm ${INPUT} ${TMP}/witness.wtns && \
+eval """
+$TIMECMD ${TMP}/witness_times.txt node  ${TMP}/${CIRCUIT_NAME_INT}_js/generate_witness.js ${TMP}/${CIRCUIT_NAME_INT}_js/${CIRCUIT_NAME_INT}.wasm ${INPUT} ${TMP}/witness.wtns
+""" && \
 # We only care about phase 2 which is circuit-specific
 # .zkey file that will contain the proving and verification keys together with 
 # all phase 2 contributions.
 echo ">>>Step 3: Setup" && \
-/usr/bin/time -h -l -o ${TMP}/setup_times.txt snarkjs groth16 setup ${TMP}/${CIRCUIT_NAME_INT}.r1cs ${TAU} ${TMP}/${CIRCUIT_NAME_INT}_0.zkey && \
+eval """
+$TIMECMD ${TMP}/setup_times.txt snarkjs groth16 setup ${TMP}/${CIRCUIT_NAME_INT}.r1cs ${TAU} ${TMP}/${CIRCUIT_NAME_INT}_0.zkey
+""" && \
 # TODO Should we contribute here?
 # We could contribute here using: snarkjs zkey contribute ${TMP}/${CIRCUIT_NAME}_0.zkey ${TMP}/${CIRCUIT_NAME}_1.zkey --name="1st Contributor Name" -v
 echo ">>>Step 4: Export verification key" && \
-/usr/bin/time -h -l -o ${TMP}/export_times.txt snarkjs zkey export verificationkey ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/verification_key.json && \
+eval """
+$TIMECMD ${TMP}/export_times.txt snarkjs zkey export verificationkey ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/verification_key.json
+""" && \
 echo ">>>Step 5: Prove" && \
-/usr/bin/time -h -l -o ${TMP}/prove_times.txt snarkjs groth16 prove ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/witness.wtns ${TMP}/proof.json ${TMP}/public.json && \
+eval """
+$TIMECMD ${TMP}/prove_times.txt snarkjs groth16 prove ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/witness.wtns ${TMP}/proof.json ${TMP}/public.json
+""" && \
 echo ">>>Step 6: Verify" && \
-/usr/bin/time -h -l -o ${TMP}/verify_times.txt snarkjs groth16 verify ${TMP}/verification_key.json ${TMP}/public.json ${TMP}/proof.json
+eval """
+$TIMECMD ${TMP}/verify_times.txt snarkjs groth16 verify ${TMP}/verification_key.json ${TMP}/public.json ${TMP}/proof.json
+"""
 
 portable_proc() {
     OS="$(uname -s)"
@@ -59,13 +84,21 @@ portable_proc() {
 
 get_time_results() {
     timeRes=$1
-    ram=$(grep maximum ${timeRes} | xargs | cut -d " " -f1) 
-    ramMb=$(echo ${ram}/1024/1024 | bc)
-    realTime=$(grep real ${timeRes} | xargs | cut -d " " -f1)
-    realTime=${realTime::${#realTime}-1}
-    milisecs=$(echo "$realTime * 1000" | bc)
-    milisecs=${milisecs::${#milisecs}-3}
-    echo "$ramMb,$milisecs"
+
+    if [[ "$OS" == "Linux" ]]; then
+        ram=$(grep Maximum ${timeRes} | cut -d ":" -f2 | xargs)
+        realTime=$(grep Real ${timeRes} | cut -d ":" -f2 | xargs)
+        # RAM here is in kbytes
+        ramMb=$(echo ${ram}/1024 | bc)
+    elif [[ "$OS" == "Darwin" ]]; then
+        ram=$(grep maximum ${timeRes} | xargs | cut -d " " -f1) 
+        realTime=$(grep real ${timeRes} | xargs | cut -d " " -f1)
+        ramMb=$(echo ${ram}/1024/1024 | bc)
+    fi
+    realTime=$(echo "$realTime" | sed 's/s//')
+    millisecs=$(echo "${realTime} * 1000" | bc)
+    millisecs_without_dec=${millisecs%.*}
+    echo "$ramMb,$millisecs_without_dec"
 }
 
 get_phase_stats() {
@@ -85,7 +118,7 @@ get_phase_stats() {
     virtual=1
     # Proof size in bytes
     if [ $phase == "prove" ]; then 
-        proofSize=$(stat -f%z ${TMP}/proof.json)
+        proofSize=$(eval "$STATCMD ${TMP}/proof.json")
     else
         proofSize=""
     fi
