@@ -1,0 +1,31 @@
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,count,cpu
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,compile,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,witness,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,prove,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,verify,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,compile,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,witness,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,prove,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,verify,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,compile,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,witness,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,prove,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,verify,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,compile,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,witness,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,prove,1053,81,81,,,804,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,verify,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,compile,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,witness,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,prove,1053,81,81,,,805,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,verify,1053,81,81,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,compile,1053,81,81,14,120,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,witness,1053,81,81,50,80,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,setup,1053,81,81,184,2990,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,prove,1053,81,81,197,650,803,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,verify,1053,81,81,136,400,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics

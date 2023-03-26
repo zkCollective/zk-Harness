@@ -1,0 +1,15 @@
+[32mtemplate instances[0m: 5
+non-linear constraints: 1053
+linear constraints: 0
+public inputs: 81
+public outputs: 0
+private inputs: 81
+private outputs: 0
+wires: 973
+labels: 2107
+[32mWritten successfully:[0m sudoku_output/sudoku.r1cs
+[32mWritten successfully:[0m sudoku_output/sudoku.sym
+[32mWritten successfully:[0m sudoku_output/sudoku_cpp/sudoku.cpp and sudoku_output/sudoku_cpp/sudoku.dat
+[32mWritten successfully:[0m sudoku_output/sudoku_cpp/main.cpp, circom.hpp, calcwit.hpp, calcwit.cpp, fr.hpp, fr.cpp, fr.asm and Makefile
+[32mWritten successfully:[0m sudoku_output/sudoku_js/sudoku.wasm
+[32mEverything went okay, circom safe[0m
