@@ -68,3 +68,9 @@ Furthermore, to execute larger circuits you might need a larger powers of tau.
 ## Adding new circuits
 
 See `TUTORIAL.md`
+
+## Added Circuits
+- poseidon - run the following command 
+  ```
+  ./scripts/run_circuit.sh circuits/benchmarks/poseidon/circuit.circom poseidon inputs/benchmarks/poseidon/input.json phase1/powersOfTau28_hez_final_16.ptau res.csv poseidon_output
+  ```

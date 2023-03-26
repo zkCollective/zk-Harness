@@ -29,3 +29,33 @@ circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,witness
 circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,setup,1053,81,81,184,2990,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
 circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,prove,1053,81,81,197,650,803,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
 circom/snarkjs,circuit,groth16,bn128,sudoku,inputs/toy/sudoku.input.json,verify,1053,81,81,136,400,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon.input.json,compile,240,0,2,181,1400,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon.input.json,witness,240,0,2,43,50,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon.input.json,prove,240,0,2,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon.input.json,verify,240,0,2,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,compile,240,0,2,180,1350,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,witness,240,0,2,58,60,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,prove,240,0,2,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,verify,240,0,2,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,compile,240,0,2,181,1490,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,witness,240,0,2,58,50,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,prove,240,0,2,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,verify,240,0,2,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,compile,240,0,2,180,1460,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,witness,240,0,2,56,40,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,prove,240,0,2,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,verify,240,0,2,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,compile,240,0,2,180,1500,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,witness,240,0,2,58,40,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,prove,240,0,2,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,verify,240,0,2,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,compile,240,0,2,180,1460,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,witness,240,0,2,54,50,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,setup,240,0,2,178,2250,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,prove,240,0,2,156,500,805,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,verify,240,0,2,138,440,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics

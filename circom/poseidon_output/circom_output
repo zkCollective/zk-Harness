@@ -1,0 +1,15 @@
+[32mtemplate instances[0m: 71
+non-linear constraints: 240
+linear constraints: 0
+public inputs: 2
+public outputs: 1
+private inputs: 0
+private outputs: 0
+wires: 243
+labels: 768
+[32mWritten successfully:[0m poseidon_output/circuit.r1cs
+[32mWritten successfully:[0m poseidon_output/circuit.sym
+[32mWritten successfully:[0m poseidon_output/circuit_cpp/circuit.cpp and poseidon_output/circuit_cpp/circuit.dat
+[32mWritten successfully:[0m poseidon_output/circuit_cpp/main.cpp, circom.hpp, calcwit.hpp, calcwit.cpp, fr.hpp, fr.cpp, fr.asm and Makefile
+[32mWritten successfully:[0m poseidon_output/circuit_js/circuit.wasm
+[32mEverything went okay, circom safe[0m
