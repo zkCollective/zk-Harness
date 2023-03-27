@@ -24,8 +24,8 @@
                 (python3.withPackages python-pkgs)
                 bc
                 gnumake
+                go
                 circom-out
-                gnark-out
                 nodejs-19_x
                 time
                 zsh
@@ -36,6 +36,7 @@ source ./pipenv/bin/activate
 pip install -r requirements.txt
 npm install
 alias snarkjs="npx snarkjs"
+ln -s ${gnark-out}/bin/backend ./gnark/gnark
               '';
             };
         });
