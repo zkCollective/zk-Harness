@@ -74,3 +74,34 @@ See `TUTORIAL.md`
   ```
   ./scripts/run_circuit.sh circuits/benchmarks/poseidon/circuit.circom poseidon inputs/benchmarks/poseidon/input.json phase1/powersOfTau28_hez_final_16.ptau res.csv poseidon_output
   ```
+- mimc - run the following command 
+  ```
+  ./scripts/run_circuit.sh circuits/benchmarks/mimc/circuit.circom mimc inputs/benchmarks/mimc/input.json phase1/powersOfTau28_hez_final_16.ptau res.csv mimc_output
+  ```
+- pedersen - run the following command 
+  ```
+  ./scripts/run_circuit.sh circuits/benchmarks/pedersen/circuit.circom pedersen inputs/benchmarks/pedersen/input.json phase1/powersOfTau28_hez_final_16.ptau res.csv pedersen_output
+  ```
+- sha256 - run the following command 
+  ```
+  ./scripts/run_circuit.sh circuits/benchmarks/pedersen/circuit.circom sha256 inputs/benchmarks/pedersen/input.json phase1/powersOfTau28_hez_final_16.ptau res.csv sha256_output
+  ```
+- eddsa - run the following command 
+  ```
+  ./scripts/run_circuit.sh circuits/benchmarks/eddsa/circuit.circom eddsa inputs/benchmarks/eddsa/input.json phase1/powersOfTau28_hez_final_16.ptau res.csv eddsa_output
+  ```
+- smtProcessor - run the following command 
+  ```
+  ./scripts/run_circuit.sh circuits/benchmarks/smtProcessor/circuit.circom smtProcessor inputs/benchmarks/smtProcessor/input.json phase1/powersOfTau28_hez_final_16.ptau res.csv smtProcessor_output
+  ```
+- smtVerifier - run the following command 
+  ```
+  ./scripts/run_circuit.sh circuits/benchmarks/smtVerifier/circuit.circom smtVerifier inputs/benchmarks/smtVerifier/input.json phase1/powersOfTau28_hez_final_16.ptau res.csv smtVerifier_output
+  ```
+- keccak256 - run the following command (note, this one isn't fully implemented)
+  ```
+  ./scripts/run_circuit.sh circuits/benchmarks/keccak256/circuit.circom keccak256 inputs/benchmarks/keccak256/input.json phase1/powersOfTau28_hez_final_16.ptau res.csv keccak256_output
+  ```
+
+
+

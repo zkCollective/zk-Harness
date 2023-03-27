@@ -69,3 +69,98 @@ circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.j
 circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,setup,240,0,2,180,2150,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
 circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,prove,240,0,2,156,590,805,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
 circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,verify,240,0,2,137,450,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,compile,240,0,2,181,1550,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,witness,240,0,2,57,50,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,setup,240,0,2,184,2430,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,prove,240,0,2,156,520,804,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,poseidon,inputs/benchmarks/poseidon/input.json,verify,240,0,2,137,430,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,compile,438,0,248,20,650,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,witness,438,0,248,45,30,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,prove,438,0,248,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,verify,438,0,248,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,compile,438,0,248,20,650,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,witness,438,0,248,46,30,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,prove,438,0,248,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,verify,438,0,248,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,compile,55,0,32,18,220,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,witness,55,0,32,45,40,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,prove,55,0,32,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,verify,55,0,32,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,compile,55,0,32,19,250,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,witness,55,0,32,45,50,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,prove,55,0,32,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,verify,55,0,32,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,compile,54,0,31,18,190,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,witness,54,0,31,47,30,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,setup,54,0,31,179,1780,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,prove,54,0,31,153,500,806,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,verify,54,0,31,136,410,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,compile,55,0,32,18,210,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,witness,55,0,32,47,30,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,setup,55,0,32,178,1700,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,prove,55,0,32,153,600,807,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,pedersen,inputs/benchmarks/pedersen/input.json,verify,55,0,32,136,430,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,mimc,inputs/benchmarks/mimc/input.json,compile,364,0,2,14,110,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,mimc,inputs/benchmarks/mimc/input.json,witness,364,0,2,46,50,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,mimc,inputs/benchmarks/mimc/input.json,setup,364,0,2,180,2000,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,mimc,inputs/benchmarks/mimc/input.json,prove,364,0,2,165,560,804,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,mimc,inputs/benchmarks/mimc/input.json,verify,364,0,2,138,440,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sha256,inputs/benchmarks/pedersen/input.json,compile,55,0,32,18,240,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sha256,inputs/benchmarks/pedersen/input.json,witness,55,0,32,46,40,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sha256,inputs/benchmarks/pedersen/input.json,setup,55,0,32,178,1830,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sha256,inputs/benchmarks/pedersen/input.json,prove,55,0,32,155,480,806,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,sha256,inputs/benchmarks/pedersen/input.json,verify,55,0,32,138,410,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,compile,95444,0,4,622,19290,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,witness,95444,0,4,81,70,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,prove,95444,0,4,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,verify,95444,0,4,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,compile,95444,0,4,595,20220,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,witness,95444,0,4,84,80,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,prove,95444,0,4,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,verify,95444,0,4,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,compile,95444,0,4,587,19890,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,witness,95444,0,4,82,70,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,prove,95444,0,4,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,verify,95444,0,4,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,compile,95444,0,4,590,20260,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,witness,95444,0,4,84,70,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,prove,95444,0,4,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,verify,95444,0,4,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,compile,95444,0,4,590,21000,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,witness,95444,0,4,82,70,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,prove,95444,0,4,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,verify,95444,0,4,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,compile,95444,0,4,589,26050,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,witness,95444,0,4,288,9850,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,prove,95444,0,4,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,ecdsa,inputs/benchmarks/ecdsa/input.json,verify,95444,0,4,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,eddsa,inputs/benchmarks/eddsa/input.json,compile,7564,0,848,55,3190,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,eddsa,inputs/benchmarks/eddsa/input.json,witness,7564,0,848,53,160,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,eddsa,inputs/benchmarks/eddsa/input.json,setup,7564,0,848,306,17840,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,eddsa,inputs/benchmarks/eddsa/input.json,prove,7564,0,848,402,1780,806,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,eddsa,inputs/benchmarks/eddsa/input.json,verify,7564,0,848,142,530,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,smtProcessor,inputs/benchmarks/smtProcessor/input.json,compile,6545,0,18,275,4800,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,smtProcessor,inputs/benchmarks/smtProcessor/input.json,witness,6545,0,18,62,110,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,smtProcessor,inputs/benchmarks/smtProcessor/input.json,setup,6545,0,18,299,17520,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,smtProcessor,inputs/benchmarks/smtProcessor/input.json,prove,6545,0,18,377,1720,806,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,smtProcessor,inputs/benchmarks/smtProcessor/input.json,verify,6545,0,18,140,500,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,smtVerifier,inputs/benchmarks/smtVerifier/input.json,compile,4063,0,18,268,4430,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,smtVerifier,inputs/benchmarks/smtVerifier/input.json,witness,4063,0,18,64,90,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,smtVerifier,inputs/benchmarks/smtVerifier/input.json,setup,4063,0,18,258,13970,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,smtVerifier,inputs/benchmarks/smtVerifier/input.json,prove,4063,0,18,293,1190,804,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,smtVerifier,inputs/benchmarks/smtVerifier/input.json,verify,4063,0,18,137,510,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,keccak256,inputs/benchmarks/keccak256/input.json,compile,150848,0,256,2278,29920,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,keccak256,inputs/benchmarks/keccak256/input.json,witness,150848,0,256,146,300,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+
+circom/snarkjs,circuit,groth16,bn128,keccak256,inputs/benchmarks/keccak256/input.json,prove,150848,0,256,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,keccak256,inputs/benchmarks/keccak256/input.json,verify,150848,0,256,,,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
