@@ -22,6 +22,7 @@
             pkgs.mkShell {
               packages = with pkgs; [
                 (python3.withPackages python-pkgs)
+                bc
                 gnumake
                 circom-out
                 gnark-out

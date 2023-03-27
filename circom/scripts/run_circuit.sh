@@ -52,21 +52,21 @@ $TIMECMD ${TMP}/witness_times.txt node  ${TMP}/${CIRCUIT_NAME_INT}_js/generate_w
 # all phase 2 contributions.
 echo ">>>Step 3: Setup" && \
 eval """
-$TIMECMD ${TMP}/setup_times.txt snarkjs groth16 setup ${TMP}/${CIRCUIT_NAME_INT}.r1cs ${TAU} ${TMP}/${CIRCUIT_NAME_INT}_0.zkey
+$TIMECMD ${TMP}/setup_times.txt npx snarkjs groth16 setup ${TMP}/${CIRCUIT_NAME_INT}.r1cs ${TAU} ${TMP}/${CIRCUIT_NAME_INT}_0.zkey
 """ && \
 # TODO Should we contribute here?
 # We could contribute here using: snarkjs zkey contribute ${TMP}/${CIRCUIT_NAME}_0.zkey ${TMP}/${CIRCUIT_NAME}_1.zkey --name="1st Contributor Name" -v
 echo ">>>Step 4: Export verification key" && \
 eval """
-$TIMECMD ${TMP}/export_times.txt snarkjs zkey export verificationkey ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/verification_key.json
+$TIMECMD ${TMP}/export_times.txt npx snarkjs zkey export verificationkey ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/verification_key.json
 """ && \
 echo ">>>Step 5: Prove" && \
 eval """
-$TIMECMD ${TMP}/prove_times.txt snarkjs groth16 prove ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/witness.wtns ${TMP}/proof.json ${TMP}/public.json
+$TIMECMD ${TMP}/prove_times.txt npx snarkjs groth16 prove ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/witness.wtns ${TMP}/proof.json ${TMP}/public.json
 """ && \
 echo ">>>Step 6: Verify" && \
 eval """
-$TIMECMD ${TMP}/verify_times.txt snarkjs groth16 verify ${TMP}/verification_key.json ${TMP}/public.json ${TMP}/proof.json
+$TIMECMD ${TMP}/verify_times.txt npx snarkjs groth16 verify ${TMP}/verification_key.json ${TMP}/public.json ${TMP}/proof.json
 """
 
 portable_proc() {
