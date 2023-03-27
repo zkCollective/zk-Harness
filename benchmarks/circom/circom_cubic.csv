@@ -49,3 +49,53 @@ circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,wit
 circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,172,2100,,1,1,1,Apple M1 Max
 circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,164,760,807,1,1,1,Apple M1 Max
 circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,133,710,,1,1,1,Apple M1 Max
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,,,,1,1,1,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
