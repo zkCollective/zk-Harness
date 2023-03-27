@@ -11,3 +11,15 @@ snarkjs,ec,bn128,pairing,_input/ec/pairing/input_1.json,103108608,4673395,1,1,10
 snarkjs,ec,bn128,pairing,_input/ec/pairing/input_1.json,110608384,4630936,1,1,10000,Apple M1 Max
 snarkjs,ec,bls12_381,pairing,_input/ec/pairing/input_1.json,96362496,5600131,1,1,10000,Apple M1 Max
 snarkjs,ec,bls12_381,pairing,_input/ec/pairing/input_1.json,112230400,5617329,1,1,10000,Apple M1 Max
+snarkjs,ec,bn128,g1-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,76783616,5622,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+snarkjs,ec,bn128,g2-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,77869056,13141,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+snarkjs,ec,bls12_381,g1-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,77881344,8145,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+snarkjs,ec,bls12_381,g2-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,79851520,20956,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+snarkjs,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,115965952,883339,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+snarkjs,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,102838272,1279180,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+snarkjs,ec,bls12_381,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,130101248,1062295,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+snarkjs,ec,bls12_381,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,142848000,1635632,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+snarkjs,ec,bn128,pairing,_input/ec/pairing/input_1.json,92057600,3741071,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+snarkjs,ec,bn128,pairing,_input/ec/pairing/input_1.json,92336128,3711194,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+snarkjs,ec,bls12_381,pairing,_input/ec/pairing/input_1.json,92590080,4446021,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
+snarkjs,ec,bls12_381,pairing,_input/ec/pairing/input_1.json,93163520,4444181,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
