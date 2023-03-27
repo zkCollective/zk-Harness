@@ -36,7 +36,9 @@ source ./pipenv/bin/activate
 pip install -r requirements.txt
 npm install
 alias snarkjs="npx snarkjs"
-ln -s ${gnark-out}/bin/backend ./gnark/gnark
+ln -fs ${gnark-out}/bin/backend ./gnark/gnark
+rm -f ./gnark/template
+ln -s ${gnark.sourceInfo.outPath}/internal/generator/backend/template ./gnark/template
               '';
             };
         });

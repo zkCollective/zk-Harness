@@ -904,7 +904,7 @@ func benchArithmetic(cmd *cobra.Command, args []string) {
 			Operation: *fOperation,
 			Input:     *fInputPath,
 			MaxRAM:    (m.Sys),
-            Count:     *fCount,
+			Count:     *fCount,
 			RunTime:   took.Nanoseconds(),
 		}
 
