@@ -4,6 +4,9 @@ import (
 	"testing"
 
 	"github.com/consensys/gnark-crypto/ecc"
+	"github.com/consensys/gnark-crypto/ecc/bn254/fr"
+	"github.com/consensys/gnark-crypto/hash"
+	"github.com/consensys/gnark/backend"
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/r1cs"
@@ -16,12 +19,18 @@ const (
 	publicHash = "7831393781387060555412927989411398077996792073838215843928284475008119358174"
 )
 
-func TestRecursion(t *testing.T) {
-	assert := test.NewAssert(t)
+// Calculate the expected output of MIMC through plain invocation
+func preComputeMimc(preImage frontend.Variable) interface{} {
+	var expectedY fr.Element
+	expectedY.SetInterface(preImage)
+	// calc MiMC
+	goMimc := hash.MIMC_BLS12_377.New()
+	goMimc.Write(expectedY.Marshal())
+	expectedh := goMimc.Sum(nil)
+	return expectedh
+}
 
-	proof := groth16.NewProof(ecc.BLS12_377)
-	vk := groth16.NewVerifyingKey(ecc.BLS12_377)
-	pk := groth16.NewProvingKey(ecc.BLS12_377)
+func TestRecursion(t *testing.T) {
 
 	// create a mock cs: knowing the preimage of a hash using mimc
 	var circuit mimc.MimcCircuit
@@ -40,44 +49,35 @@ func TestRecursion(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	innerPk, innerVk, err := groth16.Setup(r1cs)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	proof, err := groth16.Prove(r1cs, innerPk, witness)
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	publicWitness, err := witness.Public()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	// Do Setup --> Either Groth16 / Plonk / PlonkFRI -> PASS INNER CURVE
-	// Gets the initial verifier key
-	pk, vk, err = groth16.Setup(r1cs)
-	if err != nil {
+	// Check that proof verifies before continuing
+	if err := groth16.Verify(proof, innerVk, publicWitness); err != nil {
 		t.Fatal(err)
 	}
 
-	// Generate inner proof --> CASE Groth16 / Plonk / PlonkFRI
-	proof, err = groth16.Prove(r1cs, pk, witness)
-	if err != nil {
-		t.Fatal(err)
-	}
+	var outerCircuit VerifierCircuit
+	outerCircuit.InnerVk.FillG1K(innerVk)
 
-	// Check whether the computed proof verifies that the proof passes on bls12377
-	if err := groth16.Verify(proof, vk, publicWitness); err != nil {
-		panic("Computed Proof doesn't verify!‚")
-	}
+	var outerWitness VerifierCircuit
+	outerWitness.InnerProof.Assign(proof)
+	outerWitness.InnerVk.Assign(innerVk)
+	outerWitness.Hash = preComputeMimc(preImage)
 
-	// get the data
-	// var innerVk groth16_bls12377.VerifyingKey
-	// var innerProof groth16_bls12377.Proof
+	assert := test.NewAssert(t)
 
-	var groth16VerifierCircuit VerifierCircuit
-
-	assert.ProverFailed(&groth16VerifierCircuit, &VerifierCircuit{
-		InnerProof: proof,
-		InnerVk:    vk,
-		Hash:       "8674594860895598770446879254410848023850744751986836044725552747672873438975",
-	})
-
-	// assert.ProverSucceeded(&groth16VerifierCircuit, &VerifierCircuit{
-	// 	PreImage: "16130099170765464552823636852555369511329944820189892919423002775646948828469",
-	// 	Hash:     "8674594860895598770446879254410848023850744751986836044725552747672873438975",
-	// }, test.WithCurves(ecc.BN254))
-
+	assert.ProverSucceeded(&outerCircuit, &outerWitness, test.WithCurves(ecc.BW6_761), test.WithBackends(backend.GROTH16))
 }
