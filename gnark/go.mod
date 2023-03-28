@@ -1,4 +1,4 @@
-module github.com/tumberger/zk-compilers/gnark
+module github.com/zkCollective/zk-Harness/gnark
 
 go 1.19
 
@@ -13,7 +13,11 @@ require (
 )
 
 require (
-	github.com/DmitriyVTitov/size v1.5.0 // indirect
+	github.com/DmitriyVTitov/size v1.5.0
+	github.com/tumberger/zk-compilers/gnark v0.0.0-20230313074140-d4e36e2852c5
+)
+
+require (
 	github.com/blang/semver/v4 v4.0.0 // indirect
 	github.com/consensys/bavard v0.1.13 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -21,14 +25,11 @@ require (
 	github.com/fxamacker/cbor/v2 v2.4.0 // indirect
 	github.com/google/pprof v0.0.0-20230207041349-798e818bf904 // indirect
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
-	github.com/kr/text v0.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/mmcloughlin/addchain v0.4.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/rogpeppe/go-internal v1.9.0 // indirect
 	github.com/rs/zerolog v1.29.0 // indirect
-	github.com/shenwei356/util v0.5.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.8.1 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
@@ -37,3 +38,5 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	rsc.io/tmplfunc v0.0.3 // indirect
 )
+
+replace github.com/consensys/gnark => /Users/serious/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/gnark-fork
