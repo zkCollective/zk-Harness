@@ -7,17 +7,17 @@ import (
 	bls12377fr "github.com/consensys/gnark-crypto/ecc/bls12-377/fr"
 	"github.com/consensys/gnark-crypto/hash"
 
-	bls12381fr "github.com/consensys/gnark-crypto/ecc/bls12-381/fr"
 	bls24315fr "github.com/consensys/gnark-crypto/ecc/bls24-315/fr"
 	bn254fr "github.com/consensys/gnark-crypto/ecc/bn254/fr"
 	bw6633fr "github.com/consensys/gnark-crypto/ecc/bw6-633/fr"
 	bw6761fr "github.com/consensys/gnark-crypto/ecc/bw6-761/fr"
 	"github.com/consensys/gnark/backend/witness"
 	"github.com/consensys/gnark/frontend"
+	emulated "github.com/consensys/gnark/std/math/emulated"
 	"github.com/tumberger/zk-compilers/gnark/circuits/prf/mimc"
 	sha256 "github.com/tumberger/zk-compilers/gnark/circuits/prf/sha256"
 	"github.com/tumberger/zk-compilers/gnark/circuits/toy/cubic"
-	"github.com/tumberger/zk-compilers/gnark/circuits/toy/expo"
+	emulate "github.com/tumberger/zk-compilers/gnark/circuits/toy/emulate"
 	"github.com/tumberger/zk-compilers/gnark/circuits/toy/exponentiate"
 	"github.com/tumberger/zk-compilers/gnark/util"
 )
@@ -34,72 +34,12 @@ func init() {
 
 	// Toy Circuits
 	BenchCircuits["cubic"] = &defaultCircuit{}
-	BenchCircuits["expo"] = &defaultCircuit{}
 	BenchCircuits["exponentiate"] = &defaultCircuit{}
+	BenchCircuits["emulate"] = &defaultCircuit{}
 
 	// Hashes
 	BenchCircuits["mimc"] = &defaultCircuit{}
 	BenchCircuits["sha256"] = &defaultCircuit{}
-}
-
-func preCalc(size int, curveID ecc.ID) interface{} {
-	switch curveID {
-	case ecc.BN254:
-		// compute expected Y
-		var expectedY bn254fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-		return expectedY
-	case ecc.BLS12_381:
-		// compute expected Y
-		var expectedY bls12381fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		return expectedY
-	case ecc.BLS12_377:
-		// compute expected Y
-		var expectedY bls12377fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		return expectedY
-	case ecc.BLS24_315:
-		// compute expected Y
-		var expectedY bls24315fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		return expectedY
-	case ecc.BW6_761:
-		// compute expected Y
-		var expectedY bw6761fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		return expectedY
-	case ecc.BW6_633:
-		// compute expected Y
-		var expectedY bw6633fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		return expectedY
-	default:
-		panic("not implemented")
-	}
 }
 
 func preCalcMIMC(curveID ecc.ID, preImage frontend.Variable) interface{} {
@@ -177,10 +117,10 @@ func (d *defaultCircuit) Circuit(size int, name string, path string) frontend.Ci
 	switch name {
 	case "cubic":
 		return &cubic.CubicCircuit{}
-	case "expo":
-		return &expo.BenchCircuit{N: size}
 	case "exponentiate":
 		return &exponentiate.ExponentiateCircuit{}
+	case "emulate":
+		return &emulate.Circuit{}
 	case "mimc":
 		return &mimc.MimcCircuit{}
 	case "sha256":
@@ -210,10 +150,11 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, path str
 			panic(err)
 		}
 		return w
-	case "expo":
-		witness := expo.BenchCircuit{N: size}
-		witness.X = (2)
-		witness.Y = preCalc(size, curveID)
+	case "emulate":
+		witness := emulate.Circuit{}
+		witness.X = emulated.ValueOf[emulated.Secp256k1Fp](data["X"].(string))
+		witness.Y = emulated.ValueOf[emulated.Secp256k1Fp](data["Y"].(string))
+		witness.Res = emulated.ValueOf[emulated.Secp256k1Fp](data["Res"].(string))
 
 		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {
@@ -222,9 +163,9 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, path str
 		return w
 	case "exponentiate":
 		witness := exponentiate.ExponentiateCircuit{}
-		witness.X = (2)
-		witness.E = (12)
-		witness.Y = (4096)
+		witness.X = (data["X"].(string))
+		witness.E = (data["E"].(string))
+		witness.Y = (data["Y"].(string))
 
 		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {
