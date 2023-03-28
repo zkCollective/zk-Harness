@@ -18,8 +18,8 @@
             "cubic": {
                 "input_path": "_input/circuit/cubic"
             },
-            "expo": {
-                "input_path": "_input/circuit/expo"
+            "emulate": {
+                "input_path": "_input/circuit/emulated"
             },
             "exponentiate": {
                 "input_path": "_input/circuit/exponentiate"
