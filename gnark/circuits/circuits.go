@@ -12,20 +12,23 @@ import (
 	bn254fr "github.com/consensys/gnark-crypto/ecc/bn254/fr"
 	bw6633fr "github.com/consensys/gnark-crypto/ecc/bw6-633/fr"
 	bw6761fr "github.com/consensys/gnark-crypto/ecc/bw6-761/fr"
+	"github.com/consensys/gnark/backend/groth16"
 	"github.com/consensys/gnark/backend/witness"
 	"github.com/consensys/gnark/frontend"
-	"github.com/tumberger/zk-compilers/gnark/circuits/prf/mimc"
-	sha256 "github.com/tumberger/zk-compilers/gnark/circuits/prf/sha256"
-	"github.com/tumberger/zk-compilers/gnark/circuits/toy/cubic"
-	"github.com/tumberger/zk-compilers/gnark/circuits/toy/expo"
-	"github.com/tumberger/zk-compilers/gnark/circuits/toy/exponentiate"
-	"github.com/tumberger/zk-compilers/gnark/util"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/groth16bls12377verifier"
+	groth16verifier "github.com/zkCollective/zk-Harness/gnark/circuits/groth16bls12377verifier"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/prf/mimc"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/prf/sha256"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/cubic"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/expo"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/exponentiate"
+	"github.com/zkCollective/zk-Harness/gnark/util"
 )
 
 var BenchCircuits map[string]BenchCircuit
 
 type BenchCircuit interface {
-	Circuit(size int, name string, path string) frontend.Circuit
+	Circuit(size int, name string, opts ...CircuitConfig) frontend.Circuit
 	Witness(size int, curveID ecc.ID, name string, path string) witness.Witness
 }
 
@@ -167,11 +170,23 @@ func preCalcMIMC(curveID ecc.ID, preImage frontend.Variable) interface{} {
 type defaultCircuit struct {
 }
 
-func (d *defaultCircuit) Circuit(size int, name string, path string) frontend.Circuit {
+func (d *defaultCircuit) Circuit(size int, name string, opts ...CircuitOption) frontend.Circuit {
 
-	data, err := util.ReadFromInputPath(path)
-	if err != nil {
-		panic(err)
+	// Parse Options for input Path
+	opt := CircuitConfig{}
+	for _, o := range opts {
+		if err := o(&opt); err != nil {
+			panic(err)
+		}
+	}
+
+	var data map[string]interface{}
+	if opt.inputPath != "" {
+		var err error
+		data, err = util.ReadFromInputPath(opt.inputPath)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	switch name {
@@ -184,19 +199,36 @@ func (d *defaultCircuit) Circuit(size int, name string, path string) frontend.Ci
 	case "mimc":
 		return &mimc.MimcCircuit{}
 	case "sha256":
+		if data == nil || data["PreImage"] == nil {
+			panic("Input for PreImage is not defined")
+		}
 		return &sha256.Sha256Circuit{
 			PreImage: make([]frontend.Variable, (len(data["PreImage"].(string)) / 2)),
 		}
+	case "groth16_bls12377":
+		return &groth16bls12377verifier.VerifierCircuit{}
 	default:
 		panic("not implemented")
 	}
 }
 
-func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, path string) witness.Witness {
+func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...WitnessOption) witness.Witness {
 
-	data, err := util.ReadFromInputPath(path)
-	if err != nil {
-		panic(err)
+	// Parse Options for input Path
+	opt := WitnessConfig{}
+	for _, o := range opts {
+		if err := o(&opt); err != nil {
+			panic(err)
+		}
+	}
+
+	var data map[string]interface{}
+	if opt.inputPath != "" {
+		var err error
+		data, err = util.ReadFromInputPath(opt.inputPath)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	switch name {
@@ -284,7 +316,77 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, path str
 			panic(err)
 		}
 		return w
+	case "groth16_bls12377":
+		// Witness is already provided in this case (pre-computed proof)
+		var outerCircuit groth16verifier.VerifierCircuit
+		outerCircuit.InnerVk.FillG1K(opt.verifyingKey)
+
+		var outerWitness groth16verifier.VerifierCircuit
+		outerWitness.InnerProof.Assign(opt.proof)
+		outerWitness.InnerVk.Assign(opt.verifyingKey)
+		// TODO - Make variable for arbitrary circuits.
+		outerWitness.Hash = preCalcMIMC(curveID, opt.witness)
+
+		w, err := frontend.NewWitness(&outerWitness, ecc.BW6_633.ScalarField())
+		if err != nil {
+			panic(err)
+		}
+		return w
 	default:
 		panic("not implemented")
+	}
+}
+
+// Optional Parameters Circuit
+type CircuitOption func(opt *CircuitConfig) error
+
+type CircuitConfig struct {
+	inputPath string
+}
+
+// Optionally provide input path to Circuit
+func WithInputCircuit(inputPath string) CircuitOption {
+	return func(opt *CircuitConfig) error {
+		opt.inputPath = inputPath
+		return nil
+	}
+}
+
+// Optional Parameters Witness
+type WitnessOption func(opt *WitnessConfig) error
+
+type WitnessConfig struct {
+	inputPath    string
+	proof        groth16.Proof
+	verifyingKey groth16.VerifyingKey
+	witness      frontend.Variable
+}
+
+// Optionally provide input path to Witness def
+func WithInputConfig(inputPath string) WitnessOption {
+	return func(opt *WitnessConfig) error {
+		opt.inputPath = inputPath
+		return nil
+	}
+}
+
+func WithProof(proof groth16.Proof) WitnessOption {
+	return func(opt *WitnessConfig) error {
+		opt.proof = proof
+		return nil
+	}
+}
+
+func WithVK(verifyingKey groth16.VerifyingKey) WitnessOption {
+	return func(opt *WitnessConfig) error {
+		opt.verifyingKey = verifyingKey
+		return nil
+	}
+}
+
+func WithWitness(witness frontend.Variable) WitnessOption {
+	return func(opt *WitnessConfig) error {
+		opt.witness = witness
+		return nil
 	}
 }
