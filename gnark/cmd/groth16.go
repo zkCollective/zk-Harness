@@ -29,8 +29,12 @@ import (
 	"github.com/consensys/gnark/logger"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
-	"github.com/tumberger/zk-compilers/gnark/util"
+	"github.com/zkCollective/zk-Harness/gnark/circuits"
+	"github.com/zkCollective/zk-Harness/gnark/util"
 )
+
+// convert types take an int and return a string value.
+type writeFunction func(time.Duration, constraint.ConstraintSystem, int)
 
 // groth16Cmd represents the groth16 command
 var groth16Cmd = &cobra.Command{
@@ -83,6 +87,22 @@ func runGroth16(cmd *cobra.Command, args []string) {
 			panic(err)
 		}
 	}
+	// Run Benchmarks for Groth16 on given specification
+	benchGroth16(writeResults, *fAlgo, *fCount, *fCircuitSize, *fCircuit, WithInput(*fInputPath))
+}
+
+func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize int, fcircuit string, opts ...BenchOption) {
+	// Benchmark with Groth16
+	// Plain Circuit - provide input
+	// Recursive - no input provided
+
+	// Parse Options, if no option is provided it runs plain G16 benches
+	opt := BenchConfig{}
+	for _, o := range opts {
+		if err := o(&opt); err != nil {
+			panic(err)
+		}
+	}
 
 	var (
 		start time.Time
@@ -102,15 +122,15 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		if p != nil {
 			prof.Stop()
 		}
-		took /= time.Duration(*fCount)
+		took /= time.Duration(fcount)
 	}
 
-	if *fAlgo == "compile" {
+	if falgo == "compile" {
 		var err error
 		var ccs constraint.ConstraintSystem
 		startProfile()
-		for i := 0; i < *fCount; i++ {
-			ccs, err = frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
+		for i := 0; i < fcount; i++ {
+			ccs, err = frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(fcircuitSize, fcircuit, circuits.WithInputCircuit(opt.inputPath)), frontend.WithCapacity(fcircuitSize))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -118,30 +138,30 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		if took < (1024 * 1024) {
 			took = (1024 * 1024)
 		}
-		writeResults(took, ccs, 0)
+		fnWrite(took, ccs, 0)
 		return
 	}
 
-	ccs, err := frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
+	ccs, err := frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(fcircuitSize, fcircuit, circuits.WithInputCircuit(opt.inputPath)), frontend.WithCapacity(fcircuitSize))
 	assertNoError(err)
 
-	if *fAlgo == "setup" {
+	if falgo == "setup" {
 		startProfile()
 		var err error
-		for i := 0; i < *fCount; i++ {
+		for i := 0; i < fcount; i++ {
 			_, _, err = groth16.Setup(ccs)
 		}
 		stopProfile()
 		assertNoError(err)
-		writeResults(took, ccs, 0)
+		fnWrite(took, ccs, 0)
 		return
 	}
 
-	if *fAlgo == "witness" {
+	if falgo == "witness" {
 		startProfile()
 		var err error
-		for i := 0; i < *fCount; i++ {
-			c.Witness(*fCircuitSize, curveID, *fCircuit, *fInputPath)
+		for i := 0; i < fcount; i++ {
+			c.Witness(fcircuitSize, curveID, fcircuit, circuits.WithInputWitness(opt.inputPath))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -149,29 +169,29 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		if took < (1024 * 1024) {
 			took = (1024 * 1024)
 		}
-		writeResults(took, ccs, 0)
+		fnWrite(took, ccs, 0)
 		return
 	}
 
-	witness := c.Witness(*fCircuitSize, curveID, *fCircuit, *fInputPath)
+	witness := c.Witness(fcircuitSize, curveID, fcircuit, circuits.WithInputWitness(opt.inputPath))
 
-	if *fAlgo == "prove" {
+	if falgo == "prove" {
 		pk, err := groth16.DummySetup(ccs)
 		assertNoError(err)
 
 		var proof interface{}
 		startProfile()
-		for i := 0; i < *fCount; i++ {
+		for i := 0; i < fcount; i++ {
 			proof, err = groth16.Prove(ccs, pk, witness)
 		}
 		stopProfile()
 		assertNoError(err)
 		proof_size := size.Of(proof)
-		writeResults(took, ccs, proof_size)
+		fnWrite(took, ccs, proof_size)
 		return
 	}
 
-	if *fAlgo != "verify" {
+	if falgo != "verify" {
 		panic("algo at this stage should be verify")
 	}
 	pk, vk, err := groth16.Setup(ccs)
@@ -186,18 +206,56 @@ func runGroth16(cmd *cobra.Command, args []string) {
 	publicWitness, err := witness.Public()
 	assertNoError(err)
 	startProfile()
-	for i := 0; i < *fCount; i++ {
+	for i := 0; i < fcount; i++ {
 		err = groth16.Verify(proof, vk, publicWitness)
 	}
 	stopProfile()
 	assertNoError(err)
-	writeResults(took, ccs, 0)
-
+	fnWrite(took, ccs, 0)
 }
 
 func assertNoError(err error) {
 	if err != nil {
 		panic(err)
+	}
+}
+
+// These Options are used for recursive Groth16 verifier
+type BenchOption func(opt *BenchConfig) error
+
+type BenchConfig struct {
+	inputPath    string
+	proof        groth16.Proof
+	verifyingKey groth16.VerifyingKey
+	witness      frontend.Variable
+}
+
+// Optionally provide input path to Witness def
+func WithInput(inputPath string) BenchOption {
+	return func(opt *BenchConfig) error {
+		opt.inputPath = inputPath
+		return nil
+	}
+}
+
+func WithProof(proof groth16.Proof) BenchOption {
+	return func(opt *BenchConfig) error {
+		opt.proof = proof
+		return nil
+	}
+}
+
+func WithVK(verifyingKey groth16.VerifyingKey) BenchOption {
+	return func(opt *BenchConfig) error {
+		opt.verifyingKey = verifyingKey
+		return nil
+	}
+}
+
+func WithWitness(witness frontend.Variable) BenchOption {
+	return func(opt *BenchConfig) error {
+		opt.witness = witness
+		return nil
 	}
 }
 

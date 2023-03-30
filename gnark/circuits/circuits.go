@@ -5,7 +5,6 @@ import (
 
 	"github.com/consensys/gnark-crypto/ecc"
 	bls12377fr "github.com/consensys/gnark-crypto/ecc/bls12-377/fr"
-	"github.com/consensys/gnark-crypto/hash"
 
 	bls12381fr "github.com/consensys/gnark-crypto/ecc/bls12-381/fr"
 	bls24315fr "github.com/consensys/gnark-crypto/ecc/bls24-315/fr"
@@ -28,8 +27,8 @@ import (
 var BenchCircuits map[string]BenchCircuit
 
 type BenchCircuit interface {
-	Circuit(size int, name string, opts ...CircuitConfig) frontend.Circuit
-	Witness(size int, curveID ecc.ID, name string, path string) witness.Witness
+	Circuit(size int, name string, opts ...CircuitOption) frontend.Circuit
+	Witness(size int, curveID ecc.ID, name string, opts ...WitnessOption) witness.Witness
 }
 
 func init() {
@@ -105,85 +104,23 @@ func preCalc(size int, curveID ecc.ID) interface{} {
 	}
 }
 
-func preCalcMIMC(curveID ecc.ID, preImage frontend.Variable) interface{} {
-
-	switch curveID {
-	case ecc.BN254:
-		// compute expected Y
-		var expectedY bn254fr.Element
-		expectedY.SetInterface(preImage)
-
-		// running MiMC (Go)
-		goMimc := hash.MIMC_BN254.New()
-		goMimc.Write(expectedY.Marshal())
-		expectedh := goMimc.Sum(nil)
-		return expectedh
-
-	case ecc.BLS12_377:
-		// compute expected Y
-		var expectedY bls12377fr.Element
-		expectedY.SetInterface(preImage)
-
-		// running MiMC (Go)
-		goMimc := hash.MIMC_BLS12_377.New()
-		goMimc.Write(expectedY.Marshal())
-		expectedh := goMimc.Sum(nil)
-		return expectedh
-
-	case ecc.BLS24_315:
-		// compute expected Y
-		var expectedY bls24315fr.Element
-		expectedY.SetInterface(preImage)
-
-		// running MiMC (Go)
-		goMimc := hash.MIMC_BLS24_315.New()
-		goMimc.Write(expectedY.Marshal())
-		expectedh := goMimc.Sum(nil)
-		return expectedh
-
-	case ecc.BW6_761:
-		// compute expected Y
-		var expectedY bw6761fr.Element
-		expectedY.SetInterface(preImage)
-
-		// running MiMC (Go)
-		goMimc := hash.MIMC_BW6_761.New()
-		goMimc.Write(expectedY.Marshal())
-		expectedh := goMimc.Sum(nil)
-		return expectedh
-
-	case ecc.BW6_633:
-		// compute expected Y
-		var expectedY bw6633fr.Element
-		expectedY.SetInterface(preImage)
-
-		// running MiMC (Go)
-		goMimc := hash.MIMC_BW6_633.New()
-		goMimc.Write(expectedY.Marshal())
-		expectedh := goMimc.Sum(nil)
-		return expectedh
-	default:
-		panic("not implemented")
-	}
-}
-
 type defaultCircuit struct {
 }
 
 func (d *defaultCircuit) Circuit(size int, name string, opts ...CircuitOption) frontend.Circuit {
 
 	// Parse Options for input Path
-	opt := CircuitConfig{}
+	optCircuit := CircuitConfig{}
 	for _, o := range opts {
-		if err := o(&opt); err != nil {
+		if err := o(&optCircuit); err != nil {
 			panic(err)
 		}
 	}
 
 	var data map[string]interface{}
-	if opt.inputPath != "" {
+	if optCircuit.inputPath != "" {
 		var err error
-		data, err = util.ReadFromInputPath(opt.inputPath)
+		data, err = util.ReadFromInputPath(optCircuit.inputPath)
 		if err != nil {
 			panic(err)
 		}
@@ -215,17 +152,17 @@ func (d *defaultCircuit) Circuit(size int, name string, opts ...CircuitOption) f
 func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...WitnessOption) witness.Witness {
 
 	// Parse Options for input Path
-	opt := WitnessConfig{}
+	optWitness := WitnessConfig{}
 	for _, o := range opts {
-		if err := o(&opt); err != nil {
+		if err := o(&optWitness); err != nil {
 			panic(err)
 		}
 	}
 
 	var data map[string]interface{}
-	if opt.inputPath != "" {
+	if optWitness.inputPath != "" {
 		var err error
-		data, err = util.ReadFromInputPath(opt.inputPath)
+		data, err = util.ReadFromInputPath(optWitness.inputPath)
 		if err != nil {
 			panic(err)
 		}
@@ -267,7 +204,7 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 		witness := mimc.MimcCircuit{}
 		// witness.PreImage = ("16130099170765464552823636852555369511329944820189892919423002775646948828469")
 		witness.PreImage = (data["PreImage"].(string))
-		witness.Hash = preCalcMIMC(curveID, witness.PreImage)
+		witness.Hash = util.PreCalcMIMC(curveID, witness.PreImage)
 
 		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {
@@ -319,13 +256,13 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 	case "groth16_bls12377":
 		// Witness is already provided in this case (pre-computed proof)
 		var outerCircuit groth16verifier.VerifierCircuit
-		outerCircuit.InnerVk.FillG1K(opt.verifyingKey)
+		outerCircuit.InnerVk.FillG1K(optWitness.verifyingKey)
 
 		var outerWitness groth16verifier.VerifierCircuit
-		outerWitness.InnerProof.Assign(opt.proof)
-		outerWitness.InnerVk.Assign(opt.verifyingKey)
+		outerWitness.InnerProof.Assign(optWitness.proof)
+		outerWitness.InnerVk.Assign(optWitness.verifyingKey)
 		// TODO - Make variable for arbitrary circuits.
-		outerWitness.Hash = preCalcMIMC(curveID, opt.witness)
+		outerWitness.Hash = util.PreCalcMIMC(curveID, optWitness.witness)
 
 		w, err := frontend.NewWitness(&outerWitness, ecc.BW6_633.ScalarField())
 		if err != nil {
@@ -363,7 +300,7 @@ type WitnessConfig struct {
 }
 
 // Optionally provide input path to Witness def
-func WithInputConfig(inputPath string) WitnessOption {
+func WithInputWitness(inputPath string) WitnessOption {
 	return func(opt *WitnessConfig) error {
 		opt.inputPath = inputPath
 		return nil

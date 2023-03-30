@@ -1,4 +1,4 @@
-package groth16verifier
+package groth16bls12377verifier
 
 import (
 	"github.com/consensys/gnark/frontend"

@@ -30,7 +30,8 @@ import (
 	"github.com/consensys/gnark/test"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
-	"github.com/tumberger/zk-compilers/gnark/util"
+	"github.com/zkCollective/zk-Harness/gnark/circuits"
+	"github.com/zkCollective/zk-Harness/gnark/util"
 )
 
 // plonkCmd represents the plonk command
@@ -85,6 +86,20 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		}
 	}
 
+	// Run Benchmarks for Groth16 on given specification
+	benchPlonk(writeResults, *fAlgo, *fCount, *fCircuitSize, *fCircuit, WithInput(*fInputPath))
+}
+
+func benchPlonk(fnWrite writeFunction, algo string, count int, circuitSize int, circuit string, opts ...BenchOption) {
+
+	// Parse Options, if no option is provided it runs plain G16 benches
+	opt := BenchConfig{}
+	for _, o := range opts {
+		if err := o(&opt); err != nil {
+			panic(err)
+		}
+	}
+
 	var (
 		start time.Time
 		took  time.Duration
@@ -111,7 +126,7 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		var err error
 		var ccs constraint.ConstraintSystem
 		for i := 0; i < *fCount; i++ {
-			ccs, err = frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
+			ccs, err = frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, circuit, circuits.WithInputCircuit(opt.inputPath)), frontend.WithCapacity(*fCircuitSize))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -119,11 +134,11 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		if took < (1024 * 1024) {
 			took = (1024 * 1024)
 		}
-		writeResults(took, ccs, 0)
+		fnWrite(took, ccs, 0)
 		return
 	}
 
-	ccs, err := frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
+	ccs, err := frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, circuit, circuits.WithInputCircuit(opt.inputPath)), frontend.WithCapacity(*fCircuitSize))
 	assertNoError(err)
 
 	// create srs
@@ -138,7 +153,7 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		}
 		stopProfile()
 		assertNoError(err)
-		writeResults(took, ccs, 0)
+		fnWrite(took, ccs, 0)
 		return
 	}
 
@@ -146,7 +161,7 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		startProfile()
 		var err error
 		for i := 0; i < *fCount; i++ {
-			c.Witness(*fCircuitSize, curveID, *fCircuit, *fInputPath)
+			c.Witness(*fCircuitSize, curveID, circuit, circuits.WithInputWitness(opt.inputPath))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -154,11 +169,11 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		if took < (1024 * 1024) {
 			took = (1024 * 1024)
 		}
-		writeResults(took, ccs, 0)
+		fnWrite(took, ccs, 0)
 		return
 	}
 
-	witness := c.Witness(*fCircuitSize, curveID, *fCircuit, *fInputPath)
+	witness := c.Witness(*fCircuitSize, curveID, *fCircuit, circuits.WithInputWitness(opt.inputPath))
 	pk, vk, err := plonk.Setup(ccs, srs)
 	assertNoError(err)
 
@@ -171,7 +186,7 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		stopProfile()
 		assertNoError(err)
 		proof_size := size.Of(proof)
-		writeResults(took, ccs, proof_size)
+		fnWrite(took, ccs, proof_size)
 		return
 	}
 
@@ -191,8 +206,7 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 	}
 	stopProfile()
 	assertNoError(err)
-	writeResults(took, ccs, 0)
-
+	fnWrite(took, ccs, 0)
 }
 
 func init() {
