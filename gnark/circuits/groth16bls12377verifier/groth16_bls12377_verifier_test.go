@@ -4,31 +4,19 @@ import (
 	"testing"
 
 	"github.com/consensys/gnark-crypto/ecc"
-	"github.com/consensys/gnark-crypto/ecc/bn254/fr"
-	"github.com/consensys/gnark-crypto/hash"
 	"github.com/consensys/gnark/backend"
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/r1cs"
 	"github.com/consensys/gnark/test"
 	mimc "github.com/zkCollective/zk-Harness/gnark/circuits/prf/mimc"
+	"github.com/zkCollective/zk-Harness/gnark/util"
 )
 
 const (
 	preImage   = "4992816046196248432836492760315135318126925090839638585255611512962528270024"
 	publicHash = "7831393781387060555412927989411398077996792073838215843928284475008119358174"
 )
-
-// Calculate the expected output of MIMC through plain invocation
-func preComputeMimc(preImage frontend.Variable) interface{} {
-	var expectedY fr.Element
-	expectedY.SetInterface(preImage)
-	// calc MiMC
-	goMimc := hash.MIMC_BLS12_377.New()
-	goMimc.Write(expectedY.Marshal())
-	expectedh := goMimc.Sum(nil)
-	return expectedh
-}
 
 func TestRecursion(t *testing.T) {
 
@@ -72,12 +60,12 @@ func TestRecursion(t *testing.T) {
 	var outerCircuit VerifierCircuit
 	outerCircuit.InnerVk.FillG1K(innerVk)
 
-	var outerWitness VerifierCircuit
-	outerWitness.InnerProof.Assign(proof)
-	outerWitness.InnerVk.Assign(innerVk)
-	outerWitness.Hash = preComputeMimc(preImage)
+	var outerAssignment VerifierCircuit
+	outerAssignment.InnerProof.Assign(proof)
+	outerAssignment.InnerVk.Assign(innerVk)
+	outerAssignment.Witness = util.PreCalcMIMC(ecc.BLS12_377, preImage)
 
 	assert := test.NewAssert(t)
 
-	assert.ProverSucceeded(&outerCircuit, &outerWitness, test.WithCurves(ecc.BW6_761), test.WithBackends(backend.GROTH16))
+	assert.ProverSucceeded(&outerCircuit, &outerAssignment, test.WithCurves(ecc.BW6_761), test.WithBackends(backend.GROTH16))
 }

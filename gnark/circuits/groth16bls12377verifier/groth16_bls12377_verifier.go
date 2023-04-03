@@ -8,11 +8,11 @@ import (
 type VerifierCircuit struct {
 	InnerProof groth16_bls12377.Proof
 	InnerVk    groth16_bls12377.VerifyingKey
-	Hash       frontend.Variable
+	Witness    frontend.Variable
 }
 
 func (circuit *VerifierCircuit) Define(api frontend.API) error {
 	// create the verifier cs
-	groth16_bls12377.Verify(api, circuit.InnerVk, circuit.InnerProof, []frontend.Variable{circuit.Hash})
+	groth16_bls12377.Verify(api, circuit.InnerVk, circuit.InnerProof, []frontend.Variable{circuit.Witness})
 	return nil
 }
