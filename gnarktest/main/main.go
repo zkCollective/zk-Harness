@@ -6,12 +6,15 @@ import (
 	"encoding/hex"
 	"flag"
 	"fmt"
+	"log"
+	"runtime/debug"
+	"time"
+
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/r1cs"
-	"runtime/debug"
-	"time"
+	cSha256 "github.com/tumberger/zk-compilers/gnarktest/sha256"
 )
 
 type sha256Circuit struct {
