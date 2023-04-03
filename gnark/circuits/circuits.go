@@ -42,6 +42,9 @@ func init() {
 	// Hashes
 	BenchCircuits["mimc"] = &defaultCircuit{}
 	BenchCircuits["sha256"] = &defaultCircuit{}
+
+	// Recursion
+	BenchCircuits["groth16_bls12377"] = &defaultCircuit{}
 }
 
 func preCalc(size int, curveID ecc.ID) interface{} {
@@ -143,7 +146,9 @@ func (d *defaultCircuit) Circuit(size int, name string, opts ...CircuitOption) f
 			PreImage: make([]frontend.Variable, (len(data["PreImage"].(string)) / 2)),
 		}
 	case "groth16_bls12377":
-		return &groth16bls12377verifier.VerifierCircuit{}
+		outerCircuit := groth16bls12377verifier.VerifierCircuit{}
+		outerCircuit.InnerVk.FillG1K(optCircuit.verifyingKey)
+		return &outerCircuit
 	default:
 		panic("not implemented")
 	}
@@ -202,7 +207,6 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 		return w
 	case "mimc":
 		witness := mimc.MimcCircuit{}
-		// witness.PreImage = ("16130099170765464552823636852555369511329944820189892919423002775646948828469")
 		witness.PreImage = (data["PreImage"].(string))
 		witness.Hash = util.PreCalcMIMC(curveID, witness.PreImage)
 
@@ -214,10 +218,6 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 	case "sha256":
 		input := (data["PreImage"].(string))
 		output := (data["Hash"].(string))
-
-		// 'hello-world-hello-world-hello-world-hello-world-hello-world-12345' as hex
-		// input := "68656c6c6f2d776f726c642d68656c6c6f2d776f726c642d68656c6c6f2d776f726c642d68656c6c6f2d776f726c642d68656c6c6f2d776f726c642d3132333435"
-		// output := "34caf9dcd6b137c56c59f81e071a4b77a11329f26c80d7023ac7dfc485dcd780"
 
 		byteSlice, _ := hex.DecodeString(input)
 		inputByteLen := len(byteSlice)
@@ -255,16 +255,12 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 		return w
 	case "groth16_bls12377":
 		// Witness is already provided in this case (pre-computed proof)
-		var outerCircuit groth16verifier.VerifierCircuit
-		outerCircuit.InnerVk.FillG1K(optWitness.verifyingKey)
+		var outerAssignment groth16verifier.VerifierCircuit
+		outerAssignment.InnerProof.Assign(optWitness.proof)
+		outerAssignment.InnerVk.Assign(optWitness.verifyingKey)
+		outerAssignment.Witness = optWitness.witness
 
-		var outerWitness groth16verifier.VerifierCircuit
-		outerWitness.InnerProof.Assign(optWitness.proof)
-		outerWitness.InnerVk.Assign(optWitness.verifyingKey)
-		// TODO - Make variable for arbitrary circuits.
-		outerWitness.Hash = util.PreCalcMIMC(curveID, optWitness.witness)
-
-		w, err := frontend.NewWitness(&outerWitness, ecc.BW6_633.ScalarField())
+		w, err := frontend.NewWitness(&outerAssignment, ecc.BW6_761.ScalarField())
 		if err != nil {
 			panic(err)
 		}
@@ -278,13 +274,20 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 type CircuitOption func(opt *CircuitConfig) error
 
 type CircuitConfig struct {
-	inputPath string
+	inputPath    string
+	verifyingKey groth16.VerifyingKey
 }
 
-// Optionally provide input path to Circuit
 func WithInputCircuit(inputPath string) CircuitOption {
 	return func(opt *CircuitConfig) error {
 		opt.inputPath = inputPath
+		return nil
+	}
+}
+
+func WithVKCircuit(verifyingKey groth16.VerifyingKey) CircuitOption {
+	return func(opt *CircuitConfig) error {
+		opt.verifyingKey = verifyingKey
 		return nil
 	}
 }
@@ -299,7 +302,6 @@ type WitnessConfig struct {
 	witness      frontend.Variable
 }
 
-// Optionally provide input path to Witness def
 func WithInputWitness(inputPath string) WitnessOption {
 	return func(opt *WitnessConfig) error {
 		opt.inputPath = inputPath

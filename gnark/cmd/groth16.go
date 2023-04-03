@@ -22,6 +22,7 @@ import (
 	"time"
 
 	"github.com/DmitriyVTitov/size"
+	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/consensys/gnark/constraint"
 	"github.com/consensys/gnark/frontend"
@@ -92,9 +93,6 @@ func runGroth16(cmd *cobra.Command, args []string) {
 }
 
 func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize int, fcircuit string, opts ...BenchOption) {
-	// Benchmark with Groth16
-	// Plain Circuit - provide input
-	// Recursive - no input provided
 
 	// Parse Options, if no option is provided it runs plain G16 benches
 	opt := BenchConfig{}
@@ -125,12 +123,21 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 		took /= time.Duration(fcount)
 	}
 
+	outerCircuit := c.Circuit(fcircuitSize,
+		fcircuit,
+		circuits.WithInputCircuit(opt.inputPath),
+		circuits.WithVKCircuit(opt.verifyingKey))
+
 	if falgo == "compile" {
 		var err error
 		var ccs constraint.ConstraintSystem
 		startProfile()
 		for i := 0; i < fcount; i++ {
-			ccs, err = frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(fcircuitSize, fcircuit, circuits.WithInputCircuit(opt.inputPath)), frontend.WithCapacity(fcircuitSize))
+			ccs, err = frontend.Compile(
+				ecc.BW6_761.ScalarField(),
+				r1cs.NewBuilder,
+				outerCircuit,
+				frontend.WithCapacity(fcircuitSize))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -142,7 +149,12 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 		return
 	}
 
-	ccs, err := frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(fcircuitSize, fcircuit, circuits.WithInputCircuit(opt.inputPath)), frontend.WithCapacity(fcircuitSize))
+	ccs, err := frontend.Compile(
+		ecc.BW6_761.ScalarField(),
+		r1cs.NewBuilder,
+		outerCircuit,
+		frontend.WithCapacity(fcircuitSize))
+
 	assertNoError(err)
 
 	if falgo == "setup" {
@@ -161,7 +173,14 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 		startProfile()
 		var err error
 		for i := 0; i < fcount; i++ {
-			c.Witness(fcircuitSize, curveID, fcircuit, circuits.WithInputWitness(opt.inputPath))
+			c.Witness(
+				fcircuitSize,
+				ecc.BW6_761,
+				fcircuit,
+				circuits.WithInputWitness(opt.inputPath),
+				circuits.WithVK(opt.verifyingKey),
+				circuits.WithProof(opt.proof),
+				circuits.WithWitness(opt.witness))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -173,10 +192,17 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 		return
 	}
 
-	witness := c.Witness(fcircuitSize, curveID, fcircuit, circuits.WithInputWitness(opt.inputPath))
+	witness := c.Witness(
+		fcircuitSize,
+		ecc.BW6_761,
+		fcircuit,
+		circuits.WithInputWitness(opt.inputPath),
+		circuits.WithVK(opt.verifyingKey),
+		circuits.WithProof(opt.proof),
+		circuits.WithWitness(opt.witness))
 
 	if falgo == "prove" {
-		pk, err := groth16.DummySetup(ccs)
+		pk, _, err := groth16.Setup(ccs)
 		assertNoError(err)
 
 		var proof interface{}
@@ -199,9 +225,6 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 
 	proof, err := groth16.Prove(ccs, pk, witness)
 	assertNoError(err)
-
-	// print(proof_size)
-	// writeResults(took, ccs, proof_size)
 
 	publicWitness, err := witness.Public()
 	assertNoError(err)
@@ -261,6 +284,4 @@ func WithWitness(witness frontend.Variable) BenchOption {
 
 func init() {
 	rootCmd.AddCommand(groth16Cmd)
-	// groth16Cmd.Flags().StringVar(&inputPath, "input", "none", "input path to the dedicated input")
-	// print(inputPath)
 }
