@@ -129,6 +129,7 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 		circuits.WithVKCircuit(opt.verifyingKey))
 
 	if falgo == "compile" {
+		fmt.Println("BENCHMARK CIRCUIT COMPILATION")
 		var err error
 		var ccs constraint.ConstraintSystem
 		startProfile()
@@ -158,6 +159,7 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 	assertNoError(err)
 
 	if falgo == "setup" {
+		fmt.Println("BENCHMARK SETUP")
 		startProfile()
 		var err error
 		for i := 0; i < fcount; i++ {
@@ -170,6 +172,7 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 	}
 
 	if falgo == "witness" {
+		fmt.Println("BENCHMARK WITNESS GENERATION")
 		startProfile()
 		var err error
 		for i := 0; i < fcount; i++ {
@@ -202,6 +205,7 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 		circuits.WithWitness(opt.witness))
 
 	if falgo == "prove" {
+		fmt.Println("BENCHMARK PROOF GENERATION")
 		pk, _, err := groth16.Setup(ccs)
 		assertNoError(err)
 
@@ -228,6 +232,7 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 
 	publicWitness, err := witness.Public()
 	assertNoError(err)
+	fmt.Println("BENCHMARK PROOF VERIFICATION")
 	startProfile()
 	for i := 0; i < fcount; i++ {
 		err = groth16.Verify(proof, vk, publicWitness)

@@ -1,20 +1,24 @@
 {
     "project": "gnark",
     "project_url": "https://github.com/ConsenSys/gnark",
-    "category": "circuit",
-    "count": 10,
+    "category": "recursion",
+    "count": 1,
     "payload": {
-        "backend": [
+        "innerBackend": [
+            "groth16"
+        ], 
+        "innerCurve": [
+            "bls12_377"
+        ], 
+        "outerBackend": [
             "groth16"
         ],
-        "curves": [
-            "bn254",
-            "bls12_377",
-            "bls24_315"
-        ], 
         "circuits": {
             "mimc": {
                 "input_path": "_input/circuit/mimc"
+            },
+            "cubic": {
+                "input_path": "_input/circuit/cubic"
             }
         },
         "algorithm": [
