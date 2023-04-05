@@ -14,11 +14,13 @@ import (
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/consensys/gnark/backend/witness"
 	"github.com/consensys/gnark/frontend"
+	"github.com/consensys/gnark/std/math/emulated"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/groth16bls12377verifier"
 	groth16verifier "github.com/zkCollective/zk-Harness/gnark/circuits/groth16bls12377verifier"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/prf/mimc"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/prf/sha256"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/cubic"
+	emulate "github.com/zkCollective/zk-Harness/gnark/circuits/toy/emulate"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/expo"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/exponentiate"
 	"github.com/zkCollective/zk-Harness/gnark/util"
@@ -38,6 +40,7 @@ func init() {
 	BenchCircuits["cubic"] = &defaultCircuit{}
 	BenchCircuits["expo"] = &defaultCircuit{}
 	BenchCircuits["exponentiate"] = &defaultCircuit{}
+	BenchCircuits["emulate"] = &defaultCircuit{}
 
 	// Hashes
 	BenchCircuits["mimc"] = &defaultCircuit{}
@@ -136,6 +139,8 @@ func (d *defaultCircuit) Circuit(size int, name string, opts ...CircuitOption) f
 		return &expo.BenchCircuit{N: size}
 	case "exponentiate":
 		return &exponentiate.ExponentiateCircuit{}
+	case "emulate":
+		return &emulate.Circuit{}
 	case "mimc":
 		return &mimc.MimcCircuit{}
 	case "sha256":
@@ -205,6 +210,17 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 			panic(err)
 		}
 		return w
+	case "emulate":
+		witness := emulate.Circuit{}
+		witness.X = emulated.ValueOf[emulated.Secp256k1Fp](data["X"].(string))
+		witness.Y = emulated.ValueOf[emulated.Secp256k1Fp](data["Y"].(string))
+		witness.Res = emulated.ValueOf[emulated.Secp256k1Fp](data["Res"].(string))
+
+		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
+		if err != nil {
+			panic(err)
+		}
+		return w
 	case "mimc":
 		witness := mimc.MimcCircuit{}
 		witness.PreImage = (data["PreImage"].(string))
@@ -226,8 +242,8 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 		outputByteLen := len(byteSlice)
 
 		// witness definition
-		preImageAssign := sha256.StrToIntSlice(input, true)
-		outputAssign := sha256.StrToIntSlice(output, true)
+		preImageAssign := sha256.StrToByteSlice(input, true)
+		outputAssign := sha256.StrToByteSlice(output, true)
 
 		// witness values preparation
 		witness := sha256.Sha256Circuit{
@@ -243,18 +259,12 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 			witness.ExpectedResult[i] = outputAssign[i]
 		}
 
-		// Needed for variable input!
-		// circuit := sha256.Sha256Circuit{
-		// 	PreImage: make([]frontend.Variable, inputByteLen),
-		// }
-
 		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {
 			panic(err)
 		}
 		return w
 	case "groth16_bls12377":
-		// Witness is already provided in this case (pre-computed proof)
 		var outerAssignment groth16verifier.VerifierCircuit
 		outerAssignment.InnerProof.Assign(optWitness.proof)
 		outerAssignment.InnerVk.Assign(optWitness.verifyingKey)
