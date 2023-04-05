@@ -42,12 +42,16 @@ var (
 	fOperation *string
 	fField     *string
 	fGroup     *string
+
+	// Variables Recursion
+	fOuterBackend *string
 )
 
 var (
-	curveID ecc.ID
-	p       func(p *profile.Profile)
-	c       circuits.BenchCircuit
+	innerCurveID ecc.ID
+	curveID      ecc.ID
+	p            func(p *profile.Profile)
+	c            circuits.BenchCircuit
 )
 
 func init() {
@@ -73,6 +77,8 @@ func init() {
 	fFileType = rootCmd.PersistentFlags().String("filetype", "csv", "Type of file to output for benchmarks")
 
 	fOperation = rootCmd.PersistentFlags().String("operation", "None", "operation to benchmark")
+
+	fOuterBackend = rootCmd.PersistentFlags().String("outerBackend", "groth16", "Backend for the outer circuit")
 }
 
 func parseFlags() error {
@@ -113,6 +119,12 @@ func parseFlags() error {
 
 	if *fFileType != "csv" {
 		return errors.New("invalid file type for log")
+	}
+
+	switch *fOuterBackend {
+	case "groth16", "plonk", "plonkFRI":
+	default:
+		return errors.New("invalid outer backend")
 	}
 
 	var ok bool

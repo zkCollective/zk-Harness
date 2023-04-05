@@ -6,6 +6,7 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/consensys/gnark/constraint"
 	"github.com/consensys/gnark/frontend"
@@ -22,10 +23,13 @@ var recursionCmd = &cobra.Command{
 	Run:   runOneStep,
 }
 
-func computeInnerProofG16(fcircuitSize int, fcircuit string, finputPath string) (groth16.VerifyingKey, groth16.Proof) {
+var witness interface{}
+
+func computeInnerProofG16(fcircuitSize int, fcircuit string, finputPath string, innerCurveID ecc.ID) (groth16.VerifyingKey, groth16.Proof) {
+	fmt.Println("COMPUTING INNER PROOF")
 	circuit := c.Circuit(fcircuitSize, fcircuit, circuits.WithInputCircuit(finputPath))
-	ccs, err := frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, circuit, frontend.WithCapacity(fcircuitSize))
-	witness := c.Witness(fcircuitSize, curveID, fcircuit, circuits.WithInputWitness(finputPath))
+	ccs, err := frontend.Compile(innerCurveID.ScalarField(), r1cs.NewBuilder, circuit, frontend.WithCapacity(fcircuitSize))
+	witness := c.Witness(fcircuitSize, innerCurveID, fcircuit, circuits.WithInputWitness(finputPath))
 	pk, vk, err := groth16.Setup(ccs)
 	assertNoError(err)
 	proof, err := groth16.Prove(ccs, pk, witness)
@@ -45,7 +49,8 @@ func runOneStep(cmd *cobra.Command, args []string) {
 
 	var filename = "../benchmarks/gnark/gnark_" +
 		"recursion" + "_" +
-		*fCircuit + "." +
+		*fCircuit + "_" +
+		*fCurve + "." +
 		*fFileType
 
 	if err := parseFlags(); err != nil {
@@ -73,7 +78,7 @@ func runOneStep(cmd *cobra.Command, args []string) {
 		bData := util.BenchDataCircuit{
 			Framework:         "gnark",
 			Category:          "circuit",
-			Backend:           "groth16",
+			Backend:           *fOuterBackend,
 			Curve:             curveID.String(),
 			Circuit:           *fCircuit,
 			Input:             *fInputPath,
@@ -92,40 +97,59 @@ func runOneStep(cmd *cobra.Command, args []string) {
 		}
 	}
 
-	// pre-compute the inner proof
-	innerVk, innerProof := computeInnerProofG16(*fCircuitSize, *fCircuit, *fInputPath)
+	// Set inner curve based on outer curve
+	switch *fCurve {
+	case "bw6_761":
+		innerCurveID = ecc.BLS12_377
+	case "bw6_633":
+		innerCurveID = ecc.BLS24_315
+	}
 
-	// compute the outer proof
-	// TODO - replace hardcoded value
-	recursiveCircuit := "groth16_bls12377"
+	// pre-compute the inner G16 proof
+	innerVk, innerProof := computeInnerProofG16(*fCircuitSize, *fCircuit, *fInputPath, innerCurveID)
 
-	switch *fCircuit {
-	case "mimc":
-		// Run Benchmarks for Groth16 for the outer proof
-		hash := util.PreCalcMIMC(curveID, (data["PreImage"].(string)))
+	switch *fOuterBackend {
+	case "groth16":
+		// FIXME - replace hardcoded value
+		recursiveCircuit := "groth16_bls12377"
+		switch *fCircuit {
+		case "mimc":
+			witness = util.PreCalcMIMC(innerCurveID, (data["PreImage"].(string)))
+		case "cubic":
+			witness = (data["Y"].(string))
+		default:
+			panic("Circuit not implemented for recursion!")
+		}
 		benchGroth16(
 			writeResults,
 			*fAlgo,
 			*fCount,
 			*fCircuitSize,
 			recursiveCircuit,
-			WithVK(innerVk),
-			WithProof(innerProof),
-			WithWitness(hash))
-	case "cubic":
-		// pre-assign public witness
-		witness := (data["Y"].(string))
-		benchGroth16(
+			util.WithVK(innerVk),
+			util.WithProof(innerProof),
+			util.WithWitness(witness))
+	case "plonk":
+		recursiveCircuit := "groth16_bls12377"
+		switch *fCircuit {
+		case "mimc":
+			witness = util.PreCalcMIMC(innerCurveID, (data["PreImage"].(string)))
+		case "cubic":
+			witness = (data["Y"].(string))
+		default:
+			panic("Circuit not implemented for recursion!")
+		}
+		benchPlonk(
 			writeResults,
 			*fAlgo,
 			*fCount,
 			*fCircuitSize,
 			recursiveCircuit,
-			WithVK(innerVk),
-			WithProof(innerProof),
-			WithWitness(witness))
+			util.WithVK(innerVk),
+			util.WithProof(innerProof),
+			util.WithWitness(witness))
 	default:
-		panic("Circuit not implemented for recursion!")
+		panic("Outer backend not supported!")
 	}
 
 }

@@ -22,7 +22,6 @@ import (
 	"time"
 
 	"github.com/DmitriyVTitov/size"
-	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/consensys/gnark/constraint"
 	"github.com/consensys/gnark/frontend"
@@ -89,13 +88,13 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		}
 	}
 	// Run Benchmarks for Groth16 on given specification
-	benchGroth16(writeResults, *fAlgo, *fCount, *fCircuitSize, *fCircuit, WithInput(*fInputPath))
+	benchGroth16(writeResults, *fAlgo, *fCount, *fCircuitSize, *fCircuit, util.WithInput(*fInputPath))
 }
 
-func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize int, fcircuit string, opts ...BenchOption) {
-
+func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize int, fcircuit string, opts ...util.BenchOption) {
+	fmt.Println("BENCHMARKING GROTH16")
 	// Parse Options, if no option is provided it runs plain G16 benches
-	opt := BenchConfig{}
+	opt := util.BenchConfig{}
 	for _, o := range opts {
 		if err := o(&opt); err != nil {
 			panic(err)
@@ -123,10 +122,10 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 		took /= time.Duration(fcount)
 	}
 
-	outerCircuit := c.Circuit(fcircuitSize,
+	circuit := c.Circuit(fcircuitSize,
 		fcircuit,
-		circuits.WithInputCircuit(opt.inputPath),
-		circuits.WithVKCircuit(opt.verifyingKey))
+		circuits.WithInputCircuit(opt.InputPath),
+		circuits.WithVKCircuit(opt.VerifyingKey))
 
 	if falgo == "compile" {
 		fmt.Println("BENCHMARK CIRCUIT COMPILATION")
@@ -135,10 +134,11 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 		startProfile()
 		for i := 0; i < fcount; i++ {
 			ccs, err = frontend.Compile(
-				ecc.BW6_761.ScalarField(),
+				curveID.ScalarField(),
 				r1cs.NewBuilder,
-				outerCircuit,
-				frontend.WithCapacity(fcircuitSize))
+				circuit,
+				frontend.WithCapacity(fcircuitSize),
+				frontend.IgnoreUnconstrainedInputs())
 		}
 		stopProfile()
 		assertNoError(err)
@@ -151,10 +151,11 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 	}
 
 	ccs, err := frontend.Compile(
-		ecc.BW6_761.ScalarField(),
+		curveID.ScalarField(),
 		r1cs.NewBuilder,
-		outerCircuit,
-		frontend.WithCapacity(fcircuitSize))
+		circuit,
+		frontend.WithCapacity(fcircuitSize),
+		frontend.IgnoreUnconstrainedInputs())
 
 	assertNoError(err)
 
@@ -178,12 +179,12 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 		for i := 0; i < fcount; i++ {
 			c.Witness(
 				fcircuitSize,
-				ecc.BW6_761,
+				curveID,
 				fcircuit,
-				circuits.WithInputWitness(opt.inputPath),
-				circuits.WithVK(opt.verifyingKey),
-				circuits.WithProof(opt.proof),
-				circuits.WithWitness(opt.witness))
+				circuits.WithInputWitness(opt.InputPath),
+				circuits.WithVK(opt.VerifyingKey),
+				circuits.WithProof(opt.Proof),
+				circuits.WithWitness(opt.Witness))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -197,12 +198,12 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 
 	witness := c.Witness(
 		fcircuitSize,
-		ecc.BW6_761,
+		curveID,
 		fcircuit,
-		circuits.WithInputWitness(opt.inputPath),
-		circuits.WithVK(opt.verifyingKey),
-		circuits.WithProof(opt.proof),
-		circuits.WithWitness(opt.witness))
+		circuits.WithInputWitness(opt.InputPath),
+		circuits.WithVK(opt.VerifyingKey),
+		circuits.WithProof(opt.Proof),
+		circuits.WithWitness(opt.Witness))
 
 	if falgo == "prove" {
 		fmt.Println("BENCHMARK PROOF GENERATION")
@@ -245,45 +246,6 @@ func benchGroth16(fnWrite writeFunction, falgo string, fcount int, fcircuitSize 
 func assertNoError(err error) {
 	if err != nil {
 		panic(err)
-	}
-}
-
-// These Options are used for recursive Groth16 verifier
-type BenchOption func(opt *BenchConfig) error
-
-type BenchConfig struct {
-	inputPath    string
-	proof        groth16.Proof
-	verifyingKey groth16.VerifyingKey
-	witness      frontend.Variable
-}
-
-// Optionally provide input path to Witness def
-func WithInput(inputPath string) BenchOption {
-	return func(opt *BenchConfig) error {
-		opt.inputPath = inputPath
-		return nil
-	}
-}
-
-func WithProof(proof groth16.Proof) BenchOption {
-	return func(opt *BenchConfig) error {
-		opt.proof = proof
-		return nil
-	}
-}
-
-func WithVK(verifyingKey groth16.VerifyingKey) BenchOption {
-	return func(opt *BenchConfig) error {
-		opt.verifyingKey = verifyingKey
-		return nil
-	}
-}
-
-func WithWitness(witness frontend.Variable) BenchOption {
-	return func(opt *BenchConfig) error {
-		opt.witness = witness
-		return nil
 	}
 }
 

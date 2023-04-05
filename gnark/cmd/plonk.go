@@ -87,13 +87,13 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 	}
 
 	// Run Benchmarks for Groth16 on given specification
-	benchPlonk(writeResults, *fAlgo, *fCount, *fCircuitSize, *fCircuit, WithInput(*fInputPath))
+	benchPlonk(writeResults, *fAlgo, *fCount, *fCircuitSize, *fCircuit, util.WithInput(*fInputPath))
 }
 
-func benchPlonk(fnWrite writeFunction, algo string, count int, circuitSize int, circuit string, opts ...BenchOption) {
-
+func benchPlonk(fnWrite writeFunction, falgo string, fcount int, fcircuitSize int, fcircuit string, opts ...util.BenchOption) {
+	fmt.Println("BENCHMARKING PLONK")
 	// Parse Options, if no option is provided it runs plain G16 benches
-	opt := BenchConfig{}
+	opt := util.BenchConfig{}
 	for _, o := range opts {
 		if err := o(&opt); err != nil {
 			panic(err)
@@ -121,12 +121,17 @@ func benchPlonk(fnWrite writeFunction, algo string, count int, circuitSize int, 
 		took /= time.Duration(*fCount)
 	}
 
+	circuit := c.Circuit(fcircuitSize,
+		fcircuit,
+		circuits.WithInputCircuit(opt.InputPath),
+		circuits.WithVKCircuit(opt.VerifyingKey))
+
 	if *fAlgo == "compile" {
 		startProfile()
 		var err error
 		var ccs constraint.ConstraintSystem
 		for i := 0; i < *fCount; i++ {
-			ccs, err = frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, circuit, circuits.WithInputCircuit(opt.inputPath)), frontend.WithCapacity(*fCircuitSize))
+			ccs, err = frontend.Compile(curveID.ScalarField(), scs.NewBuilder, circuit, frontend.WithCapacity(*fCircuitSize))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -138,7 +143,7 @@ func benchPlonk(fnWrite writeFunction, algo string, count int, circuitSize int, 
 		return
 	}
 
-	ccs, err := frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, circuit, circuits.WithInputCircuit(opt.inputPath)), frontend.WithCapacity(*fCircuitSize))
+	ccs, err := frontend.Compile(curveID.ScalarField(), scs.NewBuilder, circuit, frontend.WithCapacity(*fCircuitSize))
 	assertNoError(err)
 
 	// create srs
@@ -161,7 +166,14 @@ func benchPlonk(fnWrite writeFunction, algo string, count int, circuitSize int, 
 		startProfile()
 		var err error
 		for i := 0; i < *fCount; i++ {
-			c.Witness(*fCircuitSize, curveID, circuit, circuits.WithInputWitness(opt.inputPath))
+			c.Witness(
+				fcircuitSize,
+				curveID,
+				fcircuit,
+				circuits.WithInputWitness(opt.InputPath),
+				circuits.WithVK(opt.VerifyingKey),
+				circuits.WithProof(opt.Proof),
+				circuits.WithWitness(opt.Witness))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -173,11 +185,20 @@ func benchPlonk(fnWrite writeFunction, algo string, count int, circuitSize int, 
 		return
 	}
 
-	witness := c.Witness(*fCircuitSize, curveID, *fCircuit, circuits.WithInputWitness(opt.inputPath))
+	witness := c.Witness(
+		fcircuitSize,
+		curveID,
+		fcircuit,
+		circuits.WithInputWitness(opt.InputPath),
+		circuits.WithVK(opt.VerifyingKey),
+		circuits.WithProof(opt.Proof),
+		circuits.WithWitness(opt.Witness))
+
 	pk, vk, err := plonk.Setup(ccs, srs)
 	assertNoError(err)
 
 	if *fAlgo == "prove" {
+		fmt.Println("BENCHMARK PROOF GENERATION")
 		var proof interface{}
 		startProfile()
 		for i := 0; i < *fCount; i++ {
@@ -200,6 +221,7 @@ func benchPlonk(fnWrite writeFunction, algo string, count int, circuitSize int, 
 	publicWitness, err := witness.Public()
 	assertNoError(err)
 
+	fmt.Println("BENCHMARK PROOF VERIFICATION")
 	startProfile()
 	for i := 0; i < *fCount; i++ {
 		err = plonk.Verify(proof, vk, publicWitness)
