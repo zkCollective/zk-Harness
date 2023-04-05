@@ -10,15 +10,17 @@
         "innerCurve": [
             "bls12_377"
         ], 
+        "outerCurve": [
+            "bw6_761"
+        ], 
         "outerBackend": [
-            "groth16"
+            "groth16",
+            "plonk",
+            "plonkFRI"
         ],
         "circuits": {
             "mimc": {
                 "input_path": "_input/circuit/mimc"
-            },
-            "cubic": {
-                "input_path": "_input/circuit/cubic"
             }
         },
         "algorithm": [
