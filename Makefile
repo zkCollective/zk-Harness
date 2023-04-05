@@ -53,6 +53,12 @@ benchmark-toy-gnark:
 benchmark-hash:
 	python3 -m _scripts.reader --config _input/config/gnark/config_hash.json  
 
+benchmark-recursion:
+	$(info --------------------------------------------)
+	$(info ----------- GNARK RECURSION BENCHMARKS -----)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/gnark/config_recursion.json
+
 benchmark-gnark-circuits: benchmark-toy-gnark benchmark-hash
 
 test-simple:

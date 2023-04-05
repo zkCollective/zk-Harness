@@ -14,12 +14,13 @@ def build_command_gnark_recursion(payload, count):
     """
     Build the command to invoke the gnark ZKP-framework given the payload
     """
-    
-    if payload.outerBackend is not None and payload.curve is not None:
-        commands = [f"./gnark recursion --circuit={circ} --algo={op} --curve=bls12_377 --input={inp} --count={count}\n"
+    # FIXME - hardcoded outer curve. Only implemented bls12_377/bw6_761 so far
+    if payload.outerBackend is not None and payload.outerCurve is not None:
+        commands = [f"./gnark recursion --circuit={circ} --algo={op} --curve=bw6_761 --input={inp} --count={count} --outerBackend={outerBackend}\n"
                     for circ, input_path in payload.circuit.items()
                     for inp in helper.get_all_input_files(input_path)
-                    for op in payload.operation]
+                    for op in payload.operation
+                    for outerBackend in payload.outerBackend]
 
         # Join the commands into a single string
         command = "".join(commands)
@@ -51,6 +52,8 @@ def get_recursion_payload(config):
     """
     Extract the payload for category "circuit" given a config.json
     """
+    # FIXME - InnerCurve is currently not parsed
+
     # Extract the relevant fields from the configuration data
     payload = config.get('payload')
     if payload is None:
@@ -62,7 +65,7 @@ def get_recursion_payload(config):
     if len(innerBackend) == 0:
         raise ValueError("backend field is empty")
 
-    curve = payload.get('innerCurve')
+    curve = payload.get('outerCurve')
     if curve is None:
         raise KeyError("curves field does not exist in circuit payload")
     if len(curve) == 0:
@@ -102,7 +105,7 @@ def get_recursion_payload(config):
     circuit = dict(zip(circuits, input_path))
     
     # Define a named tuple for the payload
-    Payload = namedtuple('Payload', ['innerBackend', 'outerBackend', 'curve', 'circuit', 'operation', 'input_path'])
+    Payload = namedtuple('Payload', ['innerBackend', 'outerBackend', 'outerCurve', 'circuit', 'operation', 'input_path'])
 
     # Return a new instance of the named tuple with the extracted values
     return Payload(innerBackend, outerBackend, curve, circuit, operation, input_path)
