@@ -78,5 +78,7 @@ There are many ways in which you can contribute to the zk-Harness:
 - Integrate a new framework into the zk-Harness
 - Propose new benchmark categories, such as for recursion and zk-EVMs.
 
+Please read the [Contribution Guidelines](https://github.com/zkCollective/zk-Harness/blob/main/CONTRIBUTING.md) before creating a PR or opening an issue.
+
 zk-Harness is developed as part of the [zk-Hackathon](https://rdi.berkeley.edu/zkp-web3-hackathon/) hosted by the [Berkeley Center for Responsible Decentralized Intelligence](https://rdi.berkeley.edu/).
 Further, zk-Harness is part of the [zk-Collective](https://github.com/zkCollective/).
