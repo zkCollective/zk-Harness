@@ -90,3 +90,33 @@ There are many ways in which you can contribute to the zk-Harness:
 
 zk-Harness is developed as part of the [zk-Hackathon](https://rdi.berkeley.edu/zkp-web3-hackathon/) hosted by the [Berkeley Center for Responsible Decentralized Intelligence](https://rdi.berkeley.edu/).
 Further, zk-Harness is part of the [zk-Collective](https://github.com/zkCollective/).
+
+### How to add new frameworks to the Nix environment
+
+The `./flake.nix` file contains the Nix code which constructs the Nix environment. To integrate a new
+framework into the Nix environment, this code must be changed so that it adds to the environment all
+of the dependencies required to run the new framework-specific benchmark commands in the Makefile.
+In general, the following steps will be involved:
+
+ * Nix the framework, if it has not already been Nixed.
+ * Add the Nixed framework to the flake `inputs`.
+ * Add the framework output to the `devShells.default.packages` in the flake `outputs`.
+ * Add any other dependencies needed to run the benchmarks to the `devShells.default.packages` in the flake `outputs`.
+ * Add any necessary setup code to the `devShells.default.shellHook`.
+
+A few things to note:
+
+ * Nix packages are supposed to have reproducible builds, and there are restrictions within the Nix build system designed to rule out common causes of non-reproducibility. Therefore, a build process designed to work outside Nix may not work within Nix without modification.
+    * In particular, the FHS (Filesystem Hierarchy Standard) does not apply in Nix; for instance, `/usr/bin/bash` cannot be expected to point to anything in the Nix environment. Instead of `/usr/bin/foo`, use `/usr/bin/env foo`.
+ * Nix is a Turing complete programming language, and there cannot be a set recipe for Nixing software, since every software package is different.
+ * Although Nix builds are in theory reproducible, the way this benchmark suite is set up does not run the benchmarks within Nix. In theory, running the benchmarks within the Nix environment should produce similar results on similar machines. However, since the benchmarks are not being run in a hermetic Nix environment, the benchmarks may work on your machine and not work at all on another machine of the same architecture, due to differences in software configuration. To avoid this, you should make sure that the commands in your Makefile only invoke dependencies that are in the Nix environment.
+
+Here are some hopefully useful pointers for Nixing pre-existing code bases:
+
+ * [cargo2nix](https://github.com/cargo2nix/cargo2nix) for Nixing Rust projects;
+ * [Nixing Go projects](https://nixos.wiki/wiki/Go);
+ * The Nix environment for this project contains Python and Node.js, and you can incorporate
+   Node and Python dependencies by adding them to the `./requirements.txt` or `./package.json`
+   file (as applicable).
+ * You can learn more about Nix by reading the [Nix pills](https://nixos.org/guides/nix-pills/)
+   and referring to the [Nix reference manual](https://nixos.org/manual/nix/stable/).
