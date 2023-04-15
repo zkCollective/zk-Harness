@@ -1,0 +1,32 @@
+[package]
+name = "arkworks-benchmarks"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+authors = [
+    "George Kadianakis <desnacked@riseup.net>",
+    "Michele Orrù <michele.orru@berkeley.edu>",
+]
+
+[[bench]]
+name = "bench_arkworks"
+harness = false
+
+[dependencies]
+ark-ec = {version = "0.4.0", features = ["std", "parallel"] }
+ark-ff = {version = "0.4.0", features = ["std", "asm", "parallel"] }
+ark-poly = {version = "0.4.0", features = ["std", "parallel"] }
+ark-relations = "0.4.0"
+# curves support
+ark-bls12-377 = "0.4.0"
+ark-bls12-381 = "0.4.0"
+ark-curve25519 = "0.4.0"
+ark-secp256k1 = "0.4.0"
+ark-pallas = "0.4.0"
+ark-vesta = "0.4.0"
+
+ark-serialize = "0.4.0"
+ark-std = {version = "0.4.0", features = ["std", "parallel"] }
+rand = "0.8.5"
+rayon = "1.5"
+criterion = "0.3.5"
