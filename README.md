@@ -61,12 +61,11 @@ On a high level, zk-Harness takes as input a configuration file. The “Config R
 
 Currently, zk-Harness includes the following components as a starting point:
 
-- Benchmarks for field arithmetic
-- Benchmarks for Elliptic curve group operations
-- Benchmarks for circuit implementations
-- In the following frameworks:
-  - gnark
-  - circom
+| Benchmarks                         | Field Arithmetic  | Elliptic Curve Group Operations | Circuit Implementations |
+|------------------------------------|------------------|--------------------------------|-------------------------|
+| gnark                              | X                | X                              | X                       |
+| circom / snarkjs                   | X                | X                              | X                       |
+| arkworks                           | X                | X                              |                         |
 
 We aim to successively expand this list to further include benchmarks for other ZKP frameworks, recursion and zk-EVMs. As a part of the ZKP/Web3 Hackathon hosted by UC Berkeley RDI, we aim to further develop the frameworks integrated into zk-Harness. You can find the program description detailing future integrations [here](https://drive.google.com/file/d/1Igm47dFXSOFAC_wldfUG4Y9OiITqlbQu/view). A detailed list of currently included sub-components and the framework architecture can be found in the [GitHub](https://github.com/zkCollective/zk-Harness) repository.
 
