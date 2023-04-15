@@ -1,0 +1,24 @@
+[package]
+name = "zkcrypto-benchmarks"
+version = "0.1.0"
+edition = "2021"
+authors = [
+    "Jack Grigg <thestr4d@gmail.com>",
+]
+
+[lib]
+bench = false
+
+[[bench]]
+name = "bench_zkcrypto"
+harness = false
+
+[dependencies]
+group = "0.12"
+pairing = "0.22"
+bls12_381 = "0.7"
+jubjub = "0.9"
+rand = "0.8"
+
+[dev-dependencies]
+criterion = "0.4"
