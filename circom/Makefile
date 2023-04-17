@@ -1,5 +1,3 @@
-SHELL = zsh
-
 all: sudoku cubic
 
 sudoku:

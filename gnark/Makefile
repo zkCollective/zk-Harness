@@ -1,5 +1,3 @@
-SHELL = zsh
-
 directory = github.com/tumberger/zk-compilers/gnark
 
 .PHONY = test
