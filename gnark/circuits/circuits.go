@@ -1,6 +1,7 @@
 package circuits
 
 import (
+	cryptoSha256 "crypto/sha256"
 	"encoding/hex"
 
 	"github.com/consensys/gnark-crypto/ecc"
@@ -14,6 +15,7 @@ import (
 	bw6761fr "github.com/consensys/gnark-crypto/ecc/bw6-761/fr"
 	"github.com/consensys/gnark/backend/witness"
 	"github.com/consensys/gnark/frontend"
+	gsha256 "github.com/tumberger/zk-compilers/gnark/circuits/circuit/gnark_sha256"
 	"github.com/tumberger/zk-compilers/gnark/circuits/prf/mimc"
 	sha256 "github.com/tumberger/zk-compilers/gnark/circuits/prf/sha256"
 	"github.com/tumberger/zk-compilers/gnark/circuits/toy/cubic"
@@ -40,6 +42,8 @@ func init() {
 	// Hashes
 	BenchCircuits["mimc"] = &defaultCircuit{}
 	BenchCircuits["sha256"] = &defaultCircuit{}
+
+	BenchCircuits["gnark_sha256"] = &defaultCircuit{}
 }
 
 func preCalc(size int, curveID ecc.ID) interface{} {
@@ -284,6 +288,35 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, path str
 			panic(err)
 		}
 		return w
+	case "gnark_sha256":
+		input := (data["PreImage"].(string))
+		//output := (data["Hash"].(string))
+
+		// witness values preparation
+		assignment := gsha256.Sha256Circuit{
+			In:             make([]frontend.Variable, len(input)),
+			ExpectedResult: [32]frontend.Variable{},
+		}
+
+		in, _ := hex.DecodeString(input)
+		goSha256 := cryptoSha256.New()
+		goSha256.Write(in[:])
+		out := goSha256.Sum(nil)
+
+		// assign values here because required to use make in assignment
+		for i := 0; i < len(input); i++ {
+			assignment.In[i] = input[i]
+		}
+		for i := 0; i < 32; i++ {
+			assignment.ExpectedResult[i] = out[i]
+		}
+
+		witness, err := frontend.NewWitness(&assignment, ecc.BN254.ScalarField())
+		if err != nil {
+			panic(err)
+		}
+		return witness
+
 	default:
 		panic("not implemented")
 	}
