@@ -63,6 +63,27 @@ def build_command_circom(payload, count):
     return command
 
 
+def build_command_jellyfish(payload, count):
+    """
+    Build the command to invoke the gnark ZKP-framework given the payload
+    """
+    
+    if payload.backend is not None and payload.curves is not None:
+        commands = [f"cargo run --release -- --backend {backend} --circuit {circ} --input {inp} --curve {curve} --count {count} --op {op}\n"
+                    for backend in payload.backend
+                    for curve in payload.curves
+                    for circ, input_path in payload.circuit.items()
+                    for inp in helper.get_all_input_files(input_path)
+                    for op in payload.operation]
+
+        # Join the commands into a single string
+        command = "".join(commands)
+        # Prepend the command to change the working directory to the gnark directory
+        command = f"cd {helper.JELLYFISH_DIR}; {command}"
+    else:
+        raise ValueError("Missing payload fields for circuit mode")
+    return command
+
 def default_case():
     raise ValueError("Framework not integrated into the benchmarking framework!")
 
@@ -70,6 +91,7 @@ def default_case():
 # List ZKP-frameworks in the zk-Harness
 projects = {
     "gnark":    build_command_gnark,
+    "jellyfish": build_command_jellyfish,
     "circom/snarkjs":   build_command_circom
 }
 

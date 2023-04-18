@@ -7,6 +7,8 @@ MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 BENCHMARKS_DIR = os.path.join(MAIN_DIR, "benchmarks")
 # GNARK PATHS
 GNARK_DIR = os.path.join(MAIN_DIR, "gnark")
+# JELLYFISH PATHS
+JELLYFISH_DIR = os.path.join(MAIN_DIR, "jellyfish")
 # CIRCOM PATHS
 CIRCOM_DIR = os.path.join(MAIN_DIR, "circom")
 CIRCOM_BENCHMAKR_DIR = os.path.join(BENCHMARKS_DIR, "circom")
