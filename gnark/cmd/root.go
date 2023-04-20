@@ -9,7 +9,7 @@ import (
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
-	"github.com/tumberger/zk-compilers/gnark/circuits"
+	"github.com/zkCollective/zk-Harness/gnark/circuits"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -42,12 +42,16 @@ var (
 	fOperation *string
 	fField     *string
 	fGroup     *string
+
+	// Variables Recursion
+	fOuterBackend *string
 )
 
 var (
-	curveID ecc.ID
-	p       func(p *profile.Profile)
-	c       circuits.BenchCircuit
+	innerCurveID ecc.ID
+	curveID      ecc.ID
+	p            func(p *profile.Profile)
+	c            circuits.BenchCircuit
 )
 
 func init() {
@@ -62,7 +66,6 @@ func init() {
 
 	// Binding the input path to a variable
 	fInputPath = rootCmd.PersistentFlags().String("input", "none", "input path to the dedicated input")
-	rootCmd.MarkPersistentFlagRequired("input")
 
 	fCircuit = rootCmd.PersistentFlags().String("circuit", "expo", "name of the circuit to use")
 	fCircuitSize = rootCmd.PersistentFlags().Int("size", 10000, "size of the circuit, parameter to circuit constructor")
@@ -73,6 +76,8 @@ func init() {
 	fFileType = rootCmd.PersistentFlags().String("filetype", "csv", "Type of file to output for benchmarks")
 
 	fOperation = rootCmd.PersistentFlags().String("operation", "None", "operation to benchmark")
+
+	fOuterBackend = rootCmd.PersistentFlags().String("outerBackend", "groth16", "Backend for the outer circuit")
 }
 
 func parseFlags() error {
@@ -113,6 +118,12 @@ func parseFlags() error {
 
 	if *fFileType != "csv" {
 		return errors.New("invalid file type for log")
+	}
+
+	switch *fOuterBackend {
+	case "groth16", "plonk", "plonkFRI":
+	default:
+		return errors.New("invalid outer backend")
 	}
 
 	var ok bool

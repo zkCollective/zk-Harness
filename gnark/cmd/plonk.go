@@ -30,7 +30,8 @@ import (
 	"github.com/consensys/gnark/test"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
-	"github.com/tumberger/zk-compilers/gnark/util"
+	"github.com/zkCollective/zk-Harness/gnark/circuits"
+	"github.com/zkCollective/zk-Harness/gnark/util"
 )
 
 // plonkCmd represents the plonk command
@@ -85,6 +86,20 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		}
 	}
 
+	// Run Benchmarks for Groth16 on given specification
+	benchPlonk(writeResults, *fAlgo, *fCount, *fCircuitSize, *fCircuit, util.WithInput(*fInputPath))
+}
+
+func benchPlonk(fnWrite writeFunction, falgo string, fcount int, fcircuitSize int, fcircuit string, opts ...util.BenchOption) {
+	fmt.Println("BENCHMARKING PLONK")
+	// Parse Options, if no option is provided it runs plain G16 benches
+	opt := util.BenchConfig{}
+	for _, o := range opts {
+		if err := o(&opt); err != nil {
+			panic(err)
+		}
+	}
+
 	var (
 		start time.Time
 		took  time.Duration
@@ -106,12 +121,17 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		took /= time.Duration(*fCount)
 	}
 
+	circuit := c.Circuit(fcircuitSize,
+		fcircuit,
+		circuits.WithInputCircuit(opt.InputPath),
+		circuits.WithVKCircuit(opt.VerifyingKey))
+
 	if *fAlgo == "compile" {
 		startProfile()
 		var err error
 		var ccs constraint.ConstraintSystem
 		for i := 0; i < *fCount; i++ {
-			ccs, err = frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
+			ccs, err = frontend.Compile(curveID.ScalarField(), scs.NewBuilder, circuit, frontend.WithCapacity(*fCircuitSize))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -119,11 +139,11 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		if took < (1024 * 1024) {
 			took = (1024 * 1024)
 		}
-		writeResults(took, ccs, 0)
+		fnWrite(took, ccs, 0)
 		return
 	}
 
-	ccs, err := frontend.Compile(curveID.ScalarField(), scs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
+	ccs, err := frontend.Compile(curveID.ScalarField(), scs.NewBuilder, circuit, frontend.WithCapacity(*fCircuitSize))
 	assertNoError(err)
 
 	// create srs
@@ -138,7 +158,7 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		}
 		stopProfile()
 		assertNoError(err)
-		writeResults(took, ccs, 0)
+		fnWrite(took, ccs, 0)
 		return
 	}
 
@@ -146,7 +166,14 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		startProfile()
 		var err error
 		for i := 0; i < *fCount; i++ {
-			c.Witness(*fCircuitSize, curveID, *fCircuit, *fInputPath)
+			c.Witness(
+				fcircuitSize,
+				curveID,
+				fcircuit,
+				circuits.WithInputWitness(opt.InputPath),
+				circuits.WithVK(opt.VerifyingKey),
+				circuits.WithProof(opt.Proof),
+				circuits.WithWitness(opt.Witness))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -154,15 +181,24 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		if took < (1024 * 1024) {
 			took = (1024 * 1024)
 		}
-		writeResults(took, ccs, 0)
+		fnWrite(took, ccs, 0)
 		return
 	}
 
-	witness := c.Witness(*fCircuitSize, curveID, *fCircuit, *fInputPath)
+	witness := c.Witness(
+		fcircuitSize,
+		curveID,
+		fcircuit,
+		circuits.WithInputWitness(opt.InputPath),
+		circuits.WithVK(opt.VerifyingKey),
+		circuits.WithProof(opt.Proof),
+		circuits.WithWitness(opt.Witness))
+
 	pk, vk, err := plonk.Setup(ccs, srs)
 	assertNoError(err)
 
 	if *fAlgo == "prove" {
+		fmt.Println("BENCHMARK PROOF GENERATION")
 		var proof interface{}
 		startProfile()
 		for i := 0; i < *fCount; i++ {
@@ -171,7 +207,7 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 		stopProfile()
 		assertNoError(err)
 		proof_size := size.Of(proof)
-		writeResults(took, ccs, proof_size)
+		fnWrite(took, ccs, proof_size)
 		return
 	}
 
@@ -185,14 +221,14 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 	publicWitness, err := witness.Public()
 	assertNoError(err)
 
+	fmt.Println("BENCHMARK PROOF VERIFICATION")
 	startProfile()
 	for i := 0; i < *fCount; i++ {
 		err = plonk.Verify(proof, vk, publicWitness)
 	}
 	stopProfile()
 	assertNoError(err)
-	writeResults(took, ccs, 0)
-
+	fnWrite(took, ccs, 0)
 }
 
 func init() {

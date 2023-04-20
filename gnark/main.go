@@ -1,6 +1,6 @@
 package main
 
-import "github.com/tumberger/zk-compilers/gnark/cmd"
+import "github.com/zkCollective/zk-Harness/gnark/cmd"
 
 func main() {
 	cmd.Execute()

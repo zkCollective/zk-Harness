@@ -35,6 +35,17 @@ func StrToIntSlice(inputData string, hexRepresentation bool) []int {
 	return data
 }
 
+func StrToByteSlice(inputData string, hexRepresentation bool) []byte {
+	var byteSlice []byte
+	if hexRepresentation {
+		hexBytes, _ := hex.DecodeString(inputData)
+		byteSlice = hexBytes
+	} else {
+		byteSlice = []byte(inputData)
+	}
+	return byteSlice
+}
+
 type Sha256Circuit struct {
 	ExpectedResult [32]frontend.Variable `gnark:"data,public"`
 	PreImage       []frontend.Variable

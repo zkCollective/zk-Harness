@@ -1,0 +1,29 @@
+{
+    "project": "gnark",
+    "project_url": "https://github.com/ConsenSys/gnark",
+    "category": "onesteprecursion",
+    "count": 1,
+    "payload": {
+        "innerProof": [
+            "groth16"
+        ], 
+        "innerCurve": [
+            "groth16"
+        ], 
+        "outerProof": [
+            "groth16"
+        ], 
+        "outerCurve": [
+            "groth16"
+        ], 
+        "circuits": {
+            "mimc": {
+                "input_path": "_input/circuit/mimc"
+            },
+            "sha256": {
+                "input_path": "_input/circuit/sha256"
+            }
+        },
+        "custom": {}
+    }    
+}
