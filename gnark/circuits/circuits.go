@@ -2,21 +2,17 @@ package circuits
 
 import (
 	"encoding/hex"
+	"fmt"
 
 	"github.com/consensys/gnark-crypto/ecc"
-	bls12377fr "github.com/consensys/gnark-crypto/ecc/bls12-377/fr"
 
-	bls12381fr "github.com/consensys/gnark-crypto/ecc/bls12-381/fr"
-	bls24315fr "github.com/consensys/gnark-crypto/ecc/bls24-315/fr"
-	bn254fr "github.com/consensys/gnark-crypto/ecc/bn254/fr"
-	bw6633fr "github.com/consensys/gnark-crypto/ecc/bw6-633/fr"
-	bw6761fr "github.com/consensys/gnark-crypto/ecc/bw6-761/fr"
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/consensys/gnark/backend/witness"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/std/math/emulated"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/bench"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/groth16bls12377verifier"
-	groth16verifier "github.com/zkCollective/zk-Harness/gnark/circuits/groth16bls12377verifier"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/groth16bls24315verifier"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/prf/mimc"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/prf/sha256"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/cubic"
@@ -36,6 +32,9 @@ type BenchCircuit interface {
 func init() {
 	BenchCircuits = make(map[string]BenchCircuit)
 
+	// Bench Circuit
+	BenchCircuits["bench"] = &defaultCircuit{}
+
 	// Toy Circuits
 	BenchCircuits["cubic"] = &defaultCircuit{}
 	BenchCircuits["expo"] = &defaultCircuit{}
@@ -48,66 +47,7 @@ func init() {
 
 	// Recursion
 	BenchCircuits["groth16_bls12377"] = &defaultCircuit{}
-}
-
-func preCalc(size int, curveID ecc.ID) interface{} {
-	switch curveID {
-	case ecc.BN254:
-		// compute expected Y
-		var expectedY bn254fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-		return expectedY
-	case ecc.BLS12_381:
-		// compute expected Y
-		var expectedY bls12381fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		return expectedY
-	case ecc.BLS12_377:
-		// compute expected Y
-		var expectedY bls12377fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		return expectedY
-	case ecc.BLS24_315:
-		// compute expected Y
-		var expectedY bls24315fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		return expectedY
-	case ecc.BW6_761:
-		// compute expected Y
-		var expectedY bw6761fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		return expectedY
-	case ecc.BW6_633:
-		// compute expected Y
-		var expectedY bw6633fr.Element
-		expectedY.SetInterface(2)
-		for i := 0; i < size; i++ {
-			expectedY.Mul(&expectedY, &expectedY)
-		}
-
-		return expectedY
-	default:
-		panic("not implemented")
-	}
+	BenchCircuits["groth16_bls24315"] = &defaultCircuit{}
 }
 
 type defaultCircuit struct {
@@ -124,7 +64,7 @@ func (d *defaultCircuit) Circuit(size int, name string, opts ...CircuitOption) f
 	}
 
 	var data map[string]interface{}
-	if optCircuit.inputPath != "" {
+	if optCircuit.inputPath != "none" && optCircuit.inputPath != "" {
 		var err error
 		data, err = util.ReadFromInputPath(optCircuit.inputPath)
 		if err != nil {
@@ -133,10 +73,12 @@ func (d *defaultCircuit) Circuit(size int, name string, opts ...CircuitOption) f
 	}
 
 	switch name {
+	case "expo":
+		return &bench.BenchCircuit{N: size}
+	case "bench":
+		return &bench.BenchCircuit{N: size}
 	case "cubic":
 		return &cubic.CubicCircuit{}
-	case "expo":
-		return &expo.BenchCircuit{N: size}
 	case "exponentiate":
 		return &exponentiate.ExponentiateCircuit{}
 	case "emulate":
@@ -152,6 +94,10 @@ func (d *defaultCircuit) Circuit(size int, name string, opts ...CircuitOption) f
 		}
 	case "groth16_bls12377":
 		outerCircuit := groth16bls12377verifier.VerifierCircuit{}
+		outerCircuit.InnerVk.FillG1K(optCircuit.verifyingKey)
+		return &outerCircuit
+	case "groth16_bls24315":
+		outerCircuit := groth16bls24315verifier.VerifierCircuit{}
 		outerCircuit.InnerVk.FillG1K(optCircuit.verifyingKey)
 		return &outerCircuit
 	default:
@@ -170,7 +116,7 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 	}
 
 	var data map[string]interface{}
-	if optWitness.inputPath != "" {
+	if optWitness.inputPath != "none" && optWitness.inputPath != "" {
 		var err error
 		data, err = util.ReadFromInputPath(optWitness.inputPath)
 		if err != nil {
@@ -179,6 +125,17 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 	}
 
 	switch name {
+	case "bench":
+		witness := bench.BenchCircuit{}
+		witness.X = (2)
+		witness.Y = util.PreCalcBench(size, curveID)
+		witness.N = size
+		fmt.Println(util.PreCalcBench(size, curveID))
+		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
+		if err != nil {
+			panic(err)
+		}
+		return w
 	case "cubic":
 		witness := cubic.CubicCircuit{}
 		witness.X = (data["X"].(string))
@@ -192,7 +149,7 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 	case "expo":
 		witness := expo.BenchCircuit{N: size}
 		witness.X = (2)
-		witness.Y = preCalc(size, curveID)
+		witness.Y = util.PreCalcBench(size, curveID)
 
 		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {
@@ -265,12 +222,21 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 		}
 		return w
 	case "groth16_bls12377":
-		var outerAssignment groth16verifier.VerifierCircuit
+		var outerAssignment groth16bls12377verifier.VerifierCircuit
 		outerAssignment.InnerProof.Assign(optWitness.proof)
 		outerAssignment.InnerVk.Assign(optWitness.verifyingKey)
 		outerAssignment.Witness = optWitness.witness
-
 		w, err := frontend.NewWitness(&outerAssignment, ecc.BW6_761.ScalarField())
+		if err != nil {
+			panic(err)
+		}
+		return w
+	case "groth16_bls24315":
+		var outerAssignment groth16bls24315verifier.VerifierCircuit
+		outerAssignment.InnerProof.Assign(optWitness.proof)
+		outerAssignment.InnerVk.Assign(optWitness.verifyingKey)
+		outerAssignment.Witness = optWitness.witness
+		w, err := frontend.NewWitness(&outerAssignment, ecc.BW6_633.ScalarField())
 		if err != nil {
 			panic(err)
 		}
