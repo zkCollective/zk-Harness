@@ -52,7 +52,7 @@ benchmark-toy-jellyfish:
 	$(info --------------------------------------------)
 	$(info --------- JELLYFISH TOY BENCHMARKS ---------)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/jellyfish/config_all_toy.json  
+	rm benchmarks/jellyfish/*; python3 -m _scripts.reader --config _input/config/jellyfish/config_all_toy.json  
 
 
 benchmark-hash:

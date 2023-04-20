@@ -5,10 +5,11 @@ use clap::Parser;
 use jf_plonk::errors::PlonkError;
 use jf_relation::{Circuit, PlonkCircuit};
 use serde::{Deserialize, Serialize};
-use std::{path::PathBuf, time::Instant};
+use std::{fs::OpenOptions, path::PathBuf, time::Instant};
 use sysinfo::{CpuExt, SystemExt};
 
 pub const FRAMEWORK: &str = "jellyfish";
+const CSV_FILENAME: &str = "../benchmarks/jellyfish/jellyfish_plonk_cubic.csv";
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
@@ -45,18 +46,19 @@ struct Args {
     count: usize,
 }
 
-fn compile_bench<F: PrimeField>(
-    x: u32,
-    y: u32,
-    count: usize,
-) -> Result<PlonkCircuit<F>, PlonkError> {
-    for _ in 0..count - 1 {
-        let _: PlonkCircuit<F> = cubic_circuit(x, y).unwrap();
-    }
+/// A macro that sets up a cubic circuit to benchmark the `Compile` operation.
+macro_rules! plonk_compile_bench {
+    ($curve:ty, $x:expr, $y:expr, $count:expr) => {{
+        for _ in 0..$count - 1 {
+            let _: PlonkCircuit<$curve> = cubic_circuit($x, $y).unwrap();
+        }
 
-    cubic_circuit::<F>(x, y)
+        let cs = cubic_circuit::<$curve>($x, $y).unwrap();
+        cs
+    }};
 }
 
+/// Defines a simple circuit: x**3 + x + 5 == y
 fn cubic_circuit<F: PrimeField>(x: u32, y: u32) -> Result<PlonkCircuit<F>, PlonkError> {
     let mut circuit: PlonkCircuit<F> = PlonkCircuit::new_turbo_plonk();
 
@@ -80,8 +82,8 @@ fn cubic_circuit<F: PrimeField>(x: u32, y: u32) -> Result<PlonkCircuit<F>, Plonk
     Ok(circuit)
 }
 
-/// A row of benchmark results within the CSV log.
-#[derive(Serialize)]
+/// A single row of benchmark results within the CSV log.
+#[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 struct Record {
     framework: String,
@@ -95,10 +97,10 @@ struct Record {
     nb_secret: String,
     nb_public: String,
     ram: usize,
-    proof_size: usize,
     /// Time (in milliseconds) for the operation to finish.
     #[serde(rename(serialize = "time(ms)"))]
     time: String,
+    proof_size: String,
     nb_physical_cores: usize,
     nb_logical_cores: usize,
     count: usize,
@@ -113,6 +115,7 @@ struct CubicInput {
     Y: String,
 }
 
+/// Kind of operation to benchmark.
 #[derive(Debug, Serialize, Clone, clap::ValueEnum)]
 #[serde(rename_all = "camelCase")]
 enum Operation {
@@ -123,7 +126,7 @@ enum Operation {
     Verify,
 }
 
-#[derive(Serialize)]
+#[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 enum Category {
     Circuit,
@@ -132,27 +135,45 @@ enum Category {
 fn main() -> Result<()> {
     let args = Args::parse();
 
+    let bench_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .join("benchmarks/jellyfish/jellyfish_plonk_cubic.csv");
+
+    let mut writer = if !bench_dir.exists() {
+        let file = std::fs::File::create(CSV_FILENAME)?;
+
+        csv::WriterBuilder::new().from_writer(file)
+    } else {
+        csv::WriterBuilder::new()
+            .has_headers(false)
+            .from_writer(OpenOptions::new().append(true).open(CSV_FILENAME)?)
+    };
+
     println!(
-        "Running:\n backend: {}\n circuit: {}\n curve: {}\n count: {} input: {}\n",
-        args.backend, args.circuit, args.curve, args.count, args.input
+        "Benching:\n framework: {}\n backend: {}\n circuit: {}\n curve: {}\n count: {}\n input: {}\n",
+        FRAMEWORK, args.backend, args.circuit, args.curve, args.count, args.input
     );
 
-    let mut writer =
-        csv::Writer::from_path("../benchmarks/jellyfish/jellyfish_plonk_cubic.csv").unwrap();
-
-    let file = format!("../{}", args.input);
-    let input = std::fs::read_to_string(file).unwrap();
+    let input = std::fs::read_to_string(format!("../{}", args.input)).unwrap();
     let input: CubicInput = serde_json::de::from_str(&input).unwrap();
 
     let x = input.X.parse().ok().unwrap();
     let y = input.Y.parse().ok().unwrap();
 
+    // TODO: we allow a single match for now since we're only benchmarking the circuit compilation.
+    // This should be removed once we add more operations.
+    #[allow(clippy::single_match)]
     match args.op {
         Operation::Compile => {
+            let cs = plonk_compile_bench!(Fr761, x, y, args.count);
             let start = Instant::now();
-            let cs: PlonkCircuit<Fr761> = compile_bench(x, y, args.count).unwrap();
             let end = start.elapsed().as_secs_f32() * 1000.0;
-            println!("end: {}", end);
+            let time = if end < 1.0 {
+                "1".to_string()
+            } else {
+                end.to_string()
+            };
 
             let system = sysinfo::System::new_all();
             let record = Record {
@@ -166,20 +187,20 @@ fn main() -> Result<()> {
                 nb_constraints: cs.num_gates().to_string(),
                 nb_secret: cs.num_vars().to_string(),
                 nb_public: cs.num_inputs().to_string(),
-                ram: Default::default(),        // TODO: add memory usage
-                proof_size: Default::default(), // TODO: add proof_size
-                time: end.to_string(),
+                ram: Default::default(), // TODO: add memory usage
+                time,
+                proof_size: 0.to_string(),
                 nb_physical_cores: num_cpus::get_physical(),
                 nb_logical_cores: num_cpus::get(),
                 count: args.count,
                 cpu: system.global_cpu_info().brand().to_string(),
             };
-
-            writer.serialize(record).unwrap();
-            writer.flush().unwrap();
+            writer.serialize(record)?;
         }
         _ => {}
     }
+
+    writer.flush()?;
     Ok(())
 }
 
@@ -193,6 +214,7 @@ mod tests {
 
     use super::*;
 
+    /// Test driver using different curves for our cubic_circuit() circuit construction.
     #[test]
     fn test_cubic() -> Result<(), CircuitError> {
         test_cubic_helper::<FqEd254>()?;
@@ -201,13 +223,18 @@ mod tests {
         test_cubic_helper::<Fq377>()
     }
 
+    /// Sanity check for our cubic_circuit() circuit construction.
     fn test_cubic_helper<F: PrimeField>() -> Result<(), CircuitError> {
-        let circuit: PlonkCircuit<F> = cubic_circuit(1u32, 1u32).unwrap();
+        let circuit: PlonkCircuit<F> = cubic_circuit(2u32, 15u32).unwrap();
         // 2 mul gates, 2 additional, 2 constant gates
         assert_eq!(circuit.num_gates(), 7);
         // Check the number of public inputs:
         assert_eq!(circuit.num_inputs(), 1);
-        // circuit.enforce_equal(result, f).unwrap();
+
+        // Check circuit satisfiability
+        let pub_input = &[F::from(15u32)];
+        let verify = circuit.check_circuit_satisfiability(pub_input);
+        assert!(verify.is_ok(), "{:?}", verify.unwrap_err());
 
         Ok(())
     }

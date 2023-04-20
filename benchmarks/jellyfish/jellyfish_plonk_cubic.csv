@@ -1,0 +1,5 @@
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram,time(ms),proofSize,nbPhysicalCores,nbLogicalCores,count,cpu
+jellyfish,circuit,plonk,bls12_381,cubic,_input/circuit/cubic/input_1.json,compile,7,10,1,0,1,0,10,12,10,12th Gen Intel(R) Core(TM) i7-1255U
+jellyfish,circuit,plonk,bls12_377,cubic,_input/circuit/cubic/input_1.json,compile,7,10,1,0,1,0,10,12,10,12th Gen Intel(R) Core(TM) i7-1255U
+jellyfish,circuit,plonk,bn254,cubic,_input/circuit/cubic/input_1.json,compile,7,10,1,0,1,0,10,12,10,12th Gen Intel(R) Core(TM) i7-1255U
+jellyfish,circuit,plonk,bw6_761,cubic,_input/circuit/cubic/input_1.json,compile,7,10,1,0,1,0,10,12,10,12th Gen Intel(R) Core(TM) i7-1255U

@@ -1,0 +1,27 @@
+{
+    "project": "jellyfish",
+    "project_url": "https://github.com/EspressoSystems/jellyfish",
+    "category": "circuit",
+    "count": 10,
+    "payload": {
+        "backend": [
+            "plonk"
+        ],
+        "curves": [
+            "bls12_381",
+            "bls12_377",
+            "bn254",
+            "bw6_761"
+        ], 
+        "circuits": {
+            "cubic": {
+                "input_path": "_input/circuit/cubic"
+            }
+        },
+        "algorithm": [
+            "compile"
+
+        ],
+        "custom": {}
+    }    
+}
