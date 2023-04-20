@@ -1,6 +1,8 @@
 package util
 
 import (
+	"github.com/consensys/gnark/constraint"
+
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/consensys/gnark/frontend"
@@ -14,6 +16,7 @@ type BenchConfig struct {
 	Proof        groth16.Proof
 	VerifyingKey groth16.VerifyingKey
 	Witness      frontend.Variable
+	CCS          constraint.ConstraintSystem
 	InnerCurve   ecc.ID
 	OuterCurve   ecc.ID
 }
@@ -43,6 +46,13 @@ func WithVK(verifyingKey groth16.VerifyingKey) BenchOption {
 func WithWitness(witness frontend.Variable) BenchOption {
 	return func(opt *BenchConfig) error {
 		opt.Witness = witness
+		return nil
+	}
+}
+
+func WithInnerCCS(ccs constraint.ConstraintSystem) BenchOption {
+	return func(opt *BenchConfig) error {
+		opt.CCS = ccs
 		return nil
 	}
 }
