@@ -19,23 +19,3 @@ snarkjs,arithmetic,bn128,base,exp,_input/arithmetic/exp/input_1.json,64888832,16
 snarkjs,arithmetic,bn128,scalar,exp,_input/arithmetic/exp/input_1.json,74862592,1710,1,1,10000,Apple M1 Max
 snarkjs,arithmetic,bls12_381,base,exp,_input/arithmetic/exp/input_1.json,70111232,1578,1,1,10000,Apple M1 Max
 snarkjs,arithmetic,bls12_381,scalar,exp,_input/arithmetic/exp/input_1.json,74412032,1514,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bn128,base,add,_input/arithmetic/add/input_1.json,67645440,61,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bn128,scalar,add,_input/arithmetic/add/input_1.json,72622080,79,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bls12_381,base,add,_input/arithmetic/add/input_1.json,69435392,64,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bls12_381,scalar,add,_input/arithmetic/add/input_1.json,73433088,77,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bn128,base,sub,_input/arithmetic/sub/input_1.json,68341760,121,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bn128,scalar,sub,_input/arithmetic/sub/input_1.json,73596928,175,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bls12_381,base,sub,_input/arithmetic/sub/input_1.json,68198400,132,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bls12_381,scalar,sub,_input/arithmetic/sub/input_1.json,74137600,174,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bn128,base,mul,_input/arithmetic/mul/input_1.json,68022272,60,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bn128,scalar,mul,_input/arithmetic/mul/input_1.json,73801728,96,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bls12_381,base,mul,_input/arithmetic/mul/input_1.json,68972544,64,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bls12_381,scalar,mul,_input/arithmetic/mul/input_1.json,74297344,79,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bn128,base,inv,_input/arithmetic/inv/input_1.json,71786496,1090,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bn128,scalar,inv,_input/arithmetic/inv/input_1.json,78802944,1469,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bls12_381,base,inv,_input/arithmetic/inv/input_1.json,74027008,1479,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bls12_381,scalar,inv,_input/arithmetic/inv/input_1.json,78594048,1171,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bn128,base,exp,_input/arithmetic/exp/input_1.json,71258112,1317,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bn128,scalar,exp,_input/arithmetic/exp/input_1.json,77996032,1429,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bls12_381,base,exp,_input/arithmetic/exp/input_1.json,72192000,1325,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
-snarkjs,arithmetic,bls12_381,scalar,exp,_input/arithmetic/exp/input_1.json,78188544,1442,1,1,10000,Intel(R) Core(TM) i5-8400 CPU @ 2.80GHz
