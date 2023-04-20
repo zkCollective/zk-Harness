@@ -18,6 +18,9 @@ const (
 	publicHash = "7831393781387060555412927989411398077996792073838215843928284475008119358174"
 )
 
+// FIXME - Currently only works with a single frontend.Variable
+// E.g. SHA-256 uses [32]frontend.Variable
+// Other circuits have >1 public input (exponentiate)
 func TestRecursion(t *testing.T) {
 
 	// create a mock cs: knowing the preimage of a hash using mimc
