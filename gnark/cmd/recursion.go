@@ -23,9 +23,11 @@ var recursionCmd = &cobra.Command{
 	Run:   runOneStep,
 }
 
-var witness interface{}
+var witness frontend.Variable
 
-func computeInnerProofG16(fcircuitSize int, fcircuit string, finputPath string, innerCurveID ecc.ID) (groth16.VerifyingKey, groth16.Proof) {
+var recursiveCircuit string
+
+func computeInnerProofG16(fcircuitSize int, fcircuit string, finputPath string, innerCurveID ecc.ID) (groth16.VerifyingKey, groth16.Proof, constraint.ConstraintSystem) {
 	fmt.Println("COMPUTING INNER PROOF")
 	circuit := c.Circuit(fcircuitSize, fcircuit, circuits.WithInputCircuit(finputPath))
 	ccs, err := frontend.Compile(innerCurveID.ScalarField(), r1cs.NewBuilder, circuit, frontend.WithCapacity(fcircuitSize))
@@ -40,7 +42,7 @@ func computeInnerProofG16(fcircuitSize int, fcircuit string, finputPath string, 
 	if err := groth16.Verify(proof, vk, publicWitness); err != nil {
 		panic(err)
 	}
-	return vk, proof
+	return vk, proof, ccs
 }
 
 func runOneStep(cmd *cobra.Command, args []string) {
@@ -60,39 +62,10 @@ func runOneStep(cmd *cobra.Command, args []string) {
 	}
 
 	var data map[string]interface{}
-	if *fInputPath != "" {
+	if *fInputPath != "none" {
 		var err error
 		data, err = util.ReadFromInputPath(*fInputPath)
 		if err != nil {
-			panic(err)
-		}
-	}
-
-	writeResults := func(took time.Duration, ccs constraint.ConstraintSystem, proof_size int) {
-
-		// check memory usage, max ram requested from OS
-		var m runtime.MemStats
-		runtime.ReadMemStats(&m)
-
-		_, secret, public := ccs.GetNbVariables()
-		bData := util.BenchDataCircuit{
-			Framework:         "gnark",
-			Category:          "circuit",
-			Backend:           *fOuterBackend,
-			Curve:             curveID.String(),
-			Circuit:           *fCircuit,
-			Input:             *fInputPath,
-			Operation:         *fAlgo,
-			NbConstraints:     ccs.GetNbConstraints(),
-			NbSecretVariables: secret,
-			NbPublicVariables: public,
-			ProofSize:         proof_size,
-			MaxRAM:            (m.Sys / 1024 / 1024),
-			Count:             *fCount,
-			RunTime:           took.Milliseconds(),
-		}
-
-		if err := util.WriteData("csv", bData, filename); err != nil {
 			panic(err)
 		}
 	}
@@ -101,24 +74,62 @@ func runOneStep(cmd *cobra.Command, args []string) {
 	switch *fCurve {
 	case "bw6_761":
 		innerCurveID = ecc.BLS12_377
+		recursiveCircuit = "groth16_bls12377"
 	case "bw6_633":
 		innerCurveID = ecc.BLS24_315
+		recursiveCircuit = "groth16_bls24315"
 	}
 
-	// pre-compute the inner G16 proof
-	innerVk, innerProof := computeInnerProofG16(*fCircuitSize, *fCircuit, *fInputPath, innerCurveID)
+	// pre-compute the inner G16 proof, return innerCCS to get num Constraints inner
+	innerVk, innerProof, innerCCS := computeInnerProofG16(*fCircuitSize, *fCircuit, *fInputPath, innerCurveID)
+
+	writeResults := func(took time.Duration, ccs constraint.ConstraintSystem, proof_size int) {
+
+		// check memory usage, max ram requested from OS
+		var m runtime.MemStats
+		runtime.ReadMemStats(&m)
+
+		_, secret, public := ccs.GetNbVariables()
+
+		// FIXME - hardcoded inner backend
+		bData := util.BenchDataRecursion{
+			Framework:          "gnark",
+			Category:           "circuit",
+			InnerBackend:       "groth16",
+			InnerCurve:         innerCurveID.String(),
+			OuterBackend:       *fOuterBackend,
+			OuterCurve:         curveID.String(),
+			Circuit:            *fCircuit,
+			Input:              *fInputPath,
+			Operation:          *fAlgo,
+			InnerNbConstraints: innerCCS.GetNbConstraints(),
+			NbConstraints:      ccs.GetNbConstraints(),
+			NbSecretVariables:  secret,
+			NbPublicVariables:  public,
+			ProofSize:          proof_size,
+			MaxRAM:             (m.Sys / 1024 / 1024),
+			Count:              *fCount,
+			RunTime:            took.Milliseconds(),
+		}
+
+		if err := util.WriteData("csv", bData, filename); err != nil {
+			panic(err)
+		}
+	}
 
 	switch *fOuterBackend {
 	case "groth16":
-		// FIXME - replace hardcoded value
-		recursiveCircuit := "groth16_bls12377"
 		switch *fCircuit {
 		case "mimc":
 			witness = util.PreCalcMIMC(innerCurveID, (data["PreImage"].(string)))
 		case "cubic":
 			witness = (data["Y"].(string))
+		case "bench":
+			witness = util.PreCalcBench(*fCircuitSize, innerCurveID)
+		case "expo":
+			witness = util.PreCalcBench(*fCircuitSize, innerCurveID)
 		default:
-			panic("Circuit not implemented for recursion!")
+			panic("Circuit not implemented for Groth16 recursion!")
 		}
 		benchGroth16(
 			writeResults,
@@ -130,16 +141,41 @@ func runOneStep(cmd *cobra.Command, args []string) {
 			util.WithProof(innerProof),
 			util.WithWitness(witness))
 	case "plonk":
-		recursiveCircuit := "groth16_bls12377"
 		switch *fCircuit {
 		case "mimc":
 			witness = util.PreCalcMIMC(innerCurveID, (data["PreImage"].(string)))
 		case "cubic":
 			witness = (data["Y"].(string))
+		case "bench":
+			witness = util.PreCalcBench(*fCircuitSize, innerCurveID)
+		case "expo":
+			witness = util.PreCalcBench(*fCircuitSize, innerCurveID)
 		default:
-			panic("Circuit not implemented for recursion!")
+			panic("Circuit not implemented for Plonk recursion!")
 		}
 		benchPlonk(
+			writeResults,
+			*fAlgo,
+			*fCount,
+			*fCircuitSize,
+			recursiveCircuit,
+			util.WithVK(innerVk),
+			util.WithProof(innerProof),
+			util.WithWitness(witness))
+	case "plonkFRI":
+		switch *fCircuit {
+		case "mimc":
+			witness = util.PreCalcMIMC(innerCurveID, (data["PreImage"].(string)))
+		case "cubic":
+			witness = (data["Y"].(string))
+		case "bench":
+			witness = util.PreCalcBench(*fCircuitSize, innerCurveID)
+		case "expo":
+			witness = util.PreCalcBench(*fCircuitSize, innerCurveID)
+		default:
+			panic("Circuit not implemented for PlonkFRI recursion!")
+		}
+		benchPlonkFRI(
 			writeResults,
 			*fAlgo,
 			*fCount,

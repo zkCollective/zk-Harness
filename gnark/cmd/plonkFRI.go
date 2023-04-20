@@ -20,7 +20,7 @@ import (
 
 // plonkCmd represents the plonk command
 var plonkFRIcmd = &cobra.Command{
-	Use:   "plonk",
+	Use:   "plonkFRI",
 	Short: "runs benchmarks and profiles using PlonK proof system",
 	Run:   runPlonkFRI,
 }
@@ -73,7 +73,7 @@ func runPlonkFRI(plonkCmd *cobra.Command, args []string) {
 }
 
 func benchPlonkFRI(fnWrite writeFunction, falgo string, fcount int, fcircuitSize int, fcircuit string, opts ...util.BenchOption) {
-	fmt.Println("BENCHMARKING PLONK")
+	fmt.Println("BENCHMARKING PLONK WITH FRI")
 
 	// Parse Options, if no option is provided it runs plain G16 benches
 	opt := util.BenchConfig{}

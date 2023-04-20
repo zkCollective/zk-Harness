@@ -66,7 +66,6 @@ func init() {
 
 	// Binding the input path to a variable
 	fInputPath = rootCmd.PersistentFlags().String("input", "none", "input path to the dedicated input")
-	rootCmd.MarkPersistentFlagRequired("input")
 
 	fCircuit = rootCmd.PersistentFlags().String("circuit", "expo", "name of the circuit to use")
 	fCircuitSize = rootCmd.PersistentFlags().Int("size", 10000, "size of the circuit, parameter to circuit constructor")
