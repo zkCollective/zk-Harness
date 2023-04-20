@@ -10,6 +10,12 @@ if [ $# -lt 5 ]; then
     exit 1
 fi
 
+if [ ! -z "$IN_NIX_SHELL" ]; then
+    TIMEBIN="/usr/bin/env time"
+else
+    TIMEBIN="/usr/bin/time"
+fi
+
 CIRCUIT=$1
 CIRCUIT_NAME=$2
 CIRCUIT_NAME_INT=${CIRCUIT##*/}
@@ -24,11 +30,11 @@ else
 fi
 
 if [[ $(uname) == "Linux" ]]; then
-    TIMECMD='/usr/bin/env time -f "Real time (seconds): %e\nMaximum resident set size (bytes): %M" -o'
+    TIMECMD="$TIMEBIN -f \"Real time (seconds): %e\nMaximum resident set size (bytes): %M\" -o"
     STATCMD='stat --printf="%s" '
     OS="Linux"
 elif [[ $(uname) == "Darwin" ]]; then
-    TIMECMD="/usr/bin/env time -h -l -o"
+    TIMECMD="$TIMEBIN -h -l -o"
     STATCMD='stat -f%z '
     OS="Darwin"
 else
