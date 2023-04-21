@@ -34,8 +34,13 @@ if [[ $(uname) == "Linux" ]]; then
     STATCMD='stat --printf="%s" '
     OS="Linux"
 elif [[ $(uname) == "Darwin" ]]; then
-    TIMECMD="$TIMEBIN -h -l -o"
-    STATCMD='stat -f%z '
+    if [ ! -z "$IN_NIX_SHELL" ]; then
+        TIMECMD="$TIMEBIN -f \"Real time (seconds): %e\nMaximum resident set size (bytes): %M\" -o"
+        STATCMD='stat --printf="%s" '
+    else
+        TIMECMD="$TIMEBIN -h -l -o"
+        STATCMD='stat -f%z '
+    fi
     OS="Darwin"
 else
     echo "Unsupported operating system."
@@ -91,7 +96,7 @@ portable_proc() {
 get_time_results() {
     timeRes=$1
 
-    if [[ "$OS" == "Linux" ]]; then
+    if [[ "$OS" == "Linux" ]] || [ ! -z "$IN_NIX_SHELL" ]; then
         ram=$(grep Maximum ${timeRes} | cut -d ":" -f2 | xargs)
         realTime=$(grep Real ${timeRes} | cut -d ":" -f2 | xargs)
         # RAM here is in kbytes
