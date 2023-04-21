@@ -98,3 +98,5 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 *.DS_STORE
+
+.idea/
