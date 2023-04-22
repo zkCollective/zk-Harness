@@ -8,8 +8,8 @@ all: test-toy test-prf
 
 test-toy:
 	go test $(directory)/circuits/toy/cubic
-	go test $(directory)/circuits/toy/expo
 	go test $(directory)/circuits/toy/exponentiate
+	go test $(directory)/circuits/toy/emulate
 
 test-prf:
 	go test $(directory)/circuits/prf/mimc
