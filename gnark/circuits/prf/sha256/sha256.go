@@ -15,7 +15,7 @@ package sha256
 
 import (
 	"encoding/hex"
-	"fmt"
+
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/frontend"
 )
@@ -161,7 +161,7 @@ func (d *digest) checkSum() []frontend.Variable {
 	len <<= 3
 	PutUint64(d.api, tmp[:], newUint64API(d.api).asUint64(len))
 	d.write(tmp[0:8])
-	fmt.Printf("block number:%d\n", d.len/64)
+	// fmt.Printf("block number:%d\n", d.len/64)
 
 	if d.nx != 0 {
 		panic("d.nx != 0")
