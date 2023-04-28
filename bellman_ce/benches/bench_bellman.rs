@@ -102,9 +102,9 @@ fn bench_pairing<P: pairing_ce::Engine, M: Measurement>(c: &mut BenchmarkGroup<'
 
 fn bench_bls12_381(c: &mut Criterion) {
     let mut group = c.benchmark_group("bls12_381");
-    // bench_add_ff::<pairing_ce::bls12_381::G1, _>(&mut group);
-    // bench_mul_ff::<pairing_ce::bls12_381::G1, _>(&mut group);
-    // bench_msm::<Bls12>(&mut group);
+    bench_add_ff::<pairing_ce::bls12_381::G1, _>(&mut group);
+    bench_mul_ff::<pairing_ce::bls12_381::G1, _>(&mut group);
+    bench_msm::<Bls12>(&mut group);
     bench_pairing::<Bls12, _>(&mut group);
 }
 
