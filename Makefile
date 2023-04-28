@@ -10,8 +10,11 @@ zkcrypto_directory = zkcrypto
 gnark_directory = gnark
 circom_directory = circom
 snarkjs_directory = snarkjs
+bellman_ce_directory = bellman_ce
+
 arkworks_benchmarks_directory = $(benchmark_directory)/$(arkworks_directory)
 blstrs_benchmarks_directory = $(benchmark_directory)/$(blstrs_directory)
+bellman_ce_benchmarks_directory = $(benchmark_directory)/$(bellman_ce_directory)
 curve25519_dalek_benchmarks_directory = $(benchmark_directory)/$(curve25519_dalek_directory)
 pasta_curves_benchmarks_directory = $(benchmark_directory)/$(pasta_curves_directory)
 zkcrypto_benchmarks_directory = $(benchmark_directory)/$(zkcrypto_directory)
@@ -22,7 +25,7 @@ snarkjs_benchmarks_directory = $(benchmark_directory)/$(snarkjs_directory)
 
 all: init arkworks-arithmetics blstrs-arithmetics benchmark-gnark-arithmetics benchmark-gnark-ec benchmark-gnark-circuits benchmark-snarkjs-arithmetics benchmark-snarkjs-ec benchmark-circom-circuits
 
-test: init zkcrypto-arithmetics
+test: init bellman-ce-arithmetics
 
 init:
 	cargo install cargo-criterion
@@ -31,6 +34,10 @@ init:
 	mkdir -p $(curve25519_dalek_benchmarks_directory)
 	mkdir -p $(pasta_curves_benchmarks_directory)
 	mkdir -p $(zkcrypto_benchmarks_directory)
+	mkdir -p $(bellman_ce_benchmarks_directory)
+
+bellman-ce-arithmetics:
+	cd bellman_ce; cargo criterion --message-format=json 1> ../$(bellman_ce_benchmarks_directory)/bellman_ce.json
 
 arkworks-arithmetics: arkworks-curves
 	cd arkworks; cargo criterion --message-format=json 1> $(arkworks_benchmarks_directory)/arkworks_arithmetics.json
