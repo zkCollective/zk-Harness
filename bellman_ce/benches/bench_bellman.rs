@@ -69,6 +69,14 @@ where
     });
 }
 
+fn bench_pairing<P: pairing_ce::Engine, M: Measurement>(c: &mut BenchmarkGroup<'_, M>) {
+    let mut rng = rand::thread_rng();
+    c.bench_function("pairing", |r| {
+        let a = P::G1::rand(&mut rng).into_affine();
+        let b = P::G2::rand(&mut rng).into_affine();
+        r.iter(|| P::pairing(a, b))
+    });
+}
 
 fn bench_new_multexp_test<G>(group: &mut BenchmarkGroup<'_, criterion::measurement::WallTime>)
 where
@@ -118,16 +126,18 @@ where
 
 fn bench_bls12_381(c: &mut Criterion) {
     let mut group = c.benchmark_group("bls12_381");
-    // bench_add_ff::<pairing_ce::bls12_381::G1, _>(&mut group);
-    // bench_mul_ff::<pairing_ce::bls12_381::G1, _>(&mut group);
+    bench_add_ff::<pairing_ce::bls12_381::G1, _>(&mut group);
+    bench_mul_ff::<pairing_ce::bls12_381::G1, _>(&mut group);
     bench_new_multexp_test::<Bls12>(&mut group);
+    bench_pairing::<Bls12, _>(&mut group);
 }
 
 fn bench_bn256(c: &mut Criterion) {
     let mut group = c.benchmark_group("bn256");
-    // bench_add_ff::<pairing_ce::bn256::G1, _>(&mut group);
-    // bench_mul_ff::<pairing_ce::bn256::G1, _>(&mut group);
+    bench_add_ff::<pairing_ce::bn256::G1, _>(&mut group);
+    bench_mul_ff::<pairing_ce::bn256::G1, _>(&mut group);
     bench_new_multexp_test::<Bn256>(&mut group);
+    bench_pairing::<Bn256, _>(&mut group);
 }
 
 criterion_group!(
