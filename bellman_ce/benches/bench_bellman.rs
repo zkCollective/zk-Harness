@@ -1,6 +1,8 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use rand::{Rand};
+use rand::{Rng, XorShiftRng, SeedableRng};
 use std::sync::Arc;
+use std::any::type_name;
 
 use criterion::measurement::Measurement;
 use criterion::{BenchmarkGroup, BenchmarkId};
@@ -8,24 +10,56 @@ use ff_ce::{PrimeField};
 use pairing_ce::{bls12_381::*, bn256::*, GenericCurveProjective, Engine};
 use bellman_ce::worker::{Worker};
 use bellman_ce::source::FullDensity;
-use bellman_ce::multiexp::*;
+use bellman_ce::{multiexp::*};
 
 // Benchmark Addition in Scalar Field
-fn bench_add_ff<G: GenericCurveProjective, M: Measurement>(c: &mut BenchmarkGroup<'_, M>) {
+fn bench_add_ff<F: PrimeField, M: Measurement>(c: &mut BenchmarkGroup<'_, M>) {
+    // let mut rng = rand::thread_rng();
+    let rng = &mut XorShiftRng::from_seed([0x5dbe6259, 0x8d313d76, 0x3237db17, 0xe5bc0654]);
+    let a: F = rng.gen();
+    let b: F = rng.gen(); 
+    
+    let mut lhs = black_box(a);
+    let rhs = black_box(&b);
+    c.bench_function("add_ff", |b| {
+        b.iter(|| {
+            F::add_assign(&mut lhs, rhs)
+        });
+    });
+}
+
+// Benchmark Addition in Scalar FIeld
+fn bench_mul_ff<F: PrimeField, M: Measurement>(c: &mut BenchmarkGroup<'_, M>) {
+    let rng = &mut XorShiftRng::from_seed([0x5dbe6259, 0x8d313d76, 0x3237db17, 0xe5bc0654]);
+    let a: F = rng.gen();
+    let b: F = rng.gen(); 
+    
+    let mut lhs = black_box(a);
+    let rhs = black_box(&b);
+    c.bench_function("mul_ff", |b| {
+        b.iter(|| {
+            F::mul_assign(&mut lhs, rhs)
+        });
+    });
+}
+
+// Benchmark Addition in Elliptic Curve Group
+fn bench_add_ec<G: GenericCurveProjective, M: Measurement>(c: &mut BenchmarkGroup<'_, M>) {
     let mut rng = rand::thread_rng();
     let lhs = G::rand(&mut rng);
     let rhs = G::rand(&mut rng);
     let mut lhs = black_box(lhs);
     let rhs = black_box(&rhs);
-    c.bench_function("add_ff", |b| {
+    let group_name = type_name::<G>();
+    c.bench_function(BenchmarkId::new(group_name, "add"), |b| {
         b.iter(|| {
             lhs.add_assign(rhs);
         });
     });
 }
 
-// Benchmark Multiplication in Scalar Field
-fn bench_mul_ff<G, M>(c: &mut BenchmarkGroup<'_, M>)
+// Benchmark Multiplication in Elliptic Curve Group
+fn bench_mul_ec<G, M>(c: &mut BenchmarkGroup<'_, M>)
 where
     G: GenericCurveProjective,
     M: Measurement,
@@ -35,7 +69,8 @@ where
     let rhs_scalar = <G as GenericCurveProjective>::Scalar::rand(&mut rng);
     let mut lhs = black_box(lhs);
     let rhs_scalar = black_box(&rhs_scalar);
-    c.bench_function("mul_ff", |b| {
+    let group_name = type_name::<G>();
+    c.bench_function(BenchmarkId::new(group_name, "mul"), |b| {
         b.iter(|| {
             lhs.mul_assign(rhs_scalar.into_repr());
         });
@@ -102,16 +137,20 @@ fn bench_pairing<P: pairing_ce::Engine, M: Measurement>(c: &mut BenchmarkGroup<'
 
 fn bench_bls12_381(c: &mut Criterion) {
     let mut group = c.benchmark_group("bls12_381");
-    bench_add_ff::<pairing_ce::bls12_381::G1, _>(&mut group);
-    bench_mul_ff::<pairing_ce::bls12_381::G1, _>(&mut group);
+    bench_add_ff::<pairing_ce::bls12_381::fr::Fr, _>(&mut group);
+    bench_mul_ff::<pairing_ce::bls12_381::fr::Fr, _>(&mut group);
+    bench_add_ec::<pairing_ce::bls12_381::G1, _>(&mut group);
+    bench_mul_ec::<pairing_ce::bls12_381::G1, _>(&mut group);
     bench_msm::<Bls12>(&mut group);
     bench_pairing::<Bls12, _>(&mut group);
 }
 
 fn bench_bn256(c: &mut Criterion) {
     let mut group = c.benchmark_group("bn256");
-    bench_add_ff::<pairing_ce::bn256::G1, _>(&mut group);
-    bench_mul_ff::<pairing_ce::bn256::G1, _>(&mut group);
+    bench_add_ff::<pairing_ce::bn256::fr::Fr, _>(&mut group);
+    bench_mul_ff::<pairing_ce::bn256::fr::Fr,_>(&mut group);
+    bench_add_ec::<pairing_ce::bn256::G1, _>(&mut group);
+    bench_mul_ec::<pairing_ce::bn256::G1, _>(&mut group);
     bench_msm::<Bn256>(&mut group);
     bench_pairing::<Bn256, _>(&mut group);
 }
