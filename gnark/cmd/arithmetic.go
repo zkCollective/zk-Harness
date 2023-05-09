@@ -27,7 +27,7 @@ import (
 
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/spf13/cobra"
-	"github.com/tumberger/zk-compilers/gnark/util"
+	"github.com/zkCollective/zk-Harness/gnark/util"
 )
 
 var arithmeticCmd = &cobra.Command{

@@ -29,7 +29,7 @@ import (
 	"github.com/consensys/gnark/logger"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
-	"github.com/tumberger/zk-compilers/gnark/util"
+	"github.com/zkCollective/zk-Harness/gnark/util"
 )
 
 // groth16Cmd represents the groth16 command

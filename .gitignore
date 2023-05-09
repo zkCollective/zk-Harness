@@ -108,3 +108,4 @@ node_modules/
 # Gnark symlinks
 gnark/gnark
 gnark/template
+.idea/

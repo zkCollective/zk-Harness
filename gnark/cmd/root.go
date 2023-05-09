@@ -9,7 +9,7 @@ import (
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
-	"github.com/tumberger/zk-compilers/gnark/circuits"
+	"github.com/zkCollective/zk-Harness/gnark/circuits"
 )
 
 // rootCmd represents the base command when called without any subcommands
