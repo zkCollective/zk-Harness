@@ -185,7 +185,7 @@ func (d *defaultCircuit) Circuit(size int, name string, path string) frontend.Ci
 		return &mimc.MimcCircuit{}
 	case "sha256":
 		return &sha256.Sha256Circuit{
-			PreImage: make([]frontend.Variable, (len(data["PreImage"].(string)) / 2)),
+			In: make([]frontend.Variable, (len(data["PreImage"].(string)) / 2)),
 		}
 	default:
 		panic("not implemented")
@@ -262,13 +262,13 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, path str
 
 		// witness values preparation
 		witness := sha256.Sha256Circuit{
-			PreImage:       make([]frontend.Variable, inputByteLen),
+			In:             make([]frontend.Variable, inputByteLen),
 			ExpectedResult: [32]frontend.Variable{},
 		}
 
 		// assign values here because required to use make in assignment
 		for i := 0; i < inputByteLen; i++ {
-			witness.PreImage[i] = preImageAssign[i]
+			witness.In[i] = preImageAssign[i]
 		}
 		for i := 0; i < outputByteLen; i++ {
 			witness.ExpectedResult[i] = outputAssign[i]

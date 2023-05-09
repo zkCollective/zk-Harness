@@ -72,7 +72,7 @@ The following information is recorded for each circuit benchmark:
 * nbConstraints: the number of constraints in the circuit
 * nbSecret: number of secret inputs
 * nbPublic: number of public inputs
-* ram: memory consumed in bytes
+* ram: memory consumed in mb
 * time: elapsed time in milliseconds
 * proofSize: the size of the proof in bytes -- empty value when Operation != proving
 * nbPhysicalCores: number of physical cores used
