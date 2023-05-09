@@ -79,6 +79,7 @@ first [install Nix](https://nixos.org/download.html)
 and [enable flakes](https://nixos.wiki/wiki/Flakes#Enable_flakes),
 then run `nix develop`.
 
+When running into issues for nix on M1/M2 Macs, please refer to [this issue](https://github.com/input-output-hk/plutus-pioneer-program/issues/40).  
 
 ## How to contribute
 
