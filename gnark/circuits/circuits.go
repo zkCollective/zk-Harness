@@ -14,12 +14,11 @@ import (
 	bw6761fr "github.com/consensys/gnark-crypto/ecc/bw6-761/fr"
 	"github.com/consensys/gnark/backend/witness"
 	"github.com/consensys/gnark/frontend"
-	"github.com/tumberger/zk-compilers/gnark/circuits/prf/mimc"
-	sha256 "github.com/tumberger/zk-compilers/gnark/circuits/prf/sha256"
-	"github.com/tumberger/zk-compilers/gnark/circuits/toy/cubic"
-	"github.com/tumberger/zk-compilers/gnark/circuits/toy/expo"
-	"github.com/tumberger/zk-compilers/gnark/circuits/toy/exponentiate"
-	"github.com/tumberger/zk-compilers/gnark/util"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/prf/mimc"
+	sha256 "github.com/zkCollective/zk-Harness/gnark/circuits/prf/sha256"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/cubic"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/exponentiate"
+	"github.com/zkCollective/zk-Harness/gnark/util"
 )
 
 var BenchCircuits map[string]BenchCircuit
@@ -177,8 +176,6 @@ func (d *defaultCircuit) Circuit(size int, name string, path string) frontend.Ci
 	switch name {
 	case "cubic":
 		return &cubic.CubicCircuit{}
-	case "expo":
-		return &expo.BenchCircuit{N: size}
 	case "exponentiate":
 		return &exponentiate.ExponentiateCircuit{}
 	case "mimc":
@@ -204,16 +201,6 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, path str
 		witness := cubic.CubicCircuit{}
 		witness.X = (data["X"].(string))
 		witness.Y = (data["Y"].(string))
-
-		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
-		if err != nil {
-			panic(err)
-		}
-		return w
-	case "expo":
-		witness := expo.BenchCircuit{N: size}
-		witness.X = (2)
-		witness.Y = preCalc(size, curveID)
 
 		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {

@@ -30,7 +30,7 @@ import (
 	"github.com/consensys/gnark/test"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
-	"github.com/tumberger/zk-compilers/gnark/util"
+	"github.com/zkCollective/zk-Harness/gnark/util"
 )
 
 // plonkCmd represents the plonk command

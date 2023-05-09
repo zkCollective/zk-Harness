@@ -1,4 +1,4 @@
-directory = github.com/tumberger/zk-compilers/gnark
+directory = github.com/zkCollective/zk-Harness/gnark
 
 .PHONY = test
 
