@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Compile, setup, prove, and verify a proof for a circom circuit.
 # If the .csv files already exist, then just append the results
@@ -8,6 +8,12 @@
 if [ $# -lt 5 ]; then
     echo $0: usage: run_circuit.sh circuit.circom circuit_name input.json powersOfTau.ptau results.csv tmp
     exit 1
+fi
+
+if [ ! -z "$IN_NIX_SHELL" ]; then
+    TIMEBIN="/usr/bin/env time"
+else
+    TIMEBIN="/usr/bin/time"
 fi
 
 CIRCUIT=$1
@@ -24,12 +30,17 @@ else
 fi
 
 if [[ $(uname) == "Linux" ]]; then
-    TIMECMD='/usr/bin/time -f "Real time (seconds): %e\nMaximum resident set size (bytes): %M" -o'
+    TIMECMD="$TIMEBIN -f \"Real time (seconds): %e\nMaximum resident set size (bytes): %M\" -o"
     STATCMD='stat --printf="%s" '
     OS="Linux"
 elif [[ $(uname) == "Darwin" ]]; then
-    TIMECMD="/usr/bin/time -h -l -o"
-    STATCMD='stat -f%z '
+    if [ ! -z "$IN_NIX_SHELL" ]; then
+        TIMECMD="$TIMEBIN -f \"Real time (seconds): %e\nMaximum resident set size (bytes): %M\" -o"
+        STATCMD='stat --printf="%s" '
+    else
+        TIMECMD="$TIMEBIN -h -l -o"
+        STATCMD='stat -f%z '
+    fi
     OS="Darwin"
 else
     echo "Unsupported operating system."
@@ -52,21 +63,21 @@ $TIMECMD ${TMP}/witness_times.txt node  ${TMP}/${CIRCUIT_NAME_INT}_js/generate_w
 # all phase 2 contributions.
 echo ">>>Step 3: Setup" && \
 eval """
-$TIMECMD ${TMP}/setup_times.txt snarkjs groth16 setup ${TMP}/${CIRCUIT_NAME_INT}.r1cs ${TAU} ${TMP}/${CIRCUIT_NAME_INT}_0.zkey
+$TIMECMD ${TMP}/setup_times.txt npx snarkjs groth16 setup ${TMP}/${CIRCUIT_NAME_INT}.r1cs ${TAU} ${TMP}/${CIRCUIT_NAME_INT}_0.zkey
 """ && \
 # TODO Should we contribute here?
 # We could contribute here using: snarkjs zkey contribute ${TMP}/${CIRCUIT_NAME}_0.zkey ${TMP}/${CIRCUIT_NAME}_1.zkey --name="1st Contributor Name" -v
 echo ">>>Step 4: Export verification key" && \
 eval """
-$TIMECMD ${TMP}/export_times.txt snarkjs zkey export verificationkey ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/verification_key.json
+$TIMECMD ${TMP}/export_times.txt npx snarkjs zkey export verificationkey ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/verification_key.json
 """ && \
 echo ">>>Step 5: Prove" && \
 eval """
-$TIMECMD ${TMP}/prove_times.txt snarkjs groth16 prove ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/witness.wtns ${TMP}/proof.json ${TMP}/public.json
+$TIMECMD ${TMP}/prove_times.txt npx snarkjs groth16 prove ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/witness.wtns ${TMP}/proof.json ${TMP}/public.json
 """ && \
 echo ">>>Step 6: Verify" && \
 eval """
-$TIMECMD ${TMP}/verify_times.txt snarkjs groth16 verify ${TMP}/verification_key.json ${TMP}/public.json ${TMP}/proof.json
+$TIMECMD ${TMP}/verify_times.txt npx snarkjs groth16 verify ${TMP}/verification_key.json ${TMP}/public.json ${TMP}/proof.json
 """
 
 portable_proc() {
@@ -85,7 +96,7 @@ portable_proc() {
 get_time_results() {
     timeRes=$1
 
-    if [[ "$OS" == "Linux" ]]; then
+    if [[ "$OS" == "Linux" ]] || [ ! -z "$IN_NIX_SHELL" ]; then
         ram=$(grep Maximum ${timeRes} | cut -d ":" -f2 | xargs)
         realTime=$(grep Real ${timeRes} | cut -d ":" -f2 | xargs)
         # RAM here is in kbytes
