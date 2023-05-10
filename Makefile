@@ -4,7 +4,7 @@ gnark_directory = gnark
 circom_directory = circom
 snarkjs_directory = snarkjs
 bellman_ce_directory = bellman_ce
-bellman_ce_directory = bellman
+bellman_directory = bellman
 gnark_benchmarks_directory = $(benchmark_directory)/$(gnark_directory)
 circom_benchmarks_directory = $(benchmark_directory)/$(circom_directory)
 snarkjs_benchmarks_directory = $(benchmark_directory)/$(snarkjs_directory)
@@ -33,6 +33,9 @@ benchmark-halo2-pse-circuits:
 	$(info ----- HALO-PSE ARITHMETICS BENCHMARKS ------)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/halo2_pse/config_circuits.json
+
+bellman-ce-circuits:
+	cd bellman_ce_circuits; cargo criterion --message-format=json 1> ../$(bellman_ce_benchmarks_directory)/bellman_ce_circuits.json
 
 benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
