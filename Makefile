@@ -78,6 +78,9 @@ zkcrypto-arithmetics:
 	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
 	cd math/zkalc/backend/zkcrypto; cargo criterion --message-format=json 1> ../../../../$(zkcrypto_benchmarks_directory)/zkcrypto.json
 
+bellman-ce-circuits:
+	cd bellman_ce_circuits; cargo criterion --message-format=json 1> ../$(bellman_ce_benchmarks_directory)/bellman_ce_circuits.json
+
 benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
 	$(info ------ SNARKJS ARITHMETICS BENCHMARKS ------)
