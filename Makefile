@@ -3,12 +3,17 @@ benchmark_directory = benchmarks
 gnark_directory = gnark
 circom_directory = circom
 snarkjs_directory = snarkjs
+bellman_ce_directory = bellman_ce
 gnark_benchmarks_directory = $(benchmark_directory)/$(gnark_directory)
 circom_benchmarks_directory = $(benchmark_directory)/$(circom_directory)
 snarkjs_benchmarks_directory = $(benchmark_directory)/$(snarkjs_directory)
+bellman_ce_benchmarks_directory = $(benchmark_directory)/$(bellman_ce_directory)
 
 
 all: benchmark-gnark-arithmetics benchmark-gnark-ec benchmark-gnark-circuits benchmark-snarkjs-arithmetics benchmark-snarkjs-ec benchmark-circom-circuits
+
+bellman-ce-circuits:
+	cd bellman_ce_circuits; cargo criterion --message-format=json 1> ../$(bellman_ce_benchmarks_directory)/bellman_ce_circuits.json
 
 benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
