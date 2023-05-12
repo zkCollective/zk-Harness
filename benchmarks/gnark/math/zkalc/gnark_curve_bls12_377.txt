@@ -1,0 +1,145 @@
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementAdd-8   	310328976	         4.287 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/fp	2.063s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementMul-8   	18889357	        65.32 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/fp	1.520s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementInverse-8   	  403556	      2909 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/fp	1.416s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementSquare
+BenchmarkElementSquare-8   	19222785	        65.43 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/fp	1.534s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementSqrt
+BenchmarkElementSqrt-8   	   16848	     71159 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/fp	2.131s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/fr/fft
+cpu: VirtualApple @ 2.50GHz
+BenchmarkFFTDITCosetReference-8             	      10	 109168308 ns/op
+BenchmarkFFTDIFReference-8                  	      13	 101862506 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/fr/fft	41.102s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG1JacAdd-8   	 1000000	      1212 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.514s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+cpu: VirtualApple @ 2.50GHz
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.467s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+cpu: VirtualApple @ 2.50GHz
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	35.049s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG1JacIsInSubGroup-8   	    8936	    130438 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	2.373s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG1AffineCofactorClearing-8   	   17403	     70656 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	2.120s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG2JacAdd-8   	  294424	      4125 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.448s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+cpu: VirtualApple @ 2.50GHz
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.470s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+cpu: VirtualApple @ 2.50GHz
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	53.662s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG2JacIsInSubGroup-8   	    6184	    196694 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.495s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG2AffineCofactorClearing-8   	    2907	    417948 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.454s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/internal/fptower
+cpu: VirtualApple @ 2.50GHz
+BenchmarkE12Add-8   	18425926	        60.16 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/internal/fptower	1.429s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/internal/fptower
+cpu: VirtualApple @ 2.50GHz
+BenchmarkE12Mul-8   	  208233	      6030 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/internal/fptower	1.491s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/internal/fptower
+cpu: VirtualApple @ 2.50GHz
+BenchmarkE12Cyclosquare-8   	  526087	      2400 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/internal/fptower	1.489s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+cpu: VirtualApple @ 2.50GHz
+BenchmarkPairing-8   	     768	   1496757 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.508s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+cpu: VirtualApple @ 2.50GHz
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	12.051s

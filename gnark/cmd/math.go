@@ -6,7 +6,6 @@ package cmd
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
 	"runtime"
@@ -16,6 +15,10 @@ import (
 	"github.com/consensys/gnark/logger"
 	"github.com/spf13/cobra"
 	"github.com/zkCollective/zk-Harness/gnark/util"
+)
+
+const (
+	pathPrefix = "../benchmarks/gnark/math"
 )
 
 var mathCmd = &cobra.Command{
@@ -31,25 +34,26 @@ type Result struct {
 	Count     int64
 }
 
+// benchCurveOperations runs benchmarks for a variety of curves in gnark
 func benchCurveOperations(cmd *cobra.Command, args []string) {
 
 	log := logger.Logger()
 	log.Info().Msg("Benchmarking curve operations - gnark: " + *fCurve + " " + *fOperation + " " + *fInputPath)
 
-	var filepath_zkalc = "../benchmarks/gnark/math/zkalc/gnark_" +
+	var filepath_zkalc = pathPrefix + "/zkalc/gnark_" +
 		"curve_" +
 		*fCurve +
 		"." + "txt"
 
-	var filepath_zkHarness = "../benchmarks/gnark/math/zkHarness/gnark_" +
+	var filepath_zkHarness = pathPrefix + "/zkHarness/gnark_" +
 		"curve_" +
 		*fCurve +
 		"." + "txt"
 
 	paths := []string{
-		"../benchmarks/gnark/math",
-		"../benchmarks/gnark/math/zkalc",
-		"../benchmarks/gnark/math/zkHarness",
+		pathPrefix,
+		pathPrefix + "/zkalc",
+		pathPrefix + "/zkHarness",
 	}
 
 	for _, path := range paths {
@@ -68,7 +72,9 @@ func benchCurveOperations(cmd *cobra.Command, args []string) {
 	}
 
 	// Clean up for new benchmarks
-	cleanup()
+	if err := cleanup(); err != nil {
+		log.Printf("Cleanup failed: %s\n", err)
+	}
 
 	// Clone gnark-crypto repo
 	cmdShell := exec.Command("git", "clone", "-b", "zkalc", "https://github.com/ConsenSys/gnark-crypto.git")
@@ -79,53 +85,75 @@ func benchCurveOperations(cmd *cobra.Command, args []string) {
 	}
 
 	// Benchmark for all curves in config
-	bench_math(curveID.String(), filepath_zkalc)
-
-	results := readBenchmarkFile(filepath_zkalc)
-	for _, result := range results {
-		writeResults(result, filepath_zkHarness)
+	if err := bench_math(curveID.String(), filepath_zkalc); err != nil {
+		log.Printf("Benchmark failed: %s\n", err)
 	}
 
-	cleanup()
+	results, err := readBenchmarkFile(filepath_zkalc)
+	if err != nil {
+		log.Printf("Reading benchmark file failed: %s\n", err)
+		return
+	}
+	for _, result := range results {
+		if err := writeResults(result, filepath_zkHarness); err != nil {
+			log.Printf("Writing results failed: %s\n", err)
+			return
+		}
+	}
+
+	if err := cleanup(); err != nil {
+		log.Printf("Cleanup failed: %s\n", err)
+	}
 }
 
-func bench_math(curve string, filename string) {
-	command := exec.Command("bash", "-c", "bash ./zkalc.sh "+curve+" | tee "+filename)
+// bench_math runs a shell command to perform a math benchmark with a specified curve
+func bench_math(curve string, filename string) error {
+	curve = strings.Replace(curve, "_", "-", -1)
+	command := exec.Command("bash", "-c", "bash ./zkalc.sh "+curve+" | grep -vE '^[^[:space:]]+/' | tee "+filename)
 	command.Dir = "../gnark-crypto"
 	err := command.Run()
 	if err != nil {
-		log.Printf("Command failed with error: %s\n", err)
+		return fmt.Errorf("Command failed with error: %s", err)
 	}
+	return nil
 }
 
-func writeResults(result Result, filename string) {
+// writeResults writes the results of a benchmark to a file
+func writeResults(result Result, filename string) error {
 	// check memory usage, max ram requested from OS
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
-
-	operationString := result.Operation
 
 	bDataArith := util.BenchDataCurve{
 		Framework: "gnark",
 		Category:  "ec",
 		Curve:     curveID.String(),
-		Operation: operationString,
+		Operation: result.Operation,
 		Input:     "", // This needs to be replaced with the appropriate value
 		MaxRAM:    m.Sys,
 		Count:     int(result.Count),
 		RunTime:   int64(result.Runtime),
 	}
 
-	if err := util.WriteData("csv", bDataArith, filename); err != nil {
-		panic(err)
+	// Check if file exists
+	if _, err := os.Stat(filename); !os.IsNotExist(err) {
+		// If file exists, remove it
+		if err := os.Remove(filename); err != nil {
+			return fmt.Errorf("failed to remove existing file: %s", err)
+		}
 	}
+
+	if err := util.WriteData("csv", bDataArith, filename); err != nil {
+		return fmt.Errorf("failed to write data: %s", err)
+	}
+	return nil
 }
 
-func readBenchmarkFile(filepath string) []Result {
+// readBenchmarkFile reads a file of benchmarks and returns the results
+func readBenchmarkFile(filepath string) ([]Result, error) {
 	file, err := os.Open(filepath)
 	if err != nil {
-		fmt.Println(err)
-		return nil
+		return nil, fmt.Errorf("failed to open file: %s", err)
 	}
 	defer file.Close()
 
@@ -152,16 +180,18 @@ func readBenchmarkFile(filepath string) []Result {
 	}
 
 	if err := scanner.Err(); err != nil {
-		fmt.Println(err)
+		return nil, fmt.Errorf("failed to scan file: %s", err)
 	}
-	return results
+	return results, nil
 }
 
-func cleanup() {
+// cleanup removes the gnark-crypto directory
+func cleanup() error {
 	err := os.RemoveAll("../gnark-crypto")
 	if err != nil {
-		log.Printf("Failed to delete the cloned repository: %s\n", err)
+		return fmt.Errorf("Failed to delete the cloned repository: %s", err)
 	}
+	return nil
 }
 
 func init() {

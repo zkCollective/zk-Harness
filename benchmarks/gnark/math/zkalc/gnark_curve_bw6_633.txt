@@ -1,0 +1,130 @@
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementAdd-8   	141222505	         7.715 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633/fp	2.255s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementMul-8   	 5593794	       222.0 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633/fp	1.691s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementInverse-8   	  121830	     10213 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633/fp	1.587s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementSquare
+BenchmarkElementSquare-8   	 5214409	       231.9 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633/fp	1.683s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementSqrt
+BenchmarkElementSqrt-8   	    5612	    182513 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633/fp	1.374s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633/fr/fft
+cpu: VirtualApple @ 2.50GHz
+BenchmarkFFTDITCosetReference-8             	       7	 178496619 ns/op
+BenchmarkFFTDIFReference-8                  	       7	 162625125 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633/fr/fft	39.670s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG1JacAdd-8   	  345727	      3760 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633	1.613s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633
+cpu: VirtualApple @ 2.50GHz
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633	1.531s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633
+cpu: VirtualApple @ 2.50GHz
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633	66.258s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG1JacIsInSubGroup-8   	    1032	   1173877 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633	1.598s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG1AffineCofactorClearing-8   	     666	   1770781 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633	1.567s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG2JacAdd-8   	  277882	      3775 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633	1.304s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633
+cpu: VirtualApple @ 2.50GHz
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633	1.391s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633
+cpu: VirtualApple @ 2.50GHz
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633	67.675s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG2JacIsInSubGroup-8   	     996	   1228868 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633	1.599s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG2AffineCofactorClearing-8   	     505	   2340177 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633	1.653s
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633/internal/fptower	0.258s
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633/internal/fptower	0.176s
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633/internal/fptower	0.190s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633
+cpu: VirtualApple @ 2.50GHz
+BenchmarkPairing-8   	     321	   3723742 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633	1.783s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bw6-633
+cpu: VirtualApple @ 2.50GHz
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bw6-633	10.836s
