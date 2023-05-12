@@ -1,0 +1,225 @@
+~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto
+~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc/bn254 ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto
+~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc/bn254/fp ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc/bn254 ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementAdd-8   	401238210	         3.395 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/fp	1.968s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementMul-8   	36371488	        36.10 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/fp	1.576s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementInverse-8   	  684400	      1836 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/fp	2.509s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementSquare
+BenchmarkElementSquare-8   	33604345	        37.54 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/fp	1.533s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/fp
+cpu: VirtualApple @ 2.50GHz
+BenchmarkElementSqrt
+BenchmarkElementSqrt-8   	  103072	     11692 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/fp	1.543s
+~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc/bn254 ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto
+~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc/bn254/fr/fft ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc/bn254 ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/fr/fft
+cpu: VirtualApple @ 2.50GHz
+BenchmarkFFT/fft_2**8bits-8       	   33988	     43159 ns/op
+BenchmarkFFT/fft_2**8bits_(coset)-8         	   25005	     47291 ns/op
+BenchmarkFFT/fft_2**9bits-8                 	   17971	     67187 ns/op
+BenchmarkFFT/fft_2**9bits_(coset)-8         	   13804	     92202 ns/op
+BenchmarkFFT/fft_2**10bits-8                	   10000	    136171 ns/op
+BenchmarkFFT/fft_2**10bits_(coset)-8        	    7944	    171368 ns/op
+BenchmarkFFT/fft_2**11bits-8                	    5809	    247085 ns/op
+BenchmarkFFT/fft_2**11bits_(coset)-8        	    4255	    299132 ns/op
+BenchmarkFFT/fft_2**12bits-8                	    2912	    429366 ns/op
+BenchmarkFFT/fft_2**12bits_(coset)-8        	    2547	    538055 ns/op
+BenchmarkFFT/fft_2**13bits-8                	    1292	    853996 ns/op
+BenchmarkFFT/fft_2**13bits_(coset)-8        	    1141	    968452 ns/op
+BenchmarkFFT/fft_2**14bits-8                	     721	   1649350 ns/op
+BenchmarkFFT/fft_2**14bits_(coset)-8        	     673	   1934362 ns/op
+BenchmarkFFT/fft_2**15bits-8                	     367	   3213080 ns/op
+BenchmarkFFT/fft_2**15bits_(coset)-8        	     320	   3797741 ns/op
+BenchmarkFFT/fft_2**16bits-8                	     171	   6548680 ns/op
+BenchmarkFFT/fft_2**16bits_(coset)-8        	     150	   7821837 ns/op
+BenchmarkFFT/fft_2**17bits-8                	      91	  14251467 ns/op
+BenchmarkFFT/fft_2**17bits_(coset)-8        	      81	  17235705 ns/op
+BenchmarkFFT/fft_2**18bits-8                	      43	  26039346 ns/op
+BenchmarkFFT/fft_2**18bits_(coset)-8        	      40	  28677454 ns/op
+BenchmarkFFT/fft_2**19bits-8                	      25	  59003987 ns/op
+BenchmarkFFT/fft_2**19bits_(coset)-8        	      20	  57683588 ns/op
+BenchmarkFFTDITCosetReference-8             	       9	 117824019 ns/op
+BenchmarkFFTDIFReference-8                  	       9	 112104468 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/fr/fft	41.142s
+~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc/bn254 ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG1JacAdd-8   	 1707273	       712.0 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	2.208s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG1JacScalarMultiplication/GLV-8         	   12366	     98041 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	2.428s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: VirtualApple @ 2.50GHz
+BenchmarkMultiExpG1/2_points-8         	    6189	    206199 ns/op
+BenchmarkMultiExpG1/4_points-8         	    4216	    265613 ns/op
+BenchmarkMultiExpG1/8_points-8         	    3894	    323498 ns/op
+BenchmarkMultiExpG1/16_points-8        	    3379	    410738 ns/op
+BenchmarkMultiExpG1/32_points-8        	    2328	    566149 ns/op
+BenchmarkMultiExpG1/64_points-8        	    1593	    747400 ns/op
+BenchmarkMultiExpG1/128_points-8       	    1161	   1139457 ns/op
+BenchmarkMultiExpG1/256_points-8       	     668	   1776279 ns/op
+BenchmarkMultiExpG1/512_points-8       	     414	   2826097 ns/op
+BenchmarkMultiExpG1/1024_points-8      	     262	   4685079 ns/op
+BenchmarkMultiExpG1/2048_points-8      	     144	   8315739 ns/op
+BenchmarkMultiExpG1/4096_points-8      	      88	  15787215 ns/op
+BenchmarkMultiExpG1/8192_points-8      	      56	  22169775 ns/op
+BenchmarkMultiExpG1/16384_points-8     	      32	  38100366 ns/op
+BenchmarkMultiExpG1/32768_points-8     	      16	  64984339 ns/op
+BenchmarkMultiExpG1/65536_points-8     	       8	 126354422 ns/op
+BenchmarkMultiExpG1/131072_points-8    	       5	 240842042 ns/op
+BenchmarkMultiExpG1/262144_points-8    	       3	 436680361 ns/op
+BenchmarkMultiExpG1/524288_points-8    	       2	 810581896 ns/op
+BenchmarkMultiExpG1/1048576_points-8   	       1	1482108167 ns/op
+BenchmarkMultiExpG1/2097152_points-8   	       1	2908785791 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	37.026s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG1JacIsInSubGroup-8   	 3843754	       299.3 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	1.656s
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	0.186s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG2JacAdd-8   	  509460	      2225 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	1.378s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG2JacScalarMultiplication/GLV-8         	    3900	    288053 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	1.348s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: VirtualApple @ 2.50GHz
+BenchmarkMultiExpG2/2_points-8         	    2179	    546128 ns/op
+BenchmarkMultiExpG2/4_points-8         	    1808	    682879 ns/op
+BenchmarkMultiExpG2/8_points-8         	    1392	    818095 ns/op
+BenchmarkMultiExpG2/16_points-8        	    1155	   1035031 ns/op
+BenchmarkMultiExpG2/32_points-8        	     888	   1381063 ns/op
+BenchmarkMultiExpG2/64_points-8        	     657	   1992466 ns/op
+BenchmarkMultiExpG2/128_points-8       	     388	   3175447 ns/op
+BenchmarkMultiExpG2/256_points-8       	     234	   4928167 ns/op
+BenchmarkMultiExpG2/512_points-8       	     152	   8100787 ns/op
+BenchmarkMultiExpG2/1024_points-8      	      96	  13933668 ns/op
+BenchmarkMultiExpG2/2048_points-8      	      45	  26947299 ns/op
+BenchmarkMultiExpG2/4096_points-8      	      28	  42954784 ns/op
+BenchmarkMultiExpG2/8192_points-8      	      20	  57370512 ns/op
+BenchmarkMultiExpG2/16384_points-8     	      10	 101202438 ns/op
+BenchmarkMultiExpG2/32768_points-8     	       6	 184323708 ns/op
+BenchmarkMultiExpG2/65536_points-8     	       4	 342944094 ns/op
+BenchmarkMultiExpG2/131072_points-8    	       2	 658214688 ns/op
+BenchmarkMultiExpG2/262144_points-8    	       1	1221765166 ns/op
+BenchmarkMultiExpG2/524288_points-8    	       1	2401126125 ns/op
+BenchmarkMultiExpG2/1048576_points-8   	       1	4432675875 ns/op
+BenchmarkMultiExpG2/2097152_points-8   	       1	8159829250 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	42.894s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG2JacIsInSubGroup-8   	    6708	    158785 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	1.291s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: VirtualApple @ 2.50GHz
+BenchmarkG2AffineCofactorClearing-8   	    7255	    163465 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	1.395s
+~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc/bn254/internal/fptower ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc/bn254 ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/internal/fptower
+cpu: VirtualApple @ 2.50GHz
+BenchmarkE12Add-8   	28753648	        42.38 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/internal/fptower	1.518s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/internal/fptower
+cpu: VirtualApple @ 2.50GHz
+BenchmarkE12Mul-8   	  341605	      3435 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/internal/fptower	1.378s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/internal/fptower
+cpu: VirtualApple @ 2.50GHz
+BenchmarkE12Cyclosquare-8   	  812282	      1308 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/internal/fptower	1.253s
+~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc/bn254 ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: VirtualApple @ 2.50GHz
+BenchmarkPairing-8   	    1015	   1010635 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	1.339s
+goos: darwin
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: VirtualApple @ 2.50GHz
+BenchmarkMultiPair/16_pairs-8         	     193	   6093353 ns/op
+BenchmarkMultiPair/32_pairs-8         	      99	  11829328 ns/op
+BenchmarkMultiPair/64_pairs-8         	      52	  22530582 ns/op
+BenchmarkMultiPair/128_pairs-8        	      27	  44815789 ns/op
+BenchmarkMultiPair/256_pairs-8        	      13	  89878647 ns/op
+BenchmarkMultiPair/512_pairs-8        	       6	 179130028 ns/op
+BenchmarkMultiPair/1024_pairs-8       	       3	 357631486 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	10.286s
+~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto/ecc ~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto
+~/Documents/01_Promotion/01_Projects/03_ZK_compilers/00_Other/merge_recursion/zk-Harness/gnark-crypto
