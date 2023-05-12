@@ -98,3 +98,14 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 *.DS_STORE
+
+# Pip environment
+pipenv/
+
+# Node environment
+node_modules/
+
+# Gnark symlinks
+gnark/gnark
+gnark/template
+.idea/

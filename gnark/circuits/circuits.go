@@ -14,12 +14,11 @@ import (
 	bw6761fr "github.com/consensys/gnark-crypto/ecc/bw6-761/fr"
 	"github.com/consensys/gnark/backend/witness"
 	"github.com/consensys/gnark/frontend"
-	"github.com/tumberger/zk-compilers/gnark/circuits/prf/mimc"
-	sha256 "github.com/tumberger/zk-compilers/gnark/circuits/prf/sha256"
-	"github.com/tumberger/zk-compilers/gnark/circuits/toy/cubic"
-	"github.com/tumberger/zk-compilers/gnark/circuits/toy/expo"
-	"github.com/tumberger/zk-compilers/gnark/circuits/toy/exponentiate"
-	"github.com/tumberger/zk-compilers/gnark/util"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/prf/mimc"
+	sha256 "github.com/zkCollective/zk-Harness/gnark/circuits/prf/sha256"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/cubic"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/exponentiate"
+	"github.com/zkCollective/zk-Harness/gnark/util"
 )
 
 var BenchCircuits map[string]BenchCircuit
@@ -177,15 +176,13 @@ func (d *defaultCircuit) Circuit(size int, name string, path string) frontend.Ci
 	switch name {
 	case "cubic":
 		return &cubic.CubicCircuit{}
-	case "expo":
-		return &expo.BenchCircuit{N: size}
 	case "exponentiate":
 		return &exponentiate.ExponentiateCircuit{}
 	case "mimc":
 		return &mimc.MimcCircuit{}
 	case "sha256":
 		return &sha256.Sha256Circuit{
-			PreImage: make([]frontend.Variable, (len(data["PreImage"].(string)) / 2)),
+			In: make([]frontend.Variable, (len(data["PreImage"].(string)) / 2)),
 		}
 	default:
 		panic("not implemented")
@@ -204,16 +201,6 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, path str
 		witness := cubic.CubicCircuit{}
 		witness.X = (data["X"].(string))
 		witness.Y = (data["Y"].(string))
-
-		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
-		if err != nil {
-			panic(err)
-		}
-		return w
-	case "expo":
-		witness := expo.BenchCircuit{N: size}
-		witness.X = (2)
-		witness.Y = preCalc(size, curveID)
 
 		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {
@@ -262,13 +249,13 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, path str
 
 		// witness values preparation
 		witness := sha256.Sha256Circuit{
-			PreImage:       make([]frontend.Variable, inputByteLen),
+			In:             make([]frontend.Variable, inputByteLen),
 			ExpectedResult: [32]frontend.Variable{},
 		}
 
 		// assign values here because required to use make in assignment
 		for i := 0; i < inputByteLen; i++ {
-			witness.PreImage[i] = preImageAssign[i]
+			witness.In[i] = preImageAssign[i]
 		}
 		for i := 0; i < outputByteLen; i++ {
 			witness.ExpectedResult[i] = outputAssign[i]

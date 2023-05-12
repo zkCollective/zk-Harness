@@ -1,5 +1,3 @@
-SHELL = zsh
-
 benchmark_directory = benchmarks
 
 arkworks_directory = arkworks

@@ -43,21 +43,26 @@ func TestSha256All(t *testing.T) {
 	outputAssign := StrToIntSlice(output, true)
 
 	// witness values preparation
+	//assignment := Sha256Circuit{
+	//	PreImage:       make([]frontend.Variable, inputByteLen),
+	//	ExpectedResult: [32]frontend.Variable{},
+	//}
+
 	assignment := Sha256Circuit{
-		PreImage:       make([]frontend.Variable, inputByteLen),
+		In:             make([]frontend.Variable, inputByteLen),
 		ExpectedResult: [32]frontend.Variable{},
 	}
 
 	// assign values here because required to use make in assignment
 	for i := 0; i < inputByteLen; i++ {
-		assignment.PreImage[i] = preImageAssign[i]
+		assignment.In[i] = preImageAssign[i]
 	}
 	for i := 0; i < outputByteLen; i++ {
 		assignment.ExpectedResult[i] = outputAssign[i]
 	}
 
 	circuit := Sha256Circuit{
-		PreImage: make([]frontend.Variable, inputByteLen),
+		In: make([]frontend.Variable, inputByteLen),
 	}
 
 	// Currently, this version of SHA256 only works with groth16
