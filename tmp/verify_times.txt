@@ -1,2 +1,0 @@
-Real time (seconds): 0.47
-Maximum resident set size (bytes): 141052
