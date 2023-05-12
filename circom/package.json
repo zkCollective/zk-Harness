@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "test": "mocha test/schnorr.js --max-old-space-size=4000 --timeout 10000"
+  },
+  "dependencies": {
+    "ffjavascript": "^0.2.57"
+  },
+  "devDependencies": {
+    "blake-hash": "^2.0.0",
+    "chai": "^4.3.7",
+    "circom_tester": "^0.0.19",
+    "circomlibjs": "^0.1.7",
+    "mocha": "^10.2.0"
+  }
+}

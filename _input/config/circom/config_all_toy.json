@@ -1,0 +1,26 @@
+{
+    "project": "circom/snarkjs",
+    "project_url": "https://github.com/iden3/circom",
+    "category": "circuit",
+    "count": 10,
+    "payload": {
+        "backend": [
+            "groth16"
+        ],
+        "curves": [
+            "bn128"
+        ], 
+        "circuits": {
+            "cubic": {
+                "input_path": "_input/circuit/cubic"
+            }
+        },
+        "algorithm": [
+            "compile",
+            "setup",
+            "witness",
+            "prove",
+            "verify"
+        ]
+    }    
+}

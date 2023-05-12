@@ -1,0 +1,37 @@
+{
+    "project": "gnark",
+    "project_url": "https://github.com/ConsenSys/gnark",
+    "category": "circuit",
+    "count": 10,
+    "payload": {
+        "backend": [
+            "groth16",
+            "plonk"
+        ],
+        "curves": [
+            "bn254",
+            "bls12_377",
+            "bw6_761",
+            "bls24_315"
+        ], 
+        "circuits": {
+            "cubic": {
+                "input_path": "_input/circuit/cubic"
+            },
+            "expo": {
+                "input_path": "_input/circuit/expo"
+            },
+            "exponentiate": {
+                "input_path": "_input/circuit/exponentiate"
+            }
+        },
+        "algorithm": [
+            "setup",
+            "compile",
+            "witness",
+            "prove",
+            "verify"
+        ],
+        "custom": {}
+    }    
+}
