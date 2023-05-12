@@ -100,3 +100,4 @@ docs/_build/
 *.DS_STORE
 
 .idea/
+circom/*_output/

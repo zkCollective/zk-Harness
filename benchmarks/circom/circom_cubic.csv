@@ -1,51 +1,51 @@
 framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,count,cpu
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,15,220,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,32,50,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,173,2110,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,162,750,805,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,132,680,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,15,60,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,32,50,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,173,2090,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,161,760,805,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,132,680,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,17,60,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,32,50,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,171,2070,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,163,760,808,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,131,680,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,16,60,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,32,50,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,172,2060,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,164,760,805,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,133,680,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,16,60,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,32,50,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,172,2050,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,162,740,806,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,132,710,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,16,60,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,33,60,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,171,2070,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,162,760,805,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,133,680,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,16,60,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,32,50,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,172,2080,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,153,750,802,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,133,690,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,16,60,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,32,50,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,172,2120,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,163,760,805,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,133,690,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,17,60,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,32,50,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,173,2090,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,162,760,808,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,131,690,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,16,60,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,32,50,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,172,2100,,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,164,760,807,1,1,1,Apple M1 Max
-circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,133,710,,1,1,1,Apple M1 Max
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,13,440,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,43,590,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,173,5090,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,146,1620,805,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,138,1230,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,13,220,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,44,80,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,173,3560,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,144,1520,804,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,137,1260,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,13,240,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,44,90,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,172,3580,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,145,1490,805,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,138,1290,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,13,220,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,45,80,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,174,3670,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,147,1520,806,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,137,1250,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,13,230,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,45,80,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,175,3490,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,147,1530,806,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,137,1270,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,13,220,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,44,70,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,171,3540,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,146,1580,804,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,137,1290,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,13,220,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,43,80,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,172,3720,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,147,1770,806,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,137,1360,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,13,250,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,44,80,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,173,3850,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,144,1490,806,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,137,1270,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,13,230,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,48,90,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,172,3560,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,145,1520,802,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,137,1230,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,compile,2,1,1,13,230,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,witness,2,1,1,43,80,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,setup,2,1,1,172,4950,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,prove,2,1,1,144,1560,801,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics
+circom/snarkjs,circuit,groth16,bn128,cubic,_input/circuit/cubic/input_1.json,verify,2,1,1,136,1250,,1,1,1,AMD Ryzen 7 4700U with Radeon Graphics

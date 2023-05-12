@@ -17,9 +17,14 @@ Please update the main config file for Circom circuits benchmarking in `../_inpu
 If you add a new circuit that is not implemented in another framework please include some input files in `../_input/circuit/circuit_name/`. 
 For more information about the input files please check `../documentation/`.
 
+## Adding Tests
+
+If you're writing a circuit from scratch (not adding an existing one from another library), please write tests for it in the circom/test folder. 
+
 ## Verify Circuit
 
 Please make sure that the circuit is correct by providing some additional 
 inputs and document how you implemented the circuit in the PR and in the source
 code. Finally, include the command to run the new circuit using the 
-`scripts/run_circuit.sh` script in the PR.
+`scripts/run_circuit.sh` script in the PR and on the README.
+

@@ -46,7 +46,7 @@ def build_command_circom(payload, count):
         raise ValueError("Circom benchmark only suppports bn128 curve")
     # TODO handle diffent operations
     commands = []
-    for circuit, input_path in payload.circuit.items():
+    for circuit, [input_path,ptauFilename] in payload.circuit.items():
         for _ in range(0, count):
             # TODO check if circuit exists
             for inp in helper.get_all_input_files(input_path):
@@ -55,7 +55,7 @@ def build_command_circom(payload, count):
                     circuit_file=os.path.join(helper.CIRCOM_CIRCUITS_DIR, circuit, "circuit.circom"),
                     circuit_name=circuit,
                     input_path=inp,
-                    ptau=helper.CIRCOM_PTAU,
+                    ptau=os.path.join(helper.CIRCOM_DIR, "phase1", ptauFilename),
                     benchmark=os.path.join(helper.CIRCOM_BENCHMAKR_DIR, "circom_" + circuit + ".csv")
                 )
                 commands.append(command)
@@ -124,9 +124,12 @@ def get_circuit_payload(config):
     input_path = []
     for c in payload['circuits'].values():
         inp = c.get("input_path")
+        ptau = c.get("ptau")
         if inp is None:
             raise KeyError(f"input_path does not exist to '{c}' circuit")
-        input_path.append(inp)
+        if ptau is None:
+            raise KeyError(f"ptau filename does not exist to '{c}' circuit")
+        input_path.append([inp,ptau])
 
     # Map circuit names onto input paths
     circuit = dict(zip(circuits, input_path))

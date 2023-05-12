@@ -1,0 +1,59 @@
+{
+    "project": "circom/snarkjs",
+    "project_url": "https://github.com/iden3/circom",
+    "category": "circuit",
+    "count": 10,
+    "payload": {
+        "backend": [
+            "groth16"
+        ],
+        "curves": [
+            "bn128"
+        ], 
+        "circuits": {
+            "cubic": {
+                "input_path": "_input/circuit/cubic",
+                "ptau":"powersOfTau28_hez_final_16.ptau"
+            },
+            "poseidon": {
+                "input_path": "_input/circuit/poseidon",
+                "ptau":"powersOfTau28_hez_final_16.ptau"
+            },
+            "pedersen": {
+                "input_path": "_input/circuit/pedersen",
+                "ptau":"powersOfTau28_hez_final_16.ptau"
+            },
+             "mimc": {
+                "input_path": "_input/circuit/mimc",
+                "ptau":"powersOfTau28_hez_final_16.ptau"
+            },
+            "sha256": {
+                "input_path": "_input/circuit/sha256",
+                "ptau":"powersOfTau28_hez_final_16.ptau"
+            },
+            "eddsaPoseidon": {
+                "input_path": "_input/circuit/eddsaPoseidon",
+                "ptau":"powersOfTau28_hez_final_16.ptau"
+            },
+            "smt": {
+                "input_path": "_input/circuit/smt",
+                "ptau":"powersOfTau28_hez_final_16.ptau"
+            },
+            "keccak256": {
+                "input_path": "_input/circuit/keccak256",
+                "ptau":"powersOfTau28_hez_final_20.ptau"
+            },
+            "schnorr": {
+                "input_path": "_input/circuit/schnorr",
+                "ptau":"powersOfTau28_hez_final_16.ptau"
+            }
+        },
+        "algorithm": [
+            "compile",
+            "setup",
+            "witness",
+            "prove",
+            "verify"
+        ]
+    }    
+}

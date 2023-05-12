@@ -36,6 +36,16 @@ else
     exit 1
 fi
 
+### Generate power of tau if necessary ###
+if [ -e "$TAU" ]
+then
+  echo "File $TAU exists, reusing it."
+else
+  echo "File $TAU does not exist. Downloading it now ..."
+  TAUSPLIT=${TAU#"phase1/"}
+  curl "https://hermez.s3-eu-west-1.amazonaws.com/$TAUSPLIT" --output "./phase1/$TAUSPLIT"
+fi
+
 ### EXECUTION ###
 echo ">>>Step 0: cleaning and creating ${TMP}" && \
 rm -rf ${TMP} && mkdir ${TMP} && \
