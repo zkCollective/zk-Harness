@@ -146,5 +146,3 @@ mod tests {
         assert!(groth16::verify_proof(&pvk, &proof, &inputs).is_ok());
     }
 }
-
-

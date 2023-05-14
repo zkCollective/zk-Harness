@@ -113,6 +113,5 @@ fn main() {
         "exponentiate" => bench_exponentiate(&mut criterion, input_file_str),
         _ => println!("Unsupported circuit"),
     }
-
     criterion.final_summary();
 }
