@@ -1,0 +1,24 @@
+[package]
+name = "bellman_circuits"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+authors = [
+    "Jens Ernstberger <jens.ernstberger@tum.de>",
+]
+
+[[bench]]
+name = "benchmark_circuit"
+harness = false
+
+[dependencies]
+rand = "0.8"
+rayon = "1.5"
+criterion = "0.3.5"
+group = "0.12.0"
+futures = "0.3.28"
+pairing = "0.23.0"
+ff = "0.13.0"
+bellman = "0.14.0"
+sha2 = "0.10.6"
+bls12_381 = "0.8.0"
