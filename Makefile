@@ -25,6 +25,7 @@ snarkjs_benchmarks_directory = $(benchmark_directory)/$(snarkjs_directory)
 
 bellman_ce_directory = bellman_ce
 bellman_directory = bellman
+bellman_ce_directory = bellman
 gnark_benchmarks_directory = $(benchmark_directory)/$(gnark_directory)
 circom_benchmarks_directory = $(benchmark_directory)/$(circom_directory)
 snarkjs_benchmarks_directory = $(benchmark_directory)/$(snarkjs_directory)
@@ -108,6 +109,9 @@ benchmark-halo2-pse-circuits:
 
 bellman-ce-circuits:
 	cd bellman_ce_circuits; cargo criterion --message-format=json 1> ../$(bellman_ce_benchmarks_directory)/bellman_ce_circuits.json
+
+bellman-circuits:
+	cd bellman_circuits; cargo criterion --message-format=json 1> ../$(bellman_ce_benchmarks_directory)/bellman_circuits.json
 
 benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
