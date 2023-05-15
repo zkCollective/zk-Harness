@@ -46,9 +46,11 @@ fn main() {
     let mut criterion = Criterion::default().configure_from_args();
 
     // Pick a preimage and create an instance of our circuit (with the preimage as a witness).
-    let preimage = [42; 80];
+    let hex_value = "68656c6c6f20776f726c64";
+    let preimage = hex::decode(hex_value).unwrap();
     let circuit = sha256::Sha256Circuit {
-        preimage: Some(preimage),
+        preimage: Some(preimage.clone()),
+        preimage_length: preimage.len(),
     };
 
     // Generate the parameters for the circuit
@@ -59,3 +61,4 @@ fn main() {
 
     criterion.final_summary();
 }
+
