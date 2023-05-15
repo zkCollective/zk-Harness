@@ -115,3 +115,4 @@ fn main() {
     }
     criterion.final_summary();
 }
+

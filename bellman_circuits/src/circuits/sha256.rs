@@ -129,6 +129,11 @@ mod tests {
 
         println!("SHA-256d hash: {}", hash_hex);
 
+        // Convert hash result to hex string
+        let hash_hex = hex::encode(hash);
+
+        println!("SHA-256d hash: {}", hash_hex);
+
         // Create an instance of our circuit (with the preimage as a witness).
         let c = Sha256Circuit {
             preimage: Some(preimage.clone()),
