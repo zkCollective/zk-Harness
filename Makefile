@@ -16,6 +16,7 @@ halo2_pse_benchmarks_directory = $(benchmark_directory)/$(halo2_pse_directory)
 
 all: benchmark-gnark-arithmetics benchmark-gnark-ec benchmark-gnark-circuits benchmark-snarkjs-arithmetics benchmark-snarkjs-ec benchmark-circom-circuits benchmark-halo2-pse-circuits
 
+
 benchmark-bellman-circuits:
 	$(info --------------------------------------------)
 	$(info ------    BELLMAN CIRCUIT BENCHMARKS  ------)
@@ -33,24 +34,6 @@ benchmark-halo2-pse-circuits:
 	$(info ----- HALO-PSE ARITHMETICS BENCHMARKS ------)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/halo2_pse/config_circuits.json
-
-benchmark-bellman-circuits:
-	$(info --------------------------------------------)
-	$(info ------    BELLMAN CIRCUIT BENCHMARKS  ------)
-	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/bellman/config_circuits.json
-
-benchmark-bellman-ce-circuits:
-	$(info --------------------------------------------)
-	$(info ------    BELLMAN_CE CIRCUIT BENCHMARKS ----)
-	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/bellman_ce/config_circuits.json
-
-benchmark-halo2-pse-circuits:
-	$(info --------------------------------------------)
-	$(info ----- HALO-PSE ARITHMETICS BENCHMARKS ------)
-	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/halo2_pse/config_exponentiation.json
 
 benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
