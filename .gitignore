@@ -109,3 +109,5 @@ node_modules/
 gnark/gnark
 gnark/template
 .idea/
+
+tags/
