@@ -1,0 +1,13 @@
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,count,CPU
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_1.json,setup,1,1,1,1242,15600,,1,1,10,MacOSX
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_1.json,prove,1,1,1,677,13932,2816,1,1,10,MacOSX
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_1.json,verify,1,1,1,1242,1,,1,1,3740,MacOSX
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_2.json,setup,1,1,1,1146,15479,,1,1,10,MacOSX
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_2.json,prove,1,1,1,667,14141,2816,1,1,10,MacOSX
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_2.json,verify,1,1,1,1146,1,,1,1,3740,MacOSX
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_3.json,setup,1,1,1,1135,15324,,1,1,10,MacOSX
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_3.json,prove,1,1,1,646,14186,2816,1,1,10,MacOSX
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_3.json,verify,1,1,1,1135,1,,1,1,3740,MacOSX
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_4.json,setup,1,1,1,1217,15405,,1,1,10,MacOSX
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_4.json,prove,1,1,1,588,14231,2816,1,1,10,MacOSX
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_4.json,verify,1,1,1,1217,1,,1,1,3575,MacOSX
