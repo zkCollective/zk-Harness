@@ -104,7 +104,7 @@ benchmark-halo2-pse-circuits:
 	$(info --------------------------------------------)
 	$(info ----- HALO-PSE ARITHMETICS BENCHMARKS ------)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/halo2_pse/config_exponentiation.json
+	python3 -m _scripts.reader --config _input/config/halo2_pse/config_circuits.json
 
 benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
