@@ -2,6 +2,7 @@ use halo2_proofs::halo2curves::bn256::Fr;
 use halo2_pse_circuits::circuits::exponentiate::ExponentiationCircuit;
 use halo2_pse_circuits::circuits::exponentiate::get_exponentiation_data;
 use utilities::get_memory;
+use utilities::measure_size_in_bytes;
 use utilities::prove_circuit;
 use utilities::read_file_contents;
 use utilities::save_results;
@@ -42,7 +43,7 @@ fn main () {
 
     let verify_rss = get_memory();
 
-    let proof_size = proof.len();
+    let proof_size = measure_size_in_bytes(&proof);
 
     save_results(initial_rss, setup_rss, proof_rss, verify_rss, proof_size, args.output);
 }
