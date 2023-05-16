@@ -23,8 +23,8 @@ hex = "0.4"
 criterion = "0.4"
 
 [[bin]]
-name = "exponentiation"
-path = "src/bin/exponentiation.rs"
+name = "exponentiate"
+path = "src/bin/exponentiate.rs"
 
 [[bin]]
 name = "sha256"
@@ -35,5 +35,5 @@ name = "sha256_bench"
 harness = false
 
 [[bench]]
-name = "exponentiation_bench"
+name = "exponentiate_bench"
 harness = false
