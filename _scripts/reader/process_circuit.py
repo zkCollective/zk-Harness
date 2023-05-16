@@ -214,6 +214,7 @@ def build_command_halo2_pse(payload, count):
     commands = []
     for circuit, input_path in payload.circuit.items():
         for inp in helper.get_all_input_files(input_path):
+            commands.append(f"cd {helper.HALO2_PSE}; ")
             output_mem_size = os.path.join(
                 helper.HALO2_PSE_BENCH_JSON,
                 circuit + "_" + os.path.basename(inp)
@@ -224,22 +225,32 @@ def build_command_halo2_pse(payload, count):
             )
             input_file = os.path.join("..", inp)
             command_mem_size: str = "RUSTFLAGS=-Awarnings cargo run --bin {binary} --release -- --input {input_file} --output {output}; ".format(
-                binary="exponentiate",
+                binary=circuit,
                 input_file=input_file,
                 output=output_mem_size
             )
             commands.append(command_mem_size)
-            command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} cargo criterion --message-format=json --bench {bench} 1> {output}".format(
+            command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
                 input_file=input_file,
                 bench=circuit + "_bench",
                 output=output_bench
             )
             commands.append(command_bench)
+            commands.append("cd ..; ")
+            out = os.path.join(
+                helper.HALO2_PSE_BENCH,
+                "halo2_pse_bn256_" + circuit + ".csv"
+            )
+            transform_command: str = "python _scripts/parsers/criterion_rust_parser.py --framework halo2_pse --category circuit --backend halo2 --curve bn256 --input {inp} --criterion_json {bench} --mem_proof_json {mem} --output_csv {out}; ".format(
+                inp=inp,
+                bench=output_bench,
+                mem=output_mem_size,
+                out=out
+            )
+            commands.append(transform_command)
 
     # Join the commands into a single string
     command = "".join(commands)
-    # Prepend the command to change the working directory to the halo2_pse directory
-    command = f"cd {helper.HALO2_PSE}; {command}"
     return command
 
 def default_case(_payload, _count):

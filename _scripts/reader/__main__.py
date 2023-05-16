@@ -10,6 +10,7 @@ def circuit_processing(project, config, count):
     # Extract relevant fields from config, build & execute command
     payload = process_circuit.get_circuit_payload(config)
     commands = process_circuit.build_command(project, payload, count)
+    print(commands)
     subprocess.run(commands, shell=True, check=True)
 
 def arithmetic_processing(project, config, count):
