@@ -1,6 +1,6 @@
 use halo2_proofs::halo2curves::bn256::Fr;
-use halo2_pse_circuits::circuits::exponentiation::ExponentiationCircuit;
-use halo2_pse_circuits::circuits::exponentiation::get_exponentiation_data;
+use halo2_pse_circuits::circuits::exponentiate::ExponentiationCircuit;
+use halo2_pse_circuits::circuits::exponentiate::get_exponentiation_data;
 use utilities::get_memory;
 use utilities::prove_circuit;
 use utilities::read_file_contents;

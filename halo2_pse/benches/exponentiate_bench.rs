@@ -4,14 +4,14 @@ use halo2_proofs::{
 use criterion::{
     Criterion
 };
-use halo2_pse_circuits::circuits::exponentiation::{ExponentiationCircuit, get_exponentiation_data};
+use halo2_pse_circuits::circuits::exponentiate::{ExponentiationCircuit, get_exponentiation_data};
 
 extern crate utilities;
 use utilities::{bench_circuit, read_file_from_env_var};
 
 
-fn bench_exponentiation(c: &mut Criterion, input_file_str: String) {
-    let mut group = c.benchmark_group("exponentiation");
+fn bench_exponentiate(c: &mut Criterion, input_file_str: String) {
+    let mut group = c.benchmark_group("exponentiate");
     let (k, e_value, x, e, y) = get_exponentiation_data(input_file_str);
     let circuit = ExponentiationCircuit {
         row: e_value,
@@ -26,7 +26,7 @@ fn main() {
 
     let input_file_str = read_file_from_env_var("INPUT_FILE".to_string());
 
-    bench_exponentiation(&mut criterion, input_file_str);
+    bench_exponentiate(&mut criterion, input_file_str);
 
     criterion.final_summary();
 }
