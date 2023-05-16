@@ -21,6 +21,7 @@ use std::{env, fs::File};
 use std::io::Read;
 use std::process;
 use psutil;
+use std::fs;
 
 #[derive(Serialize)]
 struct Results {
@@ -194,4 +195,25 @@ pub fn save_results(
         output_file_str,
         serialized
     ).expect("Could not write to file");
+}
+
+pub fn measure_size_in_bytes(data: &[u8]) -> usize {
+    // TODO: Should we serialize the proof in another format?
+    // Serialize data and save it to a temporary file
+    let temp_file_path = "temp_file.bin";
+    std::fs::write(
+        temp_file_path,
+        data
+    ).expect("Could not write to temp file");
+
+    // Measure the size of the file
+    let file_size: usize = fs::metadata(&temp_file_path).expect("Cannot read the size of temp file").len() as usize;
+
+    // Convert file size to MB
+    let size_in_mb = file_size;
+
+    // Remove the temporary file
+    fs::remove_file(&temp_file_path).expect("Cannot remove temp file");
+
+    return size_in_mb;
 }
