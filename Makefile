@@ -123,9 +123,7 @@ benchmark-halo2-pse-circuits:
 	$(info --------------------------------------------)
 	$(info ----- HALO-PSE ARITHMETICS BENCHMARKS ------)
 	$(info --------------------------------------------)
-	cd $(halo2_pse_directory); \
-		cargo run --bin exponentiation --release -- --input ../_input/circuit/exponentiate/input_1.json --output ../benchmarks/halo2_pse/jsons/exponentiate_input_1.json; \
-		INPUT_FILE=../_input/circuit/exponentiate/input_1.json cargo criterion --message-format=json --bench exponentiation_bench 1> ../benchmarks/halo2_pse/jsons/exponentiate_input_1_bench.json
+	python3 -m _scripts.reader --config _input/config/halo2_pse/config_exponentiation.json
 
 benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
