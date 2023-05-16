@@ -15,6 +15,10 @@ BELLMAN_CE_BENCH = os.path.join(BENCHMARKS_DIR, "bellman_ce")
 BELLMAN_CE_BENCH_JSON = os.path.join(BELLMAN_CE_BENCH, "jsons")
 # GNARK PATHS
 GNARK_DIR = os.path.join(MAIN_DIR, "gnark")
+# HALO2_PSE PATHS
+HALO2_PSE = os.path.join(MAIN_DIR, "halo2_pse")
+HALO2_PSE_BENCH = os.path.join(BENCHMARKS_DIR, "halo2_pse")
+HALO2_PSE_BENCH_JSON = os.path.join(HALO2_PSE_BENCH, "jsons")
 # CIRCOM PATHS
 CIRCOM_DIR = os.path.join(MAIN_DIR, "circom")
 CIRCOM_BENCHMAKR_DIR = os.path.join(BENCHMARKS_DIR, "circom")

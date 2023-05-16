@@ -199,7 +199,50 @@ def build_command_bellman_ce(payload, count):
     return command
 
 
-def default_case():
+def build_command_halo2_pse(payload, count):
+    """
+    Build the command to invoke the halo2 PSE ZKP-library given the payload
+    """
+
+    # TODO - Add count to command creation
+
+    if len(payload.backend) != 1 or payload.backend[0] != "halo2":
+        raise ValueError("PSE Halo2 benchmark only supports halo2 backend")
+    if len(payload.curves) != 1 or payload.curves[0] != "bn256":
+        raise ValueError("PSE Halo2 benchmark only suppports bn256 curve")
+    # TODO handle diffent operations (i.e., algorithms)
+    commands = []
+    for circuit, input_path in payload.circuit.items():
+        for inp in helper.get_all_input_files(input_path):
+            output_mem_size = os.path.join(
+                helper.HALO2_PSE_BENCH_JSON,
+                circuit + "_" + os.path.basename(inp)
+            )
+            output_bench = os.path.join(
+                helper.HALO2_PSE_BENCH_JSON,
+                circuit + "_bench_" + os.path.basename(inp)
+            )
+            input_file = os.path.join("..", inp)
+            command_mem_size: str = "RUSTFLAGS=-Awarnings cargo run --bin {binary} --release -- --input {input_file} --output {output}; ".format(
+                binary="exponentiate",
+                input_file=input_file,
+                output=output_mem_size
+            )
+            commands.append(command_mem_size)
+            command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} cargo criterion --message-format=json --bench {bench} 1> {output}".format(
+                input_file=input_file,
+                bench=circuit + "_bench",
+                output=output_bench
+            )
+            commands.append(command_bench)
+
+    # Join the commands into a single string
+    command = "".join(commands)
+    # Prepend the command to change the working directory to the halo2_pse directory
+    command = f"cd {helper.HALO2_PSE}; {command}"
+    return command
+
+def default_case(_payload, _count):
     raise ValueError("Framework not integrated into the benchmarking framework!")
 
 
@@ -208,7 +251,8 @@ projects = {
     "gnark":    build_command_gnark,
     "circom/snarkjs":   build_command_circom,
     "bellman":   build_command_bellman,
-    "bellman_ce":   build_command_bellman_ce
+    "bellman_ce":   build_command_bellman_ce,
+    "halo2_pse": build_command_halo2_pse
 }
 
 
