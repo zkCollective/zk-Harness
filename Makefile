@@ -10,6 +10,8 @@ circom_benchmarks_directory = $(benchmark_directory)/$(circom_directory)
 snarkjs_benchmarks_directory = $(benchmark_directory)/$(snarkjs_directory)
 bellman_ce_benchmarks_directory = $(benchmark_directory)/$(bellman_ce_directory)
 bellman_benchmarks_directory = $(benchmark_directory)/$(bellman_directory)
+halo2_pse_directory = halo2_pse
+halo2_pse_benchmarks_directory = $(benchmark_directory)/$(halo2_pse_directory)
 
 
 all: benchmark-gnark-arithmetics benchmark-gnark-ec benchmark-gnark-circuits benchmark-snarkjs-arithmetics benchmark-snarkjs-ec benchmark-circom-circuits
@@ -25,6 +27,14 @@ benchmark-bellman-ce-circuits:
 	$(info ------    BELLMAN_CE CIRCUIT BENCHMARKS ----)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/bellman_ce/config_circuits.json
+
+benchmark-halo2-pse-circuits:
+	$(info --------------------------------------------)
+	$(info ----- HALO-PSE ARITHMETICS BENCHMARKS ------)
+	$(info --------------------------------------------)
+	cd $(halo2_pse_directory); \
+		cargo run --bin exponentiation --release -- --input ../_input/circuit/exponentiate/input_1.json --output ../benchmarks/halo2_pse/jsons/exponentiate_input_1.json; \
+		INPUT_FILE=../_input/circuit/exponentiate/input_1.json cargo criterion --message-format=json --bench exponentiation_bench 1> ../benchmarks/halo2_pse/jsons/exponentiate_input_1_bench.json
 
 benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
@@ -73,4 +83,4 @@ test-simple:
 	python3 -m _scripts.reader --config _input/config/gnark/config_gnark_simple.json  
 
 clean:
-	rm -rf $(gnark_benchmarks_directory)/*  $(circom_benchmarks_directory)/* $(snarkjs_benchmarks_directory)/*
+	rm -rf $(gnark_benchmarks_directory)/*  $(circom_benchmarks_directory)/* $(snarkjs_benchmarks_directory)/* $(halo2_pse_benchmarks_directory)/*
