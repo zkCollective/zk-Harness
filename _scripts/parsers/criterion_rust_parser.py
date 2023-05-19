@@ -36,13 +36,6 @@ def parse_criterion_json(json_file):
 
 def compute_memory_usage(mem_proof_json, stages):
     # Set Memory data to None if memory is not being benchmarked
-    if mem_proof_json is None:
-        for stage in stages.keys():
-            stages[stage]["ram"] = None
-            if stage == "prove":
-                stages[stage]["proofSize"] = None
-        return stages
-
     with open(mem_proof_json, "r") as f:
         data = json.load(f)
 
@@ -107,9 +100,6 @@ def save_csv(framework, category, backend, curve, circuit_name, input_path, stag
             mean = int(mean / 1_000_000) if mean is not None else ""  # convert ns to ms
             mean = 1 if mean == 0 else mean
 
-            proofSize = data.get("proofSize")
-            proofSize = int(proofSize) if proofSize is not None else ""
-
             row = {
                 "framework": framework,
                 "category": category,
@@ -126,7 +116,7 @@ def save_csv(framework, category, backend, curve, circuit_name, input_path, stag
                 "nbPublic": 1,
                 "ram(mb)": ram,
                 "time(ms)": mean, 
-                "proofSize": proofSize,
+                "proofSize": int(data.get("proofSize", "")) if "proofSize" in data else "",
                 # FIXME
                 "nbPhysicalCores": 1,
                 # FIXME

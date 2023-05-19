@@ -113,6 +113,12 @@ bellman-ce-circuits:
 bellman-circuits:
 	cd bellman_circuits; cargo criterion --message-format=json 1> ../$(bellman_ce_benchmarks_directory)/bellman_circuits.json
 
+benchmark-bellman-circuits:
+	$(info --------------------------------------------)
+	$(info ------    BELLMAN CIRCUIT BENCHMARKS  ------)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/bellman/config_circuits.json
+
 benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
 	$(info ------ SNARKJS ARITHMETICS BENCHMARKS ------)
