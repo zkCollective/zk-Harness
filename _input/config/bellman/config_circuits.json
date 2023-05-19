@@ -1,0 +1,24 @@
+{
+    "project": "bellman",
+    "project_url": "https://github.com/zkcrypto/bellman",
+    "category": "circuit",
+    "count": 10,
+    "payload": {
+        "backend": [
+            "bellman"
+        ],
+        "curves": [
+            "bls12_381"
+        ], 
+        "circuits": {
+            "sha256": {
+                "input_path": "_input/circuit/sha256"
+            }
+        },
+        "algorithm": [
+            "setup",
+            "prove",
+            "verify"
+        ]
+    }    
+}
