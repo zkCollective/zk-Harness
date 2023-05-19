@@ -16,6 +16,9 @@
             },
             "sha256": {
                 "input_path": "_input/circuit/sha256"
+            },
+            "exponentiate": {
+                "input_path": "_input/circuit/exponentiate"
             }
         },
         "algorithm": [
