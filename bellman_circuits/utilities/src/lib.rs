@@ -33,6 +33,14 @@ pub fn read_file_from_env_var(env_var_name: String) -> String {
     return read_file_contents(input_file);
 }
 
+pub fn read_env_variable(env_var_name: String) -> String {
+    let variable_str = env::var(env_var_name.clone()).unwrap_or_else(|_| {
+        println!("Please set the {} environment variable", env_var_name);
+        process::exit(1);
+    });
+    return variable_str;
+}
+
 
 /// Return current RSS memory in bytes
 pub fn get_memory() -> u64 {
