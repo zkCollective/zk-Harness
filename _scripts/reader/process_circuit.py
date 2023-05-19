@@ -94,7 +94,8 @@ def build_command_bellman(payload, count):
                 output=output_mem_size
             )
             commands.append(command_mem_size)
-            command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
+            command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} CIRCUIT={circuit} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
+                circuit=circuit,
                 input_file=input_file,
                 bench="benchmark_circuit",
                 output=output_bench
