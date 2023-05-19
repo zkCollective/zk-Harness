@@ -89,13 +89,7 @@ fn bench_exponentiate(c: &mut Criterion, input_str: String) {
 
     // Generate Parameters
     let params = groth16::generate_random_parameters::<Bls12, _, _>(circuit.clone(), &mut thread_rng()).unwrap();
-
-    // Create a mock constraint system
-    let mut cs = TestConstraintSystem::<Scalar>::new();
-    // Synthesize the circuit with our mock constraint system
-    circuit.clone().synthesize(&mut cs).unwrap();
-    println!("Number of constraints: {}", cs.num_constraints());
-
+    
     bench_circuit(&mut group, circuit, inputs, params);
 }
 
@@ -115,4 +109,3 @@ fn main() {
     }
     criterion.final_summary();
 }
-
