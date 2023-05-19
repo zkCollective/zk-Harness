@@ -3,7 +3,7 @@ extern crate rand;
 extern crate criterion;
 
 // Use statements
-use bellman_circuits::circuits::sha256;
+use bellman_circuits::circuits::{sha256, exponentiate};
 use rand::thread_rng;
 use bellman::{Circuit, groth16};
 use criterion::{Criterion, BenchmarkGroup};
@@ -11,7 +11,9 @@ use criterion::measurement::Measurement;
 use sha2::{Digest, Sha256};
 use bellman::gadgets::multipack;
 use bls12_381::{Bls12, Scalar};
-use utilities::read_file_from_env_var;
+use utilities::{read_file_from_env_var, read_env_variable};
+use ff::PrimeField;
+use bellman::gadgets::test::TestConstraintSystem;
 
 // Benchmark for a given circuit
 pub fn bench_circuit<M: Measurement, C: Circuit<Scalar> + Clone + 'static>(
@@ -66,6 +68,41 @@ fn bench_sha256(c: &mut Criterion, input_str: String) {
     bench_circuit(&mut group, circuit, inputs, params);
 }
 
+// Benchmark for Exponentiation
+fn bench_exponentiate(c: &mut Criterion, input_str: String) {
+    let mut group = c.benchmark_group("exponentiation");
+
+    // Get data from config
+    let (x_64, e, y_64) = exponentiate::get_exponentiate_data(input_str);
+
+    // Create Scalar from some values
+    let x = Scalar::from(x_64);
+    let y = Scalar::from(y_64);
+
+    // Public inputs are x and y
+    let x_bits = multipack::bytes_to_bits_le(&x.to_repr().as_ref());
+    let y_bits = multipack::bytes_to_bits_le(&y.to_repr().as_ref());
+    let inputs = [multipack::compute_multipacking(&x_bits), multipack::compute_multipacking(&y_bits)].concat();
+
+    // Define the circuit
+    let circuit = exponentiate::ExponentiationCircuit {
+        x: Some(x),
+        e: e,
+        y: Some(y),
+    };
+
+    // Generate Parameters
+    let params = groth16::generate_random_parameters::<Bls12, _, _>(circuit.clone(), &mut thread_rng()).unwrap();
+
+    // Create a mock constraint system
+    let mut cs = TestConstraintSystem::<Scalar>::new();
+    // Synthesize the circuit with our mock constraint system
+    circuit.clone().synthesize(&mut cs).unwrap();
+    println!("Number of constraints: {}", cs.num_constraints());
+
+    bench_circuit(&mut group, circuit, inputs, params);
+}
+
 fn main() {
     let mut criterion = Criterion::default()
         .configure_from_args()
@@ -73,8 +110,13 @@ fn main() {
 
     let input_file_str = read_file_from_env_var("INPUT_FILE".to_string());
 
-    // Benchmark SHA-256 Circuit
-    bench_sha256(&mut criterion, input_file_str);
+    let circuit_str = read_env_variable("CIRCUIT".to_string());
+
+    match circuit_str.as_str() {
+        "sha256" => bench_sha256(&mut criterion, input_file_str),
+        "exponentiate" => bench_exponentiate(&mut criterion, input_file_str),
+        _ => println!("Unsupported circuit"),
+    }
 
     criterion.final_summary();
 }
