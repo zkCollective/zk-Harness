@@ -5,6 +5,10 @@ import os
 # GENERAL PATHS
 MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 BENCHMARKS_DIR = os.path.join(MAIN_DIR, "benchmarks")
+# BELLMAN PATHS
+BELLMAN = os.path.join(MAIN_DIR, "bellman_circuits")
+BELLMAN_BENCH = os.path.join(BENCHMARKS_DIR, "bellman")
+BELLMAN_BENCH_JSON = os.path.join(BELLMAN_BENCH, "jsons")
 # GNARK PATHS
 GNARK_DIR = os.path.join(MAIN_DIR, "gnark")
 # CIRCOM PATHS
