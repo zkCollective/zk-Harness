@@ -1,22 +1,26 @@
+// Extern crate declarations
 extern crate rand;
 extern crate criterion;
 
-use bellman_circuits::circuits::{sha256};
-use rand::{thread_rng};
+// Use statements
+use bellman_circuits::circuits::sha256;
+use rand::thread_rng;
 use bellman::{Circuit, groth16};
-use criterion::{Criterion};
+use criterion::{Criterion, BenchmarkGroup};
+use criterion::measurement::Measurement;
 use sha2::{Digest, Sha256};
 use bellman::gadgets::multipack;
-use bls12_381::Bls12;
-use bls12_381::Scalar;
+use bls12_381::{Bls12, Scalar};
+use utilities::read_file_from_env_var;
 
-fn bench_proof<C: Circuit<Scalar> + Clone + 'static>(
-    c: &mut Criterion,
+// Benchmark for a given circuit
+pub fn bench_circuit<M: Measurement, C: Circuit<Scalar> + Clone + 'static>(
+    c: &mut BenchmarkGroup<'_, M>,
     circuit: C,
+    public_inputs: Vec<Scalar>,
     params: groth16::Parameters<Bls12>
 ) {
     let rng = &mut thread_rng();
-
     let pvk = groth16::prepare_verifying_key(&params.vk);
 
     c.bench_function("benching_sha256_setup_time", |b| {
@@ -31,34 +35,46 @@ fn bench_proof<C: Circuit<Scalar> + Clone + 'static>(
         })
     });
 
+    let proof = groth16::create_random_proof(circuit.clone(), &params, rng).unwrap(); 
+
     c.bench_function("benching_sha256_verifier_time", |b| {
-        let proof = groth16::create_random_proof(circuit.clone(), &params, rng).unwrap(); 
-        let hash = Sha256::digest(&Sha256::digest(&[42; 80]));
-        let hash_bits = multipack::bytes_to_bits_le(&hash);
-        let inputs = multipack::compute_multipacking(&hash_bits); 
         b.iter(|| {
-            let _ = groth16::verify_proof(&pvk, &proof, &inputs);        
+            let _ = groth16::verify_proof(&pvk, &proof, &public_inputs);        
         })
     });
 }
 
-fn main() {
-    let mut criterion = Criterion::default().configure_from_args();
+// Benchmark for SHA-256
+fn bench_sha256(c: &mut Criterion, input_str: String) {
+    let mut group = c.benchmark_group("sha256");
+    let (preimage_length, preimage) = sha256::get_sha256_data(input_str);
 
-    // Pick a preimage and create an instance of our circuit (with the preimage as a witness).
-    let hex_value = "68656c6c6f20776f726c64";
-    let preimage = hex::decode(hex_value).unwrap();
+    // Pre-Compute public inputs
+    let hash = Sha256::digest(&Sha256::digest(&preimage));
+    let hash_bits = multipack::bytes_to_bits_le(&hash);
+    let inputs = multipack::compute_multipacking(&hash_bits);
+
+    // Define the circuit
     let circuit = sha256::Sha256Circuit {
         preimage: Some(preimage.clone()),
-        preimage_length: preimage.len(),
+        preimage_length: preimage_length,
     };
 
-    // Generate the parameters for the circuit
+    // Generate Parameters
     let params = groth16::generate_random_parameters::<Bls12, _, _>(circuit.clone(), &mut thread_rng()).unwrap();
+    
+    bench_circuit(&mut group, circuit, inputs, params);
+}
 
-    // Run the benchmark with the given circuit and parameters
-    bench_proof(&mut criterion, circuit, params);
+fn main() {
+    let mut criterion = Criterion::default()
+        .configure_from_args()
+        .sample_size(10);
+
+    let input_file_str = read_file_from_env_var("INPUT_FILE".to_string());
+
+    // Benchmark SHA-256 Circuit
+    bench_sha256(&mut criterion, input_file_str);
 
     criterion.final_summary();
 }
-
