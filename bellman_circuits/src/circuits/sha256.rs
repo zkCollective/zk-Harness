@@ -10,30 +10,6 @@ use ff::PrimeField;
 use serde::{Serialize, Deserialize};
 use serde_json;
 
-/// Our own SHA-256d gadget. Input and output are in little-endian bit order.
-fn sha256d<Scalar: PrimeField, CS: ConstraintSystem<Scalar>>(
-    mut cs: CS,
-    data: &[Boolean],
-) -> Result<Vec<Boolean>, SynthesisError> {
-    // Flip endianness of each input byte
-    let input: Vec<_> = data
-        .chunks(8)
-        .map(|c| c.iter().rev())
-        .flatten()
-        .cloned()
-        .collect();
-
-    let mid = sha256(cs.namespace(|| "SHA-256(input)"), &input)?;
-    let res = sha256(cs.namespace(|| "SHA-256(mid)"), &mid)?;
-
-    // Flip endianness of each output byte
-    Ok(res
-        .chunks(8)
-        .map(|c| c.iter().rev())
-        .flatten()
-        .cloned()
-        .collect())
-}
 #[derive(Clone)]
 pub struct Sha256Circuit {
     /// The input to SHA-256d we are proving that we know. Set to `None` when we
@@ -73,13 +49,39 @@ impl<Scalar: PrimeField> Circuit<Scalar> for Sha256Circuit {
             .collect::<Result<Vec<_>, _>>()?;
 
         // Compute hash = SHA-256d(preimage).
-        let hash = sha256d(cs.namespace(|| "SHA-256d(preimage)"), &preimage_bits)?;
+        let hash = sha256(cs.namespace(|| "SHA-256d(preimage)"), &preimage_bits)?;
 
         // Expose the vector of 32 boolean variables as compact public inputs.
         multipack::pack_into_inputs(cs.namespace(|| "pack hash"), &hash)
     }
 }
 
+
+/// THIS IS CURRENTLY NOT BEING BENCHMARKED, concatenation of 2 SHA-256
+/// Our own SHA-256d gadget. Input and output are in little-endian bit order.
+fn sha256d<Scalar: PrimeField, CS: ConstraintSystem<Scalar>>(
+    mut cs: CS,
+    data: &[Boolean],
+) -> Result<Vec<Boolean>, SynthesisError> {
+    // Flip endianness of each input byte
+    let input: Vec<_> = data
+        .chunks(8)
+        .map(|c| c.iter().rev())
+        .flatten()
+        .cloned()
+        .collect();
+
+    let mid = sha256(cs.namespace(|| "SHA-256(input)"), &input)?;
+    let res = sha256(cs.namespace(|| "SHA-256(mid)"), &mid)?;
+
+    // Flip endianness of each output byte
+    Ok(res
+        .chunks(8)
+        .map(|c| c.iter().rev())
+        .flatten()
+        .cloned()
+        .collect())
+}
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct SHA256Input {
