@@ -7,6 +7,8 @@ use bellman::{
     Circuit, ConstraintSystem, SynthesisError,
 };
 use ff::PrimeField;
+use serde::{Serialize, Deserialize};
+use serde_json;
 
 /// Our own SHA-256d gadget. Input and output are in little-endian bit order.
 fn sha256d<Scalar: PrimeField, CS: ConstraintSystem<Scalar>>(
@@ -76,6 +78,23 @@ impl<Scalar: PrimeField> Circuit<Scalar> for Sha256Circuit {
         // Expose the vector of 32 boolean variables as compact public inputs.
         multipack::pack_into_inputs(cs.namespace(|| "pack hash"), &hash)
     }
+}
+
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct SHA256Input {
+    PreImage: String,
+    Hash: String,
+}
+
+pub fn get_sha256_data (
+    input_str: String
+) -> (usize, Vec<u8> ){
+    let input: SHA256Input = serde_json::from_str(&input_str)
+        .expect("JSON was not well-formatted");
+    let preimage = hex::decode(input.PreImage).unwrap();
+    let preimage_length = preimage.len();
+    return (preimage_length, preimage);
 }
 
 #[cfg(test)]
