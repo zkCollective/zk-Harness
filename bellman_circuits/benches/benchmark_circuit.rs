@@ -23,13 +23,13 @@ pub fn bench_circuit<M: Measurement, C: Circuit<Scalar> + Clone + 'static>(
     let rng = &mut thread_rng();
     let pvk = groth16::prepare_verifying_key(&params.vk);
 
-    c.bench_function("setup_time", |b| {
+    c.bench_function("setup", |b| {
         b.iter(|| { 
             let _ = groth16::generate_random_parameters::<Bls12, _, _>(circuit.clone(), rng).unwrap();
         })
     });
 
-    c.bench_function("prover_time", |b| {
+    c.bench_function("prove", |b| {
         b.iter(|| { 
             let _ = groth16::create_random_proof(circuit.clone(), &params, rng); 
         })
@@ -37,7 +37,7 @@ pub fn bench_circuit<M: Measurement, C: Circuit<Scalar> + Clone + 'static>(
 
     let proof = groth16::create_random_proof(circuit.clone(), &params, rng).unwrap(); 
 
-    c.bench_function("verifier_time", |b| {
+    c.bench_function("verify", |b| {
         b.iter(|| {
             let _ = groth16::verify_proof(&pvk, &proof, &public_inputs);        
         })

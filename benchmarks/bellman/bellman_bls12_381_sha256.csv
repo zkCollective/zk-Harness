@@ -1,0 +1,13 @@
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,count,cpu
+bellman,circuit,bellman,bls12_381,sha256,_input/circuit/sha256/input_1.json,setup,1,1,1,96,4795,,1,1,10,MacOSX
+bellman,circuit,bellman,bls12_381,sha256,_input/circuit/sha256/input_1.json,prove,1,1,1,12,382,192,1,1,20,MacOSX
+bellman,circuit,bellman,bls12_381,sha256,_input/circuit/sha256/input_1.json,verify,1,1,1,96,1,,1,1,2695,MacOSX
+bellman,circuit,bellman,bls12_381,sha256,_input/circuit/sha256/input_2.json,setup,1,1,1,95,4870,,1,1,10,MacOSX
+bellman,circuit,bellman,bls12_381,sha256,_input/circuit/sha256/input_2.json,prove,1,1,1,11,387,192,1,1,20,MacOSX
+bellman,circuit,bellman,bls12_381,sha256,_input/circuit/sha256/input_2.json,verify,1,1,1,95,1,,1,1,2695,MacOSX
+bellman,circuit,bellman,bls12_381,sha256,_input/circuit/sha256/input_3.json,setup,1,1,1,143,8078,,1,1,10,MacOSX
+bellman,circuit,bellman,bls12_381,sha256,_input/circuit/sha256/input_3.json,prove,1,1,1,23,703,192,1,1,10,MacOSX
+bellman,circuit,bellman,bls12_381,sha256,_input/circuit/sha256/input_3.json,verify,1,1,1,143,1,,1,1,2695,MacOSX
+bellman,circuit,bellman,bls12_381,sha256,_input/circuit/sha256/input_4.json,setup,1,1,1,184,9951,,1,1,10,MacOSX
+bellman,circuit,bellman,bls12_381,sha256,_input/circuit/sha256/input_4.json,prove,1,1,1,26,720,192,1,1,10,MacOSX
+bellman,circuit,bellman,bls12_381,sha256,_input/circuit/sha256/input_4.json,verify,1,1,1,184,1,,1,1,2695,MacOSX

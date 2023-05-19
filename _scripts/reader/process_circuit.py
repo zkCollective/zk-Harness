@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import subprocess
 
 from collections import namedtuple
 
@@ -62,6 +63,73 @@ def build_command_circom(payload, count):
     command = "".join(commands)
     return command
 
+# TODO - This currently uses the halo2 criterion rust parser
+def build_command_bellman(payload, count):
+    """
+    Build the command to invoke the bellman ZKP-library given the payload
+    """
+
+    # TODO - Add count to command creation
+    if len(payload.backend) != 1 or payload.backend[0] != "bellman":
+        raise ValueError("Bellman benchmark only supports groth16 backend")
+    if len(payload.curves) != 1 or payload.curves[0] != "bls12_381":
+        raise ValueError("Bellman benchmark only supports bls12_381 curve")
+    # TODO handle diffent operations (i.e., algorithms)
+    commands = []
+    for circuit, input_path in payload.circuit.items():
+        for inp in helper.get_all_input_files(input_path):
+            commands.append(f"cd {helper.BELLMAN}; ")
+            output_mem_size = os.path.join(
+                helper.BELLMAN_BENCH_JSON,
+                circuit + "_" + os.path.basename(inp)
+            )
+            output_bench = os.path.join(
+                helper.BELLMAN_BENCH_JSON,
+                circuit + "_bench_" + os.path.basename(inp)
+            )
+            input_file = os.path.join("..", inp)
+            command_mem_size: str = "RUSTFLAGS=-Awarnings cargo run --bin {binary} --release -- --input {input_file} --output {output}; ".format(
+                binary=circuit,
+                input_file=input_file,
+                output=output_mem_size
+            )
+            commands.append(command_mem_size)
+            command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
+                input_file=input_file,
+                bench="benchmark_circuit",
+                output=output_bench
+            )
+            commands.append(command_bench)
+            commands.append("cd ..; ")
+            out = os.path.join(
+                helper.BELLMAN_BENCH,
+                "bellman_bls12_381_" + circuit + ".csv"
+            )
+            
+            python_command = "python"
+            try:
+                subprocess.run([python_command, "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            except (subprocess.CalledProcessError, FileNotFoundError):
+                try:
+                    python_command = "python3"
+                    subprocess.run([python_command, "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                except (subprocess.CalledProcessError, FileNotFoundError):
+                    print("Neither Python nor Python3 are installed or accessible. Please install or check your path settings.")
+                    sys.exit(1)
+
+            transform_command = "{python} _scripts/parsers/criterion_rust_parser.py --framework bellman --category circuit --backend bellman --curve bls12_381 --input {inp} --criterion_json {bench} --mem_proof_json {mem} --output_csv {out}; ".format(
+                python=python_command,
+                inp=inp,
+                bench=output_bench,
+                mem=output_mem_size,
+                out=out
+            )
+            commands.append(transform_command)
+
+    # Join the commands into a single string
+    command = "".join(commands)
+    return command
+
 
 def default_case():
     raise ValueError("Framework not integrated into the benchmarking framework!")
@@ -70,7 +138,8 @@ def default_case():
 # List ZKP-frameworks in the zk-Harness
 projects = {
     "gnark":    build_command_gnark,
-    "circom/snarkjs":   build_command_circom
+    "circom/snarkjs":   build_command_circom,
+    "bellman":   build_command_bellman
 }
 
 
