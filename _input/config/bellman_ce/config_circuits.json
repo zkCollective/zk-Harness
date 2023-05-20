@@ -1,0 +1,24 @@
+{
+    "project": "bellman_ce",
+    "project_url": "https://github.com/matter-labs/bellman",
+    "category": "circuit",
+    "count": 10,
+    "payload": {
+        "backend": [
+            "bellman_ce"
+        ],
+        "curves": [
+            "bn256"
+        ], 
+        "circuits": {
+            "mimc": {
+                "input_path": "_input/circuit/mimc"
+            }
+        },
+        "algorithm": [
+            "setup",
+            "prove",
+            "verify"
+        ]
+    }    
+}
