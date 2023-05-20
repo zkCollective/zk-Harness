@@ -35,6 +35,14 @@ def parse_criterion_json(json_file):
 
 
 def compute_memory_usage(mem_proof_json, stages):
+    # Set Memory data to None if memory is not being benchmarked
+    if mem_proof_json is None:
+        for stage in stages.keys():
+            stages[stage]["ram"] = None
+            if stage == "prove":
+                stages[stage]["proofSize"] = None
+        return stages
+
     with open(mem_proof_json, "r") as f:
         data = json.load(f)
 
@@ -50,7 +58,6 @@ def compute_memory_usage(mem_proof_json, stages):
     assert verify_rss is not None, "Missing 'verify_rss'"
     assert proof_size is not None, "Missing 'proof_size'"
 
-    # FIXME That is definitely wrong
     setup_mem = setup_rss 
     proof_mem = proof_rss + initial_rss - setup_mem
     verify_mem = verify_rss + initial_rss - proof_mem
@@ -95,9 +102,13 @@ def save_csv(framework, category, backend, curve, circuit_name, input_path, stag
 
         for stage, data in stages.items():
             ram = data.get("ram", "")
-            ram = int(ram / (1024 * 1024)) if isinstance(ram, int) else "" # convert bytes to mb
-            mean = int(data.get("mean", "") / 1_000_000) # convert ns to ms
+            ram = int(ram / (1024 * 1024)) if ram is not None and isinstance(ram, int) else ""  # convert bytes to mb
+            mean = data.get("mean", "")
+            mean = int(mean / 1_000_000) if mean is not None else ""  # convert ns to ms
             mean = 1 if mean == 0 else mean
+
+            proofSize = data.get("proofSize")
+            proofSize = int(proofSize) if proofSize is not None else ""
 
             row = {
                 "framework": framework,
@@ -115,7 +126,7 @@ def save_csv(framework, category, backend, curve, circuit_name, input_path, stag
                 "nbPublic": 1,
                 "ram(mb)": ram,
                 "time(ms)": mean, 
-                "proofSize": int(data.get("proofSize", "")) if "proofSize" in data else "",
+                "proofSize": proofSize,
                 # FIXME
                 "nbPhysicalCores": 1,
                 # FIXME
@@ -141,7 +152,7 @@ if __name__ == "__main__":
     parser.add_argument("--curve", required=True, help="Curve")
     parser.add_argument("--input", required=True, help="Input")
     parser.add_argument("--criterion_json", required=True, help="Path to the criterion JSON file")
-    parser.add_argument("--mem_proof_json", required=True, help="Path to the memory proof JSON file")
+    parser.add_argument("--mem_proof_json", required=False, help="Path to the memory proof JSON file")
     parser.add_argument("--output_csv", required=True, help="Path to the output CSV file")
     args = parser.parse_args()
 

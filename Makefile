@@ -98,6 +98,12 @@ benchmark-bellman-circuits:
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/bellman/config_circuits.json
 
+benchmark-bellman-ce-circuits:
+	$(info --------------------------------------------)
+	$(info ------    BELLMAN_CE CIRCUIT BENCHMARKS ----)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/bellman_ce/config_circuits.json
+
 benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
 	$(info ------ SNARKJS ARITHMETICS BENCHMARKS ------)
