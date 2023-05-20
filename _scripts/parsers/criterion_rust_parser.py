@@ -100,6 +100,9 @@ def save_csv(framework, category, backend, curve, circuit_name, input_path, stag
             mean = int(mean / 1_000_000) if mean is not None else ""  # convert ns to ms
             mean = 1 if mean == 0 else mean
 
+            proofSize = data.get("proofSize")
+            proofSize = int(proofSize) if proofSize is not None else ""
+
             row = {
                 "framework": framework,
                 "category": category,
@@ -116,7 +119,7 @@ def save_csv(framework, category, backend, curve, circuit_name, input_path, stag
                 "nbPublic": 1,
                 "ram(mb)": ram,
                 "time(ms)": mean, 
-                "proofSize": int(data.get("proofSize", "")) if "proofSize" in data else "",
+                "proofSize": proofSize,
                 # FIXME
                 "nbPhysicalCores": 1,
                 # FIXME
