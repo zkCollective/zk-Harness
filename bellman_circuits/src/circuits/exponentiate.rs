@@ -100,4 +100,7 @@ mod exponentiate_tests {
         // Check if the constraint system is satisfied
         assert!(cs.is_satisfied());
     }
+
+    // FIXME - Write test for circuit correctness. 
+    // Currently, proof verification fails due to parsing of public inputs
 }

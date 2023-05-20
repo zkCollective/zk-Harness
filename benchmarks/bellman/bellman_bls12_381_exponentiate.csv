@@ -1,0 +1,4 @@
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,count,cpu
+bellman,circuit,bellman,bls12_381,exponentiation,_input/circuit/exponentiate/input_1.json,setup,1,1,1,2,7,,1,1,715,MacOSX
+bellman,circuit,bellman,bls12_381,exponentiation,_input/circuit/exponentiate/input_1.json,prove,1,1,1,2,5,192,1,1,935,MacOSX
+bellman,circuit,bellman,bls12_381,exponentiation,_input/circuit/exponentiate/input_1.json,verify,1,1,1,2,1,,1,1,3374622295,MacOSX
