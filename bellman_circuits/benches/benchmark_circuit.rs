@@ -73,12 +73,8 @@ fn bench_exponentiate(c: &mut Criterion, input_str: String) {
     let mut group = c.benchmark_group("exponentiation");
 
     // Get data from config
-    let (x_64, e, y_64) = exponentiate::get_exponentiate_data(input_str);
-
-    // Create Scalar from some values
-    let x = Scalar::from(x_64);
-    let y = Scalar::from(y_64);
-
+    let (x, e, y) = exponentiate::get_exponentiate_data(input_str);
+    
     // Public inputs are x and y
     let x_bits = multipack::bytes_to_bits_le(&x.to_repr().as_ref());
     let y_bits = multipack::bytes_to_bits_le(&y.to_repr().as_ref());
