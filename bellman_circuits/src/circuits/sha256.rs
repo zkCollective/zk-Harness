@@ -49,15 +49,13 @@ impl<Scalar: PrimeField> Circuit<Scalar> for Sha256Circuit {
             .collect::<Result<Vec<_>, _>>()?;
 
         // Compute hash = SHA-256d(preimage).
-        let hash = sha256(cs.namespace(|| "SHA-256d(preimage)"), &preimage_bits)?;
+        let hash = sha256d(cs.namespace(|| "SHA-256d(preimage)"), &preimage_bits)?;
 
         // Expose the vector of 32 boolean variables as compact public inputs.
         multipack::pack_into_inputs(cs.namespace(|| "pack hash"), &hash)
     }
 }
 
-
-/// THIS IS CURRENTLY NOT BEING BENCHMARKED, concatenation of 2 SHA-256
 /// Our own SHA-256d gadget. Input and output are in little-endian bit order.
 fn sha256d<Scalar: PrimeField, CS: ConstraintSystem<Scalar>>(
     mut cs: CS,
@@ -72,10 +70,10 @@ fn sha256d<Scalar: PrimeField, CS: ConstraintSystem<Scalar>>(
         .collect();
 
     let mid = sha256(cs.namespace(|| "SHA-256(input)"), &input)?;
-    let res = sha256(cs.namespace(|| "SHA-256(mid)"), &mid)?;
+    // let res = sha256(cs.namespace(|| "SHA-256(mid)"), &mid)?;
 
     // Flip endianness of each output byte
-    Ok(res
+    Ok(mid
         .chunks(8)
         .map(|c| c.iter().rev())
         .flatten()
@@ -111,6 +109,7 @@ mod tests {
     fn test_sha256d_circuit() {
         // Pick a preimage and compute its hash.
         let hex_value = "68656c6c6f20776f726c64";
+        // let hex_value: &str = "28ca152c94e1db7f7d892d27b5b674dd414028635c3c0321289f9afb0eee906a";
         let preimage = hex::decode(hex_value).unwrap();
 
         // Create parameters for our circuit. In a production deployment these would
@@ -123,7 +122,7 @@ mod tests {
         // Prepare the verification key (for proof verification).
         let pvk = groth16::prepare_verifying_key(&params.vk);
 
-        let hash = Sha256::digest(&Sha256::digest(&preimage));
+        let hash = &Sha256::digest(&preimage);
 
         // Convert hash result to hex string
         let hash_hex = hex::encode(hash);
