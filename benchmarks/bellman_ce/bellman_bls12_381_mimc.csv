@@ -1,0 +1,9 @@
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,count,cpu
+bellman,circuit,bellman,bls12_381,mimc,_input/circuit/mimc/input_1.json,setup,1,1,1,,46,,1,1,110,MacOSX
+bellman,circuit,bellman,bls12_381,mimc,_input/circuit/mimc/input_2.json,setup,1,1,1,,46,,1,1,110,MacOSX
+bellman,circuit,bellman,bls12_381,mimc,_input/circuit/mimc/input_1.json,setup,1,1,1,,44,,1,1,165,MacOSX
+bellman,circuit,bellman,bls12_381,mimc,_input/circuit/mimc/input_1.json,prove,1,1,1,,14,,1,1,385,MacOSX
+bellman,circuit,bellman,bls12_381,mimc,_input/circuit/mimc/input_1.json,verify,1,1,1,,1,,1,1,2998986375,MacOSX
+bellman,circuit,bellman,bls12_381,mimc,_input/circuit/mimc/input_2.json,setup,1,1,1,,47,,1,1,110,MacOSX
+bellman,circuit,bellman,bls12_381,mimc,_input/circuit/mimc/input_2.json,prove,1,1,1,,14,,1,1,385,MacOSX
+bellman,circuit,bellman,bls12_381,mimc,_input/circuit/mimc/input_2.json,verify,1,1,1,,1,,1,1,3002334610,MacOSX
