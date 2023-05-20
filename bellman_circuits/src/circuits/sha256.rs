@@ -49,7 +49,7 @@ impl<Scalar: PrimeField> Circuit<Scalar> for Sha256Circuit {
             .collect::<Result<Vec<_>, _>>()?;
 
         // Compute hash = SHA-256d(preimage).
-        let hash = sha256(cs.namespace(|| "SHA-256d(preimage)"), &preimage_bits)?;
+        let hash = sha256d(cs.namespace(|| "SHA-256d(preimage)"), &preimage_bits)?;
 
         // Expose the vector of 32 boolean variables as compact public inputs.
         multipack::pack_into_inputs(cs.namespace(|| "pack hash"), &hash)
@@ -74,32 +74,6 @@ fn sha256d<Scalar: PrimeField, CS: ConstraintSystem<Scalar>>(
 
     // Flip endianness of each output byte
     Ok(mid
-        .chunks(8)
-        .map(|c| c.iter().rev())
-        .flatten()
-        .cloned()
-        .collect())
-}
-
-/// THIS IS CURRENTLY NOT BEING BENCHMARKED, concatenation of 2 SHA-256
-/// Our own SHA-256d gadget. Input and output are in little-endian bit order.
-fn sha256d<Scalar: PrimeField, CS: ConstraintSystem<Scalar>>(
-    mut cs: CS,
-    data: &[Boolean],
-) -> Result<Vec<Boolean>, SynthesisError> {
-    // Flip endianness of each input byte
-    let input: Vec<_> = data
-        .chunks(8)
-        .map(|c| c.iter().rev())
-        .flatten()
-        .cloned()
-        .collect();
-
-    let mid = sha256(cs.namespace(|| "SHA-256(input)"), &input)?;
-    let res = sha256(cs.namespace(|| "SHA-256(mid)"), &mid)?;
-
-    // Flip endianness of each output byte
-    Ok(res
         .chunks(8)
         .map(|c| c.iter().rev())
         .flatten()
@@ -149,11 +123,6 @@ mod tests {
         let pvk = groth16::prepare_verifying_key(&params.vk);
 
         let hash = &Sha256::digest(&preimage);
-
-        // Convert hash result to hex string
-        let hash_hex = hex::encode(hash);
-
-        println!("SHA-256d hash: {}", hash_hex);
 
         // Convert hash result to hex string
         let hash_hex = hex::encode(hash);
