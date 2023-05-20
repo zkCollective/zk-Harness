@@ -9,6 +9,10 @@ BENCHMARKS_DIR = os.path.join(MAIN_DIR, "benchmarks")
 BELLMAN = os.path.join(MAIN_DIR, "bellman_circuits")
 BELLMAN_BENCH = os.path.join(BENCHMARKS_DIR, "bellman")
 BELLMAN_BENCH_JSON = os.path.join(BELLMAN_BENCH, "jsons")
+# BELLMAN_CE PATHS
+BELLMAN_CE = os.path.join(MAIN_DIR, "bellman_ce_circuits")
+BELLMAN_CE_BENCH = os.path.join(BENCHMARKS_DIR, "bellman_ce")
+BELLMAN_CE_BENCH_JSON = os.path.join(BELLMAN_CE_BENCH, "jsons")
 # GNARK PATHS
 GNARK_DIR = os.path.join(MAIN_DIR, "gnark")
 # CIRCOM PATHS
