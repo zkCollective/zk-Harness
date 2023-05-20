@@ -4,6 +4,7 @@ use bellman::{
 };
 use ff::PrimeField;
 use serde::{Serialize, Deserialize};
+use bls12_381::{Scalar};
 use serde_json;
 
 #[derive(Clone)]
@@ -53,12 +54,20 @@ pub struct ExponentiateInput {
 
 pub fn get_exponentiate_data (
     input_str: String
-) -> (u64, usize, u64){
+) -> (Scalar, usize, Scalar){
     let input: ExponentiateInput = serde_json::from_str(&input_str)
         .expect("JSON was not well-formatted");
-    let x: u64 = input.X.parse().expect("Failed to parse X as u64");
-    let y: u64 = input.Y.parse().expect("Failed to parse Y as u64");
+    let x_64: u64 = input.X.parse().expect("Failed to parse X as u64");
     let e: usize = input.E.parse().expect("Failed to parse E as usize");
+
+    let mut x = Scalar::from(x_64);
+
+    // Compute y as a Scalar value in the field
+    for _ in 1..e {
+        x = x.mul(&x);
+    }
+    let y = x;
+
     return (x, e, y);
 }
 
