@@ -56,7 +56,7 @@ fn main() {
     let setup_rss = get_memory();
 
     // Compute the SHA256 hash of the preimage
-    let hash = Sha256::digest(&Sha256::digest(&preimage));
+    let hash = &Sha256::digest(&preimage);
 
     // Create a circuit instance
     let circuit = sha256::Sha256Circuit {
