@@ -29,6 +29,10 @@ Running a benchmark can be facilitated through the following commands:
 RUSTFLAGS=-Awarnings INPUT_FILE=../_input/circuit/exponentiate/input_1.json CIRCUIT=exponentiate cargo criterion --message-format=json --bench benchmark_circuit 1> ../benchmarks/bellman/jsons/exponentiate_input_1_bench.json
 ```
 
+```
+RUSTFLAGS=-Awarnings INPUT_FILE=../_input/circuit/sha256/input_1.json CIRCUIT=sha256 cargo criterion --message-format=json --bench benchmark_circuit 1> ../benchmarks/bellman/jsons/sha256_input_1_bench.json
+```
+
 * Run benchmarks for measuring memory consuption and proof size
 
 ```
