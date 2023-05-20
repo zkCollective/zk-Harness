@@ -1,0 +1,17 @@
+[package]
+name = "bellman_utils"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+rand = "0.8"
+criterion = "0.4"
+psutil = "3.2.2"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+bellman = "0.14.0"
+bls12_381 = "0.8.0"
