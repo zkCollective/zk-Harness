@@ -140,7 +140,7 @@ async function run () {
     }
 
     // Execute benchmark
-    let elapsed = await benchmarkMM(g_file, count, x);
+    let elapsed = Math.floor(await benchmarkMM(g_file, count, x) / 1000000); // Convert to milliseconds
 
 
     // Detect peripheral info
