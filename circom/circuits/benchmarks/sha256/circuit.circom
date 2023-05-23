@@ -33,12 +33,7 @@ template Main(N) {
         out[i] === hash[i];
     }
 
-    log("start ================");
-    for (var i = 0; i < 32; i++) {
-        log(out[i]);
-    }
-    log("finish ================");
 }
 
 // render this file before compilation
-component main = Main(32);
+component main = Main({TEMPLATE_VARS});
