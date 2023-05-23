@@ -6,7 +6,7 @@
 # TODO try add PLONK and FFLONKsupport
 
 if [ $# -lt 5 ]; then
-    echo $0: usage: run_circuit.sh circuit.circom circuit_name input.json powersOfTau.ptau results.csv tmp
+    echo $0: usage: run_circuit.sh circuit.circom circuit_name input.json powersOfTau.ptau results.csv tmp template_vars
     exit 1
 fi
 
@@ -28,6 +28,12 @@ if [ ! -z "$6" ]; then
 else
     TMP=tmp
 fi
+if [ ! -z "$7" ]; then
+    TEMPLATE_VARS=$7
+else
+    TEMPLATE_VARS=
+fi
+echo ">>> Running with: $CIRCUIT, $CIRCUIT_NAME, $INPUT, $TAU, $RES, $TMP, $TEMPLATE_VARS"
 
 if [[ $(uname) == "Linux" ]]; then
     TIMECMD="$TIMEBIN -f \"Real time (seconds): %e\nMaximum resident set size (bytes): %M\" -o"
@@ -47,16 +53,58 @@ else
     exit 1
 fi
 
+INPUT_FILENAME=$(basename $INPUT)
+NEW_INPUT=${TMP}/${INPUT_FILENAME}
+ORIGINAL_CIRCOM_CONTENTS=$(cat "$CIRCUIT")
+
+handle_template_vars() {
+    if [ ! -z "$TEMPLATE_VARS" ]; then
+        json=$(cat "$NEW_INPUT")
+        # Initialize an empty array to store the keys to remove
+        keys_to_remove=()
+        # Initialize an empty array to store values to replace TEMPLATE_VARS
+        values_to_replace=()
+        # Split the input values by commas
+        IFS=',' read -ra values_array <<< "$TEMPLATE_VARS"
+        # Loop through the values
+        for value in "${values_array[@]}"; do
+            # Retrieve the value from the JSON
+            retrieved_value=$(echo "$json" | jq -r ".$value")
+            # Add the value to the array
+            values_to_replace+=("$retrieved_value")
+            # Remove the corresponding key from the JSON 
+            # and add it to the keys to remove
+            json=$(echo "$json" | jq "del(.${value})")
+            keys_to_remove+=("$value")
+        done
+        # Remove the keys from the JSON
+        for key in "${keys_to_remove[@]}"; do
+            json=$(echo "$json" | jq "del(.${key})")
+        done
+        # Replace {TEMPLATE_VARS} with the passed values
+        new_contents=$(echo "$ORIGINAL_CIRCOM_CONTENTS" | sed "s/{TEMPLATE_VARS}/$(echo "${values_to_replace[*]}" | tr ' ' ',')/g")
+        # Save the modified JSON back to input.json
+        echo "$json" > "$NEW_INPUT"
+        # Save the modified circom files back to circom
+        echo "$new_contents" > "$CIRCUIT"
+    fi
+}
+
+
 ### EXECUTION ###
 echo ">>>Step 0: cleaning and creating ${TMP}" && \
 rm -rf ${TMP} && mkdir ${TMP} && \
+cp ${INPUT} ${NEW_INPUT} && \
+handle_template_vars && \
 echo ">>>Step 1: compiling the circuit" && \
 eval """
 $TIMECMD ${TMP}/compiler_times.txt circom ${CIRCUIT} --r1cs --wasm --sym --c --output ${TMP} | tee ${TMP}/circom_output 
 """ && \
+# Revert the circom file contents
+echo "$ORIGINAL_CIRCOM_CONTENTS" > ${CIRCUIT} && \
 echo ">>>Step 2: generating the witness JS" && \
 eval """
-$TIMECMD ${TMP}/witness_times.txt node  ${TMP}/${CIRCUIT_NAME_INT}_js/generate_witness.js ${TMP}/${CIRCUIT_NAME_INT}_js/${CIRCUIT_NAME_INT}.wasm ${INPUT} ${TMP}/witness.wtns
+$TIMECMD ${TMP}/witness_times.txt node ${TMP}/${CIRCUIT_NAME_INT}_js/generate_witness.js ${TMP}/${CIRCUIT_NAME_INT}_js/${CIRCUIT_NAME_INT}.wasm ${NEW_INPUT} ${TMP}/witness.wtns
 """ && \
 # We only care about phase 2 which is circuit-specific
 # .zkey file that will contain the proving and verification keys together with 

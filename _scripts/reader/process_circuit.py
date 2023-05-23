@@ -38,9 +38,7 @@ def build_command_circom(payload, count):
     """
     Build the command to invoke the circom ZKP-framework given the payload
     """
-
     # TODO - Add count to command creation
-    
     if len(payload.backend) != 1 or payload.backend[0] != "groth16":
         raise ValueError("Circom benchmark only supports groth16 backend")
     if len(payload.curves) != 1 or payload.curves[0] != "bn128":
@@ -51,13 +49,14 @@ def build_command_circom(payload, count):
         for _ in range(0, count):
             # TODO check if circuit exists
             for inp in helper.get_all_input_files(input_path):
-                command = "{script} {circuit_file} {circuit_name} {input_path} {ptau} {benchmark}\n".format(
+                command = "{script} {circuit_file} {circuit_name} {input_path} {ptau} {benchmark} tmp {template_vars}\n".format(
                     script=helper.CIRCOM_SCRIPT,
                     circuit_file=os.path.join(helper.CIRCOM_CIRCUITS_DIR, circuit, "circuit.circom"),
                     circuit_name=circuit,
                     input_path=inp,
                     ptau=helper.CIRCOM_PTAU,
-                    benchmark=os.path.join(helper.CIRCOM_BENCHMAKR_DIR, "circom_" + circuit + ".csv")
+                    benchmark=os.path.join(helper.CIRCOM_BENCHMAKR_DIR, "circom_" + circuit + ".csv"),
+                    template_vars="".join(payload.template_vars.get(circuit, [""]))
                 )
                 commands.append(command)
     command = "".join(commands)
@@ -315,17 +314,20 @@ def get_circuit_payload(config):
             raise ValueError(f"operation '{op}' not in {OPERATIONS}")
 
     input_path = []
-    for c in payload['circuits'].values():
+    template_vars = {}
+    for c_name, c in payload['circuits'].items():
         inp = c.get("input_path")
         if inp is None:
             raise KeyError(f"input_path does not exist to '{c}' circuit")
+        if "template_vars" in c:
+            template_vars[c_name] = c["template_vars"]
         input_path.append(inp)
 
     # Map circuit names onto input paths
     circuit = dict(zip(circuits, input_path))
     
     # Define a named tuple for the payload
-    Payload = namedtuple('Payload', ['backend', 'curves', 'circuit', 'operation', 'input_path'])
+    Payload = namedtuple('Payload', ['backend', 'curves', 'circuit', 'operation', 'input_path', 'template_vars'])
 
     # Return a new instance of the named tuple with the extracted values
-    return Payload(backend, curves, circuit, operation, input_path)
+    return Payload(backend, curves, circuit, operation, input_path, template_vars)
