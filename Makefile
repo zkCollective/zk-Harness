@@ -136,6 +136,16 @@ benchmark-toy-circom:
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/circom/config_all_toy.json  
 
+benchmark-circomlib:
+	$(info --------------------------------------------)
+	$(info ---------- CIRCOM TOY BENCHMARKS -----------)
+	$(info --------------------------------------------)
+	orig_dir=$(shell pwd)
+	cd circom/circuits/benchmarks && if [ ! -d "circomlib" ]; then git clone https://github.com/iden3/circomlib.git; fi
+	cd $(orig_dir)
+	python3 -m _scripts.reader --config _input/config/circom/config_sha.json
+	rm -rf circom/circuits/benchmarks/circomlib
+
 benchmark-circom-circuits: benchmark-toy-circom
 
 benchmark-gnark-arithmetics:
