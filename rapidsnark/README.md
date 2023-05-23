@@ -17,6 +17,8 @@ required library.
 npm install tmp-promise ffiasm big-integer
 ```
 
+Furthermore, you should also install lib gmp, nasm, and openmp.
+
 ### Example 
 
 * Arithmetics benchmarking
