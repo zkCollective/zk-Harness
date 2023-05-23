@@ -1,3 +1,4 @@
+ROOT_DIR=$(pwd)
 benchmark_directory = benchmarks
 
 arkworks_directory = arkworks
@@ -8,11 +9,13 @@ zkcrypto_directory = zkcrypto
 gnark_directory = gnark
 circom_directory = circom
 snarkjs_directory = snarkjs
-bellman_ce_directory = bellman_ce
+pairing_ce_directory = pairing_ce
+halo2_curves_directory = halo2_curves
 
 arkworks_benchmarks_directory = $(benchmark_directory)/$(arkworks_directory)
 blstrs_benchmarks_directory = $(benchmark_directory)/$(blstrs_directory)
-bellman_ce_benchmarks_directory = $(benchmark_directory)/$(bellman_ce_directory)
+pairing_ce_benchmarks_directory = $(benchmark_directory)/$(pairing_ce_directory)
+halo2_curves_benchmarks_directory = $(benchmark_directory)/$(halo2_curves_directory)
 curve25519_dalek_benchmarks_directory = $(benchmark_directory)/$(curve25519_dalek_directory)
 pasta_curves_benchmarks_directory = $(benchmark_directory)/$(pasta_curves_directory)
 zkcrypto_benchmarks_directory = $(benchmark_directory)/$(zkcrypto_directory)
@@ -32,30 +35,48 @@ init:
 	mkdir -p $(curve25519_dalek_benchmarks_directory)
 	mkdir -p $(pasta_curves_benchmarks_directory)
 	mkdir -p $(zkcrypto_benchmarks_directory)
-	mkdir -p $(bellman_ce_benchmarks_directory)
+	mkdir -p $(pairing_ce_benchmarks_directory)
+	mkdir -p $(halo2_curves_benchmarks_directory)
 
-bellman-ce-arithmetics:
-	cd bellman_ce; cargo criterion --message-format=json 1> ../$(bellman_ce_benchmarks_directory)/bellman_ce.json
+halo2-curves-arithmetics:
+	$(info --------------------------------------------)
+	$(info --- HALO2 CURVES ARITHMETICS BENCHMARKS ----)
+	$(info --------------------------------------------)
+	cd math/halo2_curves; cargo criterion --message-format=json 1> ../../$(halo2_curves_benchmarks_directory)/halo2_curves.json
 
-arkworks-arithmetics: arkworks-curves
-	cd arkworks; cargo criterion --message-format=json 1> $(arkworks_benchmarks_directory)/arkworks_arithmetics.json
-
-arkworks-curves:
-	rm -rf ./arkworks/curves
-	git clone https://github.com/arkworks-rs/curves.git ./arkworks/curves || true
-	cd ./arkworks/curves; cargo criterion --features ark-ec/parallel,ark-ff/asm --message-format=json 1> ../../$(arkworks_benchmarks_directory)/arkworks_curves.json
+pairing-ce-arithmetics:
+	$(info --------------------------------------------)
+	$(info --- Pairing CE   ARITHMETICS BENCHMARKS ----)
+	$(info --------------------------------------------)
+	cd math/pairing_ce; cargo criterion --message-format=json 1> ../../$(pairing_ce_benchmarks_directory)/pairing_ce.json
 
 blstrs-arithmetics:
-	cd blstrs; cargo criterion --message-format=json 1> ../$(blstrs_benchmarks_directory)/blstrs.json
+	$(info --------------------------------------------)
+	$(info --- BLSTRS ARITHMETICS BENCHMARKS ----------)
+	$(info --------------------------------------------)
+	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
+	cd math/zkalc/backend/blstrs; cargo criterion --message-format=json 1> ../../../../$(blstrs_benchmarks_directory)/blstrs.json
 
 curve25519-dalek-arithmetics:
-	cd curve25519-dalek; cargo criterion --message-format=json 1> ../$(curve25519_dalek_benchmarks_directory)/curve25519-dalek.json
+	$(info --------------------------------------------)
+	$(info -- curve25519-dalek ARITHMETICS BENCHMARKS -)
+	$(info --------------------------------------------)
+	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
+	cd math/zkalc/backend/curve25519-dalek; cargo criterion --message-format=json 1> ../../../../$(curve25519_dalek_benchmarks_directory)/curve25519-dalek.json
 
 pasta-curves-arithmetics:
-	cd pasta_curves; cargo criterion --message-format=json 1> ../$(pasta_curves_benchmarks_directory)/pasta_curves.json
+	$(info --------------------------------------------)
+	$(info ------ PASTA ARITHMETICS BENCHMARKS ------)
+	$(info --------------------------------------------)
+	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
+	cd math/zkalc/backend/pasta_curves; cargo criterion --message-format=json 1> ../../../../$(pasta_curves_benchmarks_directory)/pasta_curves.json
 
 zkcrypto-arithmetics:
-	cd zkcrypto; cargo criterion --message-format=json 1> ../$(zkcrypto_benchmarks_directory)/zkcrypto.json
+	$(info --------------------------------------------)
+	$(info ------ ZKCRYPTO ARITHMETICS BENCHMARKS -----)
+	$(info --------------------------------------------)
+	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
+	cd math/zkalc/backend/zkcrypto; cargo criterion --message-format=json 1> ../../../../$(zkcrypto_benchmarks_directory)/zkcrypto.json
 
 benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
