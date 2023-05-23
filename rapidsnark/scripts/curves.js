@@ -47,21 +47,21 @@ async function benchmarkMM(g_file, count, x) {
 
     await exec(`cp  ${path.join(path.join(__dirname, "..", "src"),  `${g_file}`)} ${dir.path}`);
 
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "alt_bn128.hpp")} ${dir.path}`);
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "alt_bn128.cpp")} ${dir.path}`);
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "f2field.hpp")} ${dir.path}`);
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "f2field.cpp")} ${dir.path}`);
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "splitparstr.hpp")} ${dir.path}`);
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "splitparstr.cpp")} ${dir.path}`);
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "curve.hpp")} ${dir.path}`);
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "curve.cpp")} ${dir.path}`);
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "exp.hpp")} ${dir.path}`);
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "naf.hpp")} ${dir.path}`);
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "naf.cpp")} ${dir.path}`);
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "multiexp.cpp")} ${dir.path}`);
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "multiexp.hpp")} ${dir.path}`);
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "misc.hpp")} ${dir.path}`);
-    await exec(`cp  ${path.join(__dirname, "..", "node_modules", "ffiasm", "c", "misc.cpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "alt_bn128.hpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "alt_bn128.cpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "f2field.hpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "f2field.cpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "splitparstr.hpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "splitparstr.cpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "curve.hpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "curve.cpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "exp.hpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "naf.hpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "naf.cpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "multiexp.cpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "multiexp.hpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "misc.hpp")} ${dir.path}`);
+    await exec(`cp  ${path.join(__dirname, "..", "..", "node_modules", "ffiasm", "c", "misc.cpp")} ${dir.path}`);
 
     await exec("g++" +
        ` -I.${dir.path}` +
