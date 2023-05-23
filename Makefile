@@ -118,6 +118,18 @@ benchmark-snarkjs-ec:
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/snarkjs/config_ec.json  
 
+benchmark-rapidsnark-arithmetics:
+	$(info --------------------------------------------)
+	$(info ---- RAPIDSNARK ARITHMETICS BENCHMARKS -----)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/rapidsnark/config_arithmetics.json  
+
+benchmark-rapidsnark-ec:
+	$(info --------------------------------------------)
+	$(info --------- RAPIDSNARK EC BENCHMARKS ---------)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/rapidsnark/config_ec.json  
+
 benchmark-toy-circom:
 	$(info --------------------------------------------)
 	$(info ---------- CIRCOM TOY BENCHMARKS -----------)
