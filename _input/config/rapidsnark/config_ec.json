@@ -5,7 +5,7 @@
     "count": 10000,
     "payload": {
         "curves": [
-            "bn128",
+            "bn128"
         ], 
         "groups": [
             "g1",
