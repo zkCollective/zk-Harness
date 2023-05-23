@@ -14,17 +14,8 @@
             "add": {
                 "input_path": "_input/arithmetic/add"
             },
-            "sub": {
-                "input_path": "_input/arithmetic/sub"
-            },
             "mul": {
                 "input_path": "_input/arithmetic/mul"
-            },
-            "inv": {
-                "input_path": "_input/arithmetic/inv"
-            },
-            "exp": {
-                "input_path": "_input/arithmetic/exp"
             }
         }
     }    
