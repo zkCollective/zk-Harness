@@ -14,7 +14,6 @@ use bellman_ce::{multiexp::*};
 
 // Benchmark Addition in Scalar Field
 fn bench_add_ff<F: PrimeField, M: Measurement>(c: &mut BenchmarkGroup<'_, M>) {
-    // let mut rng = rand::thread_rng();
     let rng = &mut XorShiftRng::from_seed([0x5dbe6259, 0x8d313d76, 0x3237db17, 0xe5bc0654]);
     let a: F = rng.gen();
     let b: F = rng.gen(); 
@@ -86,27 +85,23 @@ where
     <G as Engine>::G1: Rand,
     <G as Engine>::G2: Rand,
 {
-    const SAMPLES: usize = 1 << 3;
-    const MAX_SIZE: usize = 3;
+    const MAX_SIZE: usize = 20;
 
     let rng = &mut rand::thread_rng();
-    let v = Arc::new((0..SAMPLES).map(|_| G::Fr::rand(rng).into_repr()).collect::<Vec<_>>());
-    let g1 = Arc::new((0..SAMPLES).map(|_| G::G1::rand(rng).into_affine()).collect::<Vec<_>>());
-    let g2 = Arc::new((0..SAMPLES).map(|_| G::G2::rand(rng).into_affine()).collect::<Vec<_>>());
 
     let pool = Worker::new();
 
-    let v = black_box(v);
-    let g1 = black_box(g1);
-    let g2 = black_box(g2);
-
-    for logsize in 1..=MAX_SIZE {
-        // Dynamically control sample size so that big MSMs don't bench eternally
-        if logsize > 20 {
-            group.sample_size(10);
-        }
-
+    // Iterate over the powers of 2
+    for logsize in 0..MAX_SIZE {
         let size = 1 << logsize;
+
+        let v = Arc::new((0..size).map(|_| G::Fr::rand(rng).into_repr()).collect::<Vec<_>>());
+        let g1 = Arc::new((0..size).map(|_| G::G1::rand(rng).into_affine()).collect::<Vec<_>>());
+        let g2 = Arc::new((0..size).map(|_| G::G2::rand(rng).into_affine()).collect::<Vec<_>>());
+
+        let v = black_box(v);
+        let g1 = black_box(g1);
+        let g2 = black_box(g2);
 
         group.bench_with_input(BenchmarkId::new("G1", size), &size, |b, _| {
             b.iter(|| {
@@ -157,7 +152,7 @@ fn bench_bn256(c: &mut Criterion) {
 
 criterion_group!(
     benches,
-    bench_bls12_381,
-    bench_bn256
+    bench_bn256,
+    bench_bls12_381
 );
 criterion_main!(benches);
