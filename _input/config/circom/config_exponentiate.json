@@ -13,7 +13,7 @@
         "circuits": {
             "exponentiate": {
                 "input_path": "_input/circuit/exponentiate",
-                "template_vars": "E"
+                "template_vars": ["E"]
             }
         },
         "algorithm": [
