@@ -64,6 +64,36 @@ def build_command_snarkjs(payload, count):
     return command
 
 
+def build_command_rapidsnark(payload, count):
+    """
+    Build the command to invoke the rapidsnark ZKP-framework given the payload
+    """
+    for c in payload.curves: 
+        if c not in helper.CIRCOM_CURVES:
+            raise ValueError(f"Curve {c} not in {helper.CIRCOM_CURVES}")
+    for f in payload.groups:
+        if f not in helper.GROUPS:
+            raise ValueError(f"Field {f} not in {helper.GROUPS}")
+    # It will add two commands for pairing if both g1 and g2 are provided
+    commands = [
+        "{script} {curve} {group} {operation} {count} {input_path} {benchmark}\n".format(
+            script=helper.RAPIDSNARK_EC_SCRIPT,
+            curve=curve,
+            group=group,
+            operation=operation,
+            count=count,
+            input_path=inp,
+            benchmark=os.path.join(helper.RAPIDSNARK_BENCHMAKR_DIR, "rapidsnark_ec.csv")
+        )
+        for operation, input_path in payload.operations.items()
+        for inp in helper.get_all_input_files(input_path)
+        for curve in payload.curves
+        for group in payload.groups
+    ]
+    command = "".join(commands)
+    return command
+
+
 def default_case():
     raise ValueError("Framework not integrated into the benchmarking framework!")
 
@@ -71,7 +101,8 @@ def default_case():
 # List ZKP-frameworks in the zk-Harness
 projects = {
     "gnark":    build_command_gnark,
-    "snarkjs":   build_command_snarkjs
+    "snarkjs":   build_command_snarkjs,
+    "rapidsnark":   build_command_rapidsnark
 }
 
 
