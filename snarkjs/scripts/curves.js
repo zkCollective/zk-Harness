@@ -70,7 +70,7 @@ async function benchmark(curve, G, operation, x, y, count) {
 
 
 async function run () {
-    const singleThread = true;
+    const singleThread = false;
     var result_string = "";
     // Read Arguments
     // The first two arguments are node and app.js
