@@ -1,0 +1,2 @@
+rapidsnark,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,50483200,4,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,50053120,14,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
