@@ -29,7 +29,7 @@ async function benchmarkMM(op, prime, count, x, y) {
     await fs.promises.writeFile(path.join(dir.path, "fr.hpp"), source.hpp, "utf8");
     await fs.promises.writeFile(path.join(dir.path, "fr.cpp"), source.cpp, "utf8");
 
-    await exec(`cp  ${path.join(path.join(__dirname, "src"),  `${op}.cpp`)} ${dir.path}`);
+    await exec(`cp  ${path.join(path.join(__dirname, "..", "src"),  `${op}.cpp`)} ${dir.path}`);
 
     if (process.platform === "darwin") {
         await exec("nasm -fmacho64 --prefix _ " +
