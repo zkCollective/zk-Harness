@@ -26,8 +26,10 @@ SNARKJS_BENCHMAKR_DIR = os.path.join(BENCHMARKS_DIR, "snarkjs")
 CIRCOM_SCRIPT = os.path.join(CIRCOM_DIR, "scripts", "run_circuit.sh")
 CIRCOM_CIRCUITS_DIR = os.path.join(CIRCOM_DIR, "circuits", "benchmarks")
 CIRCOM_PTAU = os.path.join(CIRCOM_DIR, "phase1", "powersOfTau28_hez_final_16.ptau")
-CIRCOM_ARITHMETICS_SCRIPT = os.path.join(CIRCOM_DIR, "scripts", "arithmetics.js")
-CIRCOM_EC_SCRIPT = os.path.join(CIRCOM_DIR, "scripts", "curves.js")
+# SNARKJS PATHS
+SNARKJS_DIR = os.path.join(MAIN_DIR, "snarkjs")
+SNARKJS_ARITHMETICS_SCRIPT = os.path.join(SNARKJS_DIR, "scripts", "arithmetics.js")
+SNARKJS_EC_SCRIPT = os.path.join(SNARKJS_DIR, "scripts", "curves.js")
 ### GENERAL ###
 ARITHMETIC_FIELDS = ["base", "scalar"]
 GROUPS = ["g1", "g2"]

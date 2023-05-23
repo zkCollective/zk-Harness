@@ -14,16 +14,6 @@ As Circom is only the compiler to compile from HDL circuit description to R1CS, 
 
 You can install snarkjs with `npm install -g snarkjs` using [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
-#### Arithmetics and elliptic curves benchmarks
-
-If you want to run the benchmarks for Arithmetics and EC then you need to 
-execute the following command inside `circom` directory to download the
-required library.
-
-```
-npm install ffjavascript
-```
-
 ## Compilation & Proof - Toy Examples
 
 To produce and verify a circom circuit you need to perform 6 steps:

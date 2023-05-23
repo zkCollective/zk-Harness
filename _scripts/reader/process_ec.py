@@ -47,7 +47,7 @@ def build_command_snarkjs(payload, count):
     # It will add two commands for pairing if both g1 and g2 are provided
     commands = [
         "{script} {curve} {group} {operation} {count} {input_path} {benchmark}\n".format(
-            script=helper.CIRCOM_EC_SCRIPT,
+            script=helper.SNARKJS_EC_SCRIPT,
             curve=curve,
             group=group,
             operation=operation,

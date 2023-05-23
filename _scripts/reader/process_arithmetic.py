@@ -46,7 +46,7 @@ def build_command_snarkjs(payload, count):
             raise ValueError(f"Field {f} not in {helper.ARITHMETIC_FIELDS}")
     commands = [
         "{script} {curve} {field} {operation} {count} {input_path} {benchmark}\n".format(
-            script=helper.CIRCOM_ARITHMETICS_SCRIPT,
+            script=helper.SNARKJS_ARITHMETICS_SCRIPT,
             curve=curve,
             field=field,
             operation=operation,
