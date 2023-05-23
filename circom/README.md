@@ -14,6 +14,20 @@ As Circom is only the compiler to compile from HDL circuit description to R1CS, 
 
 You can install snarkjs with `npm install -g snarkjs` using [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
+### Using rapidsnark
+
+It is possible to use rapidsnark instead of snarkjs for the proving phase.
+To install rapidsnark you should run the following code:
+
+```
+git submodule init && git submodule update
+cd rapidsnark
+```
+
+Then you need to follow the commands described in the README file.
+
+__NOTE:__ You can rapidsnark only in Intel64 machines.
+
 ## Compilation & Proof - Toy Examples
 
 To produce and verify a circom circuit you need to perform 6 steps:
