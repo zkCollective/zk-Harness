@@ -1,0 +1,2 @@
+rapidsnark,arithmetic,bn128,scalar,add,_input/arithmetic/add/input_1.json,55312384,11,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,arithmetic,bn128,scalar,mul,_input/arithmetic/mul/input_1.json,55431168,20,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
