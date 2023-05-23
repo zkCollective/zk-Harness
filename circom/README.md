@@ -69,6 +69,13 @@ Finally, `res.csv` will contain statistics about the execution of each step.
 __Note__: We currently using the precomputed ceremony from `phase1/powersOfTau28_hez_final_16.ptau`, but in order to safely prove a circuit using Circom you need to safely run a setup ceremony. 
 Furthermore, to execute larger circuits you might need a larger powers of tau.
 
+## Running Example with parameterized template variables
+
+```
+./scripts/run_circuit.sh circuits/benchmarks/exponentiate/circuit.circom exponentiate \
+    inputs/input_1.json phase1/powersOfTau28_hez_final_16.ptau res.csv expo_out E
+```
+
 ## Adding new circuits
 
 See `TUTORIAL.md`

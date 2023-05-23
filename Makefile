@@ -64,9 +64,15 @@ benchmark-toy-circom:
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/circom/config_all_toy.json  
 
+benchmark-exponentiate-circom:
+	$(info --------------------------------------------)
+	$(info ----- CIRCOM EXPONENTIATE BENCHMARKS -------)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/circom/config_exponentiate.json
+
 benchmark-circomlib:
 	$(info --------------------------------------------)
-	$(info ---------- CIRCOM TOY BENCHMARKS -----------)
+	$(info -------- CIRCOM SHA256 BENCHMARKS ----------)
 	$(info --------------------------------------------)
 	orig_dir=$(shell pwd)
 	cd circom/circuits/benchmarks && if [ ! -d "circomlib" ]; then git clone https://github.com/iden3/circomlib.git; fi
