@@ -2,7 +2,7 @@
     "project": "circom/snarkjs",
     "project_url": "https://github.com/iden3/circom",
     "category": "circuit",
-    "count": 10,
+    "count": 1,
     "payload": {
         "backend": [
             "groth16"
@@ -12,7 +12,8 @@
         ], 
         "circuits": {
             "sha256": {
-                "input_path": "_input/circuit/sha256/bytes"
+                "input_path": "_input/circuit/sha256/bytes",
+                "template_vars": ["N"]
             }
         },
         "algorithm": [
