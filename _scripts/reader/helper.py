@@ -23,6 +23,7 @@ HALO2_PSE_BENCH_JSON = os.path.join(HALO2_PSE_BENCH, "jsons")
 CIRCOM_DIR = os.path.join(MAIN_DIR, "circom")
 CIRCOM_BENCHMAKR_DIR = os.path.join(BENCHMARKS_DIR, "circom")
 SNARKJS_BENCHMAKR_DIR = os.path.join(BENCHMARKS_DIR, "snarkjs")
+RAPIDSNARK_BENCHMAKR_DIR = os.path.join(BENCHMARKS_DIR, "rapidsnark")
 CIRCOM_SCRIPT = os.path.join(CIRCOM_DIR, "scripts", "run_circuit.sh")
 CIRCOM_CIRCUITS_DIR = os.path.join(CIRCOM_DIR, "circuits", "benchmarks")
 CIRCOM_PTAU = os.path.join(CIRCOM_DIR, "phase1", "powersOfTau28_hez_final_16.ptau")
@@ -30,6 +31,10 @@ CIRCOM_PTAU = os.path.join(CIRCOM_DIR, "phase1", "powersOfTau28_hez_final_16.pta
 SNARKJS_DIR = os.path.join(MAIN_DIR, "snarkjs")
 SNARKJS_ARITHMETICS_SCRIPT = os.path.join(SNARKJS_DIR, "scripts", "arithmetics.js")
 SNARKJS_EC_SCRIPT = os.path.join(SNARKJS_DIR, "scripts", "curves.js")
+# SNARKJS PATHS
+RAPIDSNARK_DIR = os.path.join(MAIN_DIR, "rapidsnark")
+RAPIDSNARK_ARITHMETICS_SCRIPT = os.path.join(RAPIDSNARK_DIR, "scripts", "arithmetics.js")
+RAPIDSNARK_EC_SCRIPT = os.path.join(RAPIDSNARK_DIR, "scripts", "curves.js")
 ### GENERAL ###
 ARITHMETIC_FIELDS = ["base", "scalar"]
 GROUPS = ["g1", "g2"]
