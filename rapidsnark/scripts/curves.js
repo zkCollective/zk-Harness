@@ -79,7 +79,6 @@ async function benchmarkMM(g_file, count, x) {
     );
 
     let result = await exec(`${path.join(dir.path,  "benchmark")} ${x} ${count}`);
-    console.log(result);
 
     if (result.stdout === '') {
           throw new Error("benchmark stdout is empty");
