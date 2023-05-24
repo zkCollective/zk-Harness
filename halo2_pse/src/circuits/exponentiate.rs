@@ -77,6 +77,7 @@ impl<F: Field> ExponentiationChip<F> {
 
             let one = Expression::Constant(get_one());
             let iszero = e_equals_zero.expr();
+            println!("{:?}", e);
             vec![
                 //s.clone() * (e + one.clone() - e_next),
                 s.clone() * (iszero.clone() * (one.clone() - y.clone()) + (one.clone() - iszero) * (x * y.clone() - y_next))
