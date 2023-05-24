@@ -732,10 +732,10 @@ func benchCurveOperations(cmd *cobra.Command, args []string) {
 		took := CurveOperation254(*fOperation)
 		writeResults(took)
 	case ecc.BLS12_381:
-		took := CurveOperationBLS12377(*fOperation)
+		took := CurveOperationBLS12381(*fOperation)
 		writeResults(took)
 	case ecc.BLS12_377:
-		took := CurveOperationBLS12381(*fOperation)
+		took := CurveOperationBLS12377(*fOperation)
 		writeResults(took)
 	case ecc.BLS24_315:
 		took := CurveOperationBLS24315(*fOperation)
