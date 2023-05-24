@@ -5,21 +5,13 @@
     "count": 10000,
     "payload": {
         "curves": [
-            "bn254",
-            "bls12_377",
-            "bls12_381",
-            "bw6_761",
-            "bls24_315",
-            "bw6_633"
+            "bn254"
         ], 
         "groups": [
             "g1",
             "g2"
         ],
         "operations": {
-            "scalar-multiplication": {
-                "input_path": "_input/ec/scalar-multiplication"
-            },
             "multi-scalar-multiplication": {
                 "input_path": "_input/ec/multi-scalar-multiplication"
             },

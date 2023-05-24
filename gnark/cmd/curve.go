@@ -35,6 +35,8 @@ var curveCmd = &cobra.Command{
 	Run:   benchCurveOperations,
 }
 
+var inputNumMSM int
+
 // Operations for Curve BN254
 func CurveOperation254(operation string) time.Duration {
 	switch operation {
@@ -66,10 +68,10 @@ func CurveOperation254(operation string) time.Duration {
 	case "multi-scalar-multiplication":
 		if *fGroup == "g1" {
 			// size of the multiExp
-			const nbSamples = 73
+			nbSamples := inputNumMSM
 			// multi exp points
-			var samplePoints [nbSamples]bn254.G1Affine
-			var sampleScalars [nbSamples]bn254fr.Element
+			samplePoints := make([]bn254.G1Affine, nbSamples)
+			sampleScalars := make([]bn254fr.Element, nbSamples)
 			for i := 0; i < len(sampleScalars); i++ {
 				sampleScalars[i].SetRandom()
 			}
@@ -91,10 +93,11 @@ func CurveOperation254(operation string) time.Duration {
 			return took
 		} else if *fGroup == "g2" {
 			// size of the multiExp
-			const nbSamples = 73
+			nbSamples := inputNumMSM
 			// multi exp points
-			var samplePoints [nbSamples]bn254.G2Affine
-			var sampleScalars [nbSamples]bn254fr.Element
+			samplePoints := make([]bn254.G2Affine, nbSamples)
+			sampleScalars := make([]bn254fr.Element, nbSamples)
+
 			for i := 0; i < len(sampleScalars); i++ {
 				sampleScalars[i].SetRandom()
 			}
@@ -276,10 +279,10 @@ func CurveOperationBLS12381(operation string) time.Duration {
 	case "multi-scalar-multiplication":
 		if *fGroup == "g1" {
 			// size of the multiExp
-			const nbSamples = 73
+			nbSamples := inputNumMSM
 			// multi exp points
-			var samplePoints [nbSamples]bls12381.G1Affine
-			var sampleScalars [nbSamples]bls12381fr.Element
+			samplePoints := make([]bls12381.G1Affine, nbSamples)
+			sampleScalars := make([]bls12381fr.Element, nbSamples)
 			for i := 0; i < len(sampleScalars); i++ {
 				sampleScalars[i].SetRandom()
 			}
@@ -301,10 +304,10 @@ func CurveOperationBLS12381(operation string) time.Duration {
 			return took
 		} else if *fGroup == "g2" {
 			// size of the multiExp
-			const nbSamples = 73
+			nbSamples := inputNumMSM
 			// multi exp points
-			var samplePoints [nbSamples]bls12381.G2Affine
-			var sampleScalars [nbSamples]bls12381fr.Element
+			samplePoints := make([]bls12381.G2Affine, nbSamples)
+			sampleScalars := make([]bls12381fr.Element, nbSamples)
 			for i := 0; i < len(sampleScalars); i++ {
 				sampleScalars[i].SetRandom()
 			}
@@ -711,10 +714,18 @@ func benchCurveOperations(cmd *cobra.Command, args []string) {
 	}
 
 	// Read input data given the input path
-	// data, err := util.ReadFromInputPath(*fInputPath)
-	// if err != nil {
-	// 	panic(err)
-	// }
+	if *fOperation == "multi-scalar-multiplication" {
+		data, err := util.ReadFromInputPath(*fInputPath)
+		if err != nil {
+			panic(err)
+		}
+		val, _ := data["x"]
+		num, ok := val.(float64) // JSON numbers are parsed as float64 by default
+		if !ok {
+			panic("x is not a number")
+		}
+		inputNumMSM = int(num) // convert to int if needed
+	}
 
 	switch curveID {
 	case ecc.BN254:
