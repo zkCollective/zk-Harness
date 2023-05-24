@@ -77,6 +77,7 @@ impl<F: Field> ExponentiationChip<F> {
 
             let one = Expression::Constant(get_one());
             let iszero = e_equals_zero.expr();
+            println!("{:?}", e);
             vec![
                 //s.clone() * (e + one.clone() - e_next),
                 s.clone() * (iszero.clone() * (one.clone() - y.clone()) + (one.clone() - iszero) * (x * y.clone() - y_next))
@@ -193,7 +194,7 @@ impl<F: Field> Circuit<F> for ExponentiationCircuit {
     ) -> Result<(), Error> {
         let chip = ExponentiationChip::construct(config);
 
-        let out_cell = chip.assign(layouter.namespace(|| "entire table"), 12)?;
+        let out_cell = chip.assign(layouter.namespace(|| "entire table"), self.row)?;
 
         chip.expose_public(layouter.namespace(|| "out"), out_cell, 2)?;
 
@@ -213,13 +214,17 @@ pub fn get_exponentiation_data (
     input_file_str: String
 ) -> (u32, usize, Fr, Fr, Fr){
     let data: ExponentiationData = serde_json::from_str(&input_file_str).expect("Cannot read json string");
-    let k = 5;
     let x_value: usize = data.X.parse().unwrap();
     let e_value: usize = data.E.parse().unwrap();
     let y_value: usize = data.Y.parse().unwrap();
     let x = Fr::from(x_value as u64); 
     let e = Fr::from(e_value as u64); 
     let y = Fr::from(y_value as u64); 
+    let k = match e_value {
+        0..=10 => 5,
+        11..=100 => 6,
+        _ => 7,
+    };
     return (k, e_value, x, e, y);
 }
 
