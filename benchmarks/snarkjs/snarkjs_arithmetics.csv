@@ -19,3 +19,23 @@ snarkjs,arithmetic,bn128,base,exp,_input/arithmetic/exp/input_1.json,64888832,16
 snarkjs,arithmetic,bn128,scalar,exp,_input/arithmetic/exp/input_1.json,74862592,1710,1,1,10000,Apple M1 Max
 snarkjs,arithmetic,bls12_381,base,exp,_input/arithmetic/exp/input_1.json,70111232,1578,1,1,10000,Apple M1 Max
 snarkjs,arithmetic,bls12_381,scalar,exp,_input/arithmetic/exp/input_1.json,74412032,1514,1,1,10000,Apple M1 Max
+snarkjs,arithmetic,bn128,base,add,_input/arithmetic/add/input_1.json,180621312,118,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bn128,scalar,add,_input/arithmetic/add/input_1.json,186068992,145,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bls12_381,base,add,_input/arithmetic/add/input_1.json,187256832,136,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bls12_381,scalar,add,_input/arithmetic/add/input_1.json,193486848,145,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bn128,base,sub,_input/arithmetic/sub/input_1.json,180408320,175,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bn128,scalar,sub,_input/arithmetic/sub/input_1.json,188153856,258,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bls12_381,base,sub,_input/arithmetic/sub/input_1.json,189739008,251,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bls12_381,scalar,sub,_input/arithmetic/sub/input_1.json,193196032,252,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bn128,base,mul,_input/arithmetic/mul/input_1.json,180940800,153,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bn128,scalar,mul,_input/arithmetic/mul/input_1.json,186241024,179,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bls12_381,base,mul,_input/arithmetic/mul/input_1.json,187797504,173,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bls12_381,scalar,mul,_input/arithmetic/mul/input_1.json,192598016,219,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bn128,base,inv,_input/arithmetic/inv/input_1.json,184000512,1831,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bn128,scalar,inv,_input/arithmetic/inv/input_1.json,191381504,2377,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bls12_381,base,inv,_input/arithmetic/inv/input_1.json,192925696,2483,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bls12_381,scalar,inv,_input/arithmetic/inv/input_1.json,195129344,2113,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bn128,base,exp,_input/arithmetic/exp/input_1.json,184659968,2286,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bn128,scalar,exp,_input/arithmetic/exp/input_1.json,191373312,2471,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bls12_381,base,exp,_input/arithmetic/exp/input_1.json,190619648,2312,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+snarkjs,arithmetic,bls12_381,scalar,exp,_input/arithmetic/exp/input_1.json,195780608,2509,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
