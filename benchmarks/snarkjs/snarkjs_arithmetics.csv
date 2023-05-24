@@ -1,24 +1,4 @@
 framework,category,curve,field,operation,input,ram,time,nbPhysicalCores,nbLogicalCores,count,cpu
-snarkjs,arithmetic,bn128,base,add,_input/arithmetic/add/input_1.json,66129920,76,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bn128,scalar,add,_input/arithmetic/add/input_1.json,63889408,81,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bls12_381,base,add,_input/arithmetic/add/input_1.json,65925120,85,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bls12_381,scalar,add,_input/arithmetic/add/input_1.json,70578176,82,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bn128,base,sub,_input/arithmetic/sub/input_1.json,61218816,100,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bn128,scalar,sub,_input/arithmetic/sub/input_1.json,67248128,338,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bls12_381,base,sub,_input/arithmetic/sub/input_1.json,63995904,102,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bls12_381,scalar,sub,_input/arithmetic/sub/input_1.json,71864320,139,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bn128,base,mul,_input/arithmetic/mul/input_1.json,60919808,101,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bn128,scalar,mul,_input/arithmetic/mul/input_1.json,64159744,112,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bls12_381,base,mul,_input/arithmetic/mul/input_1.json,65347584,103,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bls12_381,scalar,mul,_input/arithmetic/mul/input_1.json,70344704,110,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bn128,base,inv,_input/arithmetic/inv/input_1.json,62668800,1264,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bn128,scalar,inv,_input/arithmetic/inv/input_1.json,71131136,1549,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bls12_381,base,inv,_input/arithmetic/inv/input_1.json,71077888,1779,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bls12_381,scalar,inv,_input/arithmetic/inv/input_1.json,74674176,1291,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bn128,base,exp,_input/arithmetic/exp/input_1.json,64888832,1660,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bn128,scalar,exp,_input/arithmetic/exp/input_1.json,74862592,1710,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bls12_381,base,exp,_input/arithmetic/exp/input_1.json,70111232,1578,1,1,10000,Apple M1 Max
-snarkjs,arithmetic,bls12_381,scalar,exp,_input/arithmetic/exp/input_1.json,74412032,1514,1,1,10000,Apple M1 Max
 snarkjs,arithmetic,bn128,base,add,_input/arithmetic/add/input_1.json,180621312,118,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
 snarkjs,arithmetic,bn128,scalar,add,_input/arithmetic/add/input_1.json,186068992,145,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
 snarkjs,arithmetic,bls12_381,base,add,_input/arithmetic/add/input_1.json,187256832,136,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
