@@ -154,6 +154,7 @@ get_time_results() {
         realTime=$(grep real ${timeRes} | xargs | cut -d " " -f1)
         ramMb=$(echo ${ram}/1024/1024 | bc)
     fi
+    # NOTE: if real contains minutes in Mac it won't work
     realTime=$(echo "$realTime" | sed 's/s//')
     millisecs=$(echo "${realTime} * 1000" | bc)
     millisecs_without_dec=${millisecs%.*}
@@ -184,7 +185,6 @@ get_phase_stats() {
     # If phaseTimeFileToMerge is not empty then merge its results with phaseTimeFile 
     if [ ! -z "$phaseTimeFileToMerge" ]; then
         ramtimeToMerge="$(get_time_results $phaseTimeFileToMerge)"
-        echo $ramtimeToMerge > fff
         ramInitial=$(echo $ramtime | cut -d ',' -f1)
         ramToMerge=$(echo $ramtimeToMerge | cut -d ',' -f1)
         timeInitial=$(echo $ramtime | cut -d ',' -f2)
@@ -241,4 +241,3 @@ if [ ! -z "$RES" ]; then
       echo "$(get_phase_stats ${stages[$i]} ${times[$i]})" >> ${RES}
     done
 fi
-
