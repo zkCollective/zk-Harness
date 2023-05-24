@@ -43,3 +43,17 @@ rapidsnark,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multip
 rapidsnark,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_8.json,59629568,8671891,1,1,100,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
 rapidsnark,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_9.json,59535360,3715034,1,1,100,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
 rapidsnark,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_9.json,59834368,10822837,1,1,100,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_3.json,59899904,1515008,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_3.json,59518976,2716481,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_4.json,59777024,1536040,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_4.json,59846656,3200537,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_5.json,59621376,1771403,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_5.json,59535360,3919717,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_6.json,59547648,2072347,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_6.json,59453440,5292365,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_7.json,59789312,2508665,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_7.json,49844224,6852378,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_8.json,59584512,2977638,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_8.json,49590272,8494198,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_9.json,59658240,3560401,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+rapidsnark,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_9.json,49598464,10649959,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
