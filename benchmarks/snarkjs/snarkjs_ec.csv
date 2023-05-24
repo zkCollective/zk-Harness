@@ -1,16 +1,4 @@
 framework,category,curve,operation,input,ram,time,nbPhysicalCores,nbLogicalCores,count,cpu
-snarkjs,ec,bn128,g1-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,67493888,6577,1,1,10000,Apple M1 Max
-snarkjs,ec,bn128,g2-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,65638400,15712,1,1,10000,Apple M1 Max
-snarkjs,ec,bls12_381,g1-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,75612160,9984,1,1,10000,Apple M1 Max
-snarkjs,ec,bls12_381,g2-scalar-multiplication,_input/ec/scalar-multiplication/input_1.json,79753216,26548,1,1,10000,Apple M1 Max
-snarkjs,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,206397440,687249,1,1,10000,Apple M1 Max
-snarkjs,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,303611904,1014888,1,1,10000,Apple M1 Max
-snarkjs,ec,bls12_381,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,361066496,820589,1,1,10000,Apple M1 Max
-snarkjs,ec,bls12_381,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_1.json,338317312,1227889,1,1,10000,Apple M1 Max
-snarkjs,ec,bn128,pairing,_input/ec/pairing/input_1.json,103108608,4673395,1,1,10000,Apple M1 Max
-snarkjs,ec,bn128,pairing,_input/ec/pairing/input_1.json,110608384,4630936,1,1,10000,Apple M1 Max
-snarkjs,ec,bls12_381,pairing,_input/ec/pairing/input_1.json,96362496,5600131,1,1,10000,Apple M1 Max
-snarkjs,ec,bls12_381,pairing,_input/ec/pairing/input_1.json,112230400,5617329,1,1,10000,Apple M1 Max
 snarkjs,ec,bn128,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_0.json,249630720,6003949,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
 snarkjs,ec,bn128,g2-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_0.json,258617344,5698131,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
 snarkjs,ec,bls12_381,g1-multi-scalar-multiplication,_input/ec/multi-scalar-multiplication/input_0.json,258748416,5685261,1,1,1000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
