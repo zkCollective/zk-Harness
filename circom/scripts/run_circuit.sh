@@ -125,6 +125,12 @@ echo ">>>Step 5: Prove" && \
 eval """
 $TIMECMD ${TMP}/prove_times.txt node --max_old_space_size=50000 ${NODE_MODULES}/snarkjs/cli.js groth16 prove ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/witness.wtns ${TMP}/proof.json ${TMP}/public.json
 """ && \
+[[ -n $RAPIDSNARK ]] && \
+eval """
+echo '>>>Step 5: Prove (rapidsnark)' && $TIMECMD ${TMP}/rapidsnark_times.txt $RAPIDSNARK ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/witness.wtns ${TMP}/proof.json ${TMP}/public.json
+""" || \
+# Do nothing and progress to the next command
+: && \
 echo ">>>Step 6: Verify" && \
 eval """
 $TIMECMD ${TMP}/verify_times.txt node --max_old_space_size=50000 ${NODE_MODULES}/snarkjs/cli.js groth16 verify ${TMP}/verification_key.json ${TMP}/public.json ${TMP}/proof.json
@@ -203,7 +209,11 @@ get_phase_stats() {
     fi
     # We don't want to print the whole input file but only the part that it is
     # Count is always 1
-    echo "circom/snarkjs,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtimeFinal,$proofSize,$physical,$virtual,1,$PROC"
+    if [[ $phaseTimeFile == *"rapidsnark_times.txt"* ]]; then
+        echo "circom/rapidsnark,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtimeFinal,$proofSize,$physical,$virtual,1,$PROC"
+    else
+        echo "circom/snarkjs,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtimeFinal,$proofSize,$physical,$virtual,1,$PROC"
+    fi
 
 }
 
@@ -220,18 +230,35 @@ if [ ! -z "$RES" ]; then
     nbPublicOutputSignals=$(grep "^public outputs" ${TMP}/circom_output | cut -d ":" -f2 | xargs)
     nbWires=$(grep "^wires" ${TMP}/circom_output | cut -d ":" -f2 | xargs)
     nbLabels=$(grep "^labels" ${TMP}/circom_output | cut -d ":" -f2 | xargs)
-    declare -a stages=("compile" 
-                       "witness" 
-                       "setup"
-                       "prove"
-                       "verify"
-                      )
-    declare -a times=("${TMP}/compiler_times.txt" 
-                      "${TMP}/witness_times.txt" 
-                      "${TMP}/setup_times.txt ${TMP}/export_times.txt" 
-                      "${TMP}/prove_times.txt" 
-                      "${TMP}/verify_times.txt" 
-                     )
+    if [[ -n $RAPIDSNARK ]]; then
+        declare -a stages=("compile" 
+                           "witness" 
+                           "setup"
+                           "prove"
+                           "prove"
+                           "verify"
+                          )
+        declare -a times=("${TMP}/compiler_times.txt" 
+                          "${TMP}/witness_times.txt" 
+                          "${TMP}/setup_times.txt ${TMP}/export_times.txt" 
+                          "${TMP}/prove_times.txt" 
+                          "${TMP}/rapidsnark_times.txt" 
+                          "${TMP}/verify_times.txt" 
+                         )
+    else
+        declare -a stages=("compile" 
+                           "witness" 
+                           "setup"
+                           "prove"
+                           "verify"
+                          )
+        declare -a times=("${TMP}/compiler_times.txt" 
+                          "${TMP}/witness_times.txt" 
+                          "${TMP}/setup_times.txt ${TMP}/export_times.txt" 
+                          "${TMP}/prove_times.txt" 
+                          "${TMP}/verify_times.txt" 
+                         )
+    fi
     arraylength=${#stages[@]}
 
     # Check if RES file already exist.
