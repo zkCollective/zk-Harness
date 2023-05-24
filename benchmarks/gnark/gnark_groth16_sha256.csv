@@ -1,61 +1,110 @@
 framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram,time(ms),proofSize,nbPhysicalCores,nbLogicalCores,count,cpu
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_1.json,setup,42395,11,33,169,4560,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_1.json,compile,42395,11,33,77,168,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_1.json,witness,42395,11,33,61,1,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_1.json,prove,42395,11,33,139,162,384,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_1.json,verify,42395,11,33,143,1,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_2.json,setup,42584,32,33,185,4969,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_2.json,compile,42584,32,33,73,192,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_2.json,witness,42584,32,33,60,1,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_2.json,prove,42584,32,33,143,197,384,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_2.json,verify,42584,32,33,131,2,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_3.json,setup,85921,65,33,310,11427,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_3.json,compile,85921,65,33,128,363,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_3.json,witness,85921,65,33,104,1,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_3.json,prove,85921,65,33,306,401,384,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_3.json,verify,85921,65,33,240,2,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_4.json,setup,129816,160,33,415,14381,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_4.json,compile,129816,160,33,195,601,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_4.json,witness,129816,160,33,155,1,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_4.json,prove,129816,160,33,372,440,384,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_4.json,verify,129816,160,33,319,2,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_1.json,setup,42395,11,33,181,9335,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_1.json,compile,42395,11,33,77,178,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_1.json,witness,42395,11,33,65,1,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_1.json,prove,42395,11,33,173,258,576,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_1.json,verify,42395,11,33,149,3,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_2.json,setup,42584,32,33,153,9453,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_2.json,compile,42584,32,33,73,160,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_2.json,witness,42584,32,33,61,1,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_2.json,prove,42584,32,33,185,264,576,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_2.json,verify,42584,32,33,181,2,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_3.json,setup,85921,65,33,364,21276,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_3.json,compile,85921,65,33,128,480,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_3.json,witness,85921,65,33,112,1,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_3.json,prove,85921,65,33,348,597,576,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_3.json,verify,85921,65,33,348,3,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_4.json,setup,129816,160,33,493,28643,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_4.json,compile,129816,160,33,203,657,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_4.json,witness,129816,160,33,167,1,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_4.json,prove,129816,160,33,415,726,576,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls12_377,sha256,_input/circuit/sha256/input_4.json,verify,129816,160,33,409,4,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_1.json,setup,42395,11,33,201,12924,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_1.json,compile,42395,11,33,77,213,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_1.json,witness,42395,11,33,65,1,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_1.json,prove,42395,11,33,169,326,640,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_1.json,verify,42395,11,33,173,6,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_2.json,setup,42584,32,33,189,13038,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_2.json,compile,42584,32,33,77,195,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_2.json,witness,42584,32,33,61,1,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_2.json,prove,42584,32,33,181,315,640,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_2.json,verify,42584,32,33,185,6,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_3.json,setup,85921,65,33,272,25638,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_3.json,compile,85921,65,33,136,409,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_3.json,witness,85921,65,33,108,1,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_3.json,prove,85921,65,33,338,661,640,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_3.json,verify,85921,65,33,298,6,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_4.json,setup,129816,160,33,393,36271,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_4.json,compile,129816,160,33,204,719,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_4.json,witness,129816,160,33,158,1,0,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_4.json,prove,129816,160,33,443,825,640,1,1,10,VirtualApple @ 2.50GHz
-gnark,circuit,groth16,bls24_315,sha256,_input/circuit/sha256/input_4.json,verify,129816,160,33,385,6,0,1,1,10,VirtualApple @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_10.json,witness,740152,1024,33,758,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_10.json,prove,740152,1024,33,2293,1558,576,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_10.json,verify,740152,1024,33,2216,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_11.json,setup,1438008,2048,33,5637,84670,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_10.json,setup,740152,1024,33,2802,43245,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_10.json,compile,740152,1024,33,904,5439,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_10.json,witness,740152,1024,33,739,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_10.json,prove,740152,1024,33,2356,1566,576,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_10.json,verify,740152,1024,33,2182,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_11.json,setup,1438008,2048,33,5666,84637,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_11.json,compile,1438008,2048,33,1887,10766,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_11.json,witness,1438008,2048,33,1493,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_11.json,prove,1438008,2048,33,4975,3043,576,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_11.json,verify,1438008,2048,33,4116,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_12.json,setup,2833720,4096,33,12997,167463,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_12.json,compile,2833720,4096,33,3659,21426,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_12.json,witness,2833720,4096,33,2822,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_12.json,prove,2833720,4096,33,9859,6125,576,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_12.json,verify,2833720,4096,33,8722,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_13.json,setup,5625144,8192,33,23876,333356,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_13.json,compile,5625144,8192,33,6958,42593,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_13.json,witness,5625144,8192,33,5286,3,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_13.json,prove,5625144,8192,33,17636,12183,576,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_13.json,verify,5625144,8192,33,16627,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_14.json,setup,11207992,16384,33,35075,664418,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_14.json,compile,11207992,16384,33,14814,86111,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_14.json,witness,11207992,16384,33,12855,6,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_14.json,prove,11207992,16384,33,38160,24424,576,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_14.json,verify,11207992,16384,33,28396,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_15.json,setup,22373688,32768,33,69637,1329474,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_15.json,compile,22373688,32768,33,30228,173924,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_15.json,witness,22373688,32768,33,22674,13,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_15.json,prove,22373688,32768,33,63049,49250,576,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_15.json,verify,22373688,32768,33,59239,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_5.json,setup,42584,32,33,170,2630,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_5.json,compile,42584,32,33,75,290,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_5.json,witness,42584,32,33,67,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_5.json,prove,42584,32,33,175,102,576,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_5.json,verify,42584,32,33,195,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_6.json,setup,85912,64,33,370,5209,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_6.json,compile,85912,64,33,131,601,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_6.json,witness,85912,64,33,114,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_6.json,prove,85912,64,33,340,191,576,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_6.json,verify,85912,64,33,296,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_7.json,setup,129528,128,33,495,6936,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_7.json,compile,129528,128,33,198,927,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_7.json,witness,129528,128,33,172,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_7.json,prove,129528,128,33,445,219,576,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_7.json,verify,129528,128,33,421,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_8.json,setup,216760,256,33,801,12136,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_8.json,compile,216760,256,33,340,1582,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_8.json,witness,216760,256,33,264,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_8.json,prove,216760,256,33,723,439,576,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_8.json,verify,216760,256,33,768,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_9.json,setup,391224,512,33,1611,22506,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_9.json,compile,391224,512,33,584,2850,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_9.json,witness,391224,512,33,442,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_9.json,prove,391224,512,33,1336,814,576,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bls12_381,sha256,_input/circuit/sha256/input_9.json,verify,391224,512,33,1413,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_10.json,setup,740152,1024,33,2418,25366,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_10.json,compile,740152,1024,33,928,5404,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_10.json,witness,740152,1024,33,749,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_10.json,prove,740152,1024,33,2089,1132,384,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_10.json,verify,740152,1024,33,1719,0,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_11.json,setup,1438008,2048,33,5139,49655,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_11.json,compile,1438008,2048,33,1877,10847,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_11.json,witness,1438008,2048,33,1481,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_11.json,prove,1438008,2048,33,4316,2244,384,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_11.json,verify,1438008,2048,33,3726,0,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_12.json,setup,2833720,4096,33,10513,98250,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_12.json,compile,2833720,4096,33,3806,21238,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_12.json,witness,2833720,4096,33,2861,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_12.json,prove,2833720,4096,33,8762,4522,384,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_12.json,verify,2833720,4096,33,7219,0,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_13.json,setup,5625144,8192,33,21899,195855,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_13.json,compile,5625144,8192,33,7317,42391,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_13.json,witness,5625144,8192,33,5618,3,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_13.json,prove,5625144,8192,33,15358,9003,384,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_13.json,verify,5625144,8192,33,14089,0,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_14.json,setup,11207992,16384,33,30048,390507,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_14.json,compile,11207992,16384,33,14168,86259,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_14.json,witness,11207992,16384,33,11782,7,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_14.json,prove,11207992,16384,33,29386,18236,384,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_14.json,verify,11207992,16384,33,24917,0,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_5.json,setup,42584,32,33,171,1527,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_5.json,compile,42584,32,33,75,297,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_5.json,witness,42584,32,33,66,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_5.json,prove,42584,32,33,155,76,384,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_5.json,verify,42584,32,33,159,0,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_6.json,setup,85912,64,33,284,3042,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_6.json,compile,85912,64,33,139,586,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_6.json,witness,85912,64,33,114,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_6.json,prove,85912,64,33,284,134,384,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_6.json,verify,85912,64,33,278,0,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_7.json,setup,129528,128,33,433,4043,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_7.json,compile,129528,128,33,189,922,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_7.json,witness,129528,128,33,169,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_7.json,prove,129528,128,33,379,159,384,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_7.json,verify,129528,128,33,301,0,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_8.json,setup,216760,256,33,702,7074,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_8.json,compile,216760,256,33,343,1559,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_8.json,witness,216760,256,33,264,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_8.json,prove,216760,256,33,653,312,384,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_8.json,verify,216760,256,33,484,0,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_9.json,setup,391224,512,33,1425,13208,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_9.json,compile,391224,512,33,563,2948,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_9.json,witness,391224,512,33,446,1,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_9.json,prove,391224,512,33,1126,585,384,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_9.json,verify,391224,512,33,1036,0,0,8,16,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
