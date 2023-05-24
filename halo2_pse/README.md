@@ -37,13 +37,13 @@ Running a benchmark can be facilitated through the following commands:
 
 ```
 INPUT_FILE=../_input/circuit/exponentiate/input_1.json cargo criterion --message-format=json \
-    --bench exponentiation_bench 1> ../benchmarks/halo2_pse/jsons/exponentiate_input_1_bench.json
+    --bench exponentiate_bench 1> ../benchmarks/halo2_pse/jsons/exponentiate_input_1_bench.json
 ```
 
 * Run benchmarks for measuring memory consuption and proof size
 
 ```
-cargo run --bin exponentiation --release -- \
+cargo run --bin exponentiate --release -- \
     --input ../_input/circuit/exponentiate/input_1.json \
     --output ../benchmarks/halo2_pse/jsons/exponentiate_input_1.json
 ```
