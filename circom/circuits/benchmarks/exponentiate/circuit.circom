@@ -3,6 +3,7 @@ pragma circom 2.1.2;
 template Exponentiate(E) {
     signal input X;
     signal input Y;
+    signal output out;
 
     signal res[E];
 
@@ -11,7 +12,8 @@ template Exponentiate(E) {
     for (var i=1; i<E; i++) {
         res[i] <== res[i-1] * X;
     }
-    res[E-1] === Y;
+    out <-- res[E-1];
+    out === Y;
 }
 
 component main {public [X, Y]} = Exponentiate({TEMPLATE_VARS});
