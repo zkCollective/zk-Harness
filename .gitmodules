@@ -1,3 +1,3 @@
 [submodule "circom/rapidsnark"]
 	path = circom/rapidsnark
-	url = git@github.com:iden3/rapidsnark.git
+	url = https://github.com/iden3/rapidsnark.git

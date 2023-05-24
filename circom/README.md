@@ -26,7 +26,16 @@ cd rapidsnark
 
 Then you need to follow the commands described in the README file.
 
-__NOTE:__ You can rapidsnark only in Intel64 machines.
+__NOTE:__ You can use rapidsnark only in Intel64 machines.
+
+Finally to use rapidsnark you can use the following command:
+
+```
+RAPIDSNARK="./rapidsnark/prover" ./scripts/run_circuit.sh \
+            circuits/benchmarks/exponentiate/circuit.circom exponentiate \
+            ../_input/circuit/exponentiate/input_100.json
+            phase1/powersOfTau28_hez_final_20.ptau res.csv expo_out E
+```
 
 ## Compilation & Proof - Toy Examples
 
