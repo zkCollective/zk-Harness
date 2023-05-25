@@ -107,7 +107,7 @@ def build_command_bellman(payload, count):
                 "bellman_bls12_381_" + circuit + ".csv"
             )
             
-            python_command = "python"
+            python_command = "python3"
             try:
                 subprocess.run([python_command, "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             except (subprocess.CalledProcessError, FileNotFoundError):
@@ -175,7 +175,7 @@ def build_command_bellman_ce(payload, count):
                 "bellman_bls12_381_" + circuit + ".csv"
             )
             
-            python_command = "python"
+            python_command = "python3"
             try:
                 subprocess.run([python_command, "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             except (subprocess.CalledProcessError, FileNotFoundError):
@@ -241,7 +241,7 @@ def build_command_halo2_pse(payload, count):
                 helper.HALO2_PSE_BENCH,
                 "halo2_pse_bn256_" + circuit + ".csv"
             )
-            transform_command: str = "python _scripts/parsers/criterion_rust_parser.py --framework halo2_pse --category circuit --backend halo2 --curve bn256 --input {inp} --criterion_json {bench} --mem_proof_json {mem} --output_csv {out}; ".format(
+            transform_command: str = "python3 _scripts/parsers/criterion_rust_parser.py --framework halo2_pse --category circuit --backend halo2 --curve bn256 --input {inp} --criterion_json {bench} --mem_proof_json {mem} --output_csv {out}; ".format(
                 inp=inp,
                 bench=output_bench,
                 mem=output_mem_size,
