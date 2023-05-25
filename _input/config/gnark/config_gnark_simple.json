@@ -17,7 +17,11 @@
             }
         },
         "algorithm": [
-            "prove"
+            "setup",
+            "compile",
+            "witness",
+            "prove",
+            "verify"
         ],
         "custom": {}
     }    
