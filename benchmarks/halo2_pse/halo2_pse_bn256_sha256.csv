@@ -1,13 +1,34 @@
 framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,count,CPU
-halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_1.json,setup,1,1,1,1242,15600,,1,1,10,MacOSX
-halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_1.json,prove,1,1,1,677,13932,2816,1,1,10,MacOSX
-halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_1.json,verify,1,1,1,1242,1,,1,1,3740,MacOSX
-halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_2.json,setup,1,1,1,1146,15479,,1,1,10,MacOSX
-halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_2.json,prove,1,1,1,667,14141,2816,1,1,10,MacOSX
-halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_2.json,verify,1,1,1,1146,1,,1,1,3740,MacOSX
-halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_3.json,setup,1,1,1,1135,15324,,1,1,10,MacOSX
-halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_3.json,prove,1,1,1,646,14186,2816,1,1,10,MacOSX
-halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_3.json,verify,1,1,1,1135,1,,1,1,3740,MacOSX
-halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_4.json,setup,1,1,1,1217,15405,,1,1,10,MacOSX
-halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_4.json,prove,1,1,1,588,14231,2816,1,1,10,MacOSX
-halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_4.json,verify,1,1,1,1217,1,,1,1,3575,MacOSX
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_10.json,setup,1,1,1,998,14505,,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_10.json,prove,1,1,1,-14,13629,2816,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_10.json,verify,1,1,1,998,1,,1,1,3300,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_11.json,setup,1,1,1,1976,29717,,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_11.json,prove,1,1,1,-14,26697,2816,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_11.json,verify,1,1,1,1976,1,,1,1,3300,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_12.json,setup,1,1,1,3917,61021,,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_12.json,prove,1,1,1,1,53424,2816,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_12.json,verify,1,1,1,3917,1,,1,1,3300,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_13.json,setup,1,1,1,7717,127850,,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_13.json,prove,1,1,1,2,111186,2816,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_13.json,verify,1,1,1,7717,1,,1,1,3300,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_14.json,setup,1,1,1,14913,263270,,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_14.json,prove,1,1,1,2,227130,2816,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_14.json,verify,1,1,1,14913,1,,1,1,3300,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_15.json,setup,1,1,1,29567,539857,,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_15.json,prove,1,1,1,5,458338,2816,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_15.json,verify,1,1,1,29567,1,,1,1,3300,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_5.json,setup,1,1,1,998,14462,,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_5.json,prove,1,1,1,-14,13260,2816,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_5.json,verify,1,1,1,998,1,,1,1,3245,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_6.json,setup,1,1,1,998,14502,,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_6.json,prove,1,1,1,-14,13269,2816,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_6.json,verify,1,1,1,998,1,,1,1,3245,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_7.json,setup,1,1,1,998,14493,,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_7.json,prove,1,1,1,-14,13229,2816,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_7.json,verify,1,1,1,998,1,,1,1,3300,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_8.json,setup,1,1,1,998,14420,,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_8.json,prove,1,1,1,-14,13509,2816,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_8.json,verify,1,1,1,998,1,,1,1,3245,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_9.json,setup,1,1,1,998,14677,,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_9.json,prove,1,1,1,-14,13495,2816,1,1,10,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+halo2_pse,circuit,halo2,bn256,sha256,_input/circuit/sha256/input_9.json,verify,1,1,1,998,1,,1,1,3300,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
