@@ -77,7 +77,6 @@ impl<F: Field> ExponentiationChip<F> {
 
             let one = Expression::Constant(get_one());
             let iszero = e_equals_zero.expr();
-            println!("{:?}", e);
             vec![
                 //s.clone() * (e + one.clone() - e_next),
                 s.clone() * (iszero.clone() * (one.clone() - y.clone()) + (one.clone() - iszero) * (x * y.clone() - y_next))
@@ -129,6 +128,7 @@ impl<F: Field> ExponentiationChip<F> {
 
                 let mut row = 1;
                 while row <= nrows {
+                    println!("{}", row);
                     if row < nrows - 1 {
                         self.config.selector.enable(&mut region, row)?;
                     }
@@ -222,8 +222,12 @@ pub fn get_exponentiation_data (
     let y = Fr::from(y_value as u64); 
     let k = match e_value {
         0..=10 => 5,
-        11..=100 => 6,
-        _ => 7,
+        11..=100 => 7,
+        101..=1000 => 10,
+        1001..=10000 => 14,
+        10001..=100000 => 17,
+        100001..=1000000 => 20,
+        _ => 24,
     };
     return (k, e_value, x, e, y);
 }
