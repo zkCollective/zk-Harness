@@ -2,10 +2,12 @@ package circuits
 
 import (
 	"encoding/hex"
+	"strconv"
 
 	"github.com/consensys/gnark-crypto/ecc"
 	bls12377fr "github.com/consensys/gnark-crypto/ecc/bls12-377/fr"
 	"github.com/consensys/gnark-crypto/hash"
+	"github.com/tumberger/zk-compilers/gnark/circuits/toy/expo"
 
 	bls12381fr "github.com/consensys/gnark-crypto/ecc/bls12-381/fr"
 	bls24315fr "github.com/consensys/gnark-crypto/ecc/bls24-315/fr"
@@ -172,10 +174,20 @@ func (d *defaultCircuit) Circuit(size int, name string, path string) frontend.Ci
 	if err != nil {
 		panic(err)
 	}
-
 	switch name {
 	case "cubic":
 		return &cubic.CubicCircuit{}
+	case "expo":
+		// sizeTwo := (data["E"].(int))
+		strVal, ok := data["E"].(string)
+		if !ok {
+			panic("data[someKey] is not a string")
+		}
+		sizeTwo, err := strconv.Atoi(strVal)
+		if err != nil {
+			panic(err)
+		}
+		return &expo.BenchCircuit{N: sizeTwo}
 	case "exponentiate":
 		return &exponentiate.ExponentiateCircuit{}
 	case "mimc":
@@ -199,6 +211,25 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, path str
 	switch name {
 	case "cubic":
 		witness := cubic.CubicCircuit{}
+		witness.X = (data["X"].(string))
+		witness.Y = (data["Y"].(string))
+
+		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
+		if err != nil {
+			panic(err)
+		}
+		return w
+	case "expo":
+		// sizeTwo := (data["E"].(int))
+		strVal, ok := data["E"].(string)
+		if !ok {
+			panic("data[someKey] is not a string")
+		}
+		sizeTwo, err := strconv.Atoi(strVal)
+		if err != nil {
+			panic(err)
+		}
+		witness := expo.BenchCircuit{N: sizeTwo}
 		witness.X = (data["X"].(string))
 		witness.Y = (data["Y"].(string))
 

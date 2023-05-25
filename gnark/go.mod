@@ -12,7 +12,10 @@ require (
 	github.com/spf13/cobra v1.6.1
 )
 
-require github.com/DmitriyVTitov/size v1.5.0
+require (
+	github.com/DmitriyVTitov/size v1.5.0
+	github.com/tumberger/zk-compilers/gnark v0.0.0-20230423120009-1a5def42f953
+)
 
 require (
 	github.com/blang/semver/v4 v4.0.0 // indirect
@@ -22,7 +25,6 @@ require (
 	github.com/fxamacker/cbor/v2 v2.4.0 // indirect
 	github.com/google/pprof v0.0.0-20230207041349-798e818bf904 // indirect
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
-	github.com/kr/text v0.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/mmcloughlin/addchain v0.4.0 // indirect
