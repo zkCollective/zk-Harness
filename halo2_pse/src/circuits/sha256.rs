@@ -57,6 +57,7 @@ fn hex_to_binary_words(input: &str) -> Vec<BlockWord> {
             BlockWord(Value::known(value))
         })
         .collect();
+    println!("words length {:?}", words.len());
     words
 }
 
@@ -70,7 +71,22 @@ pub fn get_sha256_data (
     input_file_str: String
 ) -> (u32, Vec<BlockWord> ){
     let data: Sha256Data = serde_json::from_str(&input_file_str).expect("Cannot read json string");
-    let k = 17;
+    let preimage_length: usize = data.PreImage.len();
+    println!("Preimage length {}", preimage_length);
+    let k = match preimage_length {
+        0..=64 => 17,
+        65..=128 => 17,
+        129..=256 => 17,
+        257..=512 => 17,
+        513..=1024 => 17,
+        1025..=2048 => 17,
+        2049..=4096 => 17,
+        4097..=8192 => 17,
+        8193..=16384 => 17,
+        16385..=32768 => 17,
+        32769..=65536 => 17,
+        _ => 1,
+    };
     let preimage = data.PreImage;
     let _hash = data.Hash;
     let sha_data = hex_to_binary_words(&preimage);
