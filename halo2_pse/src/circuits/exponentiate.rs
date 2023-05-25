@@ -128,7 +128,6 @@ impl<F: Field> ExponentiationChip<F> {
 
                 let mut row = 1;
                 while row <= nrows {
-                    println!("{}", row);
                     if row < nrows - 1 {
                         self.config.selector.enable(&mut region, row)?;
                     }
