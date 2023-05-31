@@ -29,6 +29,7 @@ import (
 	"github.com/consensys/gnark/logger"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
+	"github.com/zkCollective/zk-Harness/gnark/parser"
 	"github.com/zkCollective/zk-Harness/gnark/util"
 )
 
@@ -42,14 +43,14 @@ var groth16Cmd = &cobra.Command{
 func runGroth16(cmd *cobra.Command, args []string) {
 
 	log := logger.Logger()
-	log.Info().Msg("Benchmarking " + *fCircuit + " - gnark, groth16: " + *fAlgo + " " + *fCurve + " " + *fInputPath)
+	log.Info().Msg("Benchmarking " + *cfg.Circuit + " - gnark, groth16: " + *cfg.Algo + " " + *cfg.Curve + " " + *cfg.InputPath)
 
 	var filename = "../benchmarks/gnark/gnark_" +
 		"groth16" + "_" +
-		*fCircuit + "." +
-		*fFileType
+		*cfg.Circuit + "." +
+		*cfg.FileType
 
-	if err := parseFlags(); err != nil {
+	if err := parser.ParseFlags(cfg); err != nil {
 		fmt.Println("error: ", err.Error())
 		cmd.Help()
 		os.Exit(-1)
@@ -66,16 +67,16 @@ func runGroth16(cmd *cobra.Command, args []string) {
 			Framework:         "gnark",
 			Category:          "circuit",
 			Backend:           "groth16",
-			Curve:             curveID.String(),
-			Circuit:           *fCircuit,
-			Input:             *fInputPath,
-			Operation:         *fAlgo,
+			Curve:             parser.CurveID.String(),
+			Circuit:           *cfg.Circuit,
+			Input:             *cfg.InputPath,
+			Operation:         *cfg.Algo,
 			NbConstraints:     ccs.GetNbConstraints(),
 			NbSecretVariables: secret,
 			NbPublicVariables: public,
 			ProofSize:         proof_size,
 			MaxRAM:            (m.Sys / 1024 / 1024),
-			Count:             *fCount,
+			Count:             *cfg.Count,
 			RunTime:           took.Milliseconds(),
 		}
 
@@ -92,25 +93,25 @@ func runGroth16(cmd *cobra.Command, args []string) {
 
 	startProfile := func() {
 		start = time.Now()
-		if p != nil {
-			prof = profile.Start(p, profile.ProfilePath("."), profile.NoShutdownHook)
+		if parser.P != nil {
+			prof = profile.Start(parser.P, profile.ProfilePath("."), profile.NoShutdownHook)
 		}
 	}
 
 	stopProfile := func() {
 		took = time.Since(start)
-		if p != nil {
+		if parser.P != nil {
 			prof.Stop()
 		}
-		took /= time.Duration(*fCount)
+		took /= time.Duration(*cfg.Count)
 	}
 
-	if *fAlgo == "compile" {
+	if *cfg.Algo == "compile" {
 		var err error
 		var ccs constraint.ConstraintSystem
 		startProfile()
-		for i := 0; i < *fCount; i++ {
-			ccs, err = frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
+		for i := 0; i < *cfg.Count; i++ {
+			ccs, err = frontend.Compile(parser.CurveID.ScalarField(), r1cs.NewBuilder, parser.C.Circuit(*cfg.CircuitSize, *cfg.Circuit, *cfg.InputPath), frontend.WithCapacity(*cfg.CircuitSize))
 		}
 		stopProfile()
 		assertNoError(err)
@@ -122,13 +123,13 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	ccs, err := frontend.Compile(curveID.ScalarField(), r1cs.NewBuilder, c.Circuit(*fCircuitSize, *fCircuit, *fInputPath), frontend.WithCapacity(*fCircuitSize))
+	ccs, err := frontend.Compile(parser.CurveID.ScalarField(), r1cs.NewBuilder, parser.C.Circuit(*cfg.CircuitSize, *cfg.Circuit, *cfg.InputPath), frontend.WithCapacity(*cfg.CircuitSize))
 	assertNoError(err)
 
-	if *fAlgo == "setup" {
+	if *cfg.Algo == "setup" {
 		startProfile()
 		var err error
-		for i := 0; i < *fCount; i++ {
+		for i := 0; i < *cfg.Count; i++ {
 			_, _, err = groth16.Setup(ccs)
 		}
 		stopProfile()
@@ -137,11 +138,11 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	if *fAlgo == "witness" {
+	if *cfg.Algo == "witness" {
 		startProfile()
 		var err error
-		for i := 0; i < *fCount; i++ {
-			c.Witness(*fCircuitSize, curveID, *fCircuit, *fInputPath)
+		for i := 0; i < *cfg.Count; i++ {
+			parser.C.Witness(*cfg.CircuitSize, parser.CurveID, *cfg.Circuit, *cfg.InputPath)
 		}
 		stopProfile()
 		assertNoError(err)
@@ -153,15 +154,15 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	witness := c.Witness(*fCircuitSize, curveID, *fCircuit, *fInputPath)
+	witness := parser.C.Witness(*cfg.CircuitSize, parser.CurveID, *cfg.Circuit, *cfg.InputPath)
 
-	if *fAlgo == "prove" {
+	if *cfg.Algo == "prove" {
 		pk, err := groth16.DummySetup(ccs)
 		assertNoError(err)
 
 		var proof interface{}
 		startProfile()
-		for i := 0; i < *fCount; i++ {
+		for i := 0; i < *cfg.Count; i++ {
 			proof, err = groth16.Prove(ccs, pk, witness)
 		}
 		stopProfile()
@@ -171,7 +172,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	if *fAlgo != "verify" {
+	if *cfg.Algo != "verify" {
 		panic("algo at this stage should be verify")
 	}
 	pk, vk, err := groth16.Setup(ccs)
@@ -180,13 +181,10 @@ func runGroth16(cmd *cobra.Command, args []string) {
 	proof, err := groth16.Prove(ccs, pk, witness)
 	assertNoError(err)
 
-	// print(proof_size)
-	// writeResults(took, ccs, proof_size)
-
 	publicWitness, err := witness.Public()
 	assertNoError(err)
 	startProfile()
-	for i := 0; i < *fCount; i++ {
+	for i := 0; i < *cfg.Count; i++ {
 		err = groth16.Verify(proof, vk, publicWitness)
 	}
 	stopProfile()
@@ -199,10 +197,4 @@ func assertNoError(err error) {
 	if err != nil {
 		panic(err)
 	}
-}
-
-func init() {
-	rootCmd.AddCommand(groth16Cmd)
-	// groth16Cmd.Flags().StringVar(&inputPath, "input", "none", "input path to the dedicated input")
-	// print(inputPath)
 }
