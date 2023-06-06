@@ -26,10 +26,54 @@ def build_command_gnark(payload, count):
                     for inp in helper.get_all_input_files(input_path)
                     for op in payload.operation]
 
+        # Builder command memory
+        command_binary = f"./build_memory.sh"
+        # Create /tmp folder if non-existent
+        command_check_tmp = f"mkdir -p ./tmp"
+
+        # Memory commands
+        commands_memory = [
+            (
+                os.makedirs(f"{helper.GNARK_BENCH_MEMORY}/{modified_inp}", exist_ok=True),
+                f"{helper.MEMORY_CMD} -h -l ./{backend}_memory_{op} \
+                    --circuit={circ} \
+                    --curve={curve} \
+                    --input={inp} \
+                    --count={count} \
+                    2> {helper.GNARK_BENCH_MEMORY}/{modified_inp}/gnark_{backend}_{circ}_memory_{op}.txt \
+                    > /dev/null\n"
+            )[1]
+            for backend in payload.backend
+            for curve in payload.curves
+            for circ, input_path in payload.circuit.items()
+            for inp in helper.get_all_input_files(input_path)
+            for modified_inp in [inp.replace('_input/circuit/', '').replace('.json', '')]
+            for op in payload.operation
+        ]
+
+        commands_memory.append("cd ..; ")
+
+        commands_merge = [
+            "python3 _scripts/parsers/csv_parser.py --memory_folder {memory_folder}/{input_name} --time_filename {gnark_bench_folder}/gnark_{backend}_{circuit}.csv --circuit {circuit}\n".format(
+                memory_folder=helper.GNARK_BENCH_MEMORY,
+                input_name=inp.replace('_input/circuit/', '').replace('.json', ''),
+                gnark_bench_folder=helper.GNARK_BENCH,
+                backend=backend,
+                circuit=circ
+            )
+            for backend in payload.backend
+            for circ, input_path in payload.circuit.items()
+            for op in payload.operation
+            for inp in helper.get_all_input_files(input_path)
+        ]
+
         # Join the commands into a single string
-        command = "".join(commands)
-        # Prepend the command to change the working directory to the gnark directory
-        command = f"cd {helper.GNARK_DIR}; {command}"
+        pre_command = "".join(commands + commands_memory + commands_merge)
+        
+        command = f"cd {helper.GNARK_DIR}; \
+                    {command_binary}; \
+                    {command_check_tmp}; \
+                    {pre_command}\n"
     else:
         raise ValueError("Missing payload fields for circuit mode")
     return command
@@ -138,9 +182,9 @@ def build_command_bellman_ce(payload, count):
     """
     # TODO - Add count to command creation
     if len(payload.backend) != 1 or payload.backend[0] != "bellman_ce":
-        raise ValueError("Bellman benchmark only supports groth16 backend")
+        raise ValueError("Bellman_ce benchmark only supports groth16 backend")
     if len(payload.curves) != 1 or payload.curves[0] != "bn256":
-        raise ValueError("Bellman benchmark only supports bls12_381 curve")
+        raise ValueError("Bellman_ce benchmark only supports bn256 curve")
     # TODO handle diffent operations (i.e., algorithms)
     commands = []
     for circuit, input_path in payload.circuit.items():
@@ -251,6 +295,8 @@ def build_command_halo2_pse(payload, count):
 
     # Join the commands into a single string
     command = "".join(commands)
+
+    print(command)
     return command
 
 def default_case(_payload, _count):
