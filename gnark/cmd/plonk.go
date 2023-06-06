@@ -76,7 +76,7 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 			NbSecretVariables: secret,
 			NbPublicVariables: public,
 			ProofSize:         proof_size,
-			MaxRAM:            (m.Sys / 1024 / 1024),
+			MaxRAM:            m.Sys,
 			Count:             *cfg.Count,
 			RunTime:           took.Milliseconds(),
 		}
