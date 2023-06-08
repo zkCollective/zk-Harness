@@ -149,7 +149,7 @@ func (e *Ed25519) Verify(
 		bits = append(bits, e.api.ToBinary(hRam[i], 8)...)
 	}
 
-	hRamScalar := e.fp.scalarField.FromBitsOverflow(bits...)
+	hRamScalar := e.fp.scalarField.FromBits(bits...)
 	hRamScalar = e.fp.scalarField.Reduce(hRamScalar)
 
 	baseX := emulated.ValueOf[Ed25519Fp](curve.Params().Base[0])

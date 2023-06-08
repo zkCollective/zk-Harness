@@ -61,7 +61,7 @@ func TestRecursion(t *testing.T) {
 	}
 
 	var outerCircuit VerifierCircuit
-	outerCircuit.InnerVk.FillG1K(innerVk)
+	outerCircuit.InnerVk.Allocate(innerVk)
 
 	var outerAssignment VerifierCircuit
 	outerAssignment.InnerProof.Assign(proof)

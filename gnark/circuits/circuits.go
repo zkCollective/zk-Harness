@@ -94,11 +94,11 @@ func (d *defaultCircuit) Circuit(size int, name string, opts ...CircuitOption) f
 		}
 	case "groth16_bls12377":
 		outerCircuit := groth16bls12377verifier.VerifierCircuit{}
-		outerCircuit.InnerVk.FillG1K(optCircuit.verifyingKey)
+		outerCircuit.InnerVk.Allocate(optCircuit.verifyingKey)
 		return &outerCircuit
 	case "groth16_bls24315":
 		outerCircuit := groth16bls24315verifier.VerifierCircuit{}
-		outerCircuit.InnerVk.FillG1K(optCircuit.verifyingKey)
+		outerCircuit.InnerVk.Allocate(optCircuit.verifyingKey)
 		return &outerCircuit
 	default:
 		panic("not implemented")
