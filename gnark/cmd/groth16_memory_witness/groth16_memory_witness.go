@@ -11,7 +11,7 @@ import (
 )
 
 var groth16MemoryWitnessCmd = &cobra.Command{
-	Use:   "groth16MemorySetup",
+	Use:   "groth16MemoryWitness",
 	Short: "runs benchmarks and profiles using Groth16 proof system",
 	Run:   runGroth16MemoryWitness,
 }

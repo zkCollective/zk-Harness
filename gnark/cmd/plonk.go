@@ -193,5 +193,4 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 	stopProfile()
 	assertNoError(err)
 	writeResults(took, ccs, 0)
-
 }
