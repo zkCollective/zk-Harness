@@ -6,20 +6,20 @@ import (
 	"strings"
 
 	"github.com/consensys/gnark-crypto/ecc"
-	"github.com/consensys/gnark/backend/groth16"
+	"github.com/consensys/gnark/backend/plonk"
 	"github.com/spf13/cobra"
 	"github.com/zkCollective/zk-Harness/gnark/parser"
 )
 
-var groth16MemoryProveCmd = &cobra.Command{
-	Use:   "groth16MemoryProve",
+var plonkMemoryProveCmd = &cobra.Command{
+	Use:   "plonkMemoryProve",
 	Short: "runs benchmarks and profiles using Groth16 proof system",
-	Run:   runGroth16MemoryProve,
+	Run:   runPlonkMemoryProve,
 }
 
 var cfg = parser.NewConfig()
 
-func runGroth16MemoryProve(cmd *cobra.Command, args []string) {
+func runPlonkMemoryProve(cmd *cobra.Command, args []string) {
 
 	if err := parser.ParseFlagsMemory(cfg); err != nil {
 		fmt.Println("error: ", err.Error())
@@ -28,8 +28,8 @@ func runGroth16MemoryProve(cmd *cobra.Command, args []string) {
 	}
 
 	// Initialize variables
-	ccs := groth16.NewCS(parser.CurveID)
-	pk := groth16.NewProvingKey(parser.CurveID)
+	ccs := plonk.NewCS(parser.CurveID)
+	pk := plonk.NewProvingKey(parser.CurveID)
 
 	// Read CCS
 	f, err := os.Open("tmp/ccs.dat")
@@ -60,7 +60,7 @@ func runGroth16MemoryProve(cmd *cobra.Command, args []string) {
 	// Witness creation is included in Prover Memory benchmarks
 	witness := parser.C.Witness(*cfg.CircuitSize, parser.CurveID, *cfg.Circuit, *cfg.InputPath)
 
-	proof, err := groth16.Prove(ccs, pk, witness)
+	proof, err := plonk.Prove(ccs, pk, witness)
 	if err != nil {
 		panic("Error when computing proof. Ensure that Constraint System and pk/vk are generated for the same parameters.")
 	}
@@ -96,7 +96,7 @@ func runGroth16MemoryProve(cmd *cobra.Command, args []string) {
 }
 
 func Execute() {
-	if err := groth16MemoryProveCmd.Execute(); err != nil {
+	if err := plonkMemoryProveCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
@@ -112,11 +112,11 @@ func init() {
 		curves[i] = strings.ToLower(_curves[i].String())
 	}
 
-	cfg.InputPath = groth16MemoryProveCmd.PersistentFlags().String("input", "none", "input path to the dedicated input")
-	groth16MemoryProveCmd.MarkPersistentFlagRequired("input")
-	cfg.Circuit = groth16MemoryProveCmd.PersistentFlags().String("circuit", "expo", "name of the circuit to use")
-	cfg.CircuitSize = groth16MemoryProveCmd.PersistentFlags().Int("size", 10000, "size of the circuit, parameter to circuit constructor")
-	cfg.Count = groth16MemoryProveCmd.PersistentFlags().Int("count", 2, "bench count (time is averaged on number of executions)")
-	cfg.Curve = groth16MemoryProveCmd.PersistentFlags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
-	cfg.FileType = groth16MemoryProveCmd.PersistentFlags().String("filetype", "csv", "Type of file to output for benchmarks")
+	cfg.InputPath = plonkMemoryProveCmd.PersistentFlags().String("input", "none", "input path to the dedicated input")
+	plonkMemoryProveCmd.MarkPersistentFlagRequired("input")
+	cfg.Circuit = plonkMemoryProveCmd.PersistentFlags().String("circuit", "expo", "name of the circuit to use")
+	cfg.CircuitSize = plonkMemoryProveCmd.PersistentFlags().Int("size", 10000, "size of the circuit, parameter to circuit constructor")
+	cfg.Count = plonkMemoryProveCmd.PersistentFlags().Int("count", 2, "bench count (time is averaged on number of executions)")
+	cfg.Curve = plonkMemoryProveCmd.PersistentFlags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
+	cfg.FileType = plonkMemoryProveCmd.PersistentFlags().String("filetype", "csv", "Type of file to output for benchmarks")
 }

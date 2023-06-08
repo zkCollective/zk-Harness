@@ -13,15 +13,15 @@ import (
 )
 
 // groth16Cmd represents the groth16 command
-var groth16MemoryVerifyCmd = &cobra.Command{
-	Use:   "groth16MemoryVerify",
+var plonkMemoryVerifyCmd = &cobra.Command{
+	Use:   "plonkMemoryVerify",
 	Short: "runs benchmarks and profiles using Groth16 proof system",
-	Run:   runGroth16MemoryVerify,
+	Run:   runPlonkMemoryVerify,
 }
 
 var cfg = parser.NewConfig()
 
-func runGroth16MemoryVerify(cmd *cobra.Command, args []string) {
+func runPlonkMemoryVerify(cmd *cobra.Command, args []string) {
 
 	if err := parser.ParseFlagsMemory(cfg); err != nil {
 		fmt.Println("error: ", err.Error())
@@ -81,7 +81,7 @@ func runGroth16MemoryVerify(cmd *cobra.Command, args []string) {
 }
 
 func Execute() {
-	if err := groth16MemoryVerifyCmd.Execute(); err != nil {
+	if err := plonkMemoryVerifyCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
@@ -97,11 +97,11 @@ func init() {
 		curves[i] = strings.ToLower(_curves[i].String())
 	}
 
-	cfg.InputPath = groth16MemoryVerifyCmd.PersistentFlags().String("input", "none", "input path to the dedicated input")
-	groth16MemoryVerifyCmd.MarkPersistentFlagRequired("input")
-	cfg.Circuit = groth16MemoryVerifyCmd.PersistentFlags().String("circuit", "expo", "name of the circuit to use")
-	cfg.CircuitSize = groth16MemoryVerifyCmd.PersistentFlags().Int("size", 10000, "size of the circuit, parameter to circuit constructor")
-	cfg.Count = groth16MemoryVerifyCmd.PersistentFlags().Int("count", 2, "bench count (time is averaged on number of executions)")
-	cfg.Curve = groth16MemoryVerifyCmd.PersistentFlags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
-	cfg.FileType = groth16MemoryVerifyCmd.PersistentFlags().String("filetype", "csv", "Type of file to output for benchmarks")
+	cfg.InputPath = plonkMemoryVerifyCmd.PersistentFlags().String("input", "none", "input path to the dedicated input")
+	plonkMemoryVerifyCmd.MarkPersistentFlagRequired("input")
+	cfg.Circuit = plonkMemoryVerifyCmd.PersistentFlags().String("circuit", "expo", "name of the circuit to use")
+	cfg.CircuitSize = plonkMemoryVerifyCmd.PersistentFlags().Int("size", 10000, "size of the circuit, parameter to circuit constructor")
+	cfg.Count = plonkMemoryVerifyCmd.PersistentFlags().Int("count", 2, "bench count (time is averaged on number of executions)")
+	cfg.Curve = plonkMemoryVerifyCmd.PersistentFlags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
+	cfg.FileType = plonkMemoryVerifyCmd.PersistentFlags().String("filetype", "csv", "Type of file to output for benchmarks")
 }
