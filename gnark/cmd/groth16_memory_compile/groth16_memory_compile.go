@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 	"os"
-	"runtime"
 	"strings"
 
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/r1cs"
 	"github.com/spf13/cobra"
+	"github.com/zkCollective/zk-Harness/gnark/circuits"
 	"github.com/zkCollective/zk-Harness/gnark/parser"
 )
 
@@ -34,14 +34,9 @@ func runGroth16MemoryCompile(cmd *cobra.Command, args []string) {
 		parser.C.Circuit(
 			*cfg.CircuitSize,
 			*cfg.Circuit,
-			*cfg.InputPath),
+			circuits.WithInputCircuit(*cfg.InputPath)),
 		frontend.WithCapacity(*cfg.CircuitSize))
 	parser.AssertNoError(err)
-
-	// check memory usage, max ram requested from OS
-	var m runtime.MemStats
-	runtime.ReadMemStats(&m)
-	fmt.Printf("Memory Usage Compile: %v\n", m.Sys)
 
 	f, err := os.Create("tmp/ccs.dat")
 	if err != nil {
@@ -54,7 +49,6 @@ func runGroth16MemoryCompile(cmd *cobra.Command, args []string) {
 		panic("Failed to write to file: " + err.Error())
 	}
 
-	fmt.Printf("Memory Usage Compile 2: %v\n", m.Sys)
 	return
 }
 
@@ -74,10 +68,6 @@ func init() {
 	for i := 0; i < len(_curves); i++ {
 		curves[i] = strings.ToLower(_curves[i].String())
 	}
-	// check memory usage, max ram requested from OS
-	var m runtime.MemStats
-	runtime.ReadMemStats(&m)
-	fmt.Printf("Memory Usage Compile: %v\n", m.Sys)
 
 	cfg.InputPath = groth16MemoryCompileCmd.PersistentFlags().String("input", "none", "input path to the dedicated input")
 	groth16MemoryCompileCmd.MarkPersistentFlagRequired("input")

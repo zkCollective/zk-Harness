@@ -2,9 +2,16 @@ import argparse
 import json
 import subprocess
 
+from . import process_recursion
 from . import process_circuit
 from . import process_arithmetic
 from . import process_ec
+
+def recursion_processing(project, config, count):
+    # Extract relevant fields from config, build & execute command
+    payload = process_recursion.get_recursion_payload(config)
+    commands = process_recursion.build_command(project, payload, count)
+    subprocess.run(commands, shell=True, check=True)
 
 def circuit_processing(project, config, count):
     # Extract relevant fields from config, build & execute command
@@ -29,6 +36,7 @@ def default_case():
 
 # TODO - Add other modes (arithmetic & curves)
 categories = {
+    "recursion": recursion_processing,
     "circuit": circuit_processing,
     "arithmetic": arithmetic_processing,
     "ec": ec_processing

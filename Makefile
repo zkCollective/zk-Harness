@@ -174,8 +174,14 @@ benchmark-toy-gnark:
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_all_toy.json  
 
-benchmark-hash:
+benchmark-gnark-hash:
 	python3 -m _scripts.reader --config _input/config/gnark/config_hash.json  
+
+benchmark-gnark-recursion:
+	$(info --------------------------------------------)
+	$(info ----------- GNARK RECURSION BENCHMARKS -----)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/gnark/config_recursion.json
 
 benchmark-gnark-circuits: benchmark-toy-gnark benchmark-hash
 

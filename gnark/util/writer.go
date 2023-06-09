@@ -5,7 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"time"
+
+	"github.com/consensys/gnark/constraint"
 )
+
+// convert types take an int and return a string value.
+type WriteFunction func(time.Duration, constraint.ConstraintSystem, int)
 
 // WriteData writes the data to a file in either CSV or JSON format, based on the file format specified.
 func WriteData(fileFormat string, data interface{}, filename ...string) error {
@@ -67,3 +73,31 @@ func writeDataToJSON(data interface{}, encoder *json.Encoder) error {
 	// TODO
 	return nil
 }
+
+// func writeResultCircuit(took time.Duration, ccs constraint.ConstraintSystem, data util.BenchDataCircuit, proof_size int) {
+// 	// check memory usage, max ram requested from OS
+// 	var m runtime.MemStats
+// 	runtime.ReadMemStats(&m)
+
+// 	_, secret, public := ccs.GetNbVariables()
+// 	bData := util.BenchDataCircuit{
+// 		Framework:         data.Framework,
+// 		Category:          "circuit",
+// 		Backend:           "groth16",
+// 		Curve:             curveID.String(),
+// 		Circuit:           *fCircuit,
+// 		Input:             *fInputPath,
+// 		Operation:         *fAlgo,
+// 		NbConstraints:     ccs.GetNbConstraints(),
+// 		NbSecretVariables: secret,
+// 		NbPublicVariables: public,
+// 		ProofSize:         proof_size,
+// 		MaxRAM:            (m.Sys / 1024 / 1024),
+// 		Count:             *fCount,
+// 		RunTime:           took.Milliseconds(),
+// 	}
+
+// 	if err := util.WriteData("csv", bData, filename); err != nil {
+// 		panic(err)
+// 	}
+// }

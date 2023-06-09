@@ -8,6 +8,7 @@ import (
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/spf13/cobra"
+	"github.com/zkCollective/zk-Harness/gnark/circuits"
 	"github.com/zkCollective/zk-Harness/gnark/parser"
 )
 
@@ -58,7 +59,10 @@ func runGroth16MemoryProve(cmd *cobra.Command, args []string) {
 	f.Close()
 
 	// Witness creation is included in Prover Memory benchmarks
-	witness := parser.C.Witness(*cfg.CircuitSize, parser.CurveID, *cfg.Circuit, *cfg.InputPath)
+	witness := parser.C.Witness(*cfg.CircuitSize,
+		parser.CurveID,
+		*cfg.Circuit,
+		circuits.WithInputWitness(*cfg.InputPath))
 
 	proof, err := groth16.Prove(ccs, pk, witness)
 	if err != nil {

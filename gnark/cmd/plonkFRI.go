@@ -1,18 +1,3 @@
-/*
-Copyright © 2021 ConsenSys Software Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-	http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
 package cmd
 
 import (
@@ -22,12 +7,11 @@ import (
 	"time"
 
 	"github.com/DmitriyVTitov/size"
-	"github.com/consensys/gnark/backend/plonk"
+	"github.com/consensys/gnark/backend/plonkfri"
 	"github.com/consensys/gnark/constraint"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/scs"
 	"github.com/consensys/gnark/logger"
-	"github.com/consensys/gnark/test"
 	"github.com/pkg/profile"
 	"github.com/spf13/cobra"
 	"github.com/zkCollective/zk-Harness/gnark/circuits"
@@ -36,14 +20,13 @@ import (
 )
 
 // plonkCmd represents the plonk command
-var plonkCmd = &cobra.Command{
-	Use:   "plonk",
+var plonkFRIcmd = &cobra.Command{
+	Use:   "plonkFRI",
 	Short: "runs benchmarks and profiles using PlonK proof system",
-	Run:   runPlonk,
+	Run:   runPlonkFRI,
 }
 
-func runPlonk(plonkCmd *cobra.Command, args []string) {
-
+func runPlonkFRI(plonkCmd *cobra.Command, args []string) {
 	log := logger.Logger()
 	log.Info().Msg("Benchmarking " + *cfg.Circuit + " - gnark, plonk: " + *cfg.Algo + " " + *cfg.Curve + " " + *cfg.InputPath)
 
@@ -88,11 +71,12 @@ func runPlonk(plonkCmd *cobra.Command, args []string) {
 	}
 
 	// Run Benchmarks for Groth16 on given specification
-	benchPlonk(writeResults, *cfg.Algo, *cfg.Count, *cfg.CircuitSize, *cfg.Circuit, util.WithInput(*cfg.InputPath))
+	benchPlonkFRI(writeResults, *cfg.Algo, *cfg.Count, *cfg.CircuitSize, *cfg.Circuit, util.WithInput(*cfg.InputPath))
 }
 
-func benchPlonk(fnWrite util.WriteFunction, falgo string, fcount int, fcircuitSize int, fcircuit string, opts ...util.BenchOption) {
-	fmt.Println("BENCHMARKING PLONK")
+func benchPlonkFRI(fnWrite util.WriteFunction, falgo string, fcount int, fcircuitSize int, fcircuit string, opts ...util.BenchOption) {
+	fmt.Println("BENCHMARKING PLONK WITH FRI")
+
 	// Parse Options, if no option is provided it runs plain G16 benches
 	opt := util.BenchConfig{}
 	for _, o := range opts {
@@ -147,15 +131,11 @@ func benchPlonk(fnWrite util.WriteFunction, falgo string, fcount int, fcircuitSi
 	ccs, err := frontend.Compile(parser.CurveID.ScalarField(), scs.NewBuilder, circuit, frontend.WithCapacity(fcircuitSize))
 	assertNoError(err)
 
-	// create srs
-	srs, err := test.NewKZGSRS(ccs)
-	assertNoError(err)
-
 	if falgo == "setup" {
 		startProfile()
 		var err error
 		for i := 0; i < fcount; i++ {
-			_, _, err = plonk.Setup(ccs, srs)
+			_, _, err = plonkfri.Setup(ccs)
 		}
 		stopProfile()
 		assertNoError(err)
@@ -186,7 +166,7 @@ func benchPlonk(fnWrite util.WriteFunction, falgo string, fcount int, fcircuitSi
 		return
 	}
 
-	witness := parser.C.Witness(
+	validWitness := parser.C.Witness(
 		fcircuitSize,
 		parser.CurveID,
 		fcircuit,
@@ -195,15 +175,15 @@ func benchPlonk(fnWrite util.WriteFunction, falgo string, fcount int, fcircuitSi
 		circuits.WithProof(opt.Proof),
 		circuits.WithWitness(opt.Witness))
 
-	pk, vk, err := plonk.Setup(ccs, srs)
+	pk, vk, err := plonkfri.Setup(ccs)
 	assertNoError(err)
 
 	if falgo == "prove" {
-		fmt.Println("BENCHMARK PROOF GENERATION")
+		fmt.Println("BENCHMARK PROOF GENERATION PLONK FRI")
 		var proof interface{}
 		startProfile()
 		for i := 0; i < fcount; i++ {
-			proof, err = plonk.Prove(ccs, pk, witness)
+			proof, err = plonkfri.Prove(ccs, pk, validWitness)
 		}
 		stopProfile()
 		assertNoError(err)
@@ -212,22 +192,26 @@ func benchPlonk(fnWrite util.WriteFunction, falgo string, fcount int, fcircuitSi
 		return
 	}
 
-	if falgo != "verify" {
+	if *fAlgo != "verify" {
 		panic("algo at this stage should be verify")
 	}
 
-	proof, err := plonk.Prove(ccs, pk, witness)
+	correctProof, err := plonkfri.Prove(ccs, pk, validWitness)
 	assertNoError(err)
 
-	publicWitness, err := witness.Public()
+	validPublicWitness, err := validWitness.Public()
 	assertNoError(err)
 
 	fmt.Println("BENCHMARK PROOF VERIFICATION")
 	startProfile()
 	for i := 0; i < fcount; i++ {
-		err = plonk.Verify(proof, vk, publicWitness)
+		err = plonkfri.Verify(correctProof, vk, validPublicWitness)
 	}
 	stopProfile()
 	assertNoError(err)
 	fnWrite(took, ccs, 0)
+}
+
+func init() {
+	rootCmd.AddCommand(plonkFRIcmd)
 }

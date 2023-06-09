@@ -7,6 +7,7 @@ import (
 
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/spf13/cobra"
+	"github.com/zkCollective/zk-Harness/gnark/circuits"
 	"github.com/zkCollective/zk-Harness/gnark/parser"
 )
 
@@ -26,7 +27,10 @@ func runGroth16MemoryWitness(cmd *cobra.Command, args []string) {
 		os.Exit(-1)
 	}
 
-	witness := parser.C.Witness(*cfg.CircuitSize, parser.CurveID, *cfg.Circuit, *cfg.InputPath)
+	witness := parser.C.Witness(*cfg.CircuitSize,
+		parser.CurveID,
+		*cfg.Circuit,
+		circuits.WithInputWitness(*cfg.InputPath))
 
 	f, err := os.Create("tmp/witness.dat")
 	if err != nil {
