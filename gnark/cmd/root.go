@@ -27,6 +27,26 @@ func Execute() {
 	}
 }
 
+var (
+	// Variables Circuit
+	fCircuit     *string
+	fCircuitSize *int
+	fAlgo        *string
+	fProfile     *string
+	fCount       *int
+	fCurve       *string
+	fFileType    *string
+	fInputPath   *string
+
+	// Variables Arithmetic / Curve
+	fOperation *string
+	fField     *string
+	fGroup     *string
+
+	// Variables Recursion
+	fOuterBackend *string
+)
+
 func init() {
 
 	cobra.OnInitialize()
@@ -48,6 +68,8 @@ func init() {
 	cfg.Algo = rootCmd.PersistentFlags().String("algo", "prove", "name of the algorithm to benchmark. must be compile, setup, prove or verify")
 	cfg.Operation = rootCmd.PersistentFlags().String("operation", "None", "operation to benchmark")
 	cfg.Profile = rootCmd.PersistentFlags().String("profile", "none", "type of profile. must be none, trace, cpu or mem")
+
+	cfg.OuterBackend = rootCmd.PersistentFlags().String("outerBackend", "groth16", "Backend for the outer circuit")
 
 	rootCmd.AddCommand(groth16Cmd)
 	rootCmd.AddCommand(plonkCmd)

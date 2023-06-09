@@ -9,6 +9,7 @@ import (
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/scs"
 	"github.com/spf13/cobra"
+	"github.com/zkCollective/zk-Harness/gnark/circuits"
 	"github.com/zkCollective/zk-Harness/gnark/parser"
 )
 
@@ -33,7 +34,7 @@ func runPlonkMemoryCompile(cmd *cobra.Command, args []string) {
 		parser.C.Circuit(
 			*cfg.CircuitSize,
 			*cfg.Circuit,
-			*cfg.InputPath),
+			circuits.WithInputCircuit(*cfg.InputPath)),
 		frontend.WithCapacity(*cfg.CircuitSize))
 	parser.AssertNoError(err)
 

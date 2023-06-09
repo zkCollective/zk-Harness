@@ -10,35 +10,38 @@ import (
 )
 
 type Config struct {
-	Circuit     *string
-	CircuitSize *int
-	Algo        *string
-	Profile     *string
-	Count       *int
-	Curve       *string
-	FileType    *string
-	InputPath   *string
-	Operation   *string
+	Circuit      *string
+	CircuitSize  *int
+	Algo         *string
+	Profile      *string
+	Count        *int
+	Curve        *string
+	FileType     *string
+	InputPath    *string
+	Operation    *string
+	OuterBackend *string
 }
 
 func NewConfig() *Config {
 	return &Config{
-		Circuit:     new(string),
-		CircuitSize: new(int),
-		Algo:        new(string),
-		Profile:     new(string),
-		Count:       new(int),
-		Curve:       new(string),
-		FileType:    new(string),
-		InputPath:   new(string),
-		Operation:   new(string),
+		Circuit:      new(string),
+		CircuitSize:  new(int),
+		Algo:         new(string),
+		Profile:      new(string),
+		Count:        new(int),
+		Curve:        new(string),
+		FileType:     new(string),
+		InputPath:    new(string),
+		Operation:    new(string),
+		OuterBackend: new(string),
 	}
 }
 
 var (
-	CurveID ecc.ID
-	P       func(p *profile.Profile)
-	C       circuits.BenchCircuit
+	InnerCurveID ecc.ID
+	CurveID      ecc.ID
+	P            func(p *profile.Profile)
+	C            circuits.BenchCircuit
 )
 
 var config Config

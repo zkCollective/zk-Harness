@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package exponentiate
+package exponentiate_opt
 
 import (
 	"github.com/consensys/gnark/frontend"
@@ -21,7 +21,7 @@ import (
 
 // Circuit y == x**e
 // only the bitSize least significant bits of e are used
-type ExponentiateCircuit struct {
+type ExponentiateOptCircuit struct {
 	// tagging a variable is optional
 	// default uses variable name and secret visibility.
 	X frontend.Variable `gnark:",public"`
@@ -32,7 +32,7 @@ type ExponentiateCircuit struct {
 
 // Define declares the circuit's constraints
 // y == x**e
-func (circuit *ExponentiateCircuit) Define(api frontend.API) error {
+func (circuit *ExponentiateOptCircuit) Define(api frontend.API) error {
 
 	// number of bits of exponent
 	const bitSize = 8

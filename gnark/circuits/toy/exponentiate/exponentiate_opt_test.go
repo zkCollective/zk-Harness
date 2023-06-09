@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package exponentiate
+package exponentiate_opt
 
 import (
 	"testing"
@@ -24,15 +24,15 @@ func TestExponentiateGroth16(t *testing.T) {
 
 	assert := test.NewAssert(t)
 
-	var expCircuit ExponentiateCircuit
+	var expCircuit ExponentiateOptCircuit
 
-	assert.ProverFailed(&expCircuit, &ExponentiateCircuit{
+	assert.ProverFailed(&expCircuit, &ExponentiateOptCircuit{
 		X: 2,
 		E: 12,
 		Y: 4095,
 	})
 
-	assert.ProverSucceeded(&expCircuit, &ExponentiateCircuit{
+	assert.ProverSucceeded(&expCircuit, &ExponentiateOptCircuit{
 		X: 2,
 		E: 12,
 		Y: 4096,
