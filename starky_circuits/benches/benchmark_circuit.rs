@@ -1,5 +1,3 @@
-#![feature(generic_const_exprs)]
-
 // Extern crate declarations
 extern crate rand;
 extern crate criterion;
@@ -15,6 +13,7 @@ use starky::{
 };
 use plonky2::plonk::config::{GenericConfig, PoseidonGoldilocksConfig};
 use plonky2::util::timing::TimingTree;
+use plonky2::field::types::Field;
 
 pub fn bench_sha256(c: &mut Criterion, num_hashes: i32){
     const D: usize = 2;
@@ -72,6 +71,64 @@ pub fn bench_sha256(c: &mut Criterion, num_hashes: i32){
     });
 }
 
+fn fibonacci<F: Field>(n: usize, x0: F, x1: F) -> F {
+    (0..n).fold((x0, x1), |x, _| (x.1, x.0 + x.1)).1
+}
+
+pub fn bench_fibonacci(c: &mut Criterion, num_rows_input: i32) -> Result<(), anyhow::Error> {
+    const D: usize = 2;
+    type C = PoseidonGoldilocksConfig;
+    type F = <C as GenericConfig<D>>::F;
+    type S = starky_circuits::circuits::fibonacci::FibonacciStark<F, D>;
+    let config = starky_utils::secure_config();
+
+    let mut group = c.benchmark_group("fibonacci");
+
+    let num_rows = 1 << num_rows_input;
+    let public_inputs = [F::ZERO, F::ONE,fibonacci(num_rows - 1, F::ZERO, F::ONE)];
+    let stark = S::new(num_rows);
+    
+    // 1. Witness Generation
+    group.bench_function("setup", |b| {
+        b.iter(|| { 
+            let _  = stark.generate_trace(public_inputs[0], public_inputs[1]);
+        })
+    });
+
+    let trace = stark.generate_trace(public_inputs[0], public_inputs[1]);
+
+    // 2. Compute the proof
+    group.bench_function("proof", |b| {
+        b.iter(|| { 
+            let _  = prove::<F, C, S, D>(
+                stark,
+                &config,
+                trace.clone(),
+                public_inputs,
+                &mut TimingTree::default(),
+            );
+        })
+    });
+
+    let proof = prove::<F, C, S, D>(
+        stark,
+        &config,
+        trace.clone(),
+        public_inputs,
+        &mut TimingTree::default(),
+    )?;
+
+    group.bench_function("proof", |b| {
+        b.iter(|| { 
+            let _ = verify_stark_proof(stark, proof.clone(), &config);
+        })
+    });
+
+    verify_stark_proof(stark, proof, &config)?;
+
+    Ok(())
+}
+
 fn main() {
     let mut criterion = Criterion::default()
         .configure_from_args()
@@ -88,6 +145,7 @@ fn main() {
 
     match circuit_str.as_str() {
         "sha256" => bench_sha256(&mut criterion, num_hashes),
+        "fibonacci" => bench_fibonacci(&mut criterion, num_hashes).unwrap(),
         _ => println!("Unsupported circuit"),
     }
 
