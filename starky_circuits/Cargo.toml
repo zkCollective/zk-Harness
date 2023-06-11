@@ -1,0 +1,34 @@
+[package]
+name = "starky_circuits"
+version = "0.1.0"
+edition = "2021"
+
+[[bench]]
+name = "benchmark_circuit"
+harness = false
+
+[features]
+default = ["parallel", "std", "timing"]
+parallel = ["plonky2/parallel", "plonky2_maybe_rayon/parallel"]
+std = ["anyhow/std", "plonky2/std"]
+timing = ["plonky2/timing"]
+
+[dependencies]
+anyhow = { version = "1.0.40", default-features = false }
+itertools = { version = "0.10.0", default-features = false }
+log = { version = "0.4.14", default-features = false }
+plonky2_maybe_rayon = { version = "0.1.0", default-features = false }
+plonky2 = { version = "0.1.2", default-features = false }
+plonky2_util = { git = "https://github.com/mir-protocol/plonky2.git"}
+arrayref = "0.3.7"
+generic-array = "0.14.7"
+sha2 = { version = "0.10.6", features = ["compress"] }
+criterion = "0.5.1"
+starky = { git = "https://github.com/tumberger/plonky2.git", branch = "sha256-starky"}
+rust_utils = {path = "../rust_utils"}
+rand = "0.8.5"
+starky_utils = { path = "starky_utils" }
+
+[dev-dependencies]
+env_logger = { version = "0.9.0", default-features = false }
+plonky2_field = { git = "https://github.com/mir-protocol/plonky2.git"}
