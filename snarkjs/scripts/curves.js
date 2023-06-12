@@ -30,6 +30,7 @@ async function benchmark(curve, G, operation, x, y, count) {
     var start;
     var time;
     var hrTime;
+    const Fr = curve.Fr;
     switch (operation) {
         case "scalar-multiplication":
             start = process.hrtime();
@@ -40,10 +41,15 @@ async function benchmark(curve, G, operation, x, y, count) {
             time = hrTime[0] * 1000000000 + hrTime[1];
             return time / count; // nano seconds
         case "multi-scalar-multiplication":
-            start = process.hrtime();
             const N = x;
             const scalars = new BigBuffer(N*curve.Fr.n8);
             const bases = new BigBuffer(N*G.F.n8*2);
+            for (let i=0; i<N; i++) {
+                const num = Fr.e(i+1);
+                scalars.set(Fr.fromMontgomery(num), i*Fr.n8);
+                bases.set(G.toAffine(G.timesFr(G.g, num)), i*G.F.n8*2);
+            }
+            start = process.hrtime();
             for (let step = 0; step < count; step++) {
                 var r = await G.multiExpAffine(bases, scalars, false, "");
             }
