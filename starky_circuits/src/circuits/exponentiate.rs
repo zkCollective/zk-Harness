@@ -7,7 +7,6 @@ use plonky2::hash::hash_types::RichField;
 use plonky2::plonk::circuit_builder::CircuitBuilder;
 
 use starky::constraint_consumer::{ConstraintConsumer, RecursiveConstraintConsumer};
-use starky::permutation::PermutationPair;
 use starky::stark::Stark;
 use starky::util::trace_rows_to_poly_values;
 use starky::vars::{StarkEvaluationTargets, StarkEvaluationVars};

@@ -121,7 +121,66 @@ pub fn bench_fibonacci(c: &mut Criterion, num_rows_input: i32) -> Result<(), any
         &mut TimingTree::default(),
     )?;
 
+    group.bench_function("verify", |b| {
+        b.iter(|| { 
+            let _ = verify_stark_proof(stark, proof.clone(), &config);
+        })
+    });
+
+    verify_stark_proof(stark, proof, &config)?;
+
+    Ok(())
+}
+
+fn exponentiate<F: Field>(n: usize, x: F) -> F {
+    (0..n).fold((F::ONE, x), |acc, _| (acc.1, acc.1 * x)).1
+}
+
+pub fn bench_exponentiate(c: &mut Criterion, num_rows_input: i32) -> Result<(), anyhow::Error> {
+    const D: usize = 2;
+    type C = PoseidonGoldilocksConfig;
+    type F = <C as GenericConfig<D>>::F;
+    type S = starky_circuits::circuits::exponentiate::ExponentiateStark<F, D>;
+    let config = starky_utils::secure_config();
+
+    let mut group = c.benchmark_group("exponentiate");
+
+    let num_rows = 1 << num_rows_input;
+    let public_inputs = [F::ONE, F::from_canonical_usize(num_rows), exponentiate(num_rows - 1, F::ONE)];
+    let stark = S::new(num_rows);
+    
+    // 1. Witness Generation
+    group.bench_function("setup", |b| {
+        b.iter(|| { 
+            let _  = stark.generate_trace(public_inputs[0], public_inputs[1], public_inputs[2]);
+        
+        })
+    });
+
+    let trace = stark.generate_trace(public_inputs[0], public_inputs[1], public_inputs[2]);
+
+    // 2. Compute the proof
     group.bench_function("proof", |b| {
+        b.iter(|| { 
+            let _  = prove::<F, C, S, D>(
+                stark,
+                &config,
+                trace.clone(),
+                public_inputs,
+                &mut TimingTree::default(),
+            );
+        })
+    });
+
+    let proof = prove::<F, C, S, D>(
+        stark,
+        &config,
+        trace.clone(),
+        public_inputs,
+        &mut TimingTree::default(),
+    )?;
+
+    group.bench_function("verify", |b| {
         b.iter(|| { 
             let _ = verify_stark_proof(stark, proof.clone(), &config);
         })
@@ -149,6 +208,7 @@ fn main() {
     match circuit_str.as_str() {
         "sha256" => bench_sha256(&mut criterion, num_hashes),
         "fibonacci" => bench_fibonacci(&mut criterion, num_hashes).unwrap(),
+        "exponentiate" => bench_exponentiate(&mut criterion, num_hashes).unwrap(),
         _ => println!("Unsupported circuit"),
     }
 
