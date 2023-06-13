@@ -7,15 +7,13 @@ use plonky2::hash::hash_types::RichField;
 use plonky2::plonk::circuit_builder::CircuitBuilder;
 
 use starky::constraint_consumer::{ConstraintConsumer, RecursiveConstraintConsumer};
-use starky::permutation::PermutationPair;
 use starky::stark::Stark;
 use starky::util::trace_rows_to_poly_values;
 use starky::vars::{StarkEvaluationTargets, StarkEvaluationVars};
 
 /// Toy STARK system used for testing.
-/// Computes a Fibonacci sequence with state `[x0, x1, i, j]` using the state transition
-/// `x0' <- x1, x1' <- x0 + x1, i' <- i+1, j' <- j+1`.
-/// Note: The `i, j` columns are only used to test the permutation argument.
+/// Computes a Fibonacci sequence with state `[x0, x1]` using the state transition
+/// `x0' <- x1, x1' <- x0 + x1
 #[derive(Copy, Clone)]
 pub struct FibonacciStark<F: RichField + Extendable<D>, const D: usize> {
     num_rows: usize,
@@ -38,25 +36,22 @@ impl<F: RichField + Extendable<D>, const D: usize> FibonacciStark<F, D> {
         }
     }
 
-    /// Generate the trace using `x0, x1, 0, 1` as initial state values.
+    /// Generate the trace using `x0, x1` as initial state values.
     pub fn generate_trace(&self, x0: F, x1: F) -> Vec<PolynomialValues<F>> {
-        let mut trace_rows = (0..self.num_rows)
-            .scan([x0, x1, F::ZERO, F::ONE], |acc, _| {
+        let trace_rows = (0..self.num_rows)
+            .scan([x0, x1], |acc, _| {
                 let tmp = *acc;
                 acc[0] = tmp[1];
                 acc[1] = tmp[0] + tmp[1];
-                acc[2] = tmp[2] + F::ONE;
-                acc[3] = tmp[3] + F::ONE;
                 Some(tmp)
             })
             .collect::<Vec<_>>();
-        trace_rows[self.num_rows - 1][3] = F::ZERO; // So that column 2 and 3 are permutation of one another.
         trace_rows_to_poly_values(trace_rows)
     }
 }
 
 impl<F: RichField + Extendable<D>, const D: usize> Stark<F, D> for FibonacciStark<F, D> {
-    const COLUMNS: usize = 4;
+    const COLUMNS: usize = 2;
     const PUBLIC_INPUTS: usize = 3;
 
     fn eval_packed_generic<FE, P, const D2: usize>(
@@ -85,37 +80,16 @@ impl<F: RichField + Extendable<D>, const D: usize> Stark<F, D> for FibonacciStar
 
     fn eval_ext_circuit(
         &self,
-        builder: &mut CircuitBuilder<F, D>,
-        vars: StarkEvaluationTargets<D, { Self::COLUMNS }, { Self::PUBLIC_INPUTS }>,
-        yield_constr: &mut RecursiveConstraintConsumer<F, D>,
+        _builder: &mut CircuitBuilder<F, D>,
+        _vars: StarkEvaluationTargets<D, { Self::COLUMNS }, { Self::PUBLIC_INPUTS }>,
+        _yield_constr: &mut RecursiveConstraintConsumer<F, D>,
     ) {
-        // Check public inputs.
-        let pis_constraints = [
-            builder.sub_extension(vars.local_values[0], vars.public_inputs[Self::PI_INDEX_X0]),
-            builder.sub_extension(vars.local_values[1], vars.public_inputs[Self::PI_INDEX_X1]),
-            builder.sub_extension(vars.local_values[1], vars.public_inputs[Self::PI_INDEX_RES]),
-        ];
-        yield_constr.constraint_first_row(builder, pis_constraints[0]);
-        yield_constr.constraint_first_row(builder, pis_constraints[1]);
-        yield_constr.constraint_last_row(builder, pis_constraints[2]);
-
-        // x0' <- x1
-        let first_col_constraint = builder.sub_extension(vars.next_values[0], vars.local_values[1]);
-        yield_constr.constraint_transition(builder, first_col_constraint);
-        // x1' <- x0 + x1
-        let second_col_constraint = {
-            let tmp = builder.sub_extension(vars.next_values[1], vars.local_values[0]);
-            builder.sub_extension(tmp, vars.local_values[1])
-        };
-        yield_constr.constraint_transition(builder, second_col_constraint);
+        // TODO
+        // Currently not filled as this is only relevant for recursion
     }
 
     fn constraint_degree(&self) -> usize {
         2
-    }
-
-    fn permutation_pairs(&self) -> Vec<PermutationPair> {
-        vec![PermutationPair::singletons(2, 3)]
     }
 }
 

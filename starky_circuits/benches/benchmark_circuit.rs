@@ -15,6 +15,9 @@ use plonky2::plonk::config::{GenericConfig, PoseidonGoldilocksConfig};
 use plonky2::util::timing::TimingTree;
 use plonky2::field::types::Field;
 
+// TODO - Generic bench_stark function.
+// Currently not possible as the Stark Trait does not have a generic S::new() function
+
 pub fn bench_sha256(c: &mut Criterion, num_hashes: i32){
     const D: usize = 2;
     type C = PoseidonGoldilocksConfig;
