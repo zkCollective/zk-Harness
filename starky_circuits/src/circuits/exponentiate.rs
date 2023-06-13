@@ -5,11 +5,14 @@ use plonky2::field::packed::PackedField;
 use plonky2::field::polynomial::PolynomialValues;
 use plonky2::hash::hash_types::RichField;
 use plonky2::plonk::circuit_builder::CircuitBuilder;
+use plonky2::field::types::Field;
 
+use plonky2::plonk::config::{GenericConfig};
 use starky::constraint_consumer::{ConstraintConsumer, RecursiveConstraintConsumer};
 use starky::stark::Stark;
 use starky::util::trace_rows_to_poly_values;
 use starky::vars::{StarkEvaluationTargets, StarkEvaluationVars};
+use serde::{Serialize, Deserialize};
 
 /// Toy STARK system used for testing, exponentiation circuis
 // y == x**e, x = 2 e = 3 y = 8
@@ -103,6 +106,38 @@ impl<F: RichField + Extendable<D>, const D: usize> Stark<F, D> for ExponentiateS
     }
 }
 
+#[derive(Debug, Deserialize, Serialize)]
+pub struct ExponentiateInput {
+    X: String,
+    Y: String,
+    E: String,
+}
+
+pub fn get_exponentiate_data<C: GenericConfig<D>, const D: usize>(
+    input_str: String
+) -> (C::F, i32, C::F)
+{
+    let input: ExponentiateInput = serde_json::from_str(&input_str)
+        .expect("JSON was not well-formatted");
+
+    let x_64: u64 = input.X.parse().expect("Failed to parse X as u64");
+    let e: i32 = input.E.parse().expect("Failed to parse E as usize");
+
+    let mut x = C::F::from_canonical_u64(x_64);
+
+    // Compute y as a value in the field
+    for _ in 1..e {
+        x = x.scalar_mul(x);
+    }
+    let y = x;
+
+    return (x, e, y);
+}
+
+pub fn exponentiate<F: Field>(n: usize, x: F) -> F {
+    (0..n).fold((F::ONE, x), |acc, _| (acc.1, acc.1 * x)).1
+}
+
 #[cfg(test)]
 mod tests {
     use anyhow::Result;
@@ -114,15 +149,19 @@ mod tests {
 
     use starky::config::StarkConfig;
     use crate::circuits::exponentiate::ExponentiateStark;
+    use crate::circuits::exponentiate::{
+        exponentiate,
+        get_exponentiate_data
+    };
     use starky::prover::prove;
     use starky::verifier::verify_stark_proof;
 
-    fn exponentiate<F: Field>(n: usize, x: F) -> F {
-        (0..n).fold((F::ONE, x), |acc, _| (acc.1, acc.1 * x)).1
-    }
+    use rust_utils::{
+        read_file_contents,
+    };
 
     #[test]
-    fn test_fibonacci_stark() -> Result<()> {
+    fn test_exponentiate_stark() -> Result<()> {
         const D: usize = 2;
         type C = PoseidonGoldilocksConfig;
         type F = <C as GenericConfig<D>>::F;
@@ -142,6 +181,14 @@ mod tests {
         )?;
 
         verify_stark_proof(stark, proof, &config)
+    }
+
+    #[test]
+    fn test_get_data() -> Result<(), Box<dyn std::error::Error>> { 
+        let filename = "../_input/circuit/exponentiate/input_10.json";
+        let input_str = read_file_contents(filename.to_string());
+        let (_x, _e, _y) = get_exponentiate_data::<PoseidonGoldilocksConfig, 2>(input_str);
+        Ok(())
     }
     
 }
