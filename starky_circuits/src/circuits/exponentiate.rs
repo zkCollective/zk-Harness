@@ -168,7 +168,7 @@ mod tests {
         type S = ExponentiateStark<F, D>;
 
         let config = StarkConfig::standard_fast_config();
-        let num_rows = 1 << 5;
+        let num_rows = 1 << 20;
         let public_inputs = [F::ONE, F::from_canonical_usize(num_rows), exponentiate(num_rows - 1, F::ONE)];
         let stark = S::new(num_rows);
         let trace = stark.generate_trace(public_inputs[0], public_inputs[1], public_inputs[2]);

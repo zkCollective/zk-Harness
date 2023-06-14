@@ -21,10 +21,24 @@ pub fn secure_config() -> StarkConfig {
         num_challenges: 4,
         fri_config: FriConfig {
             rate_bits: 2,
-            cap_height: 4,
+            cap_height: 8,
             proof_of_work_bits: 20,
             reduction_strategy: FriReductionStrategy::ConstantArityBits(4, 5),
             num_query_rounds: 90,
+        },
+    }
+}
+
+pub fn standard_fast_config() -> StarkConfig {
+    StarkConfig {
+        security_bits: 100,
+        num_challenges: 2,
+        fri_config: FriConfig {
+            rate_bits: 1,
+            cap_height: 4,
+            proof_of_work_bits: 16,
+            reduction_strategy: FriReductionStrategy::ConstantArityBits(4, 5),
+            num_query_rounds: 84,
         },
     }
 }

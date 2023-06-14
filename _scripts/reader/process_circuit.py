@@ -176,6 +176,49 @@ def build_command_bellman(payload, count):
     return command
 
 # TODO - This currently uses the halo2 criterion rust parser
+def build_command_starky(payload, count):
+    """
+    Build the command to invoke the starky ZKP-library given the payload
+    """
+
+    # TODO - Add count to command creation
+    if len(payload.backend) != 1 or payload.backend[0] != "starky":
+        raise ValueError("Starky benchmark only supports starky backend")
+    # TODO - Solution for Starks - don't use curve, rename parameter / other option?
+    if len(payload.curves) != 1 or payload.curves[0] != "goldilocks":
+        raise ValueError("Starky benchmark only supports goldilocks field")
+
+    # Memory commands
+    commands_memory = [
+        (
+            os.makedirs(f"{helper.STARKY_BENCH_MEMORY}/{modified_inp}", exist_ok=True),
+            f"cd {helper.STARKY}; \
+                RUSTFLAGS=-Awarnings {helper.MEMORY_CMD} -h -l \
+                cargo run --bin {circ}_{op} \
+                --release -- \
+                --input {helper.MAIN_DIR}/{inp} \
+                2> {helper.STARKY_BENCH_MEMORY}/{modified_inp}/starky_{circ}_memory_{op}.txt > /dev/null;"
+        )[1]
+        for circ, input_path in payload.circuit.items()
+        for inp in helper.get_all_input_files(input_path)
+        for modified_inp in [inp.replace('_input/circuit/', '').replace('.json', '')]
+        for op in payload.operation
+    ]
+
+    # Time commands
+    commands_time = [
+            f"cd {helper.STARKY}; \
+                RUSTFLAGS=-Awarnings INPUT_FILE={helper.MAIN_DIR}/{inp} \
+                CIRCUIT={circ} \
+                cargo criterion --message-format=json --bench benchmark_circuit 1> {os.path.join(helper.STARKY_BENCH_JSON, circ + '_' + os.path.basename(inp))}; \n"
+        for circ, input_path in payload.circuit.items()
+        for inp in helper.get_all_input_files(input_path)
+    ]
+
+    command = "".join(commands_time + commands_memory)
+    return command
+
+# TODO - This currently uses the halo2 criterion rust parser
 def build_command_bellman_ce(payload, count):
     """
     Build the command to invoke the bellman ZKP-library given the payload
@@ -309,7 +352,8 @@ projects = {
     "circom/snarkjs":   build_command_circom,
     "bellman":   build_command_bellman,
     "bellman_ce":   build_command_bellman_ce,
-    "halo2_pse": build_command_halo2_pse
+    "halo2_pse": build_command_halo2_pse,
+    "starky": build_command_starky
 }
 
 

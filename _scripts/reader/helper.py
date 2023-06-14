@@ -5,6 +5,11 @@ import os
 # GENERAL PATHS
 MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 BENCHMARKS_DIR = os.path.join(MAIN_DIR, "benchmarks")
+# STARKY PATHS
+STARKY = os.path.join(MAIN_DIR, "starky_circuits")
+STARKY_BENCH = os.path.join(BENCHMARKS_DIR, "starky")
+STARKY_BENCH_JSON = os.path.join(STARKY_BENCH, "jsons")
+STARKY_BENCH_MEMORY = os.path.join(STARKY_BENCH, "memory")
 # BELLMAN PATHS
 BELLMAN = os.path.join(MAIN_DIR, "bellman_circuits")
 BELLMAN_BENCH = os.path.join(BENCHMARKS_DIR, "bellman")
@@ -15,8 +20,8 @@ BELLMAN_CE_BENCH = os.path.join(BENCHMARKS_DIR, "bellman_ce")
 BELLMAN_CE_BENCH_JSON = os.path.join(BELLMAN_CE_BENCH, "jsons")
 # GNARK PATHS
 GNARK_DIR = os.path.join(MAIN_DIR, "gnark")
-GNARK_BENCH = BELLMAN_BENCH = os.path.join(BENCHMARKS_DIR, "gnark")
-GNARK_BENCH_MEMORY = BELLMAN_BENCH = os.path.join(GNARK_BENCH, "memory")
+GNARK_BENCH = os.path.join(BENCHMARKS_DIR, "gnark")
+GNARK_BENCH_MEMORY = os.path.join(GNARK_BENCH, "memory")
 # HALO2_PSE PATHS
 HALO2_PSE = os.path.join(MAIN_DIR, "halo2_pse")
 HALO2_PSE_BENCH = os.path.join(BENCHMARKS_DIR, "halo2_pse")

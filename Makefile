@@ -14,8 +14,25 @@ halo2_pse_directory = halo2_pse
 halo2_pse_benchmarks_directory = $(benchmark_directory)/$(halo2_pse_directory)
 
 
-all: benchmark-gnark-arithmetics benchmark-gnark-ec benchmark-gnark-circuits benchmark-snarkjs-arithmetics benchmark-snarkjs-ec benchmark-circom-circuits benchmark-halo2-pse-circuits
+# Define the list of targets
+TARGETS := \
+	benchmark-starky-circuits \
+	benchmark-gnark-arithmetics \
+	benchmark-gnark-ec \
+	benchmark-gnark-circuits \
+	benchmark-snarkjs-arithmetics \
+	benchmark-snarkjs-ec \
+	benchmark-circom-circuits \
+	benchmark-halo2-pse-circuits
 
+# Define the all target that depends on the other targets
+all: $(TARGETS)
+
+benchmark-starky-circuits:
+	$(info --------------------------------------------)
+	$(info ------    STARKY CIRCUIT BENCHMARKS  -------)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/starky/config_circuits.json
 
 benchmark-bellman-circuits:
 	$(info --------------------------------------------)
@@ -115,5 +132,17 @@ benchmark-gnark-circuits: benchmark-toy-gnark benchmark-hash
 test-simple:
 	python3 -m _scripts.reader --config _input/config/gnark/config_gnark_simple.json  
 
+
+CLEANDIRS := \
+	$(gnark_benchmarks_directory) \
+	$(circom_benchmarks_directory) \
+	$(snarkjs_benchmarks_directory) \
+	$(halo2_pse_benchmarks_directory)
+
+# Define clean command
 clean:
-	rm -rf $(gnark_benchmarks_directory)/*  $(circom_benchmarks_directory)/* $(snarkjs_benchmarks_directory)/* $(halo2_pse_benchmarks_directory)/*
+	@echo "Cleaning up..."
+	@for dir in $(CLEANDIRS); do \
+		echo "Cleaning $$dir..."; \
+		rm -rf $$dir/*; \
+	done

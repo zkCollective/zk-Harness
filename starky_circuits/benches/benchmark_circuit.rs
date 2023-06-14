@@ -3,7 +3,7 @@ extern crate rand;
 extern crate criterion;
 
 use starky_utils;
-use rust_utils::{read_env_variable};
+use rust_utils::{read_env_variable, read_file_from_env_var};
 use criterion::{Criterion};
 use starky::sha256::{Sha2CompressionStark, Sha2StarkCompressor};
 use starky::{
@@ -136,21 +136,24 @@ fn exponentiate<F: Field>(n: usize, x: F) -> F {
     (0..n).fold((F::ONE, x), |acc, _| (acc.1, acc.1 * x)).1
 }
 
-pub fn bench_exponentiate(c: &mut Criterion, num_rows_input: i32) -> Result<(), anyhow::Error> {
+pub fn bench_exponentiate(c: &mut Criterion, input_str: String) -> Result<(), anyhow::Error> {
     const D: usize = 2;
     type C = PoseidonGoldilocksConfig;
     type F = <C as GenericConfig<D>>::F;
     type S = starky_circuits::circuits::exponentiate::ExponentiateStark<F, D>;
     let config = starky_utils::secure_config();
 
+    // Get data from config
+    let (x, e, y) = starky_circuits::circuits::exponentiate::get_exponentiate_data::<PoseidonGoldilocksConfig, 2>(input_str);
+
     let mut group = c.benchmark_group("exponentiate");
 
-    let num_rows = 1 << num_rows_input;
-    let public_inputs = [F::ONE, F::from_canonical_usize(num_rows), exponentiate(num_rows - 1, F::ONE)];
+    let num_rows = 1 << e;
+    let public_inputs = [x, F::from_canonical_usize(num_rows), exponentiate(num_rows - 1, x)];
     let stark = S::new(num_rows);
     
     // 1. Witness Generation
-    group.bench_function("setup", |b| {
+    group.bench_function("witness", |b| {
         b.iter(|| { 
             let _  = stark.generate_trace(public_inputs[0], public_inputs[1], public_inputs[2]);
         
@@ -160,7 +163,7 @@ pub fn bench_exponentiate(c: &mut Criterion, num_rows_input: i32) -> Result<(), 
     let trace = stark.generate_trace(public_inputs[0], public_inputs[1], public_inputs[2]);
 
     // 2. Compute the proof
-    group.bench_function("proof", |b| {
+    group.bench_function("prove", |b| {
         b.iter(|| { 
             let _  = prove::<F, C, S, D>(
                 stark,
@@ -197,18 +200,15 @@ fn main() {
         .sample_size(10);
 
     // FIXME - Parese input from file
-    // let input_file_str = read_file_from_env_var("INPUT_FILE".to_string());
-    // let input_file_str = "Empty".to_string();
+    let input_file_str = read_file_from_env_var("INPUT_FILE".to_string());
 
     let circuit_str = read_env_variable("CIRCUIT".to_string());
 
-    let num_hashes_string = read_env_variable("NUM_HASHES".to_string());
-    let num_hashes: i32 = num_hashes_string.parse().unwrap();
-
+    // TODO - SHA256 & Fibonacci file parsing
     match circuit_str.as_str() {
-        "sha256" => bench_sha256(&mut criterion, num_hashes),
-        "fibonacci" => bench_fibonacci(&mut criterion, num_hashes).unwrap(),
-        "exponentiate" => bench_exponentiate(&mut criterion, num_hashes).unwrap(),
+        // "sha256" => bench_sha256(&mut criterion, num_hashes),
+        // "fibonacci" => bench_fibonacci(&mut criterion, num_hashes).unwrap(),
+        "exponentiate" => bench_exponentiate(&mut criterion, input_file_str).unwrap(),
         _ => println!("Unsupported circuit"),
     }
 
