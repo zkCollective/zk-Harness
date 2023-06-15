@@ -1,0 +1,20 @@
+    Finished release [optimized] target(s) in 0.07s
+     Running `target/release/exponentiate_witness --input /Users/serious/Documents/01_Promotion/01_Projects/03_ZK_compilers/zk-Harness/_input/circuit/exponentiate_2/input_22.json`
+	0.61s real		0.45s user		0.07s sys
+           574504960  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               38414  page reclaims
+                   0  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   1  signals received
+                   3  voluntary context switches
+                 146  involuntary context switches
+          5752415756  instructions retired
+          1428483749  cycles elapsed
+           506676864  peak memory footprint

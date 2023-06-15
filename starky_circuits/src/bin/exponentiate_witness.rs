@@ -21,9 +21,6 @@ use rust_utils::{
 struct Args {
     #[arg(short, long)]
     input: String,
-
-    #[arg(short, long)]
-    output: String,
 }
 
 fn main() {

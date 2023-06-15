@@ -1,0 +1,23 @@
+error: no bin target named `exponentiate_verify`.
+Available bin targets:
+    exponentiate_witness
+    exponentiate_prove
+
+	0.09s real		0.06s user		0.01s sys
+            32718848  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                3306  page reclaims
+                   0  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                   0  voluntary context switches
+                 135  involuntary context switches
+           604069724  instructions retired
+           181758705  cycles elapsed
+            21595136  peak memory footprint
