@@ -34,7 +34,16 @@ def parse_criterion_json(json_file):
     return circuit_name, stages
 
 
-def save_csv(framework, category, backend, curve, circuit_name, input_path, stages, output_csv):
+def get_file_size(file_path):
+    try:
+        size = os.path.getsize(file_path)
+        return size
+    except OSError as e:
+        print(f"Error: {e}")
+        return None
+
+
+def save_csv(framework, category, backend, curve, circuit_name, input_path, stages, output_csv, proof_size):
     header = [
         "framework",
         "category",
@@ -71,8 +80,7 @@ def save_csv(framework, category, backend, curve, circuit_name, input_path, stag
             mean = int(mean / 1_000_000) if mean is not None else ""  # convert ns to ms
             mean = 1 if mean == 0 else mean
 
-            proofSize = data.get("proofSize")
-            proofSize = int(proofSize) if proofSize is not None else ""
+            proofSize = int(proof_size) if proof_size is not None else ""
 
             row = {
                 "framework": framework,
@@ -102,9 +110,13 @@ def save_csv(framework, category, backend, curve, circuit_name, input_path, stag
 
             writer.writerow(row)
 
-def combine_jsons_to_csv(framework, category, backend, curve, input_path, criterion_json, output_csv):
+def combine_jsons_to_csv(framework, category, backend, curve, input_path, criterion_json, output_csv, proof_file):
     circuit_name, stages = parse_criterion_json(criterion_json)
-    save_csv(framework, category, backend, curve, circuit_name, input_path, stages, output_csv)
+    if proof_file:
+        proof_size = get_file_size(proof_file)
+    else:
+        proof_size = None
+    save_csv(framework, category, backend, curve, circuit_name, input_path, stages, output_csv, proof_size)
 
 
 if __name__ == "__main__":
@@ -115,9 +127,10 @@ if __name__ == "__main__":
     parser.add_argument("--curve", required=True, help="Curve")
     parser.add_argument("--input", required=True, help="Input")
     parser.add_argument("--criterion_json", required=True, help="Path to the criterion JSON file")
+    parser.add_argument("--proof", required=False, help="Path to the proof file")
     parser.add_argument("--output_csv", required=True, help="Path to the output CSV file")
     args = parser.parse_args()
 
     combine_jsons_to_csv(
         args.framework, args.category, args.backend, args.curve,
-        args.input, args.criterion_json, args.output_csv)
+        args.input, args.criterion_json, args.output_csv, args.proof)

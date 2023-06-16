@@ -107,6 +107,7 @@ def build_command_circom(payload, count):
     command = "".join(commands)
     return command
 
+
 # TODO - This currently uses the halo2 criterion rust parser
 def build_command_bellman(payload, count):
     """
@@ -274,7 +275,7 @@ def build_command_halo2_pse(payload, count):
             os.makedirs(f"{helper.HALO2_PSE_BENCH_MEMORY}/{inp}", exist_ok=True)
             # Altough each operation need only a subset of the arguments we pass
             # all of them for simplicity
-            os.makedirs(f"tmp", exist_ok=True)
+            os.makedirs(os.path.join(helper.HALO2_PSE, "tmp"), exist_ok=True)
             for op in payload.operation:
                 cargo_cmd = "cargo run --bin {circuit} --release -- --input {inp} --phase {phase} --params {params} --vk {vk} --pk {pk} --proof {proof}".format(
                     circuit=circuit,
@@ -297,10 +298,11 @@ def build_command_halo2_pse(payload, count):
                 helper.HALO2_PSE_BENCH,
                 "halo2_pse_bn256_" + circuit + ".csv"
             )
-            transform_command: str = "python3 _scripts/parsers/criterion_rust_parser.py --framework halo2_pse --category circuit --backend halo2 --curve bn256 --input {inp} --criterion_json {bench} --output_csv {out}; ".format(
+            transform_command: str = "python3 _scripts/parsers/criterion_rust_parser.py --framework halo2_pse --category circuit --backend halo2 --curve bn256 --input {inp} --criterion_json {bench} --proof {proof} --output_csv {out}; ".format(
                 inp=inp,
                 bench=output_bench,
-                out=out
+                out=out,
+                proof=os.path.join(helper.HALO2_PSE, "tmp", "proof")
             )
             commands.append(transform_command)
             time_merge = "python3 _scripts/parsers/csv_parser_rust.py --memory_folder {memory_folder} --time_filename {time_filename} --circuit {circuit}; ".format(
