@@ -34,13 +34,8 @@ The following information is recorded for each field arithmetic benchmark:
 * curve: the curve of which field we use
 * field: the benchmarked field (base or scalar)
 * operation: the operation performed (add, sub, mul, inv, exp)
-* input: file path of the input used 
-* ram: memory consumed in bytes
-* time: elapsed time in nanoseconds
-* nbPhysicalCores: number of physical cores used
-* nbLogicalCores: number of logical cores used
+* time: elapsed time in **nanoseconds**
 * count: number of times that we run the benchmark
-* cpu: the cpu type used for benchmarking
 
 ### Elliptic Curve Group Operations
 
@@ -49,14 +44,9 @@ The following information is recorded for each elliptic curve group operation be
 * framework: the name of the framework (e.g., gnark)
 * category: the category of the benchmark (i.e., ec)
 * curve: the benchmarked curve
-* operation: the operation performed -- MSM, FFT/NTT, Pairing
-* input: file path of the input used 
-* ram: memory consumed in bytes
-* time: elapsed time in milliseconds
-* nbPhysicalCores: number of physical cores used
-* nbLogicalCores: number of logical cores used
+* operation: the operation performed -- `g1-scalar-multiplicationg`, `g2-scalar-multiplication`, `g1-multi-scalar-multiplication`, `g2-multi-scalar-multiplication`, `pairing`
+* time: elapsed time in **milliseconds**
 * count: number of times that we run the benchmark
-* cpu: the cpu type used for benchmarking
 
 ### Circuits
 
@@ -72,13 +62,10 @@ The following information is recorded for each circuit benchmark:
 * nbConstraints: the number of constraints in the circuit
 * nbSecret: number of secret inputs
 * nbPublic: number of public inputs
-* ram: memory consumed in mb
-* time: elapsed time in milliseconds
-* proofSize: the size of the proof in bytes -- empty value when Operation != proving
-* nbPhysicalCores: number of physical cores used
-* nbLogicalCores: number of logical cores used
+* ram: memory consumed in **bytes**
+* time: elapsed time in **milliseconds**
+* proofSize: the size of the proof in **bytes** -- empty value when `operation != prove`
 * count: number of times that we run the benchmark
-* cpu: the cpu type used for benchmarking
 
 ### Recursion
 
