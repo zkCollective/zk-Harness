@@ -41,7 +41,7 @@ def parse_csv(csv_filename, memory_folder, circuit):
         csv_reader = csv.DictReader(file)
         for row in csv_reader:
             if row['circuit'] == circuit:
-                memory_file = os.path.join(memory_folder, f'halo2_exponentiate_memory_{row["operation"]}.txt')
+                memory_file = os.path.join(memory_folder, f'halo2_{circuit}_memory_{row["operation"]}.txt')
                 ram = extract_ram_from_file(memory_file)
                 row['ram(mb)'] = ram
             csv_rows.append(row)
