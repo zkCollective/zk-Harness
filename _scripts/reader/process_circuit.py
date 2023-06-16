@@ -79,9 +79,20 @@ def build_command_gnark(payload, count):
     return command
 
 
-def build_command_circom(payload, count):
+def build_command_circom_snarkjs(payload, count):
+    return build_command_circom(payload, count)
+
+
+def build_command_circom_rapidsnark(payload, count):
+    return build_command_circom(payload, count, rapidsnark=True)
+
+
+def build_command_circom(payload, count, rapidsnark=False):
     """
     Build the command to invoke the circom ZKP-framework given the payload
+
+    If rapidsnark is true it will benchmark both provers
+    NOTE: rapidsnark only works in intel x64
     """
     # TODO - Add count to command creation
     if len(payload.backend) != 1 or payload.backend[0] != "groth16":
@@ -94,14 +105,15 @@ def build_command_circom(payload, count):
         for _ in range(0, count):
             # TODO check if circuit exists
             for inp in helper.get_all_input_files(input_path):
-                command = "{script} {circuit_file} {circuit_name} {input_path} {ptau} {benchmark} tmp {template_vars}\n".format(
+                command = "{script} {circuit_file} {circuit_name} {input_path} {ptau} {benchmark} tmp {template_vars} {rapidsnark}\n".format(
                     script=helper.CIRCOM_SCRIPT,
                     circuit_file=os.path.join(helper.CIRCOM_CIRCUITS_DIR, circuit, "circuit.circom"),
                     circuit_name=circuit,
                     input_path=inp,
                     ptau=helper.CIRCOM_PTAU,
                     benchmark=os.path.join(helper.CIRCOM_BENCHMAKR_DIR, "circom_" + circuit + ".csv"),
-                    template_vars="".join(payload.template_vars.get(circuit, [""]))
+                    template_vars="".join(payload.template_vars.get(circuit, [""])),
+                    rapidsnark="1" if rapidsnark else ""
                 )
                 commands.append(command)
     command = "".join(commands)
@@ -324,7 +336,8 @@ def default_case(_payload, _count):
 # List ZKP-frameworks in the zk-Harness
 projects = {
     "gnark":    build_command_gnark,
-    "circom/snarkjs":   build_command_circom,
+    "circom/snarkjs":   build_command_circom_snarkjs,
+    "circom/rapidsnark":   build_command_circom_rapidsnark,
     "bellman":   build_command_bellman,
     "bellman_ce":   build_command_bellman_ce,
     "halo2_pse": build_command_halo2_pse
