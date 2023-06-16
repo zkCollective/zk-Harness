@@ -34,35 +34,6 @@ def parse_criterion_json(json_file):
     return circuit_name, stages
 
 
-def compute_memory_usage(mem_proof_json, stages):
-    # Set Memory data to None if memory is not being benchmarked
-    with open(mem_proof_json, "r") as f:
-        data = json.load(f)
-
-    initial_rss = data.get("initial_rss")
-    setup_rss = data.get("setup_rss")
-    proof_rss = data.get("proof_rss")
-    verify_rss = data.get("verify_rss")
-    proof_size = data.get("proof_size")
-
-    assert initial_rss is not None, "Missing 'initial_rss'"
-    assert setup_rss is not None, "Missing 'setup_rss'"
-    assert proof_rss is not None, "Missing 'proof_rss'"
-    assert verify_rss is not None, "Missing 'verify_rss'"
-    assert proof_size is not None, "Missing 'proof_size'"
-
-    setup_mem = setup_rss 
-    proof_mem = proof_rss + initial_rss - setup_mem
-    verify_mem = verify_rss + initial_rss - proof_mem
-
-    stages["setup"]["ram"] = setup_mem
-    stages["prove"]["ram"] = proof_mem
-    stages["prove"]["proofSize"] = proof_size
-    stages["verify"]["ram"] = verify_mem
-
-    return stages
-
-
 def save_csv(framework, category, backend, curve, circuit_name, input_path, stages, output_csv):
     header = [
         "framework",
@@ -131,9 +102,8 @@ def save_csv(framework, category, backend, curve, circuit_name, input_path, stag
 
             writer.writerow(row)
 
-def combine_jsons_to_csv(framework, category, backend, curve, input_path, criterion_json, mem_proof_json, output_csv):
+def combine_jsons_to_csv(framework, category, backend, curve, input_path, criterion_json, output_csv):
     circuit_name, stages = parse_criterion_json(criterion_json)
-    stages = compute_memory_usage(mem_proof_json, stages)
     save_csv(framework, category, backend, curve, circuit_name, input_path, stages, output_csv)
 
 
@@ -145,10 +115,9 @@ if __name__ == "__main__":
     parser.add_argument("--curve", required=True, help="Curve")
     parser.add_argument("--input", required=True, help="Input")
     parser.add_argument("--criterion_json", required=True, help="Path to the criterion JSON file")
-    parser.add_argument("--mem_proof_json", required=False, help="Path to the memory proof JSON file")
     parser.add_argument("--output_csv", required=True, help="Path to the output CSV file")
     args = parser.parse_args()
 
     combine_jsons_to_csv(
         args.framework, args.category, args.backend, args.curve,
-        args.input, args.criterion_json, args.mem_proof_json, args.output_csv)
+        args.input, args.criterion_json, args.output_csv)

@@ -259,40 +259,58 @@ def build_command_halo2_pse(payload, count):
     for circuit, input_path in payload.circuit.items():
         for inp in helper.get_all_input_files(input_path):
             commands.append(f"cd {helper.HALO2_PSE}; ")
-            output_mem_size = os.path.join(
-                helper.HALO2_PSE_BENCH_JSON,
-                circuit + "_" + os.path.basename(inp)
-            )
             output_bench = os.path.join(
                 helper.HALO2_PSE_BENCH_JSON,
                 circuit + "_bench_" + os.path.basename(inp)
             )
             input_file = os.path.join("..", inp)
-            command_mem_size: str = "RUSTFLAGS=-Awarnings cargo run --bin {binary} --release -- --input {input_file} --output {output}; ".format(
-                binary=circuit,
-                input_file=input_file,
-                output=output_mem_size
-            )
-            commands.append(command_mem_size)
             command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
                 input_file=input_file,
                 bench=circuit + "_bench",
                 output=output_bench
             )
             commands.append(command_bench)
+            # Memory commands
+            os.makedirs(f"{helper.HALO2_PSE_BENCH_MEMORY}/{inp}", exist_ok=True)
+            # Altough each operation need only a subset of the arguments we pass
+            # all of them for simplicity
+            os.makedirs(f"tmp", exist_ok=True)
+            print(circuit)
+            for op in payload.operation:
+                cargo_cmd = "cargo run --bin {circuit} --release -- --input {inp} --phase {phase} --params {params} --vk {vk} --pk {pk} --proof {proof}".format(
+                    circuit=circuit,
+                    inp=input_file,
+                    phase=op,
+                    params=os.path.join("tmp", "params"),
+                    vk=os.path.join("tmp", "vk"),
+                    pk=os.path.join("tmp", "pk"),
+                    proof=os.path.join("tmp", "proof"),
+                )
+                commands.append(
+                    "RUSTFLAGS=-Awarnings {memory_cmd} -h -l {cargo} 2> {time_file} > /dev/null; ".format(
+                        memory_cmd=helper.MEMORY_CMD,
+                        cargo=cargo_cmd,
+                        time_file=f"{helper.HALO2_PSE_BENCH_MEMORY}/{inp}/halo2_{circuit}_memory_{op}.txt"
+                    )
+                )
+                print(op)
             commands.append("cd ..; ")
             out = os.path.join(
                 helper.HALO2_PSE_BENCH,
                 "halo2_pse_bn256_" + circuit + ".csv"
             )
-            transform_command: str = "python3 _scripts/parsers/criterion_rust_parser.py --framework halo2_pse --category circuit --backend halo2 --curve bn256 --input {inp} --criterion_json {bench} --mem_proof_json {mem} --output_csv {out}; ".format(
+            transform_command: str = "python3 _scripts/parsers/criterion_rust_parser.py --framework halo2_pse --category circuit --backend halo2 --curve bn256 --input {inp} --criterion_json {bench} --output_csv {out}; ".format(
                 inp=inp,
                 bench=output_bench,
-                mem=output_mem_size,
                 out=out
             )
             commands.append(transform_command)
-
+            time_merge = "python3 _scripts/parsers/csv_parser.py --memory_folder {memory_folder} --time_filename {time_filename} --circuit {circuit}; ".format(
+                memory_folder=os.path.join(helper.HALO2_PSE_BENCH_MEMORY, inp),
+                time_filename=os.path.join(helper.HALO2_PSE_BENCH, f"halo2_pse_bn256_{circuit}.csv"),
+                circuit=circuit
+            )
+            commands.append(time_merge)
     # Join the commands into a single string
     command = "".join(commands)
 

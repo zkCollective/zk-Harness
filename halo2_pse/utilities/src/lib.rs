@@ -8,20 +8,24 @@ use halo2_proofs::{
             strategy::AccumulatorStrategy
         }
     }, 
-    halo2curves::bn256::{Bn256, G1Affine}, 
+    halo2curves::bn256::{Bn256, G1Affine, Fr}, 
     transcript::{
         Blake2bRead, Blake2bWrite, Challenge255, TranscriptReadBuffer, TranscriptWriterBuffer,
     },
 };
+use halo2_proofs::SerdeFormat;
 use criterion::{
     measurement::Measurement, BenchmarkGroup,
 };
 use serde::Serialize;
 use std::{env, fs::File};
-use std::io::Read;
+use std::io::{BufReader, Read, Write};
 use std::process;
 use psutil;
 use std::fs;
+use clap::Parser;
+
+pub const DEFAULT_SERDE_FORMAT: SerdeFormat = SerdeFormat::RawBytesUnchecked;
 
 #[derive(Serialize)]
 struct Results {
@@ -30,6 +34,29 @@ struct Results {
     proof_rss: u64,
     verify_rss: u64,
     proof_size: usize,
+}
+
+
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+pub struct BinaryArgs {
+    #[arg(short, long)]
+    pub input: String,
+
+    #[arg(short, long)]
+    pub phase: String,
+
+    #[arg(short, long)]
+    pub params: Option<String>,
+
+    #[arg(short, long)]
+    pub pk: Option<String>,
+
+    #[arg(short, long)]
+    pub vk: Option<String>,
+
+    #[arg(short, long)]
+    pub proof: Option<String>,
 }
 
 
@@ -137,7 +164,7 @@ pub fn bench_circuit<M: Measurement, C: Circuit<halo2_proofs::halo2curves::bn256
             //println!("proof len: {}", proof.len());
             let strategy = AccumulatorStrategy::new(params.as_ref().unwrap(),);
             let mut transcript = Blake2bRead::<_, _, Challenge255<_>>::init(&proof[..]);
-            let strategy = verify_proof::<KZGCommitmentScheme<_>, VerifierGWC<_>, _, _, _>(
+            let _strategy = verify_proof::<KZGCommitmentScheme<_>, VerifierGWC<_>, _, _, _>(
                 params.as_ref().unwrap(),
                 pk.as_ref().unwrap().get_vk(),
                 strategy,
@@ -216,4 +243,68 @@ pub fn measure_size_in_bytes(data: &[u8]) -> usize {
     fs::remove_file(&temp_file_path).expect("Cannot remove temp file");
 
     return size_in_mb;
+}
+
+pub fn save_params(params_file: String, params: &ParamsKZG<Bn256>) {
+    let mut params_buf = Vec::new();
+    params.write_custom(&mut params_buf, DEFAULT_SERDE_FORMAT).unwrap();
+
+    let mut params_file = File::create(params_file).unwrap();
+    params_file.write_all(&params_buf[..]).unwrap();
+}
+
+pub fn load_params(params_file: String) -> ParamsKZG<Bn256> {
+    let f = File::open(params_file).unwrap();
+    return ParamsKZG::<Bn256>::read_custom::<_>(&mut BufReader::new(f), DEFAULT_SERDE_FORMAT).unwrap();
+}
+
+pub fn save_vk(vk_file: String, vk: &VerifyingKey<G1Affine>) {
+    let mut vk_file = File::create(vk_file).unwrap();
+    vk.write(&mut vk_file, DEFAULT_SERDE_FORMAT).unwrap();
+}
+
+pub fn load_vk<C: Circuit<Fr>>(vk_file: String) -> VerifyingKey<G1Affine> {
+    let f = File::open(vk_file).unwrap();
+    return VerifyingKey::<G1Affine>::read::<_, C>(&mut BufReader::new(f), DEFAULT_SERDE_FORMAT).unwrap();
+}
+
+pub fn save_pk(pk_file: String, pk: &ProvingKey<G1Affine>) {
+    let mut pk_file = File::create(pk_file).unwrap();
+    pk.write(&mut pk_file, DEFAULT_SERDE_FORMAT).unwrap();
+}
+
+pub fn load_pk<C: Circuit<Fr>>(pk_file: String) -> ProvingKey<G1Affine> {
+    let f = File::open(pk_file).unwrap();
+    return ProvingKey::<G1Affine>::read::<_, C>(&mut BufReader::new(f), DEFAULT_SERDE_FORMAT).unwrap();
+}
+
+pub fn save_proof(proof_file: String, proof: &[u8]) {
+    let mut proof_file = File::create(proof_file).unwrap();
+    proof_file.write_all(proof).unwrap();
+}
+
+pub fn load_proof(proof_file: String) -> Vec<u8> {
+    let f = File::open(proof_file).unwrap();
+    return BufReader::new(f).bytes().map(|x| x.unwrap()).collect();
+}
+
+pub fn f_setup<C: Circuit<Fr> + Clone>(k: u32, circuit: C, params_file: String, vk_file: String, pk_file: String) {
+    let (params, vk, pk) = setup_circuit(k, circuit.clone());
+    save_params(params_file, &params);
+    save_vk(vk_file, &vk);
+    save_pk(pk_file, &pk);
+}
+
+pub fn f_prove<C: Circuit<Fr> + Clone>(circuit: C, params_file: String, pk_file: String, public_input: &[&[Fr]], proof_file: String) {
+    let params = load_params(params_file);
+    let pk = load_pk::<C>(pk_file);
+    let proof = prove_circuit(&params, &pk, circuit, public_input);
+    save_proof(proof_file, &proof);
+}
+
+pub fn f_verify<C: Circuit<Fr> + Clone>(params_file: String, vk_file: String, proof_file: String, public_input: &[&[Fr]]) {
+    let params = load_params(params_file);
+    let vk = load_vk::<C>(vk_file);
+    let proof = load_proof(proof_file);
+    verify_circuit::<C>(&params, &vk, &proof, public_input);
 }

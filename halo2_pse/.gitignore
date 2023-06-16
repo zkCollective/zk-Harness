@@ -14,3 +14,11 @@ Cargo.lock
 *.pdb
 tags
 .*.swp
+
+param
+params
+pk
+proof
+res.json
+vk
+tmp/

@@ -42,10 +42,12 @@ INPUT_FILE=../_input/circuit/exponentiate/input_1.json cargo criterion --message
 
 * Run benchmarks for measuring memory consuption and proof size
 
+You should use time command with the following commands
+
 ```
-cargo run --bin exponentiate --release -- \
-    --input ../_input/circuit/exponentiate/input_1.json \
-    --output ../benchmarks/halo2_pse/jsons/exponentiate_input_1.json
+cargo run --bin sha256 --release -- --input ../_input/circuit/sha256/input_5.json --phase setup --params param --vk vk --pk pk 
+cargo run --bin sha256 --release -- --input ../_input/circuit/sha256/input_5.json --phase prove --params param --pk pk --proof proof
+cargo run --bin sha256 --release -- --input ../_input/circuit/sha256/input_5.json --phase verify --params param --vk vk --pk pk --proof proof
 ```
 
 ## Adding new circuits
