@@ -2,11 +2,12 @@
 #
 # Compile, setup, prove, and verify a proof for a circom circuit.
 # If the .csv files already exist, then just append the results
+# If rapidsnark is set, then it will run both provers
 # TODO add C++ witness generation support
 # TODO try add PLONK and FFLONKsupport
 
 if [ $# -lt 5 ]; then
-    echo $0: usage: run_circuit.sh circuit.circom circuit_name input.json powersOfTau.ptau results.csv tmp template_vars
+    echo $0: usage: run_circuit.sh circuit.circom circuit_name input.json powersOfTau.ptau results.csv tmp template_vars rapidsnark
     exit 1
 fi
 
@@ -35,7 +36,12 @@ if [ ! -z "$7" ]; then
 else
     TEMPLATE_VARS=
 fi
-echo ">>> Running with: $CIRCUIT, $CIRCUIT_NAME, $INPUT, $TAU, $RES, $TMP, $TEMPLATE_VARS"
+if [ ! -z "$8" ]; then
+    RAPIDSNARK=1
+else
+    RAPIDSNARK=
+fi
+echo ">>> Running with: $CIRCUIT, $CIRCUIT_NAME, $INPUT, $TAU, $RES, $TMP, $TEMPLATE_VARS, $RAPIDSNARK"
 
 if [[ $(uname) == "Linux" ]]; then
     TIMECMD="$TIMEBIN -f \"Real time (seconds): %e\nMaximum resident set size (bytes): %M\" -o"
