@@ -275,7 +275,6 @@ def build_command_halo2_pse(payload, count):
             # Altough each operation need only a subset of the arguments we pass
             # all of them for simplicity
             os.makedirs(f"tmp", exist_ok=True)
-            print(circuit)
             for op in payload.operation:
                 cargo_cmd = "cargo run --bin {circuit} --release -- --input {inp} --phase {phase} --params {params} --vk {vk} --pk {pk} --proof {proof}".format(
                     circuit=circuit,
@@ -293,7 +292,6 @@ def build_command_halo2_pse(payload, count):
                         time_file=f"{helper.HALO2_PSE_BENCH_MEMORY}/{inp}/halo2_{circuit}_memory_{op}.txt"
                     )
                 )
-                print(op)
             commands.append("cd ..; ")
             out = os.path.join(
                 helper.HALO2_PSE_BENCH,
@@ -305,7 +303,7 @@ def build_command_halo2_pse(payload, count):
                 out=out
             )
             commands.append(transform_command)
-            time_merge = "python3 _scripts/parsers/csv_parser.py --memory_folder {memory_folder} --time_filename {time_filename} --circuit {circuit}; ".format(
+            time_merge = "python3 _scripts/parsers/csv_parser_rust.py --memory_folder {memory_folder} --time_filename {time_filename} --circuit {circuit}; ".format(
                 memory_folder=os.path.join(helper.HALO2_PSE_BENCH_MEMORY, inp),
                 time_filename=os.path.join(helper.HALO2_PSE_BENCH, f"halo2_pse_bn256_{circuit}.csv"),
                 circuit=circuit
