@@ -1,49 +1,42 @@
 use halo2_proofs::halo2curves::bn256::Fr;
 use halo2_pse_circuits::circuits::exponentiate::ExponentiationCircuit;
 use halo2_pse_circuits::circuits::exponentiate::get_exponentiation_data;
-use utilities::get_memory;
-use utilities::measure_size_in_bytes;
-use utilities::prove_circuit;
+use utilities::f_prove;
+use utilities::f_setup;
+use utilities::f_verify;
 use utilities::read_file_contents;
-use utilities::save_results;
-use utilities::setup_circuit;
-use utilities::verify_circuit;
+use utilities::BinaryArgs;
 use clap::Parser;
 
-#[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
-struct Args {
-    #[arg(short, long)]
-    input: String,
-
-    #[arg(short, long)]
-    output: String,
-}
-
 fn main () {
-    let args = Args::parse();
+    let args = BinaryArgs::parse();
     let input_str = read_file_contents(args.input);
     let (k, e_value, x, e, y) = get_exponentiation_data(input_str);
 
-    let initial_rss = get_memory();
-
-    let circuit = ExponentiationCircuit {
-        row: e_value,
-    };
-    let (params, vk, pk) = setup_circuit(k, circuit.clone());
-
-    let setup_rss = get_memory();
-
-    let public_input: &[&[Fr]] = &[&[x, e, y]];
-    let proof = prove_circuit(&params, &pk, circuit, public_input);
-
-    let proof_rss = get_memory();
-
-    verify_circuit::<ExponentiationCircuit>(&params, &vk, &proof, public_input);
-
-    let verify_rss = get_memory();
-
-    let proof_size = measure_size_in_bytes(&proof);
-
-    save_results(initial_rss, setup_rss, proof_rss, verify_rss, proof_size, args.output);
+    if args.phase == "setup" {
+        let circuit = ExponentiationCircuit {
+            row: e_value,
+        };
+        let params_file = args.params.expect("Missing params argument");
+        let vk_file = args.vk.expect("Missing vk argument");
+        let pk_file = args.pk.expect("Missing pk argument");
+        f_setup(k, circuit, params_file, vk_file, pk_file);
+    } else if args.phase == "prove" {
+        let circuit = ExponentiationCircuit {
+            row: e_value,
+        };
+        let public_input: &[&[Fr]] = &[&[x, e, y]];
+        let params_file = args.params.expect("Missing params argument");
+        let pk_file = args.pk.expect("Missing pk argument");
+        let proof_file = args.proof.expect("Missing proof argument");
+        f_prove(circuit, params_file, pk_file, public_input, proof_file);
+    } else if args.phase == "verify" {
+        let public_input: &[&[Fr]] = &[&[x, e, y]];
+        let params_file = args.params.expect("Missing params argument");
+        let vk_file = args.vk.expect("Missing vk argument");
+        let proof_file = args.proof.expect("Missing proof argument");
+        f_verify::<ExponentiationCircuit>(params_file, vk_file, proof_file, public_input)
+    } else {
+        panic!("Invalid phase (should be setup, prove, or verify)");
+    }
 }

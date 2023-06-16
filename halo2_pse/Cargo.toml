@@ -8,8 +8,8 @@ path = "src/lib.rs"
 
 [dependencies]
 #halo2_proofs = { git = "https://github.com/privacy-scaling-explorations/halo2.git", version = "0.2"}
-halo2_proofs = { git = "https://github.com/celer-network/halo2", version = "0.2", branch = "KZG-bench-sha256" }
-halo2_gadgets = { git = "https://github.com/celer-network/halo2", version = "0.2", features = ["unstable"], branch = "KZG-bench-sha256" }
+halo2_proofs = { git = "https://github.com/StefanosChaliasos/halo2", version = "0.2" }
+halo2_gadgets = { git = "https://github.com/StefanosChaliasos/halo2", version = "0.2", features = ["unstable"] }
 #halo2curves = { git = 'https://github.com/privacy-scaling-explorations/halo2curves.git', tag = "0.3.1" }
 rand = "0.8"
 psutil = "3.2.2"
