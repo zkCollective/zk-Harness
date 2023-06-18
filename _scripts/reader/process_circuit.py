@@ -17,7 +17,8 @@ def build_command_gnark(payload, count):
     """
     Build the command to invoke the gnark ZKP-framework given the payload
     """
-    
+    os.makedirs(helper.GNARK_BENCH, exist_ok=True)    
+    os.makedirs(helper.GNARK_BENCH_MEMORY, exist_ok=True)    
     if payload.backend is not None and payload.curves is not None:
         commands = [f"./gnark {backend} --circuit={circ} --algo={op} --curve={curve} --input={inp} --count={count}\n"
                     for backend in payload.backend
@@ -94,6 +95,7 @@ def build_command_circom(payload, count, rapidsnark=False):
     If rapidsnark is true it will benchmark both provers
     NOTE: rapidsnark only works in intel x64
     """
+    os.makedirs(helper.CIRCOM_BENCHMAKR_DIR, exist_ok=True)    
     # TODO - Add count to command creation
     if len(payload.backend) != 1 or payload.backend[0] != "groth16":
         raise ValueError("Circom benchmark only supports groth16 backend")
@@ -125,7 +127,9 @@ def build_command_bellman(payload, count):
     """
     Build the command to invoke the bellman ZKP-library given the payload
     """
-
+    os.makedirs(helper.BELLMAN_BENCH, exist_ok=True)    
+    os.makedirs(helper.BELLMAN_BENCH_JSON, exist_ok=True)    
+    os.makedirs(helper.BELLMAN_BENCH_MEMORY, exist_ok=True)    
     # TODO - Add count to command creation
     if len(payload.backend) != 1 or payload.backend[0] != "bellman":
         raise ValueError("Bellman benchmark only supports groth16 backend")
@@ -208,6 +212,8 @@ def build_command_bellman_ce(payload, count):
     """
     Build the command to invoke the bellman ZKP-library given the payload
     """
+    os.makedirs(helper.BELLMAN_CE_BENCH, exist_ok=True)    
+    os.makedirs(helper.BELLMAN_CE_BENCH_JSON, exist_ok=True)    
     # TODO - Add count to command creation
     if len(payload.backend) != 1 or payload.backend[0] != "bellman_ce":
         raise ValueError("Bellman_ce benchmark only supports groth16 backend")
@@ -275,6 +281,9 @@ def build_command_halo2_pse(payload, count):
     """
     Build the command to invoke the halo2 PSE ZKP-library given the payload
     """
+    os.makedirs(helper.HALO2_PSE_BENCH, exist_ok=True)    
+    os.makedirs(helper.HALO2_PSE_BENCH_JSON, exist_ok=True)    
+    os.makedirs(helper.HALO2_PSE_BENCH_MEMORY, exist_ok=True)    
 
     # TODO - Add count to command creation
 
