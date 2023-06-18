@@ -59,7 +59,5 @@ if __name__ == '__main__':
     parser.add_argument('--config', required=True, help='Path to configuration file')
     parser.add_argument('--machine', required=True, help='Machine name')
     args = parser.parse_args()
-    print(helper.BENCHMARKS_DIR)
     helper.BENCHMARKS_DIR = os.path.join(helper.BENCHMARKS_DIR, args.machine)
-    print(helper.BENCHMARKS_DIR)
     parse_config(args.config)
