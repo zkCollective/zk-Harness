@@ -15,7 +15,7 @@ Arguments:
 --circuit: The name of the circuit to filter rows in the CSV file.
 
 The script reads the CSV file, searches for rows matching the specified circuit name, extracts the RAM values from the corresponding memory files,
-and adds the RAM values to the "ram(mb)" column in the CSV file. The updated CSV file will be saved with the changes.
+and adds the RAM values to the "ram" column in the CSV file. The updated CSV file will be saved with the changes.
 
 Example Usage:
 --------------
@@ -45,7 +45,7 @@ def parse_csv(csv_filename, memory_folder, circuit):
                 memory_filename = next(f for f in files if row["operation"] in f)
                 memory_file = os.path.join(memory_folder, memory_filename)
                 ram = extract_ram_from_file(memory_file)
-                row['ram(mb)'] = ram
+                row['ram'] = ram
             csv_rows.append(row)
 
     # Write updated rows back to the CSV file
