@@ -8,6 +8,7 @@ BENCHMARKS_DIR = os.path.join(MAIN_DIR, "benchmarks")
 # BELLMAN PATHS
 BELLMAN = os.path.join(MAIN_DIR, "bellman_circuits")
 BELLMAN_BENCH = os.path.join(BENCHMARKS_DIR, "bellman")
+BELLMAN_BENCH_MEMORY = os.path.join(BELLMAN_BENCH, "memory")
 BELLMAN_BENCH_JSON = os.path.join(BELLMAN_BENCH, "jsons")
 # BELLMAN_CE PATHS
 BELLMAN_CE = os.path.join(MAIN_DIR, "bellman_ce_circuits")
