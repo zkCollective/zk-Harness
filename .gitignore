@@ -115,4 +115,6 @@ gnark/template
 
 tags/
 
+# Vim
 *.*.swp
+*tags
