@@ -114,3 +114,5 @@ gnark/template
 .idea/
 
 tags/
+
+*.*.swp

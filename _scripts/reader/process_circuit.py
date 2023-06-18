@@ -136,21 +136,11 @@ def build_command_bellman(payload, count):
     for circuit, input_path in payload.circuit.items():
         for inp in helper.get_all_input_files(input_path):
             commands.append(f"cd {helper.BELLMAN}; ")
-            output_mem_size = os.path.join(
-                helper.BELLMAN_BENCH_JSON,
-                circuit + "_" + os.path.basename(inp)
-            )
             output_bench = os.path.join(
                 helper.BELLMAN_BENCH_JSON,
                 circuit + "_bench_" + os.path.basename(inp)
             )
             input_file = os.path.join("..", inp)
-            command_mem_size: str = "RUSTFLAGS=-Awarnings cargo run --bin {binary} --release -- --input {input_file} --output {output}; ".format(
-                binary=circuit,
-                input_file=input_file,
-                output=output_mem_size
-            )
-            commands.append(command_mem_size)
             command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} CIRCUIT={circuit} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
                 circuit=circuit,
                 input_file=input_file,
@@ -158,12 +148,31 @@ def build_command_bellman(payload, count):
                 output=output_bench
             )
             commands.append(command_bench)
+            # Memory commands
+            os.makedirs(f"{helper.BELLMAN_BENCH_MEMORY}/{inp}", exist_ok=True)
+            # Altough each operation need only a subset of the arguments we pass
+            # all of them for simplicity
+            os.makedirs(os.path.join(helper.BELLMAN, "tmp"), exist_ok=True)
+            for op in payload.operation:
+                cargo_cmd = "cargo run --bin {circuit} --release -- --input {inp} --phase {phase} --params {params} --proof {proof}".format(
+                    circuit=circuit,
+                    inp=input_file,
+                    phase=op,
+                    params=os.path.join("tmp", "params"),
+                    proof=os.path.join("tmp", "proof"),
+                )
+                commands.append(
+                    "RUSTFLAGS=-Awarnings {memory_cmd} -h -l {cargo} 2> {time_file} > /dev/null; ".format(
+                        memory_cmd=helper.MEMORY_CMD,
+                        cargo=cargo_cmd,
+                        time_file=f"{helper.BELLMAN_BENCH_MEMORY}/{inp}/bellman_{circuit}_memory_{op}.txt"
+                    )
+                )
             commands.append("cd ..; ")
             out = os.path.join(
                 helper.BELLMAN_BENCH,
                 "bellman_bls12_381_" + circuit + ".csv"
             )
-            
             python_command = "python3"
             try:
                 subprocess.run([python_command, "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -175,14 +184,20 @@ def build_command_bellman(payload, count):
                     print("Neither Python nor Python3 are installed or accessible. Please install or check your path settings.")
                     sys.exit(1)
 
-            transform_command = "{python} _scripts/parsers/criterion_rust_parser.py --framework bellman --category circuit --backend bellman --curve bls12_381 --input {inp} --criterion_json {bench} --mem_proof_json {mem} --output_csv {out}; ".format(
+            transform_command = "{python} _scripts/parsers/criterion_rust_parser.py --framework bellman --category circuit --backend bellman --curve bls12_381 --input {inp} --criterion_json {bench} --proof {proof} --output_csv {out}; ".format(
                 python=python_command,
                 inp=inp,
                 bench=output_bench,
-                mem=output_mem_size,
+                proof=os.path.join(helper.BELLMAN, "tmp", "proof"),
                 out=out
             )
             commands.append(transform_command)
+            time_merge = "python3 _scripts/parsers/csv_parser_rust.py --memory_folder {memory_folder} --time_filename {time_filename} --circuit {circuit}; ".format(
+                memory_folder=os.path.join(helper.BELLMAN_BENCH_MEMORY, inp),
+                time_filename=out,
+                circuit=circuit
+            )
+            commands.append(time_merge)
 
     # Join the commands into a single string
     command = "".join(commands)
