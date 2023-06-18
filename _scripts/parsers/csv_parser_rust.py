@@ -33,6 +33,11 @@ def extract_ram_from_file(filename):
         match = re.search(r'(\d+)\s+maximum resident set size', content)
         if match:
             return match.group(1)
+        else:
+            match = re.search('Maximum resident set size \(kbytes\):\s+(\d+)', content)
+            if match: 
+                kb = match.group(1)
+                return int(kb) * 1024  # convert kb to bytes
     return ''
 
 def parse_csv(csv_filename, memory_folder, circuit):
