@@ -1,4 +1,5 @@
 import os
+import platform
 
 
 ### PATHS ###
@@ -68,3 +69,15 @@ def get_all_input_files(input_path, abspath=False):
     if len(files) == 0:
         raise ValueError(f"Input: no input file detected in {input_path}")
     return files
+
+
+def get_memory_command():
+    system = platform.system()
+    options = ""
+    if system == 'Darwin':
+        options = "-h -l"
+    elif system == 'Linux':
+        options = "-v"
+    else:
+        raise Exception("Unsupported operating system")
+    return MEMORY_CMD + " " + options

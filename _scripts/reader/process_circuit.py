@@ -35,7 +35,7 @@ def build_command_gnark(payload, count):
         commands_memory = [
             (
                 os.makedirs(f"{helper.GNARK_BENCH_MEMORY}/{modified_inp}", exist_ok=True),
-                f"{helper.MEMORY_CMD} -h -l ./{backend}_memory_{op} \
+                f"{helper.get_memory_command()} ./{backend}_memory_{op} \
                     --circuit={circ} \
                     --curve={curve} \
                     --input={inp} \
@@ -162,8 +162,8 @@ def build_command_bellman(payload, count):
                     proof=os.path.join("tmp", "proof"),
                 )
                 commands.append(
-                    "RUSTFLAGS=-Awarnings {memory_cmd} -h -l {cargo} 2> {time_file} > /dev/null; ".format(
-                        memory_cmd=helper.MEMORY_CMD,
+                    "RUSTFLAGS=-Awarnings {memory_cmd} {cargo} 2> {time_file} > /dev/null; ".format(
+                        memory_cmd=helper.get_memory_command(),
                         cargo=cargo_cmd,
                         time_file=f"{helper.BELLMAN_BENCH_MEMORY}/{inp}/bellman_{circuit}_memory_{op}.txt"
                     )
@@ -314,8 +314,8 @@ def build_command_halo2_pse(payload, count):
                     proof=os.path.join("tmp", "proof"),
                 )
                 commands.append(
-                    "RUSTFLAGS=-Awarnings {memory_cmd} -h -l {cargo} 2> {time_file} > /dev/null; ".format(
-                        memory_cmd=helper.MEMORY_CMD,
+                    "RUSTFLAGS=-Awarnings {memory_cmd} {cargo} 2> {time_file} > /dev/null; ".format(
+                        memory_cmd=helper.get_memory_command(),
                         cargo=cargo_cmd,
                         time_file=f"{helper.HALO2_PSE_BENCH_MEMORY}/{inp}/halo2_{circuit}_memory_{op}.txt"
                     )
