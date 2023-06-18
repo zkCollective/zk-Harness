@@ -1,6 +1,0 @@
-framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram,time(ms),proofSize,nbPhysicalCores,nbLogicalCores,count,cpu,ramReal
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_5.json,compile,42584,32,33,64009480,163,0,1,1,1,VirtualApple @ 2.50GHz,181977088
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_5.json,setup,42584,32,33,133284120,3811,0,1,1,1,VirtualApple @ 2.50GHz,104099840
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_5.json,witness,42584,32,33,63747336,1,0,1,1,1,VirtualApple @ 2.50GHz,7544832
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_5.json,prove,42584,32,33,112312600,134,384,1,1,1,VirtualApple @ 2.50GHz,101220352
-gnark,circuit,groth16,bn254,sha256,_input/circuit/sha256/input_5.json,verify,42584,32,33,141934872,2,0,1,1,1,VirtualApple @ 2.50GHz,9728000
