@@ -162,17 +162,17 @@ get_time_results() {
         ram=$(grep Maximum ${timeRes} | cut -d ":" -f2 | xargs)
         realTime=$(grep Real ${timeRes} | cut -d ":" -f2 | xargs)
         # RAM here is in kbytes
-        ramMb=$(echo ${ram}/1024 | bc)
+        ramBytes=$(echo ${ram}*1024 | bc)
     elif [[ "$OS" == "Darwin" ]]; then
         ram=$(grep maximum ${timeRes} | xargs | cut -d " " -f1) 
         realTime=$(grep real ${timeRes} | xargs | cut -d " " -f1)
-        ramMb=$(echo ${ram}/1024/1024 | bc)
+        ramBytes=$(echo ${ram} | bc)
     fi
     # NOTE: if real contains minutes in Mac it won't work
     realTime=$(echo "$realTime" | sed 's/s//')
     millisecs=$(echo "${realTime} * 1000" | bc)
     millisecs_without_dec=${millisecs%.*}
-    echo "$ramMb,$millisecs_without_dec"
+    echo "$ramBytes,$millisecs_without_dec"
 }
 
 get_phase_stats() {
@@ -181,15 +181,6 @@ get_phase_stats() {
     phaseTimeFileToMerge=$3
 
     ramtime="$(get_time_results $phaseTimeFile)"
-    # TODO Node uses 1 single thread in one core. Nevertheless, snarkjs
-    # (and the underlying library ffjavascript)
-    # use workers to perfrom operations, hence it isn't actually single threaded.
-    # We could instrument snarkjs so it uses only a single worker.
-    # For circom compiler, again we could potentially enforce single core and
-    # thread execution if we instrument it.
-    # Finally, we might need to do the same for the witness generator.
-    physical=1
-    virtual=1
     # Proof size in bytes
     if [ $phase == "prove" ]; then 
         proofSize=$(eval "$STATCMD ${TMP}/proof.json")
@@ -216,9 +207,9 @@ get_phase_stats() {
     # We don't want to print the whole input file but only the part that it is
     # Count is always 1
     if [[ $phaseTimeFile == *"rapidsnark_times.txt"* ]]; then
-        echo "circom/rapidsnark,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtimeFinal,$proofSize,$physical,$virtual,1,$PROC"
+        echo "circom/rapidsnark,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtimeFinal,$proofSize,1"
     else
-        echo "circom/snarkjs,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtimeFinal,$proofSize,$physical,$virtual,1,$PROC"
+        echo "circom/snarkjs,circuit,groth16,bn128,$CIRCUIT_NAME,$INPUT,$phase,$nbConstraints,$nbPrivateInputSignals,$nbPublicInputSignals,$ramtimeFinal,$proofSize,1"
     fi
 
 }
@@ -269,7 +260,7 @@ if [ ! -z "$RES" ]; then
 
     # Check if RES file already exist.
     if [ ! -f "$RES" ]; then
-        echo "framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram(mb),time(ms),proofSize,nbPhysicalCores,nbLogicalCores,count,cpu" > ${RES}
+        echo "framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram,time,proofSize,count" > ${RES}
     fi
     for (( i=0; i<${arraylength}; i++ ));
     do
