@@ -1,5 +1,6 @@
 use bellman::{
     gadgets::num::AllocatedNum,
+    gadgets::multipack,
     Circuit, ConstraintSystem, SynthesisError,
 };
 use ff::PrimeField;
@@ -76,9 +77,12 @@ mod exponentiate_tests {
     use super::*;
     use bls12_381::{Scalar};
     use bellman::gadgets::test::TestConstraintSystem;
+    use bellman::groth16;
+    use rand::rngs::OsRng;
+    use bls12_381::Bls12;
 
     #[test]
-    fn test_exponentiation_circuit() {
+    fn test_cs_satisfaction() {
         // Convert x, y from string to Fr and prepare public input
         let x = Scalar::from(2u64);
         let y = Scalar::from(16u64);
@@ -110,6 +114,34 @@ mod exponentiate_tests {
         assert!(cs.is_satisfied());
     }
 
-    // FIXME - Write test for circuit correctness. 
-    // Currently, proof verification fails due to parsing of public inputs
+    #[test]
+    fn test_circuit_correctness() {
+        // Convert x, y from string to Fr and prepare public input
+        let x = Scalar::from(1u64);
+        let y = Scalar::from(1u64);
+        let e = 4;
+
+        // Define the circuit
+        let circuit = ExponentiationCircuit {
+            x: Some(x),
+            e: e,
+            y: Some(y),
+        };
+
+        // Generate Parameters
+        let params = groth16::generate_random_parameters::<Bls12, _, _>(circuit.clone(), &mut OsRng).unwrap();
+
+        // Create a mock constraint system
+        let mut cs = TestConstraintSystem::<Scalar>::new();
+        // Synthesize the circuit with our mock constraint system
+        circuit.clone().synthesize(&mut cs).unwrap();
+        println!("Number of constraints: {}", cs.num_constraints());
+
+        let rng = &mut OsRng;
+        let pvk = groth16::prepare_verifying_key(&params.vk);
+        let proof = groth16::create_random_proof(circuit.clone(), &params, rng).unwrap(); 
+
+        // Check the proof!
+        assert!(groth16::verify_proof(&pvk, &proof, &[]).is_ok());
+    }
 }
