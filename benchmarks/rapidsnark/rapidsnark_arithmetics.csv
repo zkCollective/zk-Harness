@@ -1,3 +1,0 @@
-framework,category,curve,field,operation,input,ram,time,nbPhysicalCores,nbLogicalCores,count,cpu
-rapidsnark,arithmetic,bn128,scalar,add,_input/arithmetic/add/input_1.json,54263808,11,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
-rapidsnark,arithmetic,bn128,scalar,mul,_input/arithmetic/mul/input_1.json,54882304,20,1,1,10000,Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz

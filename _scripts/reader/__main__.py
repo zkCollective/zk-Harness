@@ -1,11 +1,13 @@
 import argparse
 import json
 import subprocess
+import os
 
 from . import process_recursion
 from . import process_circuit
 from . import process_arithmetic
 from . import process_ec
+from . import helper
 
 def recursion_processing(project, config, count):
     # Extract relevant fields from config, build & execute command
@@ -54,6 +56,10 @@ def parse_config(config_path):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config', help='Path to configuration file')
+    parser.add_argument('--config', required=True, help='Path to configuration file')
+    parser.add_argument('--machine', required=True, help='Machine name')
     args = parser.parse_args()
+    print(helper.BENCHMARKS_DIR)
+    helper.BENCHMARKS_DIR = os.path.join(helper.BENCHMARKS_DIR, args.machine)
+    print(helper.BENCHMARKS_DIR)
     parse_config(args.config)
