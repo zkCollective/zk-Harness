@@ -70,7 +70,7 @@ fn bench_sha256(c: &mut Criterion, input_str: String) {
 
 // Benchmark for Exponentiation
 fn bench_exponentiate(c: &mut Criterion, input_str: String) {
-    let mut group = c.benchmark_group("exponentiation");
+    let mut group = c.benchmark_group("exponentiate");
 
     // Get data from config
     let (x, e, y) = exponentiate::get_exponentiate_data(input_str);

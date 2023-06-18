@@ -55,13 +55,10 @@ def save_csv(framework, category, backend, curve, circuit_name, input_path, stag
         "nbConstraints",
         "nbSecret",
         "nbPublic",
-        "ram(mb)",
-        "time(ms)",
+        "ram",
+        "time",
         "proofSize",
-        "nbPhysicalCores",
-        "nbLogicalCores",
-        "count",
-        "cpu"
+        "count"
     ]
 
     write_header = not os.path.exists(output_csv)
@@ -75,7 +72,7 @@ def save_csv(framework, category, backend, curve, circuit_name, input_path, stag
 
         for stage, data in stages.items():
             ram = data.get("ram", "")
-            ram = int(ram / (1024 * 1024)) if ram is not None and isinstance(ram, int) else ""  # convert bytes to mb
+            ram = int(ram) if ram is not None and isinstance(ram, int) else ""
             mean = data.get("mean", "")
             mean = int(mean / 1_000_000) if mean is not None else ""  # convert ns to ms
             mean = 1 if mean == 0 else mean
@@ -91,21 +88,15 @@ def save_csv(framework, category, backend, curve, circuit_name, input_path, stag
                 "input": input_path,
                 "operation": stage,
                 # FIXME
-                "nbConstraints": 1,
+                "nbConstraints": "",
                 # FIXME
-                "nbSecret": 1,
+                "nbSecret": "",
                 # FIXME
-                "nbPublic": 1,
-                "ram(mb)": ram,
-                "time(ms)": mean, 
-                "proofSize": proofSize,
-                # FIXME
-                "nbPhysicalCores": 1,
-                # FIXME
-                "nbLogicalCores": 1,
-                "count": data.get("count", ""),
-                # FIXME
-                "cpu": "MacOSX"
+                "nbPublic": "",
+                "ram": ram,
+                "time": mean, 
+                "proofSize": proofSize if stage == "prove" else "",
+                "count": data.get("count", "")
             }
 
             writer.writerow(row)
