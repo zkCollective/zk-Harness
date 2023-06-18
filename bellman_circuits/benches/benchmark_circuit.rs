@@ -41,7 +41,7 @@ pub fn bench_circuit<M: Measurement, C: Circuit<Scalar> + Clone + 'static>(
 
     c.bench_function("verify", |b| {
         b.iter(|| {
-            let _ = groth16::verify_proof(&pvk, &proof, &public_inputs);        
+            let _ = groth16::verify_proof(&pvk, &proof, &public_inputs).unwrap();        
         })
     });
 }
@@ -75,11 +75,9 @@ fn bench_exponentiate(c: &mut Criterion, input_str: String) {
     // Get data from config
     let (x, e, y) = exponentiate::get_exponentiate_data(input_str);
     
-    // Public inputs are x and y
-    let x_bits = multipack::bytes_to_bits_le(&x.to_repr().as_ref());
-    let y_bits = multipack::bytes_to_bits_le(&y.to_repr().as_ref());
-    let inputs = [multipack::compute_multipacking(&x_bits), multipack::compute_multipacking(&y_bits)].concat();
-
+    // Public input is empty
+    let inputs = Vec::new();
+    
     // Define the circuit
     let circuit = exponentiate::ExponentiationCircuit {
         x: Some(x),
