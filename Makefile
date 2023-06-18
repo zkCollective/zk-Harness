@@ -83,34 +83,17 @@ benchmark-circomlib:
 
 benchmark-circom-circuits: benchmark-toy-circom
 
-benchmark-gnark-arithmetics:
-	$(info --------------------------------------------)
-	$(info ------- GNARK ARITHMETICS BENCHMARKS -------)
-	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/gnark/config_arithmetics.json  
-
-benchmark-gnark-ec:
-	$(info --------------------------------------------)
-	$(info ------ GNARK EC BENCHMARKS -----------------)
-	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/gnark/config_ec.json  
-
-benchmark-toy-gnark:
+benchmark-gnark-circuits: 
 	$(info --------------------------------------------)
 	$(info ----------- GNARK TOY BENCHMARKS -----------)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/gnark/config_all_toy.json  
-
-benchmark-gnark-hash:
-	python3 -m _scripts.reader --config _input/config/gnark/config_hash.json  
+	python3 -m _scripts.reader --config _input/config/gnark/config_circuits.json  
 
 benchmark-gnark-recursion:
 	$(info --------------------------------------------)
 	$(info ----------- GNARK RECURSION BENCHMARKS -----)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_recursion.json
-
-benchmark-gnark-circuits: benchmark-toy-gnark benchmark-hash
 
 test-simple:
 	python3 -m _scripts.reader --config _input/config/gnark/config_gnark_simple.json  
