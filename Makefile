@@ -97,14 +97,14 @@ benchmark-gnark-ec:
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_ec.json   --machine $(MACHINE)
 
-benchmark-gnark-hash:
-	python3 -m _scripts.reader --config _input/config/gnark/config_hash.json   --machine $(MACHINE)
-
-benchmark-gnark-circuits: 
+benchmark-toy-gnark:
 	$(info --------------------------------------------)
 	$(info ----------- GNARK TOY BENCHMARKS -----------)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/gnark/config_circuits.json  
+	python3 -m _scripts.reader --config _input/config/gnark/config_all_toy.json   --machine $(MACHINE)
+
+benchmark-gnark-hash:
+	python3 -m _scripts.reader --config _input/config/gnark/config_hash.json   --machine $(MACHINE)
 
 benchmark-gnark-recursion:
 	$(info --------------------------------------------)
