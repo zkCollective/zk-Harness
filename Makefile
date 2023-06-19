@@ -1,5 +1,6 @@
 ROOT_DIR=$(pwd)
 benchmark_directory = benchmarks
+MACHINE := $(shell cat machine 2> /dev/null || echo DEFAULT)
 
 arkworks_directory = arkworks
 blstrs_directory = blstrs
@@ -12,21 +13,20 @@ snarkjs_directory = snarkjs
 pairing_ce_directory = pairing_ce
 halo2_curves_directory = halo2_curves
 
-arkworks_benchmarks_directory = $(benchmark_directory)/$(arkworks_directory)
-blstrs_benchmarks_directory = $(benchmark_directory)/$(blstrs_directory)
-pairing_ce_benchmarks_directory = $(benchmark_directory)/$(pairing_ce_directory)
-halo2_curves_benchmarks_directory = $(benchmark_directory)/$(halo2_curves_directory)
-curve25519_dalek_benchmarks_directory = $(benchmark_directory)/$(curve25519_dalek_directory)
-pasta_curves_benchmarks_directory = $(benchmark_directory)/$(pasta_curves_directory)
-zkcrypto_benchmarks_directory = $(benchmark_directory)/$(zkcrypto_directory)
-gnark_benchmarks_directory = $(benchmark_directory)/$(gnark_directory)
-circom_benchmarks_directory = $(benchmark_directory)/$(circom_directory)
-snarkjs_benchmarks_directory = $(benchmark_directory)/$(snarkjs_directory)
+arkworks_benchmarks_directory = $(benchmark_directory)/$(MACHINE)/$(arkworks_directory)
+blstrs_benchmarks_directory = $(benchmark_directory)/$(MACHINE)/$(blstrs_directory)
+pairing_ce_benchmarks_directory = $(benchmark_directory)/$(MACHINE)/$(pairing_ce_directory)
+halo2_curves_benchmarks_directory = $(benchmark_directory)/$(MACHINE)/$(halo2_curves_directory)
+curve25519_dalek_benchmarks_directory = $(benchmark_directory)/$(MACHINE)/$(curve25519_dalek_directory)
+pasta_curves_benchmarks_directory = $(benchmark_directory)/$(MACHINE)/$(pasta_curves_directory)
+zkcrypto_benchmarks_directory = $(benchmark_directory)/$(MACHINE)/$(zkcrypto_directory)
+gnark_benchmarks_directory = $(benchmark_directory)/$(MACHINE)/$(gnark_directory)
+circom_benchmarks_directory = $(benchmark_directory)/$(MACHINE)/$(circom_directory)
+snarkjs_benchmarks_directory = $(benchmark_directory)/$(MACHINE)/$(snarkjs_directory)
 
 bellman_ce_directory = bellman_ce
 bellman_directory = bellman
 halo2_pse_directory = halo2_pse
-MACHINE := $(shell cat machine 2> /dev/null || echo DEFAULT)
 
 
 all: init arkworks-arithmetics blstrs-arithmetics benchmark-gnark-arithmetics benchmark-gnark-ec benchmark-gnark-circuits benchmark-snarkjs-arithmetics benchmark-snarkjs-ec benchmark-circom-circuits
