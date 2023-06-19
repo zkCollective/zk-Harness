@@ -207,75 +207,6 @@ def build_command_bellman(payload, count):
     command = "".join(commands)
     return command
 
-# TODO - This currently uses the halo2 criterion rust parser
-def build_command_bellman_ce(payload, count):
-    """
-    Build the command to invoke the bellman ZKP-library given the payload
-    """
-    os.makedirs(helper.Paths().BELLMAN_CE_BENCH, exist_ok=True)    
-    os.makedirs(helper.Paths().BELLMAN_CE_BENCH_JSON, exist_ok=True)    
-    # TODO - Add count to command creation
-    if len(payload.backend) != 1 or payload.backend[0] != "bellman_ce":
-        raise ValueError("Bellman_ce benchmark only supports groth16 backend")
-    if len(payload.curves) != 1 or payload.curves[0] != "bn256":
-        raise ValueError("Bellman_ce benchmark only supports bn256 curve")
-    # TODO handle diffent operations (i.e., algorithms)
-    commands = []
-    for circuit, input_path in payload.circuit.items():
-        for inp in helper.get_all_input_files(input_path):
-            commands.append(f"cd {helper.Paths().BELLMAN_CE}; ")
-            output_mem_size = os.path.join(
-                helper.Paths().BELLMAN_CE_BENCH_JSON,
-                circuit + "_" + os.path.basename(inp)
-            )
-            output_bench = os.path.join(
-                helper.Paths().BELLMAN_CE_BENCH_JSON,
-                circuit + "_bench_" + os.path.basename(inp)
-            )
-            input_file = os.path.join("..", inp)
-            # TODO - Memory Benchmarks for Bellman_ce currently not supported
-            # command_mem_size: str = "RUSTFLAGS=-Awarnings cargo run --bin {binary} --release -- --input {input_file} --output {output}; ".format(
-            #     binary=circuit,
-            #     input_file=input_file,
-            #     output=output_mem_size
-            # )
-            # commands.append(command_mem_size)
-            command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} CIRCUIT={circuit} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
-                circuit=circuit,
-                input_file=input_file,
-                bench="benchmark_circuit",
-                output=output_bench
-            )
-            commands.append(command_bench)
-            commands.append("cd ..; ")
-            out = os.path.join(
-                helper.Paths().BELLMAN_CE_BENCH,
-                "bellman_bls12_381_" + circuit + ".csv"
-            )
-            
-            python_command = "python3"
-            try:
-                subprocess.run([python_command, "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            except (subprocess.CalledProcessError, FileNotFoundError):
-                try:
-                    python_command = "python3"
-                    subprocess.run([python_command, "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-                except (subprocess.CalledProcessError, FileNotFoundError):
-                    print("Neither Python nor Python3 are installed or accessible. Please install or check your path settings.")
-                    sys.exit(1)
-
-            transform_command = "{python} _scripts/parsers/criterion_rust_parser.py --framework bellman --category circuit --backend bellman --curve bls12_381 --input {inp} --criterion_json {bench} --output_csv {out}; ".format(
-                python=python_command,
-                inp=inp,
-                bench=output_bench,
-                out=out
-            )
-            commands.append(transform_command)
-
-    # Join the commands into a single string
-    command = "".join(commands)
-    return command
-
 
 def build_command_halo2_pse(payload, count):
     """
@@ -363,7 +294,6 @@ projects = {
     "circom/snarkjs":   build_command_circom_snarkjs,
     "circom/rapidsnark":   build_command_circom_rapidsnark,
     "bellman":   build_command_bellman,
-    "bellman_ce":   build_command_bellman_ce,
     "halo2_pse": build_command_halo2_pse
 }
 
