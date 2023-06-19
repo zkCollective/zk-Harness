@@ -1,4 +1,6 @@
-use std::{fs::File};
+use std::{env, fs::File};
+use std::process;
+use std::io::Read;
 use std::fs;
 use bellman::{Circuit, groth16};
 use bellman::groth16::{Proof, Parameters};
@@ -21,6 +23,29 @@ pub struct BinaryArgs {
 
     #[arg(short, long)]
     pub proof: Option<String>,
+}
+
+pub fn read_file_from_env_var(env_var_name: String) -> String {
+    let input_file = env::var(env_var_name.clone()).unwrap_or_else(|_| {
+        println!("Please set the {} environment variable to point to the input file", env_var_name);
+        process::exit(1);
+    });
+    return read_file_contents(input_file);
+}
+
+pub fn read_env_variable(env_var_name: String) -> String {
+    let variable_str = env::var(env_var_name.clone()).unwrap_or_else(|_| {
+        println!("Please set the {} environment variable", env_var_name);
+        process::exit(1);
+    });
+    return variable_str;
+}
+
+pub fn read_file_contents(file_name: String) -> String {
+    let mut file = File::open(file_name).expect("Cannot load file");
+    let mut file_str = String::new();
+    file.read_to_string(&mut file_str).expect("Cannot read file");
+    return file_str;
 }
 
 pub fn measure_size_in_bytes(proof: &Proof<Bls12>) -> usize {

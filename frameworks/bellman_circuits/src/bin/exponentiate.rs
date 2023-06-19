@@ -1,9 +1,6 @@
 use bellman_circuits::circuits::exponentiate;
 use clap::{Parser};
-use rust_utils::{
-    read_file_contents,
-};
-use bellman_utils::{BinaryArgs, f_setup, f_verify, f_prove};
+use bellman_utils::{BinaryArgs, f_setup, f_verify, f_prove, read_file_contents};
 use bellman::gadgets::multipack;
 use bls12_381::Scalar;
 use ff::PrimeField;

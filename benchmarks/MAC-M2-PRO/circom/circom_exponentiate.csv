@@ -1,0 +1,17 @@
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram,time,proofSize,count
+circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,compile,100,0,2,16502784,130,,1
+circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,witness,100,0,2,34480128,60,,1
+
+circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,prove,100,0,2,,,,1
+circom/rapidsnark,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,prove,100,0,2,,,,1
+circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,verify,100,0,2,27951104,50,,1
+circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,compile,100,0,2,17285120,60,,1
+circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,witness,100,0,2,34336768,60,,1
+
+circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,prove,100,0,2,,,,1
+circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,verify,100,0,2,28008448,50,,1
+circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,compile,100,0,2,16924672,70,,1
+circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,witness,100,0,2,34742272,60,,1
+circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,setup,100,0,2,217448448,2740,,1
+circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,prove,100,0,2,192946176,1040,803,1
+circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,verify,100,0,2,165089280,930,,1

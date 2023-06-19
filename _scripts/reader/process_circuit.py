@@ -19,6 +19,7 @@ def build_command_gnark(payload, count):
     """
     os.makedirs(helper.Paths().GNARK_BENCH, exist_ok=True)    
     os.makedirs(helper.Paths().GNARK_BENCH_MEMORY, exist_ok=True)    
+    print()
     if payload.backend is not None and payload.curves is not None:
         commands = [f"./gnark {backend} --circuit={circ} --algo={op} --curve={curve} --input={inp} --count={count}\n"
                     for backend in payload.backend
@@ -47,12 +48,12 @@ def build_command_gnark(payload, count):
             for backend in payload.backend
             for curve in payload.curves
             for circ, input_path in payload.circuit.items()
-            for inp in helper.Paths().get_all_input_files(input_path)
+            for inp in helper.get_all_input_files(input_path)
             for modified_inp in [inp.replace('_input/circuit/', '').replace('.json', '')]
             for op in payload.operation
         ]
 
-        commands_memory.append("cd ..; ")
+        commands_memory.append("cd ../../; ")
 
         commands_merge = [
             "python3 _scripts/parsers/csv_parser.py --memory_folder {memory_folder}/{input_name} --time_filename {gnark_bench_folder}/gnark_{backend}_{circuit}.csv --circuit {circuit}\n".format(
@@ -144,7 +145,7 @@ def build_command_bellman(payload, count):
                 helper.Paths().BELLMAN_BENCH_JSON,
                 circuit + "_bench_" + os.path.basename(inp)
             )
-            input_file = os.path.join("..", inp)
+            input_file = os.path.join("..", "..", inp)
             command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} CIRCUIT={circuit} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
                 circuit=circuit,
                 input_file=input_file,
@@ -172,7 +173,7 @@ def build_command_bellman(payload, count):
                         time_file=f"{helper.Paths().BELLMAN_BENCH_MEMORY}/{inp}/bellman_{circuit}_memory_{op}.txt"
                     )
                 )
-            commands.append("cd ..; ")
+            commands.append("cd ../../; ")
             out = os.path.join(
                 helper.Paths().BELLMAN_BENCH,
                 "bellman_bls12_381_" + circuit + ".csv"
@@ -231,7 +232,7 @@ def build_command_halo2_pse(payload, count):
                 helper.Paths().HALO2_PSE_BENCH_JSON,
                 circuit + "_bench_" + os.path.basename(inp)
             )
-            input_file = os.path.join("..", inp)
+            input_file = os.path.join("..", "..", inp)
             command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
                 input_file=input_file,
                 bench=circuit + "_bench",
@@ -260,7 +261,7 @@ def build_command_halo2_pse(payload, count):
                         time_file=f"{helper.Paths().HALO2_PSE_BENCH_MEMORY}/{inp}/halo2_{circuit}_memory_{op}.txt"
                     )
                 )
-            commands.append("cd ..; ")
+            commands.append("cd ../../; ")
             out = os.path.join(
                 helper.Paths().HALO2_PSE_BENCH,
                 "halo2_pse_bn256_" + circuit + ".csv"
@@ -281,7 +282,6 @@ def build_command_halo2_pse(payload, count):
     # Join the commands into a single string
     command = "".join(commands)
 
-    print(command)
     return command
 
 def default_case(_payload, _count):

@@ -2,6 +2,8 @@ import os
 import platform
 
 
+FRAMEWORKS_DIR = "frameworks"
+
 class Paths():
     _instance = None
     MAIN_DIR = None
@@ -45,21 +47,21 @@ class Paths():
             cls._instance.MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
             cls._instance.BENCHMARKS_DIR = os.path.join(cls._instance.MAIN_DIR, "benchmarks", machine)
             # BELLMAN PATHS
-            cls._instance.BELLMAN = os.path.join(cls._instance.MAIN_DIR, "bellman_circuits")
+            cls._instance.BELLMAN = os.path.join(cls._instance.MAIN_DIR, FRAMEWORKS_DIR, "bellman_circuits")
             cls._instance.BELLMAN_BENCH = os.path.join(cls._instance.BENCHMARKS_DIR, "bellman")
             cls._instance.BELLMAN_BENCH_MEMORY = os.path.join(cls._instance.BELLMAN_BENCH, "memory")
             cls._instance.BELLMAN_BENCH_JSON = os.path.join(cls._instance.BELLMAN_BENCH, "jsons")
             # GNARK PATHS
-            cls._instance.GNARK_DIR = os.path.join(cls._instance.MAIN_DIR, "gnark")
+            cls._instance.GNARK_DIR = os.path.join(cls._instance.MAIN_DIR, FRAMEWORKS_DIR, "gnark")
             cls._instance.GNARK_BENCH = os.path.join(cls._instance.BENCHMARKS_DIR, "gnark")
             cls._instance.GNARK_BENCH_MEMORY = os.path.join(cls._instance.GNARK_BENCH, "memory")
             # HALO2_PSE PATHS
-            cls._instance.HALO2_PSE = os.path.join(cls._instance.MAIN_DIR, "halo2_pse")
+            cls._instance.HALO2_PSE = os.path.join(cls._instance.MAIN_DIR, FRAMEWORKS_DIR, "halo2_pse")
             cls._instance.HALO2_PSE_BENCH = os.path.join(cls._instance.BENCHMARKS_DIR, "halo2_pse")
             cls._instance.HALO2_PSE_BENCH_MEMORY = os.path.join(cls._instance.HALO2_PSE_BENCH, "memory")
             cls._instance.HALO2_PSE_BENCH_JSON = os.path.join(cls._instance.HALO2_PSE_BENCH, "jsons")
             # CIRCOM PATHS
-            cls._instance.CIRCOM_DIR = os.path.join(cls._instance.MAIN_DIR, "circom")
+            cls._instance.CIRCOM_DIR = os.path.join(cls._instance.MAIN_DIR, FRAMEWORKS_DIR, "circom")
             cls._instance.CIRCOM_BENCHMAKR_DIR = os.path.join(cls._instance.BENCHMARKS_DIR, "circom")
             cls._instance.SNARKJS_BENCHMAKR_DIR = os.path.join(cls._instance.BENCHMARKS_DIR, "snarkjs")
             cls._instance.RAPIDSNARK_BENCHMAKR_DIR = os.path.join(cls._instance.BENCHMARKS_DIR, "rapidsnark")

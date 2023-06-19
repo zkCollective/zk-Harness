@@ -18,7 +18,7 @@ else
 fi
 
 SCRIPT_PATH=$(dirname "$(readlink -f "$0")")
-NODE_MODULES="${SCRIPT_PATH}/../../node_modules/"
+NODE_MODULES="${SCRIPT_PATH}/../../../node_modules/"
 CIRCUIT=$1
 CIRCUIT_NAME=$2
 CIRCUIT_NAME_INT=${CIRCUIT##*/}
