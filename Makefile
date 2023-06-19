@@ -35,31 +35,31 @@ benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
 	$(info ------ SNARKJS ARITHMETICS BENCHMARKS ------)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/snarkjs/config_arithmetics.json  --machine $(MACHINE) 
+	python3 -m _scripts.reader --config _input/config/snarkjs/config_arithmetics.json --machine $(MACHINE) 
 
 benchmark-snarkjs-ec:
 	$(info --------------------------------------------)
 	$(info ---------- SNARKJS EC BENCHMARKS -----------)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/snarkjs/config_ec.json   --machine $(MACHINE)
+	python3 -m _scripts.reader --config _input/config/snarkjs/config_ec.json --machine $(MACHINE)
 
 benchmark-rapidsnark-arithmetics:
 	$(info --------------------------------------------)
 	$(info ---- RAPIDSNARK ARITHMETICS BENCHMARKS -----)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/rapidsnark/config_arithmetics.json   --machine $(MACHINE)
+	python3 -m _scripts.reader --config _input/config/rapidsnark/config_arithmetics.json --machine $(MACHINE)
 
 benchmark-rapidsnark-ec:
 	$(info --------------------------------------------)
 	$(info --------- RAPIDSNARK EC BENCHMARKS ---------)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/rapidsnark/config_ec.json   --machine $(MACHINE)
+	python3 -m _scripts.reader --config _input/config/rapidsnark/config_ec.json --machine $(MACHINE)
 
 benchmark-toy-circom:
 	$(info --------------------------------------------)
 	$(info ---------- CIRCOM TOY BENCHMARKS -----------)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/circom/config_all_toy.json   --machine $(MACHINE)
+	python3 -m _scripts.reader --config _input/config/circom/config_all_toy.json --machine $(MACHINE)
 
 benchmark-exponentiate-circom:
 	$(info --------------------------------------------)
@@ -81,30 +81,30 @@ benchmark-circom-circuits: benchmark-exponentiate-circom benchmark-sha-circom
 
 benchmark-gnark-circuits: 
 	$(info --------------------------------------------)
-	$(info ----------- GNARK TOY BENCHMARKS -----------)
+	$(info -------- GNARK CIRCUITS BENCHMARKS ---------)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/gnark/config_circuits.json  --machine $(MACHINE)
+	python3 -m _scripts.reader --config _input/config/gnark/config_circuits.json --machine $(MACHINE)
 
 benchmark-gnark-arithmetics:
 	$(info --------------------------------------------)
 	$(info ------- GNARK ARITHMETICS BENCHMARKS -------)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/gnark/config_arithmetics.json   --machine $(MACHINE)
+	python3 -m _scripts.reader --config _input/config/gnark/config_arithmetics.json --machine $(MACHINE)
 
 benchmark-gnark-ec:
 	$(info --------------------------------------------)
 	$(info ------ GNARK EC BENCHMARKS -----------------)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/gnark/config_ec.json   --machine $(MACHINE)
+	python3 -m _scripts.reader --config _input/config/gnark/config_ec.json --machine $(MACHINE)
 
 benchmark-toy-gnark:
 	$(info --------------------------------------------)
 	$(info ----------- GNARK TOY BENCHMARKS -----------)
 	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/gnark/config_all_toy.json   --machine $(MACHINE)
+	python3 -m _scripts.reader --config _input/config/gnark/config_all_toy.json --machine $(MACHINE)
 
 benchmark-gnark-hash:
-	python3 -m _scripts.reader --config _input/config/gnark/config_hash.json   --machine $(MACHINE)
+	python3 -m _scripts.reader --config _input/config/gnark/config_hash.json --machine $(MACHINE)
 
 benchmark-gnark-recursion:
 	$(info --------------------------------------------)
@@ -113,7 +113,7 @@ benchmark-gnark-recursion:
 	python3 -m _scripts.reader --config _input/config/gnark/config_recursion.json --machine $(MACHINE)
 
 test-simple:
-	python3 -m _scripts.reader --config _input/config/gnark/config_gnark_simple.json   --machine $(MACHINE)
+	python3 -m _scripts.reader --config _input/config/gnark/config_gnark_simple.json --machine $(MACHINE)
 
 clean:
 	rm -rf $(benchmark_directory)/*
