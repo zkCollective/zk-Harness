@@ -17,8 +17,8 @@ def build_command_gnark(payload, count):
     """
     Build the command to invoke the gnark ZKP-framework given the payload
     """
-    os.makedirs(helper.GNARK_BENCH, exist_ok=True)    
-    os.makedirs(helper.GNARK_BENCH_MEMORY, exist_ok=True)    
+    os.makedirs(helper.Paths().GNARK_BENCH, exist_ok=True)    
+    os.makedirs(helper.Paths().GNARK_BENCH_MEMORY, exist_ok=True)    
     if payload.backend is not None and payload.curves is not None:
         commands = [f"./gnark {backend} --circuit={circ} --algo={op} --curve={curve} --input={inp} --count={count}\n"
                     for backend in payload.backend
@@ -35,19 +35,19 @@ def build_command_gnark(payload, count):
         # Memory commands
         commands_memory = [
             (
-                os.makedirs(f"{helper.GNARK_BENCH_MEMORY}/{modified_inp}", exist_ok=True),
+                os.makedirs(f"{helper.Paths().GNARK_BENCH_MEMORY}/{modified_inp}", exist_ok=True),
                 f"{helper.get_memory_command()} ./{backend}_memory_{op} \
                     --circuit={circ} \
                     --curve={curve} \
                     --input={inp} \
                     --count={count} \
-                    2> {helper.GNARK_BENCH_MEMORY}/{modified_inp}/gnark_{backend}_{circ}_memory_{op}.txt \
+                    2> {helper.Paths().GNARK_BENCH_MEMORY}/{modified_inp}/gnark_{backend}_{circ}_memory_{op}.txt \
                     > /dev/null\n"
             )[1]
             for backend in payload.backend
             for curve in payload.curves
             for circ, input_path in payload.circuit.items()
-            for inp in helper.get_all_input_files(input_path)
+            for inp in helper.Paths().get_all_input_files(input_path)
             for modified_inp in [inp.replace('_input/circuit/', '').replace('.json', '')]
             for op in payload.operation
         ]
@@ -56,9 +56,9 @@ def build_command_gnark(payload, count):
 
         commands_merge = [
             "python3 _scripts/parsers/csv_parser.py --memory_folder {memory_folder}/{input_name} --time_filename {gnark_bench_folder}/gnark_{backend}_{circuit}.csv --circuit {circuit}\n".format(
-                memory_folder=helper.GNARK_BENCH_MEMORY,
+                memory_folder=helper.Paths().GNARK_BENCH_MEMORY,
                 input_name=inp.replace('_input/circuit/', '').replace('.json', ''),
-                gnark_bench_folder=helper.GNARK_BENCH,
+                gnark_bench_folder=helper.Paths().GNARK_BENCH,
                 backend=backend,
                 circuit=circ
             )
@@ -71,7 +71,7 @@ def build_command_gnark(payload, count):
         # Join the commands into a single string
         pre_command = "".join(commands + commands_memory + commands_merge)
         
-        command = f"cd {helper.GNARK_DIR}; \
+        command = f"cd {helper.Paths().GNARK_DIR}; \
                     {command_binary}; \
                     {command_check_tmp}; \
                     {pre_command}\n"
@@ -95,7 +95,7 @@ def build_command_circom(payload, count, rapidsnark=False):
     If rapidsnark is true it will benchmark both provers
     NOTE: rapidsnark only works in intel x64
     """
-    os.makedirs(helper.CIRCOM_BENCHMAKR_DIR, exist_ok=True)    
+    os.makedirs(helper.Paths().CIRCOM_BENCHMAKR_DIR, exist_ok=True)    
     # TODO - Add count to command creation
     if len(payload.backend) != 1 or payload.backend[0] != "groth16":
         raise ValueError("Circom benchmark only supports groth16 backend")
@@ -108,12 +108,12 @@ def build_command_circom(payload, count, rapidsnark=False):
             # TODO check if circuit exists
             for inp in helper.get_all_input_files(input_path):
                 command = "{script} {circuit_file} {circuit_name} {input_path} {ptau} {benchmark} tmp {template_vars} {rapidsnark}\n".format(
-                    script=helper.CIRCOM_SCRIPT,
-                    circuit_file=os.path.join(helper.CIRCOM_CIRCUITS_DIR, circuit, "circuit.circom"),
+                    script=helper.Paths().CIRCOM_SCRIPT,
+                    circuit_file=os.path.join(helper.Paths().CIRCOM_CIRCUITS_DIR, circuit, "circuit.circom"),
                     circuit_name=circuit,
                     input_path=inp,
-                    ptau=helper.CIRCOM_PTAU,
-                    benchmark=os.path.join(helper.CIRCOM_BENCHMAKR_DIR, "circom_" + circuit + ".csv"),
+                    ptau=helper.Paths().CIRCOM_PTAU,
+                    benchmark=os.path.join(helper.Paths().CIRCOM_BENCHMAKR_DIR, "circom_" + circuit + ".csv"),
                     template_vars="".join(payload.template_vars.get(circuit, [""])),
                     rapidsnark="1" if rapidsnark else ""
                 )
@@ -127,9 +127,9 @@ def build_command_bellman(payload, count):
     """
     Build the command to invoke the bellman ZKP-library given the payload
     """
-    os.makedirs(helper.BELLMAN_BENCH, exist_ok=True)    
-    os.makedirs(helper.BELLMAN_BENCH_JSON, exist_ok=True)    
-    os.makedirs(helper.BELLMAN_BENCH_MEMORY, exist_ok=True)    
+    os.makedirs(helper.Paths().BELLMAN_BENCH, exist_ok=True)    
+    os.makedirs(helper.Paths().BELLMAN_BENCH_JSON, exist_ok=True)    
+    os.makedirs(helper.Paths().BELLMAN_BENCH_MEMORY, exist_ok=True)    
     # TODO - Add count to command creation
     if len(payload.backend) != 1 or payload.backend[0] != "bellman":
         raise ValueError("Bellman benchmark only supports groth16 backend")
@@ -139,9 +139,9 @@ def build_command_bellman(payload, count):
     commands = []
     for circuit, input_path in payload.circuit.items():
         for inp in helper.get_all_input_files(input_path):
-            commands.append(f"cd {helper.BELLMAN}; ")
+            commands.append(f"cd {helper.Paths().BELLMAN}; ")
             output_bench = os.path.join(
-                helper.BELLMAN_BENCH_JSON,
+                helper.Paths().BELLMAN_BENCH_JSON,
                 circuit + "_bench_" + os.path.basename(inp)
             )
             input_file = os.path.join("..", inp)
@@ -153,10 +153,10 @@ def build_command_bellman(payload, count):
             )
             commands.append(command_bench)
             # Memory commands
-            os.makedirs(f"{helper.BELLMAN_BENCH_MEMORY}/{inp}", exist_ok=True)
+            os.makedirs(f"{helper.Paths().BELLMAN_BENCH_MEMORY}/{inp}", exist_ok=True)
             # Altough each operation need only a subset of the arguments we pass
             # all of them for simplicity
-            os.makedirs(os.path.join(helper.BELLMAN, "tmp"), exist_ok=True)
+            os.makedirs(os.path.join(helper.Paths().BELLMAN, "tmp"), exist_ok=True)
             for op in payload.operation:
                 cargo_cmd = "cargo run --bin {circuit} --release -- --input {inp} --phase {phase} --params {params} --proof {proof}".format(
                     circuit=circuit,
@@ -169,12 +169,12 @@ def build_command_bellman(payload, count):
                     "RUSTFLAGS=-Awarnings {memory_cmd} {cargo} 2> {time_file} > /dev/null; ".format(
                         memory_cmd=helper.get_memory_command(),
                         cargo=cargo_cmd,
-                        time_file=f"{helper.BELLMAN_BENCH_MEMORY}/{inp}/bellman_{circuit}_memory_{op}.txt"
+                        time_file=f"{helper.Paths().BELLMAN_BENCH_MEMORY}/{inp}/bellman_{circuit}_memory_{op}.txt"
                     )
                 )
             commands.append("cd ..; ")
             out = os.path.join(
-                helper.BELLMAN_BENCH,
+                helper.Paths().BELLMAN_BENCH,
                 "bellman_bls12_381_" + circuit + ".csv"
             )
             python_command = "python3"
@@ -192,12 +192,12 @@ def build_command_bellman(payload, count):
                 python=python_command,
                 inp=inp,
                 bench=output_bench,
-                proof=os.path.join(helper.BELLMAN, "tmp", "proof"),
+                proof=os.path.join(helper.Paths().BELLMAN, "tmp", "proof"),
                 out=out
             )
             commands.append(transform_command)
             time_merge = "python3 _scripts/parsers/csv_parser_rust.py --memory_folder {memory_folder} --time_filename {time_filename} --circuit {circuit}; ".format(
-                memory_folder=os.path.join(helper.BELLMAN_BENCH_MEMORY, inp),
+                memory_folder=os.path.join(helper.Paths().BELLMAN_BENCH_MEMORY, inp),
                 time_filename=out,
                 circuit=circuit
             )
@@ -212,8 +212,8 @@ def build_command_bellman_ce(payload, count):
     """
     Build the command to invoke the bellman ZKP-library given the payload
     """
-    os.makedirs(helper.BELLMAN_CE_BENCH, exist_ok=True)    
-    os.makedirs(helper.BELLMAN_CE_BENCH_JSON, exist_ok=True)    
+    os.makedirs(helper.Paths().BELLMAN_CE_BENCH, exist_ok=True)    
+    os.makedirs(helper.Paths().BELLMAN_CE_BENCH_JSON, exist_ok=True)    
     # TODO - Add count to command creation
     if len(payload.backend) != 1 or payload.backend[0] != "bellman_ce":
         raise ValueError("Bellman_ce benchmark only supports groth16 backend")
@@ -223,13 +223,13 @@ def build_command_bellman_ce(payload, count):
     commands = []
     for circuit, input_path in payload.circuit.items():
         for inp in helper.get_all_input_files(input_path):
-            commands.append(f"cd {helper.BELLMAN_CE}; ")
+            commands.append(f"cd {helper.Paths().BELLMAN_CE}; ")
             output_mem_size = os.path.join(
-                helper.BELLMAN_CE_BENCH_JSON,
+                helper.Paths().BELLMAN_CE_BENCH_JSON,
                 circuit + "_" + os.path.basename(inp)
             )
             output_bench = os.path.join(
-                helper.BELLMAN_CE_BENCH_JSON,
+                helper.Paths().BELLMAN_CE_BENCH_JSON,
                 circuit + "_bench_" + os.path.basename(inp)
             )
             input_file = os.path.join("..", inp)
@@ -249,7 +249,7 @@ def build_command_bellman_ce(payload, count):
             commands.append(command_bench)
             commands.append("cd ..; ")
             out = os.path.join(
-                helper.BELLMAN_CE_BENCH,
+                helper.Paths().BELLMAN_CE_BENCH,
                 "bellman_bls12_381_" + circuit + ".csv"
             )
             
@@ -281,9 +281,9 @@ def build_command_halo2_pse(payload, count):
     """
     Build the command to invoke the halo2 PSE ZKP-library given the payload
     """
-    os.makedirs(helper.HALO2_PSE_BENCH, exist_ok=True)    
-    os.makedirs(helper.HALO2_PSE_BENCH_JSON, exist_ok=True)    
-    os.makedirs(helper.HALO2_PSE_BENCH_MEMORY, exist_ok=True)    
+    os.makedirs(helper.Paths().HALO2_PSE_BENCH, exist_ok=True)    
+    os.makedirs(helper.Paths().HALO2_PSE_BENCH_JSON, exist_ok=True)    
+    os.makedirs(helper.Paths().HALO2_PSE_BENCH_MEMORY, exist_ok=True)    
 
     # TODO - Add count to command creation
 
@@ -295,9 +295,9 @@ def build_command_halo2_pse(payload, count):
     commands = []
     for circuit, input_path in payload.circuit.items():
         for inp in helper.get_all_input_files(input_path):
-            commands.append(f"cd {helper.HALO2_PSE}; ")
+            commands.append(f"cd {helper.Paths().HALO2_PSE}; ")
             output_bench = os.path.join(
-                helper.HALO2_PSE_BENCH_JSON,
+                helper.Paths().HALO2_PSE_BENCH_JSON,
                 circuit + "_bench_" + os.path.basename(inp)
             )
             input_file = os.path.join("..", inp)
@@ -308,10 +308,10 @@ def build_command_halo2_pse(payload, count):
             )
             commands.append(command_bench)
             # Memory commands
-            os.makedirs(f"{helper.HALO2_PSE_BENCH_MEMORY}/{inp}", exist_ok=True)
+            os.makedirs(f"{helper.Paths().HALO2_PSE_BENCH_MEMORY}/{inp}", exist_ok=True)
             # Altough each operation need only a subset of the arguments we pass
             # all of them for simplicity
-            os.makedirs(os.path.join(helper.HALO2_PSE, "tmp"), exist_ok=True)
+            os.makedirs(os.path.join(helper.Paths().HALO2_PSE, "tmp"), exist_ok=True)
             for op in payload.operation:
                 cargo_cmd = "cargo run --bin {circuit} --release -- --input {inp} --phase {phase} --params {params} --vk {vk} --pk {pk} --proof {proof}".format(
                     circuit=circuit,
@@ -326,24 +326,24 @@ def build_command_halo2_pse(payload, count):
                     "RUSTFLAGS=-Awarnings {memory_cmd} {cargo} 2> {time_file} > /dev/null; ".format(
                         memory_cmd=helper.get_memory_command(),
                         cargo=cargo_cmd,
-                        time_file=f"{helper.HALO2_PSE_BENCH_MEMORY}/{inp}/halo2_{circuit}_memory_{op}.txt"
+                        time_file=f"{helper.Paths().HALO2_PSE_BENCH_MEMORY}/{inp}/halo2_{circuit}_memory_{op}.txt"
                     )
                 )
             commands.append("cd ..; ")
             out = os.path.join(
-                helper.HALO2_PSE_BENCH,
+                helper.Paths().HALO2_PSE_BENCH,
                 "halo2_pse_bn256_" + circuit + ".csv"
             )
             transform_command: str = "python3 _scripts/parsers/criterion_rust_parser.py --framework halo2_pse --category circuit --backend halo2 --curve bn256 --input {inp} --criterion_json {bench} --proof {proof} --output_csv {out}; ".format(
                 inp=inp,
                 bench=output_bench,
                 out=out,
-                proof=os.path.join(helper.HALO2_PSE, "tmp", "proof")
+                proof=os.path.join(helper.Paths().HALO2_PSE, "tmp", "proof")
             )
             commands.append(transform_command)
             time_merge = "python3 _scripts/parsers/csv_parser_rust.py --memory_folder {memory_folder} --time_filename {time_filename} --circuit {circuit}; ".format(
-                memory_folder=os.path.join(helper.HALO2_PSE_BENCH_MEMORY, inp),
-                time_filename=os.path.join(helper.HALO2_PSE_BENCH, f"halo2_pse_bn256_{circuit}.csv"),
+                memory_folder=os.path.join(helper.Paths().HALO2_PSE_BENCH_MEMORY, inp),
+                time_filename=os.path.join(helper.Paths().HALO2_PSE_BENCH, f"halo2_pse_bn256_{circuit}.csv"),
                 circuit=circuit
             )
             commands.append(time_merge)
