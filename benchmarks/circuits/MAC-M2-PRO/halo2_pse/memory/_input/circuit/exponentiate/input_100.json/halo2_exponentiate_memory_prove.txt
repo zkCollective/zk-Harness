@@ -1,11 +1,11 @@
     Finished release [optimized] target(s) in 0.10s
      Running `target/release/exponentiate --input ../../_input/circuit/exponentiate/input_100.json --phase prove --params tmp/params --vk tmp/vk --pk tmp/pk --proof tmp/proof`
-	0.45s real		0.29s user		0.08s sys
-             5369856  maximum resident set size
+	0.44s real		0.29s user		0.08s sys
+             5390336  maximum resident set size
                    0  average shared memory size
                    0  average unshared data size
                    0  average unshared stack size
-               14723  page reclaims
+               14717  page reclaims
                    0  page faults
                    0  swaps
                    0  block input operations
@@ -14,7 +14,7 @@
                    0  messages received
                    0  signals received
                    0  voluntary context switches
-                2097  involuntary context switches
-          4149547158  instructions retired
-          1154536595  cycles elapsed
-             3024192  peak memory footprint
+                2101  involuntary context switches
+          4152259883  instructions retired
+          1159467268  cycles elapsed
+             3040576  peak memory footprint

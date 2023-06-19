@@ -1,0 +1,4 @@
+framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram,time,proofSize,count
+bellman,circuit,bellman,bls12_381,exponentiate,_input/circuit/exponentiate/input_100.json,setup,,,,4718592,23,,220
+bellman,circuit,bellman,bls12_381,exponentiate,_input/circuit/exponentiate/input_100.json,prove,,,,4943872,10,192,495
+bellman,circuit,bellman,bls12_381,exponentiate,_input/circuit/exponentiate/input_100.json,verify,,,,3776512,2,,2200

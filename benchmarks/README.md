@@ -5,7 +5,7 @@ This folder contains the raw data displayed on the public webpage.
 ## Structure
 
 ```
-benchmarks/<machine>/<framework>/
+benchmarks/<circuits or math>/<machine>/<framework>/
 ```
 
 ## Supported Machines
