@@ -12,10 +12,6 @@ class Paths():
     BELLMAN_BENCH_JSON = None
     BELLMAN_BENCH_MEMORY = None
 
-    BELLMAN_CE = None
-    BELLMAN_CE_BENCH = None
-    BELLMAN_CE_BENCH_JSON = None
-
     GNARK_DIR = None
     GNARK_BENCH = None
     GNARK_BENCH_MEMORY = None
@@ -53,10 +49,6 @@ class Paths():
             cls._instance.BELLMAN_BENCH = os.path.join(cls._instance.BENCHMARKS_DIR, "bellman")
             cls._instance.BELLMAN_BENCH_MEMORY = os.path.join(cls._instance.BELLMAN_BENCH, "memory")
             cls._instance.BELLMAN_BENCH_JSON = os.path.join(cls._instance.BELLMAN_BENCH, "jsons")
-            # BELLMAN_CE PATHS
-            cls._instance.BELLMAN_CE = os.path.join(cls._instance.MAIN_DIR, "bellman_ce_circuits")
-            cls._instance.BELLMAN_CE_BENCH = os.path.join(cls._instance.BENCHMARKS_DIR, "bellman_ce")
-            cls._instance.BELLMAN_CE_BENCH_JSON = os.path.join(cls._instance.BELLMAN_CE_BENCH, "jsons")
             # GNARK PATHS
             cls._instance.GNARK_DIR = os.path.join(cls._instance.MAIN_DIR, "gnark")
             cls._instance.GNARK_BENCH = os.path.join(cls._instance.BENCHMARKS_DIR, "gnark")

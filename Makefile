@@ -25,7 +25,6 @@ snarkjs_benchmarks_directory = $(benchmark_directory)/$(snarkjs_directory)
 
 bellman_ce_directory = bellman_ce
 bellman_directory = bellman
-bellman_ce_directory = bellman
 halo2_pse_directory = halo2_pse
 MACHINE := $(shell cat machine 2> /dev/null || echo DEFAULT)
 
@@ -91,12 +90,6 @@ benchmark-bellman-circuits:
 	$(info ------    BELLMAN CIRCUIT BENCHMARKS  ------)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/bellman/config_circuits.json --machine $(MACHINE)
-
-benchmark-bellman-ce-circuits:
-	$(info --------------------------------------------)
-	$(info ------    BELLMAN_CE CIRCUIT BENCHMARKS ----)
-	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/bellman_ce/config_circuits.json --machine $(MACHINE)
 
 benchmark-halo2-pse-circuits:
 	$(info --------------------------------------------)
