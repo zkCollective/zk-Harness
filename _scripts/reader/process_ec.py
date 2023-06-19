@@ -29,7 +29,7 @@ def build_command_gnark(payload, count):
         # Join the commands into a single string
         command = "".join(commands)
         # Prepend the command to change the working directory to the gnark directory
-        command = f"cd {helper.GNARK_DIR}; {command}"
+        command = f"cd {helper.Paths().GNARK_DIR}; {command}"
     else:
         raise ValueError("Missing payload fields for arithmetic mode")
     return command
@@ -47,13 +47,13 @@ def build_command_snarkjs(payload, count):
     # It will add two commands for pairing if both g1 and g2 are provided
     commands = [
         "{script} {curve} {group} {operation} {count} {input_path} {benchmark}\n".format(
-            script=helper.SNARKJS_EC_SCRIPT,
+            script=helper.Paths().SNARKJS_EC_SCRIPT,
             curve=curve,
             group=group,
             operation=operation,
             count=count,
             input_path=inp,
-            benchmark=os.path.join(helper.SNARKJS_BENCHMAKR_DIR, "snarkjs_ec.csv")
+            benchmark=os.path.join(helper.Paths().SNARKJS_BENCHMAKR_DIR, "snarkjs_ec.csv")
         )
         for operation, input_path in payload.operations.items()
         for inp in helper.get_all_input_files(input_path)
@@ -77,13 +77,13 @@ def build_command_rapidsnark(payload, count):
     # It will add two commands for pairing if both g1 and g2 are provided
     commands = [
         "{script} {curve} {group} {operation} {count} {input_path} {benchmark}\n".format(
-            script=helper.RAPIDSNARK_EC_SCRIPT,
+            script=helper.Paths().RAPIDSNARK_EC_SCRIPT,
             curve=curve,
             group=group,
             operation=operation,
             count=count,
             input_path=inp,
-            benchmark=os.path.join(helper.RAPIDSNARK_BENCHMAKR_DIR, "rapidsnark_ec.csv")
+            benchmark=os.path.join(helper.Paths().RAPIDSNARK_BENCHMAKR_DIR, "rapidsnark_ec.csv")
         )
         for operation, input_path in payload.operations.items()
         for inp in helper.get_all_input_files(input_path)

@@ -29,7 +29,7 @@ def build_command_gnark(payload, count):
         # Join the commands into a single string
         command = "".join(commands)
         # Prepend the command to change the working directory to the gnark directory
-        command = f"cd {helper.GNARK_DIR}; {command}"
+        command = f"cd {helper.Paths().GNARK_DIR}; {command}"
     else:
         raise ValueError("Missing payload fields for arithmetic mode")
     return command
@@ -46,13 +46,13 @@ def build_command_snarkjs(payload, count):
             raise ValueError(f"Field {f} not in {helper.ARITHMETIC_FIELDS}")
     commands = [
         "{script} {curve} {field} {operation} {count} {input_path} {benchmark}\n".format(
-            script=helper.SNARKJS_ARITHMETICS_SCRIPT,
+            script=helper.Paths().SNARKJS_ARITHMETICS_SCRIPT,
             curve=curve,
             field=field,
             operation=operation,
             count=count,
             input_path=inp,
-            benchmark=os.path.join(helper.SNARKJS_BENCHMAKR_DIR, "snarkjs_arithmetics.csv")
+            benchmark=os.path.join(helper.Paths().SNARKJS_BENCHMAKR_DIR, "snarkjs_arithmetics.csv")
         )
         for operation, input_path in payload.operations.items()
         for inp in helper.get_all_input_files(input_path)
@@ -75,13 +75,13 @@ def build_command_rapidsnark(payload, count):
             raise ValueError(f"Field {f} not in {helper.ARITHMETIC_FIELDS}")
     commands = [
         "{script} {curve} {field} {operation} {count} {input_path} {benchmark}\n".format(
-            script=helper.RAPIDSNARK_ARITHMETICS_SCRIPT,
+            script=helper.Paths().RAPIDSNARK_ARITHMETICS_SCRIPT,
             curve=curve,
             field=field,
             operation=operation,
             count=count,
             input_path=inp,
-            benchmark=os.path.join(helper.RAPIDSNARK_BENCHMAKR_DIR, "rapidsnark_arithmetics.csv")
+            benchmark=os.path.join(helper.Paths().RAPIDSNARK_BENCHMAKR_DIR, "rapidsnark_arithmetics.csv")
         )
         for operation, input_path in payload.operations.items()
         for inp in helper.get_all_input_files(input_path)

@@ -26,7 +26,7 @@ def build_command_gnark_recursion(payload, count):
         command = "".join(commands)
         print(command)
         # Prepend the command to change the working directory to the gnark directory
-        command = f"cd {helper.GNARK_DIR}; {command}"
+        command = f"cd {helper.Paths().GNARK_DIR}; {command}"
     else:
         raise ValueError("Missing payload fields for circuit mode")
     return command
