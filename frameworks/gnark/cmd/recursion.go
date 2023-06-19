@@ -49,11 +49,7 @@ func runOneStep(cmd *cobra.Command, args []string) {
 	log := logger.Logger()
 	log.Info().Msg("Benchmarking " + *cfg.Circuit + " - gnark, recursion: " + *cfg.Algo + " " + *cfg.Curve + " " + *cfg.InputPath)
 
-	var filename = "../benchmarks/gnark/gnark_" +
-		"recursion" + "_" +
-		*cfg.Circuit + "_" +
-		*cfg.Curve + "." +
-		*cfg.FileType
+	var filename = *cfg.OutputPath
 
 	if err := parser.ParseFlags(cfg); err != nil {
 		fmt.Println("error: ", err.Error())

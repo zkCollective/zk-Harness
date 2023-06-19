@@ -104,5 +104,4 @@ func init() {
 	cfg.CircuitSize = plonkMemorySetupCmd.PersistentFlags().Int("size", 10000, "size of the circuit, parameter to circuit constructor")
 	cfg.Count = plonkMemorySetupCmd.PersistentFlags().Int("count", 2, "bench count (time is averaged on number of executions)")
 	cfg.Curve = plonkMemorySetupCmd.PersistentFlags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
-	cfg.FileType = plonkMemorySetupCmd.PersistentFlags().String("filetype", "csv", "Type of file to output for benchmarks")
 }
