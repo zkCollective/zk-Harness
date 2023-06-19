@@ -1,0 +1,27 @@
+{
+    "project": "circom/snarkjs",
+    "project_url": "https://github.com/iden3/circom",
+    "category": "circuit",
+    "count": 1,
+    "payload": {
+        "backend": [
+            "groth16"
+        ],
+        "curves": [
+            "bn128"
+        ], 
+        "circuits": {
+            "exponentiate": {
+                "input_path": "_input/circuit/exponentiate/input_100.json",
+                "template_vars": ["E"]
+            }
+        },
+        "algorithm": [
+            "compile",
+            "setup",
+            "witness",
+            "prove",
+            "verify"
+        ]
+    }    
+}

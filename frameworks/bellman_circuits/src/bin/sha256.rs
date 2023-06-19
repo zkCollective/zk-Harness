@@ -1,10 +1,9 @@
 // use bellman_circuits::benches::benchmark_circuit; // Assuming this is the path to the bench_proof function
 use bellman_circuits::circuits::sha256;
 use clap::{Parser};
-use rust_utils::read_file_contents;
 use bellman::gadgets::multipack;
 use sha2::{Digest, Sha256};
-use bellman_utils::{BinaryArgs, f_setup, f_verify, f_prove};
+use bellman_utils::{BinaryArgs, f_setup, f_verify, f_prove, read_file_contents};
 
 fn main() {
     // Parse command line arguments

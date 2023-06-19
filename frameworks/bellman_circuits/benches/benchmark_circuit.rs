@@ -10,8 +10,8 @@ use criterion::{Criterion, BenchmarkGroup};
 use criterion::measurement::Measurement;
 use sha2::{Digest, Sha256};
 use bellman::gadgets::multipack;
+use bellman_utils::{read_file_from_env_var, read_env_variable};
 use bls12_381::{Bls12, Scalar};
-use rust_utils::{read_file_from_env_var, read_env_variable};
 use ff::PrimeField;
 use bellman::gadgets::test::TestConstraintSystem;
 

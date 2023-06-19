@@ -85,17 +85,67 @@ zkcrypto-arithmetics:
 
 ready: benchmark-bellman-circuits benchmark-halo2-pse-circuits benchmark-circom-circuits
 
+circuits-test: benchmark-bellman-test-circuit benchmark-halo2-pse-test-circuit benchmark-circom-test-circuit benchmark-gnark-test-circuit
+
+benchmark-bellman-test-circuit:
+	$(info --------------------------------------------)
+	$(info ----- BELLMAN TEST CIRCUIT BENCHMARKS  -----)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/bellman/config_test.json --machine $(MACHINE)
+
 benchmark-bellman-circuits:
 	$(info --------------------------------------------)
 	$(info ------    BELLMAN CIRCUIT BENCHMARKS  ------)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/bellman/config_circuits.json --machine $(MACHINE)
 
+benchmark-halo2-pse-test-circuit:
+	$(info --------------------------------------------)
+	$(info ----- HALO-PSE TEST CIRCUIT BENCHMARKS -----)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/halo2_pse/config_test.json --machine $(MACHINE)
+
 benchmark-halo2-pse-circuits:
 	$(info --------------------------------------------)
 	$(info ----- HALO-PSE ARITHMETICS BENCHMARKS ------)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/halo2_pse/config_circuits.json --machine $(MACHINE)
+
+benchmark-circom-test-circuit:
+	$(info --------------------------------------------)
+	$(info ----- CIRCOM TEST CIRCUIT BENCHMARKS -------)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/circom/config_test.json --machine $(MACHINE)
+
+benchmark-exponentiate-circom:
+	$(info --------------------------------------------)
+	$(info ----- CIRCOM EXPONENTIATE BENCHMARKS -------)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/circom/config_exponentiate.json --machine $(MACHINE)
+
+benchmark-sha-circom:
+	$(info --------------------------------------------)
+	$(info -------- CIRCOM SHA256 BENCHMARKS ----------)
+	$(info --------------------------------------------)
+	orig_dir=$(shell pwd)
+	cd circom/circuits/benchmarks && if [ ! -d "circomlib" ]; then git clone https://github.com/iden3/circomlib.git; fi
+	cd $(orig_dir)
+	python3 -m _scripts.reader --config _input/config/circom/config_sha.json --machine $(MACHINE)
+	rm -rf circom/circuits/benchmarks/circomlib
+
+benchmark-circom-circuits: benchmark-exponentiate-circom benchmark-sha-circom
+
+benchmark-gnark-test-circuit:
+	$(info --------------------------------------------)
+	$(info ------ GNARK TEST CIRCUIT BENCHMARKS -------)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/gnark/config_test.json --machine $(MACHINE)
+
+benchmark-gnark-circuits: 
+	$(info --------------------------------------------)
+	$(info -------- GNARK CIRCUITS BENCHMARKS ---------)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/gnark/config_circuits.json --machine $(MACHINE)
 
 benchmark-snarkjs-arithmetics:
 	$(info --------------------------------------------)
@@ -121,36 +171,6 @@ benchmark-rapidsnark-ec:
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/rapidsnark/config_ec.json --machine $(MACHINE)
 
-benchmark-toy-circom:
-	$(info --------------------------------------------)
-	$(info ---------- CIRCOM TOY BENCHMARKS -----------)
-	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/circom/config_all_toy.json --machine $(MACHINE)
-
-benchmark-exponentiate-circom:
-	$(info --------------------------------------------)
-	$(info ----- CIRCOM EXPONENTIATE BENCHMARKS -------)
-	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/circom/config_exponentiate.json --machine $(MACHINE)
-
-benchmark-sha-circom:
-	$(info --------------------------------------------)
-	$(info -------- CIRCOM SHA256 BENCHMARKS ----------)
-	$(info --------------------------------------------)
-	orig_dir=$(shell pwd)
-	cd circom/circuits/benchmarks && if [ ! -d "circomlib" ]; then git clone https://github.com/iden3/circomlib.git; fi
-	cd $(orig_dir)
-	python3 -m _scripts.reader --config _input/config/circom/config_sha.json --machine $(MACHINE)
-	rm -rf circom/circuits/benchmarks/circomlib
-
-benchmark-circom-circuits: benchmark-exponentiate-circom benchmark-sha-circom
-
-benchmark-gnark-circuits: 
-	$(info --------------------------------------------)
-	$(info -------- GNARK CIRCUITS BENCHMARKS ---------)
-	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/gnark/config_circuits.json --machine $(MACHINE)
-
 benchmark-gnark-arithmetics:
 	$(info --------------------------------------------)
 	$(info ------- GNARK ARITHMETICS BENCHMARKS -------)
@@ -162,15 +182,6 @@ benchmark-gnark-ec:
 	$(info ------ GNARK EC BENCHMARKS -----------------)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_ec.json --machine $(MACHINE)
-
-benchmark-toy-gnark:
-	$(info --------------------------------------------)
-	$(info ----------- GNARK TOY BENCHMARKS -----------)
-	$(info --------------------------------------------)
-	python3 -m _scripts.reader --config _input/config/gnark/config_all_toy.json --machine $(MACHINE)
-
-benchmark-gnark-hash:
-	python3 -m _scripts.reader --config _input/config/gnark/config_hash.json --machine $(MACHINE)
 
 benchmark-gnark-recursion:
 	$(info --------------------------------------------)
