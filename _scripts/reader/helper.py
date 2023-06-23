@@ -32,14 +32,6 @@ class Paths():
     CIRCOM_SCRIPT = None
     CIRCOM_CIRCUITS_DIR = None
     CIRCOM_PTAU = None
-    # SNARKJS PATHS
-    SNARKJS_DIR = None
-    SNARKJS_ARITHMETICS_SCRIPT = None
-    SNARKJS_EC_SCRIPT = None
-    # SNARKJS PATHS
-    RAPIDSNARK_DIR = None
-    RAPIDSNARK_ARITHMETICS_SCRIPT = None
-    RAPIDSNARK_EC_SCRIPT = None
 
     def __new__(cls, machine=None, *args, **kwargs):
         if not cls._instance:
@@ -57,38 +49,24 @@ class Paths():
             cls._instance.BELLMAN_BENCH_JSON = os.path.join(cls._instance.BELLMAN_BENCH, "jsons")
             # GNARK PATHS
             cls._instance.GNARK_DIR = os.path.join(cls._instance.MAIN_DIR, FRAMEWORKS_DIR, "gnark")
-            cls._instance.GNARK_BENCH = os.path.join(cls._instance.CIRCUITS_BENCH, "gnark")
+            cls._instance.GNARK_BENCH = os.path.join(cls._instance.BENCHMARKS_DIR, "gnark")
             cls._instance.GNARK_BENCH_MEMORY = os.path.join(cls._instance.GNARK_BENCH, "memory")
             # HALO2_PSE PATHS
             cls._instance.HALO2_PSE = os.path.join(cls._instance.MAIN_DIR, FRAMEWORKS_DIR, "halo2_pse")
-            cls._instance.HALO2_PSE_BENCH = os.path.join(cls._instance.CIRCUITS_BENCH, "halo2_pse")
+            cls._instance.HALO2_PSE_BENCH = os.path.join(cls._instance.BENCHMARKS_DIR, "halo2_pse")
             cls._instance.HALO2_PSE_BENCH_MEMORY = os.path.join(cls._instance.HALO2_PSE_BENCH, "memory")
             cls._instance.HALO2_PSE_BENCH_JSON = os.path.join(cls._instance.HALO2_PSE_BENCH, "jsons")
             # CIRCOM PATHS
             cls._instance.CIRCOM_DIR = os.path.join(cls._instance.MAIN_DIR, FRAMEWORKS_DIR, "circom")
-            cls._instance.CIRCOM_BENCHMAKR_DIR = os.path.join(cls._instance.CIRCUITS_BENCH, "circom")
-            cls._instance.SNARKJS_BENCHMAKR_DIR = os.path.join(cls._instance.MATH_BENCH, "snarkjs")
-            cls._instance.RAPIDSNARK_BENCHMAKR_DIR = os.path.join(cls._instance.MATH_BENCH, "rapidsnark")
+            cls._instance.CIRCOM_BENCHMAKR_DIR = os.path.join(cls._instance.BENCHMARKS_DIR, "circom")
             cls._instance.CIRCOM_SCRIPT = os.path.join(cls._instance.CIRCOM_DIR, "scripts", "run_circuit.sh")
             cls._instance.CIRCOM_CIRCUITS_DIR = os.path.join(cls._instance.CIRCOM_DIR, "circuits", "benchmarks")
             cls._instance.CIRCOM_PTAU = os.path.join(cls._instance.CIRCOM_DIR, "phase1", "powersOfTau28_hez_final_16.ptau")
-            # SNARKJS PATHS
-            cls._instance.SNARKJS_DIR = os.path.join(cls._instance.MAIN_DIR, "snarkjs")
-            cls._instance.SNARKJS_ARITHMETICS_SCRIPT = os.path.join(cls._instance.SNARKJS_DIR, "scripts", "arithmetics.js")
-            cls._instance.SNARKJS_EC_SCRIPT = os.path.join(cls._instance.SNARKJS_DIR, "scripts", "curves.js")
-            # SNARKJS PATHS
-            cls._instance.RAPIDSNARK_DIR = os.path.join(cls._instance.MAIN_DIR, "rapidsnark")
-            cls._instance.RAPIDSNARK_ARITHMETICS_SCRIPT = os.path.join(cls._instance.RAPIDSNARK_DIR, "scripts", "arithmetics.js")
-            cls._instance.RAPIDSNARK_EC_SCRIPT = os.path.join(cls._instance.RAPIDSNARK_DIR, "scripts", "curves.js")
         return cls._instance
 
 
 ### GENERAL ###
 MEMORY_CMD = "/usr/bin/time"
-ARITHMETIC_FIELDS = ["base", "scalar"]
-GROUPS = ["g1", "g2"]
-# CIRCOM CURVES
-CIRCOM_CURVES = ["bn128", "bls12_381"]
 
 
 def get_all_input_files(input_path, abspath=False):

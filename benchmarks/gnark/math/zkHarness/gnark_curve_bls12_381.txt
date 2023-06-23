@@ -1,0 +1,18 @@
+framework,category,curve,operation,input,ram,time(ms),nbPhysicalCores,nbLogicalCores,count,cpu
+gnark,ec,bls12_381,BenchmarkElementAdd-8,,14923016,4,1,1,287853822,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkElementMul-8,,14923016,67,1,1,18366480,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkElementInverse-8,,14923016,2982,1,1,401976,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkElementSquare-8,,14923016,68,1,1,16978648,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkElementSqrt-8,,14923016,33006,1,1,37813,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkFFTDITCosetReference-8,,14923016,126596718,1,1,9,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkFFTDIFReference-8,,14923016,118408378,1,1,12,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkG1JacAdd-8,,14923016,1266,1,1,858928,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkG1JacIsInSubGroup-8,,14923016,128288,1,1,8238,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkG1AffineCofactorClearing-8,,14923016,69458,1,1,17444,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkG2JacAdd-8,,14923016,3882,1,1,324746,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkG2JacIsInSubGroup-8,,14923016,171491,1,1,6919,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkG2AffineCofactorClearing-8,,14923016,367622,1,1,3423,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkE12Add-8,,14923016,59,1,1,20434197,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkE12Mul-8,,14923016,5528,1,1,197700,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkE12Cyclosquare-8,,14923016,1981,1,1,599594,VirtualApple @ 2.50GHz
+gnark,ec,bls12_381,BenchmarkPairing-8,,14923016,1364962,1,1,846,VirtualApple @ 2.50GHz

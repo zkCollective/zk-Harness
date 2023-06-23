@@ -1,12 +1,9 @@
 import argparse
 import json
 import subprocess
-import os
 
 from . import process_recursion
 from . import process_circuit
-from . import process_arithmetic
-from . import process_ec
 from . import helper
 
 def recursion_processing(project, config, count):
@@ -21,18 +18,6 @@ def circuit_processing(project, config, count):
     commands = process_circuit.build_command(project, payload, count)
     subprocess.run(commands, shell=True, check=True)
 
-def arithmetic_processing(project, config, count):
-    # Extract relevant fields from config, build & execute command
-    payload = process_arithmetic.get_arithmetic_payload(config)
-    commands = process_arithmetic.build_command(project, payload, count)
-    subprocess.run(commands, shell=True, check=True)
-
-def ec_processing(project, config, count):
-    # Extract relevant fields from config, build & execute command
-    payload = process_ec.get_ec_payload(config)
-    commands = process_ec.build_command(project, payload, count)
-    subprocess.run(commands, shell=True, check=True)
-
 def default_case():
     raise ValueError("Benchmark category not integrated into the benchmarking framework!")
 
@@ -40,8 +25,6 @@ def default_case():
 categories = {
     "recursion": recursion_processing,
     "circuit": circuit_processing,
-    "arithmetic": arithmetic_processing,
-    "ec": ec_processing
 }
 
 def parse_config(config_path):
