@@ -208,6 +208,72 @@ def build_command_bellman(payload, count):
     command = "".join(commands)
     return command
 
+def build_command_starky(payload, count):
+    """
+    Build the command to invoke the starky ZKP-library given the payload
+    """
+
+    if not os.path.exists(helper.Paths().STARKY_BENCH_JSON):
+        try:
+            os.makedirs(helper.Paths().STARKY_BENCH_JSON)
+        except OSError as e:
+            # This can happen when the process doesn't have write permissions or another error
+            print("Error: Creating directory. " +  folder_path)
+            raise
+    # TODO - Add count to command creation
+    if len(payload.backend) != 1 or payload.backend[0] != "starky":
+        raise ValueError("Starky benchmark only supports starky backend")
+    # TODO - Solution for Starks - don't use curve, rename parameter / other option?
+    if len(payload.curves) != 1 or payload.curves[0] != "goldilocks":
+        raise ValueError("Starky benchmark only supports goldilocks field")
+    # TODO - Support verification memory benchmarks - problem deserialization
+    for op in payload.operation:
+        if op == "verify":
+            user_input = input("Verify Memory Benchmarks currently not supported, if you'd still like to continue press any key, else press 'n' to stop:")
+            if user_input.lower() == 'n':
+                raise ValueError("Operation stopped by the user.")
+                
+    # Memory commands
+    commands_memory = [
+        (
+            os.makedirs(f"{helper.Paths().STARKY_BENCH_MEMORY}/{modified_inp}", exist_ok=True),
+            f"cd {helper.Paths().STARKY}; \
+                RUSTFLAGS=-Awarnings {helper.get_memory_command()} -h -l \
+                cargo run --bin {circ}_{op} \
+                --release -- \
+                --input {helper.Paths().MAIN_DIR}/{inp} \
+                2> {helper.Paths().STARKY_BENCH_MEMORY}/{modified_inp}/starky_{circ}_memory_{op}.txt > /dev/null;"
+        )[1]
+        for circ, input_path in payload.circuit.items()
+        for inp in helper.get_all_input_files(input_path)
+        for modified_inp in [inp.replace('_input/circuit/', '').replace('.json', '')]
+        for op in payload.operation
+    ]
+
+    # Time commands
+    commands_time = [
+            f"cd {helper.Paths().STARKY}; \
+                RUSTFLAGS=-Awarnings INPUT_FILE={helper.Paths().MAIN_DIR}/{inp} \
+                CIRCUIT={circ} \
+                cargo criterion --message-format=json --bench benchmark_circuit 1> {os.path.join(helper.Paths().STARKY_BENCH_JSON, circ + '_' + os.path.basename(inp))}; \n"
+        for circ, input_path in payload.circuit.items()
+        for inp in helper.get_all_input_files(input_path)
+    ]
+
+    python_command = "python3"
+    try:
+        subprocess.run([python_command, "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        try:
+            python_command = "python3"
+            subprocess.run([python_command, "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            print("Neither Python nor Python3 are installed or accessible. Please install or check your path settings.")
+            sys.exit(1)
+
+    command = "".join(commands_time + commands_memory)
+    return command
+
 
 def build_command_halo2_pse(payload, count):
     """
@@ -290,11 +356,12 @@ def default_case(_payload, _count):
 
 # List ZKP-frameworks in the zk-Harness
 projects = {
-    "gnark":    build_command_gnark,
-    "circom/snarkjs":   build_command_circom_snarkjs,
-    "circom/rapidsnark":   build_command_circom_rapidsnark,
-    "bellman":   build_command_bellman,
-    "halo2_pse": build_command_halo2_pse
+    "gnark":                build_command_gnark,
+    "circom/snarkjs":       build_command_circom_snarkjs,
+    "circom/rapidsnark":    build_command_circom_rapidsnark,
+    "bellman":              build_command_bellman,
+    "starky":               build_command_starky,
+    "halo2_pse":            build_command_halo2_pse
 }
 
 

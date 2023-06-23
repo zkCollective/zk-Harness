@@ -47,6 +47,11 @@ class Paths():
             cls._instance.BELLMAN_BENCH = os.path.join(cls._instance.CIRCUITS_BENCH, "bellman")
             cls._instance.BELLMAN_BENCH_MEMORY = os.path.join(cls._instance.BELLMAN_BENCH, "memory")
             cls._instance.BELLMAN_BENCH_JSON = os.path.join(cls._instance.BELLMAN_BENCH, "jsons")
+            # STARKY PATHS
+            cls._instance.STARKY = os.path.join(cls._instance.MAIN_DIR, FRAMEWORKS_DIR, "starky_circuits")
+            cls._instance.STARKY_BENCH = os.path.join(cls._instance.CIRCUITS_BENCH, "starky")
+            cls._instance.STARKY_BENCH_MEMORY = os.path.join(cls._instance.STARKY_BENCH, "memory")
+            cls._instance.STARKY_BENCH_JSON = os.path.join(cls._instance.STARKY_BENCH, "jsons")
             # GNARK PATHS
             cls._instance.GNARK_DIR = os.path.join(cls._instance.MAIN_DIR, FRAMEWORKS_DIR, "gnark")
             cls._instance.GNARK_BENCH = os.path.join(cls._instance.BENCHMARKS_DIR, "gnark")
