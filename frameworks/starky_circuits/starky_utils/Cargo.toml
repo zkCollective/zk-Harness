@@ -1,0 +1,11 @@
+[package]
+name = "starky_utils"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+plonky2 = { version = "0.1.3", default-features = false }
+starky = { git = "https://github.com/tumberger/plonky2.git", branch = "sha256-starky"}
