@@ -21,7 +21,7 @@ def parse_criterion_json(json_file):
                 assert len(id_parts) == 2, "Invalid ID format"
                 circuit_name, stage = id_parts
 
-                assert stage in ["setup", "prove", "verify"], "Invalid stage"
+                assert stage in ["setup", "witness", "prove", "verify"], "Invalid stage"
 
                 mean = data.get("mean", {})
                 assert mean.get("unit") == "ns", "Invalid unit"
