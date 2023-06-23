@@ -219,6 +219,12 @@ benchmark-gnark-circuits: gnark-init
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_circuits.json --machine $(MACHINE)
 
+benchmark-starky-circuits: 
+	$(info --------------------------------------------)
+	$(info -------- STARKY CIRCUITS BENCHMARKS --------)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/starky/config_circuits.json --machine $(MACHINE)
+
 ################################################################################
 
 ############################## RECURSION #######################################

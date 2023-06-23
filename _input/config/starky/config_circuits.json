@@ -16,7 +16,8 @@
             }
         },
         "algorithm": [
-            "witness"
+            "witness",
+            "prove"
         ]
     }    
 }

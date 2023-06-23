@@ -2,7 +2,6 @@ use starky::serialization::Buffer;
 use clap::Parser;
 
 use starky_utils;
-use starky::config::StarkConfig;
 use starky::{
     prover::prove
 };

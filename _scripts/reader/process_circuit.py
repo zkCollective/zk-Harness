@@ -220,14 +220,18 @@ def build_command_starky(payload, count):
             # This can happen when the process doesn't have write permissions or another error
             print("Error: Creating directory. " +  folder_path)
             raise
-            
+    # TODO - Add count to command creation
     if len(payload.backend) != 1 or payload.backend[0] != "starky":
         raise ValueError("Starky benchmark only supports starky backend")
     # TODO - Solution for Starks - don't use curve, rename parameter / other option?
     if len(payload.curves) != 1 or payload.curves[0] != "goldilocks":
         raise ValueError("Starky benchmark only supports goldilocks field")
-    
-    # TODO - Support verification memory benchmarks - problem: deserialization of proof
+    # TODO - Support verification memory benchmarks - problem deserialization
+    for op in payload.operation:
+        if op == "verify":
+            user_input = input("Verify Memory Benchmarks currently not supported, if you'd still like to continue press any key, else press 'n' to stop:")
+            if user_input.lower() == 'n':
+                raise ValueError("Operation stopped by the user.")
                 
     # Memory commands
     commands_memory = [
