@@ -45,6 +45,7 @@ The following information is recorded for each elliptic curve group operation be
 * category: the category of the benchmark (i.e., ec)
 * curve: the benchmarked curve
 * operation: the operation performed -- `g1-scalar-multiplicationg`, `g2-scalar-multiplication`, `g1-multi-scalar-multiplication`, `g2-multi-scalar-multiplication`, `pairing`
+* input: Provided input
 * time: elapsed time in **milliseconds**
 * count: number of times that we run the benchmark
 
