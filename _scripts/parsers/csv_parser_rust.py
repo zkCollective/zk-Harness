@@ -49,7 +49,10 @@ def parse_csv(csv_filename, memory_folder, circuit):
             input_name_from_row = os.path.basename(row['input']).split('.')[0]
             if row['circuit'] == circuit and input_name_from_memory == input_name_from_row:
                 files =  os.listdir(memory_folder)
-                memory_filename = next(f for f in files if row["operation"] in f)
+                memory_filename = next((f for f in files if row["operation"] in f), None)
+                if memory_filename is None:
+                    print(f"No file found for operation: {row['operation']}")
+                    continue
                 memory_file = os.path.join(memory_folder, memory_filename)
                 ram = extract_ram_from_file(memory_file)
                 row['ram'] = ram

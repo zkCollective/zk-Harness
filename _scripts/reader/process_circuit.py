@@ -271,7 +271,43 @@ def build_command_starky(payload, count):
             print("Neither Python nor Python3 are installed or accessible. Please install or check your path settings.")
             sys.exit(1)
 
-    command = "".join(commands_time + commands_memory)
+    # TODO - Add proof to get proof size. Demands for additional serialization logic in starky.
+    commands_transform = [
+        f"{python_command} _scripts/parsers/criterion_rust_parser.py \
+            --framework starky \
+            --category circuit \
+            --backend starky \
+            --curve goldilocks \
+            --input {inp} \
+            --criterion_json {bench} \
+            --output_csv {out};"
+        for circ, input_path in payload.circuit.items()
+        for inp in helper.get_all_input_files(input_path)
+        for bench in [os.path.join(helper.Paths().STARKY_BENCH_JSON, circ + '_' + os.path.basename(inp))]
+        for out in [os.path.join(helper.Paths().STARKY_BENCH, "starky_goldilocks_" + circ + ".csv")]
+    ]
+
+    # TODO - Currently doesn't account for memory consumption of Setup / Witness / Verify
+    commands_merge = [
+        f"{python_command} _scripts/parsers/csv_parser_rust.py \
+            --memory_folder {memory_folder} \
+            --time_filename {time_filename} \
+            --circuit {circ};"
+        for circ, input_path in payload.circuit.items()
+        for inp in helper.get_all_input_files(input_path)
+        for modified_inp in [inp.replace('_input/circuit/', '').replace('.json', '')]
+        for memory_folder in [os.path.join(helper.Paths().STARKY_BENCH_MEMORY, modified_inp)]
+        for time_filename in [os.path.join(helper.Paths().STARKY_BENCH, "starky_goldilocks_" + circ + ".csv")]
+    ]
+
+    command_cd = [f"cd ../../; "]
+
+    command = "".join(commands_time + 
+        commands_memory + 
+        command_cd +
+        commands_transform + 
+        commands_merge)
+    
     return command
 
 
