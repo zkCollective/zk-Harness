@@ -1,41 +1,37 @@
-![Alt text](/logo_harness.png?raw=true "Title")
+<h1 align="center">zk-Harness</h1>
 
-# zk-Harness - A benchmarking framework for general purpose Zero-Knowledge Proofs
+zk-Harness is a benchmarking framework for *zero knowledge succinct non-interactive arguments (zkSNARKs)*. 
+This repository contains a modular and easily extensible framework for benchmarking zkSNARKs and underlying mathematical primitives.
 
-We cordially invite the zk SNARK community to join us in creating a comprehensive benchmarking framework (zk-Harness) for zk SNARKs. This is a crucial step in the important mission to create a reference point for non-experts and experts alike on what zkSNARK scheme best suits their needs, and to also promote further research by identifying performance gaps. We believe that the collective efforts of the community will help to achieve this goal. Whether you are a researcher, developer, or simply passionate about zk SNARKs, we welcome your participation and contribution in this exciting initiative.
+## 📊 Benchmark Results
 
-It is designed to be modular - new circuit implementations and ZKP-frameworks can be easily added, without extensive developer overhead.
-zk-Harness has a standardized set of interfaces for configuring benchmark jobs and formatting log outputs.
-Once a new component is included, it's benchmarks will be displayed on [zk-bench.org](https://www.zk-bench.org).
+The benchmark results are currently hosted at [zk-bench.org](https://www.zk-bench.org).
 
-**Note: zk-Harness is a WIP. Its architecture may change over time.**
+The backend for mathematical operations has been merged with [zka.lc](https://zka.lc/).
 
-## Main Features
+### Currently Supported Standard Payloads 
 
-There is a large and ever-increasing number of SNARK implementations. Although the theoretical complexity of the underlying proof systems is well understood, the concrete costs rely on a number of factors such as the efficiency of the field and curve implementations, the underlying proof techniques, and the computation model and its compatibility with the specific application. To elicit the concrete performance differences in different proof systems, it is important to separately benchmark the following:
+The current framework supports a set of payloads for each library.
+We aim to successively extend the following once more circuits are available as `std` in the respective libraries.
 
-### Field and Curve computations
+|          | Exponentiate       | SHA-256           |
+| -------- | ------------------ | ----------------- |
+| `Bellman`| :heavy_check_mark: | :heavy_check_mark:|
+| `Circom` | :heavy_check_mark: | :heavy_check_mark:|
+| `Gnark`  | :heavy_check_mark: | :heavy_check_mark:|
+| `Halo2`  | :heavy_check_mark: | :heavy_check_mark:|
+| `Starky` | :heavy_check_mark: | :heavy_check_mark:|
 
-All popular SNARKs operate over prime fields, which are basically integers modulo p, i.e,. F_p. While some SNARKs are associated with a single field F_p, there are many SNARKs that rely on elliptic curve groups for security. For such SNARKs, the scalar field of the elliptic curve is F_p, and the base field is a different field F_q. Thus, the aim is to benchmark the field F_p, along with the field F_q and the elliptic curve group (if applicable). Benchmarking F_p and F_q involves benchmarking the following operations:
+### Backends, Curves, Fields and Arithmetizations
 
-- Addition
-- Subtraction
-- Multiplication
-- (Modular) Exponentiation
-- Inverse Exponentiation
+<!-- TODO -->
 
-An elliptic curve is defined over a prime field of specific order (F_q). The elliptic curve group (E(F_q)) consists of the subgroup of points in the field that are on the curve, including a special point at infinity. While some SNARKs operate over elliptic curves without requiring pairings, others require pairings and therefore demand for pairing-friendly elliptic curves. The pairing operation takes an element from G_1 and an element from G_2 and computes an element in G_T. The elements of G_T are typically denoted by e(P, Q), where P is an element of G_1 and Q is an element of G_2. For efficiency, it is required that not only is the finite field arithmetic fast, but also the arithmetic in groups G_1 and G_2 as well as pairings are efficient. Therefore, we intend to benchmark the following operations over pairing-friendly elliptic curves:
+### Run Benchmarks On Your Own!
 
-- Scalar Multiplication
-  - in G for single elliptic curves
-  - in G_1 and G_2 for pairing-friendly elliptic curves
-- Multi-Scalar Multiplication (MSM)
-  - in G for single elliptic curves
-  - in G_1 and G_2 for pairing-friendly elliptic curves
-- Parings
-  - for pairing-friendly elliptic curves
+zk-Harness is supposed to be easily extensible and modular, which means that you should be able to integrate you own circuits with ease.
+Each framework in `framework/<framework_name>` includes a detailed description on how to add a self-developed circuit that goes beyond the standard payloads already integrated.
 
-### Circuits
+To validate and re-run any of the standard payloads, please refer to the the `Makefile`, which utilizes standard configuration files.
 
 Many end-to-end applications require proving a specific cryptographic primitive,
 which requires the specification of said cryptographic primitive in a specific ZKP
@@ -79,6 +75,13 @@ and [enable flakes](https://nixos.wiki/wiki/Flakes#Enable_flakes),
 then run `nix develop`.
 
 When running into issues for nix on M1/M2 Macs, please refer to [this issue](https://github.com/input-output-hk/plutus-pioneer-program/issues/40).  
+
+
+## Future Work & ZKP Hackathon
+
+We aim to successively expand this list to further include benchmarks for other ZKP frameworks, recursive composition of proofs, and potentially zk-EVMs. 
+
+zk-Harness was developed as a part of the ZKP / Web 3.0 Hackathon at UC Berkeley. You can find the program description detailing future integrations [here](https://drive.google.com/file/d/1Igm47dFXSOFAC_wldfUG4Y9OiITqlbQu/view).
 
 ## How to contribute
 

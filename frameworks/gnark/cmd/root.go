@@ -35,7 +35,6 @@ var (
 	fProfile     *string
 	fCount       *int
 	fCurve       *string
-	fFileType    *string
 	fInputPath   *string
 
 	// Variables Arithmetic / Curve
@@ -45,6 +44,9 @@ var (
 
 	// Variables Recursion
 	fOuterBackend *string
+
+	// Machine Variable
+	fOutputPath *string
 )
 
 func init() {
@@ -63,13 +65,13 @@ func init() {
 	cfg.CircuitSize = rootCmd.PersistentFlags().Int("size", 10000, "size of the circuit, parameter to circuit constructor")
 	cfg.Count = rootCmd.PersistentFlags().Int("count", 2, "bench count (time is averaged on number of executions)")
 	cfg.Curve = rootCmd.PersistentFlags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
-	cfg.FileType = rootCmd.PersistentFlags().String("filetype", "csv", "Type of file to output for benchmarks")
-
 	cfg.Algo = rootCmd.PersistentFlags().String("algo", "prove", "name of the algorithm to benchmark. must be compile, setup, prove or verify")
 	cfg.Operation = rootCmd.PersistentFlags().String("operation", "None", "operation to benchmark")
 	cfg.Profile = rootCmd.PersistentFlags().String("profile", "none", "type of profile. must be none, trace, cpu or mem")
 
 	cfg.OuterBackend = rootCmd.PersistentFlags().String("outerBackend", "groth16", "Backend for the outer circuit")
+
+	cfg.OutputPath = rootCmd.PersistentFlags().String("outputPath", "None", "The output path for the log file")
 
 	rootCmd.AddCommand(groth16Cmd)
 	rootCmd.AddCommand(plonkCmd)

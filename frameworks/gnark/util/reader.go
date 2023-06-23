@@ -10,7 +10,7 @@ import (
 func ReadFromInputPath(pathInput string) (map[string]interface{}, error) {
 
 	// Construct the absolute path to the file
-	absPath := filepath.Join("../", pathInput)
+	absPath := filepath.Join("../", "../", pathInput)
 	absPath, err := filepath.Abs(absPath)
 	if err != nil {
 		fmt.Println("Error constructing absolute path:", err)

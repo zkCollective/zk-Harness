@@ -1,0 +1,22 @@
+    Finished release [optimized] target(s) in 0.15s
+     Running `target/release/exponentiate --input ../../_input/circuit/exponentiate/input_100.json --phase verify --params tmp/params --proof tmp/proof`
+thread 'main' panicked at 'assertion failed: groth16::verify_proof(&pvk, &proof, &public_input).is_ok()', bellman_utils/src/lib.rs:108:5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+	0.61s real		0.15s user		0.04s sys
+             3776512  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               14677  page reclaims
+                   0  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                   0  voluntary context switches
+                 172  involuntary context switches
+          2266959592  instructions retired
+           626218320  cycles elapsed
+             1823744  peak memory footprint

@@ -16,10 +16,10 @@ type Config struct {
 	Profile      *string
 	Count        *int
 	Curve        *string
-	FileType     *string
 	InputPath    *string
 	Operation    *string
 	OuterBackend *string
+	OutputPath   *string
 }
 
 func NewConfig() *Config {
@@ -30,10 +30,10 @@ func NewConfig() *Config {
 		Profile:      new(string),
 		Count:        new(int),
 		Curve:        new(string),
-		FileType:     new(string),
 		InputPath:    new(string),
 		Operation:    new(string),
 		OuterBackend: new(string),
+		OutputPath:   new(string),
 	}
 }
 
@@ -82,10 +82,6 @@ func ParseFlags(config *Config) error {
 		return errors.New("invalid curve")
 	}
 
-	if *config.FileType != "csv" {
-		return errors.New("invalid file type for log")
-	}
-
 	var ok bool
 	C, ok = circuits.BenchCircuits[*config.Circuit]
 	if !ok {
@@ -112,10 +108,6 @@ func ParseFlagsMemory(config *Config) error {
 	}
 	if CurveID == ecc.UNKNOWN {
 		return errors.New("invalid curve")
-	}
-
-	if *config.FileType != "csv" {
-		return errors.New("invalid file type for log")
 	}
 
 	var ok bool

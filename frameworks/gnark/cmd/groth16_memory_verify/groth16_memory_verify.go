@@ -103,5 +103,4 @@ func init() {
 	cfg.CircuitSize = groth16MemoryVerifyCmd.PersistentFlags().Int("size", 10000, "size of the circuit, parameter to circuit constructor")
 	cfg.Count = groth16MemoryVerifyCmd.PersistentFlags().Int("count", 2, "bench count (time is averaged on number of executions)")
 	cfg.Curve = groth16MemoryVerifyCmd.PersistentFlags().String("curve", "bn254", "curve name. must be "+fmt.Sprint(curves))
-	cfg.FileType = groth16MemoryVerifyCmd.PersistentFlags().String("filetype", "csv", "Type of file to output for benchmarks")
 }

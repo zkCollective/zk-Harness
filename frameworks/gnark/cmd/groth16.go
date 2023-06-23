@@ -46,10 +46,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 	log := logger.Logger()
 	log.Info().Msg("Benchmarking " + *cfg.Circuit + " - gnark, groth16: " + *cfg.Algo + " " + *cfg.Curve + " " + *cfg.InputPath)
 
-	var filename = "../benchmarks/gnark/gnark_" +
-		"groth16" + "_" +
-		*cfg.Circuit + "." +
-		*cfg.FileType
+	var filename = *cfg.OutputPath
 
 	if err := parser.ParseFlags(cfg); err != nil {
 		fmt.Println("error: ", err.Error())

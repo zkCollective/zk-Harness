@@ -21,7 +21,7 @@ def build_command_gnark(payload, count):
     os.makedirs(helper.Paths().GNARK_BENCH_MEMORY, exist_ok=True)    
     print()
     if payload.backend is not None and payload.curves is not None:
-        commands = [f"./gnark {backend} --circuit={circ} --algo={op} --curve={curve} --input={inp} --count={count}\n"
+        commands = [f"./gnark {backend} --circuit={circ} --algo={op} --curve={curve} --input={inp} --count={count} --outputPath={helper.Paths().GNARK_BENCH}/{backend}_{circ}.csv\n"
                     for backend in payload.backend
                     for curve in payload.curves
                     for circ, input_path in payload.circuit.items()
