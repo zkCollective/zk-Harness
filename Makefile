@@ -3,24 +3,11 @@ benchmark_directory = benchmarks
 MATH = math
 MACHINE := $(shell cat machine 2> /dev/null || echo DEFAULT)
 
-arkworks_directory = arkworks
-blstrs_directory = blstrs
-curve25519_dalek_directory = curve25519-dalek
-pasta_curves_directory = pasta_curves
-zkcrypto_directory = zkcrypto
-gnark_directory = gnark
 circom_directory = circom
 snarkjs_directory = snarkjs
-pairing_ce_directory = pairing_ce
 halo2_curves_directory = halo2_curves
 
-arkworks_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(arkworks_directory)
-blstrs_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(blstrs_directory)
-pairing_ce_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(pairing_ce_directory)
 halo2_curves_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(halo2_curves_directory)
-curve25519_dalek_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(curve25519_dalek_directory)
-pasta_curves_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(pasta_curves_directory)
-zkcrypto_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(zkcrypto_directory)
 gnark_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(gnark_directory)
 circom_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(circom_directory)
 snarkjs_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(snarkjs_directory)
@@ -29,76 +16,110 @@ bellman_ce_directory = bellman_ce
 bellman_directory = bellman
 halo2_pse_directory = halo2_pse
 
+# Math variables
+arkworks_directory = arkworks
+arkworks_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(arkworks_directory)
+arkworks_curves_directory = arkworks_curves
+arkworks_curves_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(arkworks_curves_directory)
+blstrs_directory = blstrs
+blstrs_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(blstrs_directory)
+curve25519_dalek_directory = curve25519-dalek
+curve25519_dalek_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(curve25519_dalek_directory)
+pasta_curves_directory = pasta_curves
+pasta_curves_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(pasta_curves_directory)
+zkcrypto_directory = zkcrypto
+zkcrypto_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(zkcrypto_directory)
+pairing_ce_directory = pairing_ce
+pairing_ce_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(pairing_ce_directory)
+gnark_crypto_directory = gnark
+gnark_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(gnark_crypto_directory)
+ffjavascript_directory = ffjavascript
+ffjavascript_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(ffjavascript_directory)
 
-all: init arkworks-math blstrs-math benchmark-gnark-math benchmark-gnark-ec gnark-circuits 
+all: init 
 
 test: init bellman-ce-math
 
 init:
 	cargo install cargo-criterion
-	mkdir -p $(arkworks_benchmarks_directory)
-	mkdir -p $(blstrs_benchmarks_directory)
-	mkdir -p $(curve25519_dalek_benchmarks_directory)
-	mkdir -p $(pasta_curves_benchmarks_directory)
-	mkdir -p $(zkcrypto_benchmarks_directory)
-	mkdir -p $(pairing_ce_benchmarks_directory)
-	mkdir -p $(halo2_curves_benchmarks_directory)
 
-halo2-curves-math:
-	$(info --------------------------------------------)
-	$(info ------- HALO2 CURVES MATH BENCHMARKS -------)
-	$(info --------------------------------------------)
-	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
-	cd math/zkalc && make init
-	cd math/zkalc/halo2_curves; cargo criterion --message-format=json 1> ../../$(halo2_curves_benchmarks_directory)/halo2_curves.json
+############################# ARITHMETICS ######################################
+math:  math-arkworks-curves math-blstrs math-curve25519-dalek math-pasta-curves math-zkcrypto math-pairing-ce math-ffjavascript
 
-pairing-ce-math:
-	$(info --------------------------------------------)
-	$(info --------- Pairing CE MATHBENCHMARKS --------)
-	$(info --------------------------------------------)
-	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
-	cd math/zkalc && make init
-	cd math/zkalc/pairing_ce; cargo criterion --message-format=json 1> ../../$(pairing_ce_benchmarks_directory)/pairing_ce.json
-
-arkworks-math:
+math-arkworks:
 	$(info --------------------------------------------)
 	$(info --------- ARKWORKS MATH BENCHMARKS ---------)
 	$(info --------------------------------------------)
+	mkdir -p $(arkworks_benchmarks_directory)
 	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
-	cd math/zkalc && make init
-	cd math/zkalc/arkworks; cargo criterion --message-format=json 1> ../../$(arkworks_benchmarks_directory)/pairing_ce.json
+	cd math/zkalc/backend && make init
+	cd math/zkalc/backend/arkworks; cargo criterion --message-format=json 1> ../../../../$(arkworks_benchmarks_directory)/arkworks.json || true
 
-blstrs-math:
+math-arkworks-curves:
+	$(info --------------------------------------------)
+	$(info ------ ARKWORKS CURVES MATH BENCHMARKS -----)
+	$(info --------------------------------------------)
+	mkdir -p $(arkworks_curves_benchmarks_directory)
+	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
+	cd math/zkalc/backend && make init
+	cd math/zkalc/backend && git clone https://github.com/arkworks-rs/curves.git || true
+	cd math/zkalc/backend/curves; cargo criterion --features ark-ec/parallel,ark-ff/asm --message-format=json 1> ../../../../$(arkworks_curves_benchmarks_directory)/ark-curves.json || true
+
+math-blstrs:
 	$(info --------------------------------------------)
 	$(info -------- BLSTRS MATH BENCHMARKS ------------)
 	$(info --------------------------------------------)
+	mkdir -p $(blstrs_benchmarks_directory)
 	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
-	cd math/zkalc && make init
-	cd math/zkalc/backend/blstrs; cargo criterion --message-format=json 1> ../../../../$(blstrs_benchmarks_directory)/blstrs.json
+	cd math/zkalc/backend && make init
+	cd math/zkalc/backend/blstrs; cargo criterion --message-format=json 1> ../../../../$(blstrs_benchmarks_directory)/blstrs.json || true
 
-curve25519-dalek-math:
+math-curve25519-dalek:
 	$(info --------------------------------------------)
 	$(info ---- curve25519-dalek MATH BENCHMARKS ------)
 	$(info --------------------------------------------)
+	mkdir -p $(curve25519_dalek_benchmarks_directory)
 	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
-	cd math/zkalc && make init
-	cd math/zkalc/backend/curve25519-dalek; cargo criterion --message-format=json 1> ../../../../$(curve25519_dalek_benchmarks_directory)/curve25519-dalek.json
+	cd math/zkalc/backend && make init
+	cd math/zkalc/backend/curve25519-dalek; cargo criterion --message-format=json 1> ../../../../$(curve25519_dalek_benchmarks_directory)/curve25519-dalek.json || true
 
-pasta-curves-math:
+math-pasta-curves:
 	$(info --------------------------------------------)
 	$(info ----------- PASTA MATH BENCHMARKS ----------)
 	$(info --------------------------------------------)
+	mkdir -p $(pasta_curves_benchmarks_directory)
 	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
-	cd math/zkalc && make init
-	cd math/zkalc/backend/pasta_curves; cargo criterion --message-format=json 1> ../../../../$(pasta_curves_benchmarks_directory)/pasta_curves.json
+	cd math/zkalc/backend && make init
+	cd math/zkalc/backend/pasta_curves; cargo criterion --message-format=json 1> ../../../../$(pasta_curves_benchmarks_directory)/pasta_curves.json || true
 
-zkcrypto-math:
+math-zkcrypto:
 	$(info --------------------------------------------)
 	$(info -------- ZKCRYPTO MATH BENCHMARKS ----------)
 	$(info --------------------------------------------)
+	mkdir -p $(zkcrypto_benchmarks_directory)
 	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
-	cd math/zkalc && make init
-	cd math/zkalc/backend/zkcrypto; cargo criterion --message-format=json 1> ../../../../$(zkcrypto_benchmarks_directory)/zkcrypto.json
+	cd math/zkalc/backend && make init
+	cd math/zkalc/backend/zkcrypto; cargo criterion --message-format=json 1> ../../../../$(zkcrypto_benchmarks_directory)/zkcrypto.json || true
+
+math-pairing-ce:
+	$(info --------------------------------------------)
+	$(info --------- Pairing CE MATHBENCHMARKS --------)
+	$(info --------------------------------------------)
+	mkdir -p $(pairing_ce_benchmarks_directory)
+	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
+	cd math/zkalc/backend && make init
+	cd math/zkalc/backend/pairing_ce; cargo criterion --message-format=json 1> ../../../../$(pairing_ce_benchmarks_directory)/pairing_ce.json || true
+
+math-ffjavascript:
+	$(info --------------------------------------------)
+	$(info ------- ffjavascript MATHBENCHMARKS --------)
+	$(info --------------------------------------------)
+	mkdir -p $(ffjavascript_benchmarks_directory)
+	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
+	cd math/zkalc/backend && make init
+	cd math/zkalc/backend/ffjavascript; node bench.js > ../../../../$(ffjavascript_benchmarks_directory)/ffjavascript.json || true
+
+################################################################################
 
 ready: benchmark-bellman-circuits benchmark-halo2-pse-circuits benchmark-circom-circuits
 
