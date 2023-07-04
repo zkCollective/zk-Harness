@@ -38,8 +38,6 @@ ffjavascript_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(
 
 all: init 
 
-test: init bellman-ce-math
-
 init:
 	cargo install cargo-criterion
 
@@ -60,10 +58,9 @@ math-arkworks-curves:
 	$(info ------ ARKWORKS CURVES MATH BENCHMARKS -----)
 	$(info --------------------------------------------)
 	mkdir -p $(arkworks_curves_benchmarks_directory)
-	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
 	cd math/zkalc/backend && make init
 	cd math/zkalc/backend && git clone https://github.com/arkworks-rs/curves.git || true
-	cd math/zkalc/backend/curves; cargo criterion --features ark-ec/parallel,ark-ff/asm --message-format=json 1> ../../../../$(arkworks_curves_benchmarks_directory)/ark-curves.json || true
+	cd math/zkalc/backend/curves; git fetch; git checkout releases; cargo criterion --features ark-ec/parallel,ark-ff/asm --message-format=json 1> ../../../../$(arkworks_curves_benchmarks_directory)/ark-curves.json || true
 
 math-blstrs:
 	$(info --------------------------------------------)
