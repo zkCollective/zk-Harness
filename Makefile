@@ -27,6 +27,8 @@ curve25519_dalek_directory = curve25519-dalek
 curve25519_dalek_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(curve25519_dalek_directory)
 pasta_curves_directory = pasta_curves
 pasta_curves_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(pasta_curves_directory)
+halo2_curves_directory = halo2_curves
+halo2_curves_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(halo2_curves_directory)
 zkcrypto_directory = zkcrypto
 zkcrypto_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(zkcrypto_directory)
 pairing_ce_directory = pairing_ce
@@ -88,6 +90,15 @@ math-pasta-curves:
 	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
 	cd math/zkalc/backend && make init
 	cd math/zkalc/backend/pasta_curves; cargo criterion --message-format=json 1> ../../../../$(pasta_curves_benchmarks_directory)/pasta_curves.json || true
+
+math-halo2-curves:
+	$(info --------------------------------------------)
+	$(info ----------- HALO2 MATH BENCHMARKS ----------)
+	$(info --------------------------------------------)
+	mkdir -p $(halo2_curves_benchmarks_directory)
+	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
+	cd math/zkalc/backend && make init
+	cd math/zkalc/backend/halo2_curves; cargo criterion --message-format=json 1> ../../../../$(halo2_curves_benchmarks_directory)/halo2_curves.json || true
 
 math-zkcrypto:
 	$(info --------------------------------------------)
