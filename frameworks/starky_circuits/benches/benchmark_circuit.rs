@@ -147,7 +147,7 @@ pub fn bench_exponentiate(c: &mut Criterion, input_str: String) -> Result<(), an
 
     let mut group = c.benchmark_group("exponentiate");
 
-    let num_rows = 1 << e;
+    let num_rows = e as usize;
     let public_inputs = [x, F::from_canonical_usize(num_rows), exponentiate(num_rows - 1, x)];
     let stark = S::new(num_rows);
     

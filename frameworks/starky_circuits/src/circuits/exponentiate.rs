@@ -183,7 +183,7 @@ mod tests {
 
     #[test]
     fn test_get_data() -> Result<(), Box<dyn std::error::Error>> { 
-        let filename = "../_input/circuit/exponentiate/input_10.json";
+        let filename = "../_input/circuit/exponentiate_2/input_10.json";
         let input_str = starky_utils::read_file_contents(filename.to_string());
         let (_x, _e, _y) = get_exponentiate_data::<PoseidonGoldilocksConfig, 2>(input_str);
         Ok(())
