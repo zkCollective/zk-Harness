@@ -42,9 +42,10 @@ all: init
 
 init:
 	cargo install cargo-criterion
+	@if [ ! -d "math" ]; then mkdir -p math; fi
 
 ############################# ARITHMETICS ######################################
-math:  math-arkworks-curves math-blstrs math-curve25519-dalek math-pasta-curves math-zkcrypto math-pairing-ce math-ffjavascript
+math:  math-arkworks math-arkworks-curves math-blstrs math-curve25519-dalek math-pasta-curves math-zkcrypto math-pairing-ce math-ffjavascript
 
 math-arkworks:
 	$(info --------------------------------------------)
