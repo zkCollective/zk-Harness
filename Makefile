@@ -33,10 +33,12 @@ zkcrypto_directory = zkcrypto
 zkcrypto_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(zkcrypto_directory)
 pairing_ce_directory = pairing_ce
 pairing_ce_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(pairing_ce_directory)
-gnark_crypto_directory = gnark
-gnark_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(gnark_crypto_directory)
+gnark_crypto_directory = gnark_crypto
+gnark_crypto_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(gnark_crypto_directory)
 ffjavascript_directory = ffjavascript
 ffjavascript_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(ffjavascript_directory)
+ffiasm_directory = ffiasm
+ffiasm_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(ffiasm_directory)
 
 all: init 
 
@@ -45,7 +47,8 @@ init:
 	@if [ ! -d "math" ]; then mkdir -p math; fi
 
 ############################# ARITHMETICS ######################################
-math:  math-arkworks math-arkworks-curves math-blstrs math-curve25519-dalek math-pasta-curves math-zkcrypto math-pairing-ce math-ffjavascript
+# TODO include ffiasm
+math: math-arkworks math-arkworks-curves math-blstrs math-curve25519-dalek math-pasta-curves math-halo2-curves math-zkcrypto math-pairing-ce math-ffjavascript math-gnark
 
 math-arkworks:
 	$(info --------------------------------------------)
@@ -127,6 +130,29 @@ math-ffjavascript:
 	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
 	cd math/zkalc/backend && make init
 	cd math/zkalc/backend/ffjavascript; node bench.js > ../../../../$(ffjavascript_benchmarks_directory)/ffjavascript.json || true
+
+math-gnark:
+	$(info --------------------------------------------)
+	$(info ----------- gnark MATHBENCHMARKS -----------)
+	$(info --------------------------------------------)
+	mkdir -p $(gnark_crypto_benchmarks_directory)
+	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
+	cd math/zkalc/backend && make init
+	cd math/zkalc/backend; if [ ! -d "gnark-crypto" ]; then git clone -b zkalc https://github.com/ConsenSys/gnark-crypto.git; fi
+	cd math/zkalc/backend/gnark-crypto && \
+	bash ./zkalc.sh bls12-381 | tee ../../../../$(gnark_crypto_benchmarks_directory)/gnark-bls12-381.txt && \
+	bash ./zkalc.sh bls12-377 | tee ../../../../$(gnark_crypto_benchmarks_directory)/gnark-bls12-377.txt && \
+	bash ./zkalc.sh bn254     | tee ../../../../$(gnark_crypto_benchmarks_directory)/gnark-bn254.txt && \
+	bash ./zkalc.sh secp256k1 | tee ../../../../$(gnark_crypto_benchmarks_directory)/gnark-secp256k1.txt
+
+math-ffiasm:
+	$(info --------------------------------------------)
+	$(info ---------- ffiasm MATHBENCHMARKS -----------)
+	$(info --------------------------------------------)
+	mkdir -p $(ffiasm_benchmarks_directory)
+	cd math && if [ ! -d "zkalc" ]; then git clone https://github.com/asn-d6/zkalc.git; fi
+	cd math/zkalc/backend && make init
+	cd math/zkalc/backend/ffiasm; node scripts/bench.js > ../../../../$(ffjavascript_benchmarks_directory)/ffjavascript.json || true
 
 ################################################################################
 
