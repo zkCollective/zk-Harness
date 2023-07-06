@@ -8,6 +8,10 @@ You can find a description of the configuration file in the ``config`` sub-folde
 
 ![Alt text](./HarnessSpecification.jpg?raw=true "Title")
 
+## Overview
+
+On a high level, zk-Harness takes as input a configuration file. The “Config Reader” reads the standardized config and invokes the ZKP framework as specified in the configuration file. You can find a description of the configuration file in the tutorials/config sub-folder of the GitHub repository. Each integrated ZKP framework exposes a set of functions that take as an input the standardized configuration parameters to execute the corresponding benchmarks. The output of benchmarking a given ZKP framework is a log file in csv format with standardized metrics. The log file is read by the “Log Analyzer”, which compiles the logs into pandas dataframes that are used by the front-end and displayed on the public website. You can find the standardized logging format in the tutorials/logs sub-folder.
+
 
 ## Adding a new framework to the zk-Harness
 

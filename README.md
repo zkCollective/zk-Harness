@@ -5,11 +5,11 @@ This repository contains a modular and easily extensible framework for benchmark
 
 ## 📊 Benchmark Results
 
-The benchmark results are currently hosted at [zk-bench.org](https://www.zk-bench.org).
+The benchmark results are hosted at [zk-bench.org](https://www.zk-bench.org).
 
 The backend for mathematical operations has been merged with [zka.lc](https://zka.lc/).
 
-### Currently Supported Standard Payloads 
+### Payloads supported by zk-Harness 
 
 The current framework supports a set of payloads for each library.
 We aim to successively extend the following once more circuits are available as `std` in the respective libraries.
@@ -22,52 +22,18 @@ We aim to successively extend the following once more circuits are available as 
 | `Halo2`  | :heavy_check_mark: | :heavy_check_mark:|
 | `Starky` | :heavy_check_mark: | :heavy_check_mark:|
 
-### Backends, Curves, Fields and Arithmetizations
+### Curves, Fields and Arithmetizations and Backends
 
-<!-- TODO -->
-
-### Run Benchmarks On Your Own!
-
-zk-Harness is supposed to be easily extensible and modular, which means that you should be able to integrate you own circuits with ease.
-Each framework in `framework/<framework_name>` includes a detailed description on how to add a self-developed circuit that goes beyond the standard payloads already integrated.
-
-To validate and re-run any of the standard payloads, please refer to the the `Makefile`, which utilizes standard configuration files.
-
-Many end-to-end applications require proving a specific cryptographic primitive,
-which requires the specification of said cryptographic primitive in a specific ZKP
-framework.
-
-- *Circuits for native field operations* -  These operations, namely, addition and multiplication in F_p, are supported by each SNARK library, and they are the most efficient to prove with a SNARK because arithmetic modulo F_p is the native computation model of a SNARK. This provides a good understanding of the efficiency of the core
-SNARK implementation.
-- *Circuits for non-native field operations* - All computations we want to prove do not belong to arithmetic modulo p. For instance, Z_{2^64} or uint64/int64 is a popular data type in traditional programming languages. Or, we might want to prove arithmetic on a different field, say Z_q. This usually happens when we want to verify elliptic-curve based cryptographic primitives. An example of this is supporting verification of ECDSA signatures. The native field of elliptic curve underlying the chosen SNARK typically differs from the base field of the secp256k1 curve
-- *Circuits for SNARK-optimized primitives* - One of the challenges in the practically using SNARKs is their inefficiency with regard to traditional hash algorithms, like SHA-2, and traditional signature algorithms, such as ECDSA. They are fast when executed on a CPU, but prohibitively slow when used in a SNARK. As a result, the community has proposed several hash functions and signature algorithms that are SNARK-friendly, such as the following:
-  - Poseidon Hash
-  - Pedersen Hash
-  - MIMC Hash
-  - Ed25519 (EdDSA signature)
-- *Circuits for CPU-optimized primitives* - Even though it would be beneficial to only rely on SNARK optimized primitives, practical applications often don’t allow for the usage of e.g. Poseidon hash functions or SNARK friendly signature schemes. For example, verifying ECDSA signatures in SNARKs is crucial when building e.g. zkBridge, however an implementation requires for non-native field arithmetic, and therefore yields many constraints. Similarly, for building applications such as TLS Notary, one has to prove SHA-256 hash functions and AES-128 encryption which yields many constraints. Hence, we intend to benchmark the performance of the following cryptographic primitives and their
-circuit implementations in different ZKP-frameworks:
-  - SHA-256
-  - Blake2
-  - ECDSA
-
-### Current Features
-
-On a high level, zk-Harness takes as input a configuration file. The “Config Reader” reads the standardized config and invokes the ZKP framework as specified in the configuration file. You can find a description of the configuration file in the tutorials/config sub-folder of the GitHub repository. Each integrated ZKP framework exposes a set of functions that take as an input the standardized configuration parameters to execute the corresponding benchmarks. The output of benchmarking a given ZKP framework is a log file in csv format with standardized metrics. The log file is read by the “Log Analyzer”, which compiles the logs into pandas dataframes that are used by the front-end and displayed on the public website. You can find the standardized logging format in the tutorials/logs sub-folder.
-
-Currently, zk-Harness includes the following components as a starting point:
-
-| Benchmarks                         | Field Arithmetic  | Elliptic Curve Group Operations | Circuit Implementations |
-|------------------------------------|------------------|--------------------------------|-------------------------|
-| gnark                              | X                | X                              | X                       |
-| circom / snarkjs                   | X                | X                              | X                       |
-| arkworks                           | X                | X                              |                         |
-
-We aim to successively expand this list to further include benchmarks for other ZKP frameworks, recursion and zk-EVMs. As a part of the ZKP/Web3 Hackathon hosted by UC Berkeley RDI, we aim to further develop the frameworks integrated into zk-Harness. You can find the program description detailing future integrations [here](https://drive.google.com/file/d/1Igm47dFXSOFAC_wldfUG4Y9OiITqlbQu/view). A detailed list of currently included sub-components and the framework architecture can be found in the [GitHub](https://github.com/zkCollective/zk-Harness) repository.
+You can find the set of elliptic curves and finite fields as implemented in common libraries [here](https://docs.google.com/spreadsheets/d/1tq8lvcg88dE6D-EVJd61hBKhQxpDsZF16UMYpDXjef8/edit#gid=156416826).
+We aim to maintain the set of supported functionalities and circuits in each library in the future.
 
 ## How to use
 
-Run any of the various targets in the `Makefile`.
+To run the benchmarks, you will first need to follow the installation instructions of the respective framework.
+
+To run *all* benchmarks for mathematical operations, run `make math`.
+
+To run *all* benchmarks for end-to-end circuits on standard operations, run `make benchmark-circuits`.
 
 To obtain a Nix environment in which you can successfully run these benchmarks,
 first [install Nix](https://nixos.org/download.html)
@@ -75,6 +41,11 @@ and [enable flakes](https://nixos.wiki/wiki/Flakes#Enable_flakes),
 then run `nix develop`.
 
 When running into issues for nix on M1/M2 Macs, please refer to [this issue](https://github.com/input-output-hk/plutus-pioneer-program/issues/40).  
+
+### Run Benchmarks On Your Own!
+
+zk-Harness is supposed to be easily extensible and modular, which means that you should be able to integrate you own circuits with ease.
+Each framework in `framework/<framework_name>` includes a detailed description on how to add a self-developed circuit that goes beyond the standard payloads already integrated.
 
 
 ## Future Work & ZKP Hackathon
