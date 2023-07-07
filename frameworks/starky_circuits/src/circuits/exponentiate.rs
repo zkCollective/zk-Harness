@@ -166,7 +166,7 @@ mod tests {
         type S = ExponentiateStark<F, D>;
 
         let config = StarkConfig::standard_fast_config();
-        let num_rows = 1 << 20;
+        let num_rows = 1 << 10;
         let public_inputs = [F::ONE, F::from_canonical_usize(num_rows), exponentiate(num_rows - 1, F::ONE)];
         let stark = S::new(num_rows);
         let trace = stark.generate_trace(public_inputs[0], public_inputs[1], public_inputs[2]);
@@ -183,7 +183,7 @@ mod tests {
 
     #[test]
     fn test_get_data() -> Result<(), Box<dyn std::error::Error>> { 
-        let filename = "../_input/circuit/exponentiate_2/input_10.json";
+        let filename = "../../_input/circuit/exponentiate_2/input_16.json";
         let input_str = starky_utils::read_file_contents(filename.to_string());
         let (_x, _e, _y) = get_exponentiate_data::<PoseidonGoldilocksConfig, 2>(input_str);
         Ok(())
