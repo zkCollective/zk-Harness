@@ -14,6 +14,7 @@ import (
 
 	"github.com/consensys/gnark/logger"
 	"github.com/spf13/cobra"
+	"github.com/zkCollective/zk-Harness/gnark/parser"
 	"github.com/zkCollective/zk-Harness/gnark/util"
 )
 
@@ -65,7 +66,7 @@ func benchCurveOperations(cmd *cobra.Command, args []string) {
 		}
 	}
 
-	if err := parseFlags(); err != nil {
+	if err := parser.ParseFlags(cfg); err != nil {
 		fmt.Println("error: ", err.Error())
 		cmd.Help()
 		os.Exit(-1)
@@ -85,7 +86,7 @@ func benchCurveOperations(cmd *cobra.Command, args []string) {
 	}
 
 	// Benchmark for all curves in config
-	if err := bench_math(curveID.String(), filepath_zkalc); err != nil {
+	if err := bench_math(parser.CurveID.String(), filepath_zkalc); err != nil {
 		log.Printf("Benchmark failed: %s\n", err)
 	}
 
@@ -127,7 +128,7 @@ func writeResults(result Result, filename string) error {
 	bDataArith := util.BenchDataCurve{
 		Framework: "gnark",
 		Category:  "ec",
-		Curve:     curveID.String(),
+		Curve:     parser.CurveID.String(),
 		Operation: result.Operation,
 		Input:     "", // This needs to be replaced with the appropriate value
 		MaxRAM:    m.Sys,
