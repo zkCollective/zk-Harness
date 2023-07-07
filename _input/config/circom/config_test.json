@@ -12,7 +12,10 @@
         ], 
         "circuits": {
             "exponentiate": {
-                "input_path": "_input/circuit/exponentiate/input_100.json",
+                "input_path": [
+                    "_input/circuit/exponentiate/input_100.json",
+                    "_input/circuit/exponentiate/input_1000.json"
+                ],
                 "template_vars": ["E"]
             }
         },

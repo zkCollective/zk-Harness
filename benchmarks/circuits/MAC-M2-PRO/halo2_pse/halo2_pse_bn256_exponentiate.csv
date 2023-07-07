@@ -1,4 +1,0 @@
-framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram,time,proofSize,count
-halo2_pse,circuit,halo2,bn256,exponentiate,_input/circuit/exponentiate/input_100.json,setup,,,,5091328,26,,220
-halo2_pse,circuit,halo2,bn256,exponentiate,_input/circuit/exponentiate/input_100.json,prove,,,,5390336,33,992,165
-halo2_pse,circuit,halo2,bn256,exponentiate,_input/circuit/exponentiate/input_100.json,verify,,,,4444160,1,,6545

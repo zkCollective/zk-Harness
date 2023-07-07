@@ -1,6 +1,0 @@
-framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram,time,proofSize,count
-circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,compile,100,0,2,16912384,70,,1
-circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,witness,100,0,2,34369536,50,,1
-circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,setup,100,0,2,212025344,2690,,1
-circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,prove,100,0,2,193421312,1010,804,1
-circom/snarkjs,circuit,groth16,bn128,exponentiate,_input/circuit/exponentiate/input_100.json,verify,100,0,2,167063552,950,,1

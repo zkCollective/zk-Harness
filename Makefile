@@ -3,19 +3,6 @@ benchmark_directory = benchmarks
 MATH = math
 MACHINE := $(shell cat machine 2> /dev/null || echo DEFAULT)
 
-circom_directory = circom
-snarkjs_directory = snarkjs
-halo2_curves_directory = halo2_curves
-
-halo2_curves_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(halo2_curves_directory)
-gnark_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(gnark_directory)
-circom_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(circom_directory)
-snarkjs_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(snarkjs_directory)
-
-bellman_ce_directory = bellman_ce
-bellman_directory = bellman
-halo2_pse_directory = halo2_pse
-
 # Math variables
 arkworks_directory = arkworks
 arkworks_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(arkworks_directory)
@@ -40,7 +27,9 @@ ffjavascript_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(
 ffiasm_directory = ffiasm
 ffiasm_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(ffiasm_directory)
 
-all: init 
+# Circuits variables
+
+all: init math circuits
 
 init:
 	cargo install cargo-criterion
@@ -156,9 +145,11 @@ math-ffiasm:
 
 ################################################################################
 
-ready: benchmark-bellman-circuits benchmark-halo2-pse-circuits benchmark-circom-circuits
+############################## CIRCUITS ########################################
 
 circuits-test: benchmark-bellman-test-circuit benchmark-halo2-pse-test-circuit benchmark-circom-test-circuit benchmark-gnark-test-circuit
+
+circuits: benchmark-bellman-test-circuit
 
 benchmark-bellman-test-circuit:
 	$(info --------------------------------------------)
@@ -168,7 +159,7 @@ benchmark-bellman-test-circuit:
 
 benchmark-bellman-circuits:
 	$(info --------------------------------------------)
-	$(info ------    BELLMAN CIRCUIT BENCHMARKS  ------)
+	$(info ------- BELLMAN CIRCUIT BENCHMARKS ---------)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/bellman/config_circuits.json --machine $(MACHINE)
 
@@ -220,14 +211,17 @@ benchmark-gnark-circuits:
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_circuits.json --machine $(MACHINE)
 
+################################################################################
+
+############################## RECURSION #######################################
+
 benchmark-gnark-recursion:
 	$(info --------------------------------------------)
 	$(info ----------- GNARK RECURSION BENCHMARKS -----)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_recursion.json --machine $(MACHINE)
 
-test-simple:
-	python3 -m _scripts.reader --config _input/config/gnark/config_gnark_simple.json --machine $(MACHINE)
+################################################################################
 
 clean:
 	rm -rf $(benchmark_directory)/*
