@@ -74,6 +74,11 @@ def get_all_input_files(input_path, abspath=False):
     Given a input_path return the full path of the file or if it is a directory
     return the full paths of all JSON files in this directory
     """
+    if isinstance(input_path, list):
+        files = []
+        for p in input_path:
+            files.extend(get_all_input_files(p, abspath))
+        return files
     if not os.path.exists(input_path):
         raise ValueError(f"Input: {input_path} does not exist")
     if os.path.isfile(input_path):
