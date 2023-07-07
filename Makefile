@@ -147,7 +147,7 @@ math-ffiasm:
 
 ############################## CIRCUITS ########################################
 
-circuits-test: benchmark-bellman-test-circuit benchmark-halo2-pse-test-circuit benchmark-circom-test-circuit benchmark-gnark-test-circuit
+circuits-test: benchmark-bellman-test-circuit benchmark-halo2-pse-test-circuit benchmark-circom-test-circuit gnark-init benchmark-gnark-test-circuit
 
 circuits: benchmark-bellman-test-circuit
 
@@ -198,6 +198,9 @@ benchmark-sha-circom:
 	rm -rf circom/circuits/benchmarks/circomlib
 
 benchmark-circom-circuits: benchmark-exponentiate-circom benchmark-sha-circom
+
+gnark-init: 
+	cd frameworks/gnark && go build
 
 benchmark-gnark-test-circuit:
 	$(info --------------------------------------------)
