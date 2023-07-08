@@ -1,0 +1,225 @@
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bn254 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bn254/fp ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bn254 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/fp
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkElementAdd-8   	428092376	         2.967 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/fp	2.593s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/fp
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkElementMul-8   	55643791	        21.49 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/fp	1.223s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/fp
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkElementInverse-8   	  703561	      1717 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/fp	1.231s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/fp
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkElementSquare
+BenchmarkElementSquare-8   	55143414	        21.71 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/fp	1.225s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/fp
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkElementSqrt
+BenchmarkElementSqrt-8   	  184834	      6498 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/fp	1.272s
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bn254 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bn254/fr/fft ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bn254 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/fr/fft
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkFFT/fft_2**8bits-8       	   26869	     43667 ns/op
+BenchmarkFFT/fft_2**8bits_(coset)-8         	   21628	     54671 ns/op
+BenchmarkFFT/fft_2**9bits-8                 	   16238	     73392 ns/op
+BenchmarkFFT/fft_2**9bits_(coset)-8         	   15038	     79331 ns/op
+BenchmarkFFT/fft_2**10bits-8                	   10000	    110803 ns/op
+BenchmarkFFT/fft_2**10bits_(coset)-8        	    8884	    134228 ns/op
+BenchmarkFFT/fft_2**11bits-8                	    6325	    186564 ns/op
+BenchmarkFFT/fft_2**11bits_(coset)-8        	    5287	    224278 ns/op
+BenchmarkFFT/fft_2**12bits-8                	    3631	    316622 ns/op
+BenchmarkFFT/fft_2**12bits_(coset)-8        	    3159	    377109 ns/op
+BenchmarkFFT/fft_2**13bits-8                	    2065	    580962 ns/op
+BenchmarkFFT/fft_2**13bits_(coset)-8        	    1788	    668802 ns/op
+BenchmarkFFT/fft_2**14bits-8                	    1194	   1003854 ns/op
+BenchmarkFFT/fft_2**14bits_(coset)-8        	    1068	   1129589 ns/op
+BenchmarkFFT/fft_2**15bits-8                	     661	   1814077 ns/op
+BenchmarkFFT/fft_2**15bits_(coset)-8        	     603	   2027216 ns/op
+BenchmarkFFT/fft_2**16bits-8                	     348	   3519022 ns/op
+BenchmarkFFT/fft_2**16bits_(coset)-8        	     303	   3867376 ns/op
+BenchmarkFFT/fft_2**17bits-8                	     166	   7137887 ns/op
+BenchmarkFFT/fft_2**17bits_(coset)-8        	     154	   7853382 ns/op
+BenchmarkFFT/fft_2**18bits-8                	      79	  14776530 ns/op
+BenchmarkFFT/fft_2**18bits_(coset)-8        	      74	  16018363 ns/op
+BenchmarkFFT/fft_2**19bits-8                	      38	  30993318 ns/op
+BenchmarkFFT/fft_2**19bits_(coset)-8        	      34	  33654793 ns/op
+BenchmarkFFTDITCosetReference-8             	      16	  71890107 ns/op
+BenchmarkFFTDIFReference-8                  	      18	  65416452 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/fr/fft	38.152s
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bn254 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkG1JacAdd-8   	 2742063	       437.8 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	1.648s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkG1JacScalarMultiplication/GLV-8         	   19623	     60889 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	1.818s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkMultiExpG1/2_points-8         	    7052	    168118 ns/op
+BenchmarkMultiExpG1/4_points-8         	    6147	    192959 ns/op
+BenchmarkMultiExpG1/8_points-8         	    5419	    218716 ns/op
+BenchmarkMultiExpG1/16_points-8        	    4561	    256308 ns/op
+BenchmarkMultiExpG1/32_points-8        	    3528	    323874 ns/op
+BenchmarkMultiExpG1/64_points-8        	    2596	    442154 ns/op
+BenchmarkMultiExpG1/128_points-8       	    1808	    652587 ns/op
+BenchmarkMultiExpG1/256_points-8       	    1201	    991029 ns/op
+BenchmarkMultiExpG1/512_points-8       	     735	   1626413 ns/op
+BenchmarkMultiExpG1/1024_points-8      	     463	   2608087 ns/op
+BenchmarkMultiExpG1/2048_points-8      	     243	   4933074 ns/op
+BenchmarkMultiExpG1/4096_points-8      	     133	   8912605 ns/op
+BenchmarkMultiExpG1/8192_points-8      	      73	  16135555 ns/op
+BenchmarkMultiExpG1/16384_points-8     	      50	  23842115 ns/op
+BenchmarkMultiExpG1/32768_points-8     	      25	  45587874 ns/op
+BenchmarkMultiExpG1/65536_points-8     	      13	  84847479 ns/op
+BenchmarkMultiExpG1/131072_points-8    	       7	 155352091 ns/op
+BenchmarkMultiExpG1/262144_points-8    	       4	 292618599 ns/op
+BenchmarkMultiExpG1/524288_points-8    	       2	 528694276 ns/op
+BenchmarkMultiExpG1/1048576_points-8   	       2	 977540282 ns/op
+BenchmarkMultiExpG1/2097152_points-8   	       1	1894533875 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	33.496s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkG1JacIsInSubGroup-8   	 6703288	       178.9 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	1.385s
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	0.003s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkG2JacAdd-8   	 1000000	      1043 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	1.058s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkG2JacScalarMultiplication/GLV-8         	    8628	    139039 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	1.219s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkMultiExpG2/2_points-8         	    3633	    331645 ns/op
+BenchmarkMultiExpG2/4_points-8         	    2862	    388718 ns/op
+BenchmarkMultiExpG2/8_points-8         	    2578	    449921 ns/op
+BenchmarkMultiExpG2/16_points-8        	    2041	    550739 ns/op
+BenchmarkMultiExpG2/32_points-8        	    1558	    731972 ns/op
+BenchmarkMultiExpG2/64_points-8        	    1152	   1012728 ns/op
+BenchmarkMultiExpG2/128_points-8       	     753	   1577105 ns/op
+BenchmarkMultiExpG2/256_points-8       	     465	   2585957 ns/op
+BenchmarkMultiExpG2/512_points-8       	     271	   4424618 ns/op
+BenchmarkMultiExpG2/1024_points-8      	     168	   7089036 ns/op
+BenchmarkMultiExpG2/2048_points-8      	      86	  13791485 ns/op
+BenchmarkMultiExpG2/4096_points-8      	      48	  24813015 ns/op
+BenchmarkMultiExpG2/8192_points-8      	      32	  32981489 ns/op
+BenchmarkMultiExpG2/16384_points-8     	      21	  57939033 ns/op
+BenchmarkMultiExpG2/32768_points-8     	      10	 106733275 ns/op
+BenchmarkMultiExpG2/65536_points-8     	       6	 185713454 ns/op
+BenchmarkMultiExpG2/131072_points-8    	       3	 351834943 ns/op
+BenchmarkMultiExpG2/262144_points-8    	       2	 638620428 ns/op
+BenchmarkMultiExpG2/524288_points-8    	       1	1231515681 ns/op
+BenchmarkMultiExpG2/1048576_points-8   	       1	2312626405 ns/op
+BenchmarkMultiExpG2/2097152_points-8   	       1	4377686300 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	36.220s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkG2JacIsInSubGroup-8   	   16052	     74725 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	1.960s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkG2AffineCofactorClearing-8   	   16081	     74604 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	1.959s
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bn254/internal/fptower ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bn254 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/internal/fptower
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkE12Add-8   	21757114	        55.08 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/internal/fptower	1.259s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/internal/fptower
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkE12Mul-8   	  641526	      1868 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/internal/fptower	1.223s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254/internal/fptower
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkE12Cyclosquare-8   	 1709072	       702.1 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254/internal/fptower	1.914s
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bn254 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkPairing-8   	    2256	    531523 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	1.258s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/bn254
+cpu: Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz
+BenchmarkMultiPair/16_pairs-8         	     364	   3284867 ns/op
+BenchmarkMultiPair/32_pairs-8         	     193	   6188680 ns/op
+BenchmarkMultiPair/64_pairs-8         	      98	  12047991 ns/op
+BenchmarkMultiPair/128_pairs-8        	      50	  23793679 ns/op
+BenchmarkMultiPair/256_pairs-8        	      25	  47242067 ns/op
+BenchmarkMultiPair/512_pairs-8        	      12	  94073907 ns/op
+BenchmarkMultiPair/1024_pairs-8       	       6	 187821826 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bn254	9.532s
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+~/zk-Harness/math/zkalc/backend/gnark-crypto
