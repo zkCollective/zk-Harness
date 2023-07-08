@@ -202,13 +202,13 @@ benchmark-circom-circuits: benchmark-exponentiate-circom benchmark-sha-circom
 gnark-init: 
 	cd frameworks/gnark && go build
 
-benchmark-gnark-test-circuit:
+benchmark-gnark-test-circuit: gnark-init
 	$(info --------------------------------------------)
 	$(info ------ GNARK TEST CIRCUIT BENCHMARKS -------)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_test.json --machine $(MACHINE)
 
-benchmark-gnark-circuits: 
+benchmark-gnark-circuits: gnark-init
 	$(info --------------------------------------------)
 	$(info -------- GNARK CIRCUITS BENCHMARKS ---------)
 	$(info --------------------------------------------)
