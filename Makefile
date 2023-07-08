@@ -32,7 +32,7 @@ ffiasm_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(ffiasm
 all: math circuits
 
 init:
-	benchmark-gnark-circuits
+	cargo install cargo-criterion
 
 math-init:
 	@if [ ! -d "math" ]; then mkdir -p math; fi
