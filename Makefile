@@ -29,17 +29,19 @@ ffiasm_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(ffiasm
 
 # Circuits variables
 
-all: init math circuits
+all: math circuits
 
 init:
-	cargo install cargo-criterion
+	benchmark-gnark-circuits
+
+math-init:
 	@if [ ! -d "math" ]; then mkdir -p math; fi
 
 ############################# ARITHMETICS ######################################
 # TODO include ffiasm
 math: math-arkworks math-arkworks-curves math-blstrs math-curve25519-dalek math-pasta-curves math-halo2-curves math-zkcrypto math-pairing-ce math-ffjavascript math-gnark
 
-math-arkworks:
+math-arkworks: init math-init
 	$(info --------------------------------------------)
 	$(info --------- ARKWORKS MATH BENCHMARKS ---------)
 	$(info --------------------------------------------)
@@ -48,7 +50,7 @@ math-arkworks:
 	cd math/zkalc/backend && make init
 	cd math/zkalc/backend/arkworks; cargo criterion --message-format=json 1> ../../../../$(arkworks_benchmarks_directory)/arkworks.json || true
 
-math-arkworks-curves:
+math-arkworks-curves: init math-init
 	$(info --------------------------------------------)
 	$(info ------ ARKWORKS CURVES MATH BENCHMARKS -----)
 	$(info --------------------------------------------)
@@ -57,7 +59,7 @@ math-arkworks-curves:
 	cd math/zkalc/backend && git clone https://github.com/arkworks-rs/curves.git || true
 	cd math/zkalc/backend/curves; git fetch; git checkout releases; cargo criterion --features ark-ec/parallel,ark-ff/asm --message-format=json 1> ../../../../$(arkworks_curves_benchmarks_directory)/ark-curves.json || true
 
-math-blstrs:
+math-blstrs: init math-init
 	$(info --------------------------------------------)
 	$(info -------- BLSTRS MATH BENCHMARKS ------------)
 	$(info --------------------------------------------)
@@ -66,7 +68,7 @@ math-blstrs:
 	cd math/zkalc/backend && make init
 	cd math/zkalc/backend/blstrs; cargo criterion --message-format=json 1> ../../../../$(blstrs_benchmarks_directory)/blstrs.json || true
 
-math-curve25519-dalek:
+math-curve25519-dalek: init math-init
 	$(info --------------------------------------------)
 	$(info ---- curve25519-dalek MATH BENCHMARKS ------)
 	$(info --------------------------------------------)
@@ -75,7 +77,7 @@ math-curve25519-dalek:
 	cd math/zkalc/backend && make init
 	cd math/zkalc/backend/curve25519-dalek; cargo criterion --message-format=json 1> ../../../../$(curve25519_dalek_benchmarks_directory)/curve25519-dalek.json || true
 
-math-pasta-curves:
+math-pasta-curves: init math-init
 	$(info --------------------------------------------)
 	$(info ----------- PASTA MATH BENCHMARKS ----------)
 	$(info --------------------------------------------)
@@ -84,7 +86,7 @@ math-pasta-curves:
 	cd math/zkalc/backend && make init
 	cd math/zkalc/backend/pasta_curves; cargo criterion --message-format=json 1> ../../../../$(pasta_curves_benchmarks_directory)/pasta_curves.json || true
 
-math-halo2-curves:
+math-halo2-curves: init math-init
 	$(info --------------------------------------------)
 	$(info ----------- HALO2 MATH BENCHMARKS ----------)
 	$(info --------------------------------------------)
@@ -93,7 +95,7 @@ math-halo2-curves:
 	cd math/zkalc/backend && make init
 	cd math/zkalc/backend/halo2_curves; cargo criterion --message-format=json 1> ../../../../$(halo2_curves_benchmarks_directory)/halo2_curves.json || true
 
-math-zkcrypto:
+math-zkcrypto: init math-init
 	$(info --------------------------------------------)
 	$(info -------- ZKCRYPTO MATH BENCHMARKS ----------)
 	$(info --------------------------------------------)
@@ -102,7 +104,7 @@ math-zkcrypto:
 	cd math/zkalc/backend && make init
 	cd math/zkalc/backend/zkcrypto; cargo criterion --message-format=json 1> ../../../../$(zkcrypto_benchmarks_directory)/zkcrypto.json || true
 
-math-pairing-ce:
+math-pairing-ce: init math-init
 	$(info --------------------------------------------)
 	$(info --------- Pairing CE MATHBENCHMARKS --------)
 	$(info --------------------------------------------)
@@ -111,7 +113,7 @@ math-pairing-ce:
 	cd math/zkalc/backend && make init
 	cd math/zkalc/backend/pairing_ce; cargo criterion --message-format=json 1> ../../../../$(pairing_ce_benchmarks_directory)/pairing_ce.json || true
 
-math-ffjavascript:
+math-ffjavascript: math-init
 	$(info --------------------------------------------)
 	$(info ------- ffjavascript MATHBENCHMARKS --------)
 	$(info --------------------------------------------)
@@ -120,7 +122,7 @@ math-ffjavascript:
 	cd math/zkalc/backend && make init
 	cd math/zkalc/backend/ffjavascript; node bench.js > ../../../../$(ffjavascript_benchmarks_directory)/ffjavascript.json || true
 
-math-gnark:
+math-gnark: math-init
 	$(info --------------------------------------------)
 	$(info ----------- gnark MATHBENCHMARKS -----------)
 	$(info --------------------------------------------)
@@ -134,7 +136,7 @@ math-gnark:
 	bash ./zkalc.sh bn254     | tee ../../../../$(gnark_crypto_benchmarks_directory)/gnark-bn254.txt && \
 	bash ./zkalc.sh secp256k1 | tee ../../../../$(gnark_crypto_benchmarks_directory)/gnark-secp256k1.txt
 
-math-ffiasm:
+math-ffiasm: math-init
 	$(info --------------------------------------------)
 	$(info ---------- ffiasm MATHBENCHMARKS -----------)
 	$(info --------------------------------------------)
@@ -149,27 +151,27 @@ math-ffiasm:
 
 circuits-test: benchmark-bellman-test-circuit benchmark-halo2-pse-test-circuit benchmark-circom-test-circuit gnark-init benchmark-gnark-test-circuit
 
-circuits: benchmark-bellman-test-circuit
+circuits: benchmark-bellman-circuits benchmark-halo2-pse-circuits benchmark-circom-circuits benchmark-gnark-circuits
 
-benchmark-bellman-test-circuit:
+benchmark-bellman-test-circuit: init
 	$(info --------------------------------------------)
 	$(info ----- BELLMAN TEST CIRCUIT BENCHMARKS  -----)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/bellman/config_test.json --machine $(MACHINE)
 
-benchmark-bellman-circuits:
+benchmark-bellman-circuits: init
 	$(info --------------------------------------------)
 	$(info ------- BELLMAN CIRCUIT BENCHMARKS ---------)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/bellman/config_circuits.json --machine $(MACHINE)
 
-benchmark-halo2-pse-test-circuit:
+benchmark-halo2-pse-test-circuit: init
 	$(info --------------------------------------------)
 	$(info ----- HALO-PSE TEST CIRCUIT BENCHMARKS -----)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/halo2_pse/config_test.json --machine $(MACHINE)
 
-benchmark-halo2-pse-circuits:
+benchmark-halo2-pse-circuits: init
 	$(info --------------------------------------------)
 	$(info ----- HALO-PSE ARITHMETICS BENCHMARKS ------)
 	$(info --------------------------------------------)
@@ -181,23 +183,26 @@ benchmark-circom-test-circuit:
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/circom/config_test.json --machine $(MACHINE)
 
-benchmark-exponentiate-circom:
+circom-init:
+	cd frameworks/circom/circuits/benchmarks && if [ ! -d "circomlib" ]; then git clone https://github.com/iden3/circomlib.git; fi
+
+benchmark-exponentiate-circom: 
 	$(info --------------------------------------------)
 	$(info ----- CIRCOM EXPONENTIATE BENCHMARKS -------)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/circom/config_exponentiate.json --machine $(MACHINE)
 
-benchmark-sha-circom:
+benchmark-sha-circom: circom-init
 	$(info --------------------------------------------)
 	$(info -------- CIRCOM SHA256 BENCHMARKS ----------)
 	$(info --------------------------------------------)
-	orig_dir=$(shell pwd)
-	cd circom/circuits/benchmarks && if [ ! -d "circomlib" ]; then git clone https://github.com/iden3/circomlib.git; fi
-	cd $(orig_dir)
 	python3 -m _scripts.reader --config _input/config/circom/config_sha.json --machine $(MACHINE)
-	rm -rf circom/circuits/benchmarks/circomlib
 
-benchmark-circom-circuits: benchmark-exponentiate-circom benchmark-sha-circom
+benchmark-circom-circuits: circom-init
+	$(info --------------------------------------------)
+	$(info -------- CIRCOM CIRCUIT BENCHMARKS ---------)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/circom/config_circuits.json --machine $(MACHINE)
 
 gnark-init: 
 	cd frameworks/gnark && go build
@@ -218,7 +223,7 @@ benchmark-gnark-circuits: gnark-init
 
 ############################## RECURSION #######################################
 
-benchmark-gnark-recursion:
+benchmark-gnark-recursion: gnark-init
 	$(info --------------------------------------------)
 	$(info ----------- GNARK RECURSION BENCHMARKS -----)
 	$(info --------------------------------------------)
