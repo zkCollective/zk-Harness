@@ -219,6 +219,12 @@ benchmark-gnark-circuits: gnark-init
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_circuits.json --machine $(MACHINE)
 
+benchmark-starky-test-circuit: 
+	$(info --------------------------------------------)
+	$(info -------- STARKY CIRCUITS BENCHMARKS --------)
+	$(info --------------------------------------------)
+	python3 -m _scripts.reader --config _input/config/starky/config_test.json --machine $(MACHINE)
+
 benchmark-starky-circuits: 
 	$(info --------------------------------------------)
 	$(info -------- STARKY CIRCUITS BENCHMARKS --------)
@@ -235,7 +241,12 @@ benchmark-gnark-recursion: gnark-init
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_recursion.json --machine $(MACHINE)
 
+<<<<<<< HEAD
 ################################################################################
+=======
+test-simple:
+	python3 -m _scripts.reader --config _input/config/gnark/config_gnark_simple.json --machine $(MACHINE)
+>>>>>>> 844b9c6 (Add test command for starky)
 
 clean:
 	rm -rf $(benchmark_directory)/*
