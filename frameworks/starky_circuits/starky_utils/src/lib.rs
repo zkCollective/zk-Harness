@@ -2,8 +2,9 @@ use plonky2::fri::reduction_strategies::FriReductionStrategy;
 use plonky2::fri::{FriConfig};
 use starky::config::StarkConfig;
 use std::{env, fs::File};
-use std::io::Read;
 use std::process;
+use std::io::{self, BufReader, Read, Write};
+use std::fs;
 
 // Explanation of parameters
 // rate_bits - Reed solomon code rate
@@ -81,4 +82,10 @@ pub fn read_env_variable(env_var_name: String) -> String {
         process::exit(1);
     });
     return variable_str;
+}
+
+pub fn save_proof(proof_file: String, proof: &[u8]) -> io::Result<()> {
+    let mut file = File::create(&proof_file)?;
+    file.write_all(proof)?;
+    Ok(())
 }

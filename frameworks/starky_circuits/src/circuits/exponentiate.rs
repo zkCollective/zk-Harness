@@ -159,7 +159,7 @@ mod tests {
     use starky_utils;
 
     #[test]
-    fn test_exponentiate_stark() -> Result<()> {
+    fn test_exponentiate_stark() {
         const D: usize = 2;
         type C = PoseidonGoldilocksConfig;
         type F = <C as GenericConfig<D>>::F;
@@ -176,9 +176,9 @@ mod tests {
             trace,
             public_inputs,
             &mut TimingTree::default(),
-        )?;
+        ).expect("Proof generation failed");
 
-        verify_stark_proof(stark, proof, &config)
+        verify_stark_proof(stark, proof, &config).expect("Proof verification failed");
     }
 
     #[test]

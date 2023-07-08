@@ -58,12 +58,12 @@ pub fn bench_sha256(c: &mut Criterion, num_hashes: i32){
     let stark = S::new();
     group.bench_function("prove", |b| {
         b.iter(|| { 
-            let _ = prove::<F, C, S, D>(stark, &config, trace.clone(), [], &mut &mut TimingTree::default()).unwrap();
+            let _ = prove::<F, C, S, D>(stark, &config, trace.clone(), [], &mut TimingTree::default()).unwrap();
         })
     });
 
     // Generate Proof for verification
-    let proof = prove::<F, C, S, D>(stark, &config, trace, [], &mut &mut TimingTree::default()).unwrap();
+    let proof = prove::<F, C, S, D>(stark, &config, trace, [], &mut TimingTree::default()).unwrap();
 
     // 3. Verify algorith, uses config & proof
     group.bench_function("verify", |b| {
