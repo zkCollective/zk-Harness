@@ -212,6 +212,10 @@ def build_command_starky(payload, count):
     """
     Build the command to invoke the starky ZKP-library given the payload
     """
+    
+
+    os.makedirs(helper.Paths().BELLMAN_BENCH, exist_ok=True)    
+    os.makedirs(helper.Paths().BELLMAN_BENCH_MEMORY, exist_ok=True)  
 
     if not os.path.exists(helper.Paths().STARKY_BENCH_JSON):
         try:
@@ -226,93 +230,78 @@ def build_command_starky(payload, count):
     # TODO - Solution for Starks - don't use curve, rename parameter / other option?
     if len(payload.curves) != 1 or payload.curves[0] != "goldilocks":
         raise ValueError("Starky benchmark only supports goldilocks field")
-    # TODO - Support verification memory benchmarks - problem deserialization
-    for op in payload.operation:
-        if op == "verify":
-            user_input = input("Verify Memory Benchmarks currently not supported, if you'd still like to continue press any key, else press 'n' to stop:")
-            if user_input.lower() == 'n':
-                raise ValueError("Operation stopped by the user.")
-                
-    # Memory commands
-    commands_memory = [
-        (
-            os.makedirs(f"{helper.Paths().STARKY_BENCH_MEMORY}/{modified_inp}", exist_ok=True),
-            os.makedirs(os.path.join(helper.Paths().STARKY, "tmp"), exist_ok=True),
-            f"cd {helper.Paths().STARKY}; \
-                RUSTFLAGS=-Awarnings {helper.get_memory_command()} -h -l \
-                cargo run --bin {circ}_{op} \
-                --release -- \
-                --input {helper.Paths().MAIN_DIR}/{inp} \
-                --proof {os.path.join('tmp', 'proof')} \
-                2> {helper.Paths().STARKY_BENCH_MEMORY}/{modified_inp}/starky_{circ}_memory_{op}.txt > /dev/null;"
-        )[2]
-        for circ, input_path in payload.circuit.items()
-        for inp in helper.get_all_input_files(input_path)
-        for modified_inp in [inp.replace('_input/circuit/', '').replace('.json', '')]
-        for op in payload.operation
-    ]
-
-    # Time commands
-    commands_time = [
-            f"cd {helper.Paths().STARKY}; \
-                RUSTFLAGS=-Awarnings INPUT_FILE={helper.Paths().MAIN_DIR}/{inp} \
-                CIRCUIT={circ} \
-                cargo criterion --message-format=json --bench benchmark_circuit 1> {os.path.join(helper.Paths().STARKY_BENCH_JSON, circ + '_' + os.path.basename(inp))}; \n"
-        for circ, input_path in payload.circuit.items()
-        for inp in helper.get_all_input_files(input_path)
-    ]
-
-    python_command = "python3"
-    try:
-        subprocess.run([python_command, "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        try:
+          
+    # TODO handle diffent operations (i.e., algorithms)
+    commands = []
+    for circuit, input_path in payload.circuit.items():
+        for inp in helper.get_all_input_files(input_path):
+            commands.append(f"cd {helper.Paths().STARKY}; ")
+            output_bench = os.path.join(
+                helper.Paths().STARKY_BENCH_JSON,
+                circuit + "_bench_" + os.path.basename(inp)
+            )
+            input_file = os.path.join("..", "..", inp)
+            command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} CIRCUIT={circuit} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
+                circuit=circuit,
+                input_file=input_file,
+                bench="benchmark_circuit",
+                output=output_bench
+            )
+            commands.append(command_bench)
+            # Memory commands
+            os.makedirs(f"{helper.Paths().STARKY_BENCH_MEMORY}/{inp}", exist_ok=True)
+            # Altough each operation need only a subset of the arguments we pass
+            # all of them for simplicity
+            os.makedirs(os.path.join(helper.Paths().STARKY, "tmp"), exist_ok=True)
+            for op in payload.operation:
+                cargo_cmd = "cargo run --bin {circuit}_{path} --release -- --input {inp} --proof {proof}".format(
+                    circuit=circuit,
+                    inp=input_file,
+                    path=op,
+                    proof=os.path.join("tmp", "proof"),
+                )
+                commands.append(
+                    "RUSTFLAGS=-Awarnings {memory_cmd} {cargo} 2> {time_file} > /dev/null; ".format(
+                        memory_cmd=helper.get_memory_command(),
+                        cargo=cargo_cmd,
+                        time_file=f"{helper.Paths().STARKY_BENCH_MEMORY}/{inp}/starky_{circuit}_memory_{op}.txt"
+                    )
+                )
+            commands.append("cd ../../; ")
+            out = os.path.join(
+                helper.Paths().STARKY_BENCH,
+                "starky_goldilocks_" + circuit + ".csv"
+            )
             python_command = "python3"
-            subprocess.run([python_command, "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            print("Neither Python nor Python3 are installed or accessible. Please install or check your path settings.")
-            sys.exit(1)
+            try:
+                subprocess.run([python_command, "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            except (subprocess.CalledProcessError, FileNotFoundError):
+                try:
+                    python_command = "python3"
+                    subprocess.run([python_command, "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                except (subprocess.CalledProcessError, FileNotFoundError):
+                    print("Neither Python nor Python3 are installed or accessible. Please install or check your path settings.")
+                    sys.exit(1)
 
-    # TODO - Add proof to get proof size. Demands for additional serialization logic in starky.
-    commands_transform = [
-        f"{python_command} _scripts/parsers/criterion_rust_parser.py \
-            --framework starky \
-            --category circuit \
-            --backend starky \
-            --curve goldilocks \
-            --input {inp} \
-            --criterion_json {bench} \
-            --proof {proof_file} \
-            --output_csv {out};"
-        for circ, input_path in payload.circuit.items()
-        for inp in helper.get_all_input_files(input_path)
-        for bench in [os.path.join(helper.Paths().STARKY_BENCH_JSON, circ + '_' + os.path.basename(inp))]
-        for out in [os.path.join(helper.Paths().STARKY_BENCH, "starky_goldilocks_" + circ + ".csv")]
-        for proof_file in [os.path.join(helper.Paths().STARKY, "tmp", "proof")]
-    ]
+            transform_command = "{python} _scripts/parsers/criterion_rust_parser.py --framework starky --category circuit --backend starky --curve goldilocks --input {inp} --criterion_json {bench} --proof {proof} --output_csv {out}; ".format(
+                python=python_command,
+                inp=inp,
+                bench=output_bench,
+                proof=os.path.join(helper.Paths().STARKY, "tmp", "proof"),
+                out=out
+            )
+            commands.append(transform_command)
+            time_merge = "python3 _scripts/parsers/csv_parser_rust.py --memory_folder {memory_folder} --time_filename {time_filename} --circuit {circuit}; ".format(
+                memory_folder=os.path.join(helper.Paths().STARKY_BENCH_MEMORY, inp),
+                time_filename=out,
+                circuit=circuit
+            )
+            commands.append(time_merge)
 
-    # TODO - Currently doesn't account for memory consumption of Setup / Witness / Verify
-    commands_merge = [
-        f"{python_command} _scripts/parsers/csv_parser_rust.py \
-            --memory_folder {memory_folder} \
-            --time_filename {time_filename} \
-            --circuit {circ};"
-        for circ, input_path in payload.circuit.items()
-        for inp in helper.get_all_input_files(input_path)
-        for modified_inp in [inp.replace('_input/circuit/', '').replace('.json', '')]
-        for memory_folder in [os.path.join(helper.Paths().STARKY_BENCH_MEMORY, modified_inp)]
-        for time_filename in [os.path.join(helper.Paths().STARKY_BENCH, "starky_goldilocks_" + circ + ".csv")]
-    ]
-
-    command_cd = [f"cd ../../; "]
-
-    command = "".join(commands_time + 
-        commands_memory + 
-        command_cd +
-        commands_transform + 
-        commands_merge)
-    
+    # Join the commands into a single string
+    command = "".join(commands)
     return command
+
 
 
 def build_command_halo2_pse(payload, count):
