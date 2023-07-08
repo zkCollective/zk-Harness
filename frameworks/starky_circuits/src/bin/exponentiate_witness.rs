@@ -17,6 +17,9 @@ use starky_circuits::circuits::exponentiate::{
 struct Args {
     #[arg(short, long)]
     input: String,
+
+    #[arg(short, long)]
+    proof: Option<String>,
 }
 
 fn main() {
