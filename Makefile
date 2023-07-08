@@ -149,9 +149,9 @@ math-ffiasm: math-init
 
 ############################## CIRCUITS ########################################
 
-circuits-test: benchmark-bellman-test-circuit benchmark-halo2-pse-test-circuit benchmark-circom-test-circuit gnark-init benchmark-gnark-test-circuit
+circuits-test: benchmark-bellman-test-circuit benchmark-halo2-pse-test-circuit benchmark-circom-test-circuit gnark-init benchmark-gnark-test-circuit benchmark-starky-test-circuit
 
-circuits: benchmark-bellman-circuits benchmark-halo2-pse-circuits benchmark-circom-circuits benchmark-gnark-circuits
+circuits: benchmark-bellman-circuits benchmark-halo2-pse-circuits benchmark-circom-circuits benchmark-gnark-circuits benchmark-starky-circuits
 
 benchmark-bellman-test-circuit: init
 	$(info --------------------------------------------)
@@ -219,13 +219,13 @@ benchmark-gnark-circuits: gnark-init
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_circuits.json --machine $(MACHINE)
 
-benchmark-starky-test-circuit: 
+benchmark-starky-test-circuit: init
 	$(info --------------------------------------------)
 	$(info -------- STARKY CIRCUITS BENCHMARKS --------)
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/starky/config_test.json --machine $(MACHINE)
 
-benchmark-starky-circuits: 
+benchmark-starky-circuits: init
 	$(info --------------------------------------------)
 	$(info -------- STARKY CIRCUITS BENCHMARKS --------)
 	$(info --------------------------------------------)
@@ -241,12 +241,7 @@ benchmark-gnark-recursion: gnark-init
 	$(info --------------------------------------------)
 	python3 -m _scripts.reader --config _input/config/gnark/config_recursion.json --machine $(MACHINE)
 
-<<<<<<< HEAD
 ################################################################################
-=======
-test-simple:
-	python3 -m _scripts.reader --config _input/config/gnark/config_gnark_simple.json --machine $(MACHINE)
->>>>>>> 844b9c6 (Add test command for starky)
 
 clean:
 	rm -rf $(benchmark_directory)/*
