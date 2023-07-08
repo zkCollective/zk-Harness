@@ -233,13 +233,15 @@ def build_command_starky(payload, count):
     commands_memory = [
         (
             os.makedirs(f"{helper.Paths().STARKY_BENCH_MEMORY}/{modified_inp}", exist_ok=True),
+            os.makedirs(os.path.join(helper.Paths().STARKY, "tmp"), exist_ok=True),
             f"cd {helper.Paths().STARKY}; \
                 RUSTFLAGS=-Awarnings {helper.get_memory_command()} -h -l \
                 cargo run --bin {circ}_{op} \
                 --release -- \
                 --input {helper.Paths().MAIN_DIR}/{inp} \
+                --proof {os.path.join('tmp', 'proof')} \
                 2> {helper.Paths().STARKY_BENCH_MEMORY}/{modified_inp}/starky_{circ}_memory_{op}.txt > /dev/null;"
-        )[1]
+        )[2]
         for circ, input_path in payload.circuit.items()
         for inp in helper.get_all_input_files(input_path)
         for modified_inp in [inp.replace('_input/circuit/', '').replace('.json', '')]

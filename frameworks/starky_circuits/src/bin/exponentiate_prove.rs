@@ -2,6 +2,7 @@ use starky::serialization::Buffer;
 use clap::Parser;
 
 use starky_utils;
+use starky::config::StarkConfig;
 use starky::{
     prover::prove
 };
@@ -17,14 +18,17 @@ use starky_circuits::circuits::exponentiate::{
 
 #[derive(Parser, Debug)]
 #[clap(
-    name = "StarkyMemoryBenchExponentiateWitness",
-    about = "StarkyMemoryBenchExponentiateWitness CLI is a CLI Application to Benchmark memory consumption of Exponentiate in starky",
+    name = "StarkyMemoryBenchExponentiateProve",
+    about = "StarkyMemoryBenchExponentiateProve CLI is a CLI Application to Benchmark memory consumption of Exponentiate in starky",
     version = "0.0.1"
 )]
 
 struct Args {
     #[arg(short, long)]
     input: String,
+
+    #[arg(short, long)]
+    proof: Option<String>,
 }
 
 fn main() {
@@ -39,12 +43,13 @@ fn main() {
 
     // Read and parse input from the specified JSON file
     let input_str = starky_utils::read_file_contents(args.input);
+    let proof_file = args.proof.expect("Missing proof argument");
     
     // Get data from config
     let (x, e, _y) = get_exponentiate_data::<PoseidonGoldilocksConfig, 2>(input_str);
     
     // Compute Trace
-    let num_rows = 1 << e;
+    let num_rows = e as usize;
     let public_inputs = [x, F::from_canonical_usize(num_rows), exponentiate(num_rows - 1, x)];
     let stark = S::new(num_rows);
 
@@ -54,7 +59,7 @@ fn main() {
     let proof = prove::<F, C, S, D>(
         stark,
         &config,
-        trace.clone(),
+        trace,
         public_inputs,
         &mut TimingTree::default(),
     ).unwrap();
@@ -62,6 +67,11 @@ fn main() {
     // Serialization of Proof
     let mut buffer = Buffer::new(Vec::new());
     let _ = buffer.write_stark_proof_with_public_inputs(&proof);
-    // println!("proof size {}\n", buffer.bytes().len());
-
+    println!("Start of program");
+    // Get the serialized bytes
+    let serialized_proof = buffer.bytes();
+    match starky_utils::save_proof(proof_file, &serialized_proof) {
+        Ok(_) => println!("Proof saved successfully."),
+        Err(e) => println!("An error occurred while saving the proof: {:?}", e),
+    }
 }
