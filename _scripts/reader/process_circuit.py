@@ -278,11 +278,13 @@ def build_command_starky(payload, count):
             --curve goldilocks \
             --input {inp} \
             --criterion_json {bench} \
+            --proof {proof_file} \
             --output_csv {out};"
         for circ, input_path in payload.circuit.items()
         for inp in helper.get_all_input_files(input_path)
         for bench in [os.path.join(helper.Paths().STARKY_BENCH_JSON, circ + '_' + os.path.basename(inp))]
         for out in [os.path.join(helper.Paths().STARKY_BENCH, "starky_goldilocks_" + circ + ".csv")]
+        for proof_file in [os.path.join(helper.Paths().STARKY, "tmp", "proof")]
     ]
 
     # TODO - Currently doesn't account for memory consumption of Setup / Witness / Verify
