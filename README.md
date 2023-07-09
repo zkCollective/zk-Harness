@@ -60,6 +60,8 @@ Run *test* benchmarks for end-to-end circuits, run `make circuits-test`.
 
 To run *all* benchmarks for end-to-end circuits, run `make circuits`.
 
+To keep logs for the runs you can use the `tee` command, e.g., `make circuits 2>&1 | tee logs`
+
 ### Add benchmarks for new circuits
 
 zk-Harness is easily extensible and modular, which means that you should be able to integrate you own circuits with ease.
