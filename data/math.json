@@ -86,6 +86,21 @@
         ]
     },
     {
+        "name": "ffiasm",
+        "url": "https://github.com/iden3/ffiasm",
+        "language": "C++",
+        "curves/fields": [
+            "BN128",
+            "BLS12-381"
+        ],
+        "framework": [
+            {
+                "name": "rapidsnark",
+                "url": "https://github.com/iden3/rapidsnark"
+            }
+        ]
+    },
+    {
         "name": "halo2curves",
         "url": "https://github.com/privacy-scaling-explorations/halo2curves",
         "language": "Rust",

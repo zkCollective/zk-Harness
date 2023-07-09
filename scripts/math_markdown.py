@@ -9,8 +9,8 @@ def generate_markdown_table(json_data):
     # Create the rows for each entry
     entry_rows = ""
     for entry in json_data:
-        framework_name = entry["name"]
-        framework_url = entry["url"]
+        library_name = entry["name"]
+        library_url = entry["url"]
         language = entry["language"]
         curves_fields = ", ".join(entry["curves/fields"])
         frameworks = []
@@ -21,7 +21,7 @@ def generate_markdown_table(json_data):
                 frameworks.append(f"[{framework_name}]({framework_url})")
         frameworks_str = ", ".join(frameworks)
 
-        entry_row = f"| [{framework_name}]({framework_url}) | {language} | {curves_fields} | {frameworks_str} |\n"
+        entry_row = f"| [{library_name}]({library_url}) | {language} | {curves_fields} | {frameworks_str} |\n"
         entry_rows += entry_row
 
     # Generate the markdown table
