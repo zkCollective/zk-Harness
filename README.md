@@ -22,6 +22,7 @@ The backend for mathematical operations has been merged with [zka.lc](https://zk
 * `data`: Auxilary data
   - `data/circuits.json`: Support zkSNARK frameworks
   - `data/math.json`: Support math libraries
+* `scripts`: Other auxiliary scripts
 
 ### Circuit payloads supported by zk-Harness 
 
