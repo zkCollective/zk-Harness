@@ -52,7 +52,7 @@ fn bench_sha256(c: &mut Criterion, input_str: String) {
     let (preimage_length, preimage) = sha256::get_sha256_data(input_str);
 
     // Pre-Compute public inputs
-    let hash = Sha256::digest(&Sha256::digest(&preimage));
+    let hash = Sha256::digest(&preimage);
     let hash_bits = multipack::bytes_to_bits_le(&hash);
     let inputs = multipack::compute_multipacking(&hash_bits);
 
