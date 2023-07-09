@@ -1,15 +1,29 @@
 <h1 align="center">zk-Harness</h1>
 
-zk-Harness is a benchmarking framework for *zero knowledge succinct non-interactive arguments (zkSNARKs)*. 
+zk-Harness is a benchmarking framework for *zero-knowledge succinct non-interactive arguments (zkSNARKs)*. 
 This repository contains a modular and easily extensible framework for benchmarking zkSNARKs and underlying mathematical primitives.
 
-## 📊 Benchmark Results
+## Overview
 
+TODO: goal, math (shared with zkalc), circuits, website of zk-bench, website of zkalc.
 The benchmark results are hosted at [zk-bench.org](https://www.zk-bench.org).
 
 The backend for mathematical operations has been merged with [zka.lc](https://zka.lc/).
 
-### Payloads supported by zk-Harness 
+## Structure
+
+* `benchmarks`: Directory containing the results of the benchmarks.
+* `zkbench`: Python code to run the benchmarks and parse the results
+* `input`: Configuration and input files
+  - `input/circuit`: Input files for each circuit, i.e., values to be used as the inputs in circuits for benchmarking.
+  - `input/config`: configurations for executing benchmarks for a specific framework using `zkbench`
+* `app`: UI code for presenting the results.
+* `frameworks`: Directory containing the harness for each framework to benchmark circuits.
+* `data`: Auxilary data
+  - `data/circuits.json`: Support zkSNARK frameworks
+  - `data/math.json`: Support math libraries
+
+### Circuit payloads supported by zk-Harness 
 
 The current framework supports a set of payloads for each library.
 We aim to successively extend the following once more circuits are available as `std` in the respective libraries.
