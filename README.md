@@ -52,7 +52,7 @@ The current framework supports a set of payloads for each library.
 
 ## How to use
 
-To run the benchmarks, you will first need to follow the installation instructions of the respective framework.
+To run the benchmarks, you will first need to follow the [installation instructions](INSTALL.md)
 
 To run *all* benchmarks for mathematical operations, run `make math`.
 
