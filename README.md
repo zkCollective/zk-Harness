@@ -28,13 +28,13 @@ The backend for mathematical operations has been merged with [zka.lc](https://zk
 The current framework supports a set of payloads for each library.
 We aim to successively extend the following once more circuits are available as `std` in the respective libraries.
 
-|          | Exponentiate       | SHA-256           |
-| -------- | ------------------ | ----------------- |
-| `Bellman`| :heavy_check_mark: | :heavy_check_mark:|
-| `Circom` | :heavy_check_mark: | :heavy_check_mark:|
-| `Gnark`  | :heavy_check_mark: | :heavy_check_mark:|
-| `Halo2`  | :heavy_check_mark: | :heavy_check_mark:|
-| `Starky` | :heavy_check_mark: | :heavy_check_mark:|
+|          | Exponentiate        | SHA-256             |
+| -------- | ------------------- | ------------------- |
+| [Bellman](https://github.com/zkcrypto/bellman) | :heavy_check_mark: (custom) | :heavy_check_mark: ([implementation](https://github.com/zkcrypto/bellman/blob/main/src/gadgets/sha256.rs)) |
+| [Circom](https://github.com/iden3/circom) | :heavy_check_mark: (custom) | :heavy_check_mark: ([implementation](https://github.com/iden3/circomlib/tree/master/circuits/sha256)) |
+| [Gnark](https://github.com/Consensys/gnark) | :heavy_check_mark: (custom) | :heavy_check_mark: (custom) |
+| [Halo2-PSE](https://github.com/privacy-scaling-explorations/halo2/) | :heavy_check_mark: (custom) | :heavy_check_mark: ([implementation](https://github.com/privacy-scaling-explorations/halo2/blob/main/halo2_gadgets/benches/sha256.rs)) |
+| [Starky](https://github.com/mir-protocol/plonky2) | :heavy_check_mark: (custom) | :x: |
 
 ### Curves, Fields and Arithmetizations and Backends
 
