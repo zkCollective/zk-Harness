@@ -52,31 +52,36 @@ The current framework supports a set of payloads for each library.
 
 ## How to use
 
-To run the benchmarks, you will first need to follow the [installation instructions](INSTALL.md)
+To run the benchmarks, you will first need to follow the [installation instructions](INSTALL.md).
 
 To run *all* benchmarks for mathematical operations, run `make math`.
 
-To run *all* benchmarks for end-to-end circuits on standard operations, run `make benchmark-circuits`.
+Run *test* benchmarks for end-to-end circuits, run `make circuits-test`.
 
-### Run Benchmarks On Your Own!
+To run *all* benchmarks for end-to-end circuits, run `make circuits`.
 
-zk-Harness is supposed to be easily extensible and modular, which means that you should be able to integrate you own circuits with ease.
+### Add benchmarks for new circuits
+
+zk-Harness is easily extensible and modular, which means that you should be able to integrate you own circuits with ease.
 Each framework in `framework/<framework_name>` includes a detailed description on how to add a self-developed circuit that goes beyond the standard payloads already integrated.
 
+### zk-Harness architecture and add support for a new framework
 
-## Future Work & ZKP Hackathon
+See [ARCHITECTURE.md](ARCHITECTURE.md)
 
-We aim to successively expand this list to further include benchmarks for other ZKP frameworks, recursive composition of proofs, and potentially zk-EVMs. 
+## How to contribute / TODOs
 
-zk-Harness was developed as a part of the ZKP / Web 3.0 Hackathon at UC Berkeley. You can find the program description detailing future integrations [here](https://drive.google.com/file/d/1Igm47dFXSOFAC_wldfUG4Y9OiITqlbQu/view).
-
-## How to contribute
+We aim to successively expand this list to further include benchmarks for other ZKP frameworks, more circuits, and recursive composition of proofs.
 
 There are many ways in which you can contribute to the zk-Harness:
 
-- Add benchmarks for circuits in an already integrated framework
-- Integrate a new framework into the zk-Harness
-- Propose new benchmark categories, such as for recursion and zk-EVMs.
+- [] Add benchmarks for circuits in an already integrated framework
+- [] Integrate a new framework into the zk-Harness
+- [] Integrate new math benchmarks in [zkalc](https://github.com/asn-d6/zkalc/)
+- [] Run existing benchmarks to additional machines
+- [] Work on any open GitHub issue
+- [] Propose new visualizations for the results
+- [] Propose new benchmark categories, such as recursion benchmarking
 
 Please read the [Contribution Guidelines](https://github.com/zkCollective/zk-Harness/blob/main/CONTRIBUTING.md) before creating a PR or opening an issue.
 
