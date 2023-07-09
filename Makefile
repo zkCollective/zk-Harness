@@ -3,8 +3,8 @@ benchmark_directory = benchmarks
 MATH = math
 MACHINE := $(shell cat machine 2> /dev/null || echo DEFAULT)
 ZKALC = https://github.com/asn-d6/zkalc.git
-INPUTS = _input
-FRAMEWORK = _scripts
+INPUTS = input
+FRAMEWORK = src
 
 # Math variables
 arkworks_directory = arkworks

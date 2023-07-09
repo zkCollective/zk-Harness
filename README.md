@@ -13,7 +13,7 @@ The backend for mathematical operations has been merged with [zka.lc](https://zk
 ## Structure
 
 * `benchmarks`: Directory containing the results of the benchmarks.
-* `zkbench`: Python code to run the benchmarks and parse the results
+* `src`: Python code to run the benchmarks and parse the results
 * `input`: Configuration and input files
   - `input/circuit`: Input files for each circuit, i.e., values to be used as the inputs in circuits for benchmarking.
   - `input/config`: configurations for executing benchmarks for a specific framework using `zkbench`
