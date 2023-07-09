@@ -26,7 +26,6 @@ The backend for mathematical operations has been merged with [zka.lc](https://zk
 ### Circuit payloads supported by zk-Harness 
 
 The current framework supports a set of payloads for each library.
-We aim to successively extend the following once more circuits are available as `std` in the respective libraries.
 
 |          | Exponentiate        | SHA-256             |
 | -------- | ------------------- | ------------------- |
@@ -36,10 +35,19 @@ We aim to successively extend the following once more circuits are available as 
 | [Halo2-PSE](https://github.com/privacy-scaling-explorations/halo2/) | :heavy_check_mark: (custom) | :heavy_check_mark: ([implementation](https://github.com/privacy-scaling-explorations/halo2/blob/main/halo2_gadgets/benches/sha256.rs)) |
 | [Starky](https://github.com/mir-protocol/plonky2) | :heavy_check_mark: (custom) | :x: |
 
-### Curves, Fields and Arithmetizations and Backends
+### Curves and Fields 
 
-You can find the set of elliptic curves and finite fields as implemented in common libraries [here](https://docs.google.com/spreadsheets/d/1tq8lvcg88dE6D-EVJd61hBKhQxpDsZF16UMYpDXjef8/edit#gid=156416826).
-We aim to maintain the set of supported functionalities and circuits in each library in the future.
+|           | Language | Curves/Fields | Frameworks |
+| --------- | -------- | ------------- | ---------- |
+| [blstrs](https://github.com/filecoin-project/blstrs) | Rust | BLS12-381 |  |
+| [gnark](https://github.com/Consensys/gnark) | Go | BN254, BLS12-377, BLS12-378, BLS12-381, BLS12-387, BLS24-315, BLS24-317, BW6-761, BW6-756, BW6-633, secp256k1, stark-curve, goldilocks | [gnark](https://github.com/Consensys/gnark) |
+| [arkworks](https://github.com/arkworks-rs/snark) | Rust | BN254, BLS12-377, BLS12-381, MNT4-298, MNT4-753, MNT6-298, MNT6-753, Grumpkin, BW6-761, CP6-782, secp256k1, secp256r1, secp384r1, secq256k1 | [arkworks](https://github.com/arkworks-rs/snark) |
+| [curve25519-dalek](https://github.com/dalek-cryptography/curve25519-dalek) | Rust | Curve25519 |  |
+| [snarkjs](https://github.com/iden3/snarkjs) | JavaScript/WASM | BN128, BLS12-381 | [snarkjs](https://github.com/iden3/snarkjs) |
+| [halo2-PSE](https://github.com/privacy-scaling-explorations/halo2) | Rust | BN256, Pallas, Vesta | [halo2-PSE](https://github.com/privacy-scaling-explorations/halo2) |
+| [bellman-ce](https://github.com/matter-labs/bellman) | Rust | BN256, BLS12-381 | [bellman-ce](https://github.com/matter-labs/bellman) |
+| [bellman](https://github.com/zkcrypto/bellman) | Rust | jubjub, BLS12-381 | [bellman](https://github.com/zkcrypto/bellman) |
+| [halo2](https://github.com/zcash/halo2) | Rust | Pallas, Vesta | [halo2](https://github.com/zcash/halo2) |
 
 ## How to use
 
