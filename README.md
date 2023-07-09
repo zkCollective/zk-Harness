@@ -49,13 +49,6 @@ To run *all* benchmarks for mathematical operations, run `make math`.
 
 To run *all* benchmarks for end-to-end circuits on standard operations, run `make benchmark-circuits`.
 
-To obtain a Nix environment in which you can successfully run these benchmarks,
-first [install Nix](https://nixos.org/download.html)
-and [enable flakes](https://nixos.wiki/wiki/Flakes#Enable_flakes),
-then run `nix develop`.
-
-When running into issues for nix on M1/M2 Macs, please refer to [this issue](https://github.com/input-output-hk/plutus-pioneer-program/issues/40).  
-
 ### Run Benchmarks On Your Own!
 
 zk-Harness is supposed to be easily extensible and modular, which means that you should be able to integrate you own circuits with ease.
