@@ -5,22 +5,22 @@ can be found [here](https://github.com/privacy-scaling-explorations/halo2/).
 The main difference of PSE's halo2 fork is that it uses KZG instead of IPA.
 You can find more details about halo2 in the [halo2 book](https://zcash.github.io/halo2/index.html).
 
-Currently the following circuits have been implemented:
+Currently, the following circuits have been implemented:
 
 * Exponentiation (using a custom implementation)
 * Sha256 (using the sha256 gadget from [here](https://github.com/privacy-scaling-explorations/halo2/tree/main/halo2_gadgets/src/sha256)
 
-Note: currently we use Celar network 
-[fork](https://github.com/celer-network/halo2/tree/KZG-bench-sha256)
+Note: currently, we use a
+[fork](https://github.com/StefanosChaliasos/halo2)
 because there is no implementation of sha256 to work with KZG in 
 [PSE's fork](https://github.com/privacy-scaling-explorations/halo2/issues/182).
-We should update the dependencies when there would be support in PSE's fork.
+We should update the dependencies when there is support in PSE's fork.
 
 ## Plain Setup
 
 ### Installation
 
-To run these benchmarks you need to install `rust`, `cargo`, and `cargo-criterion`.
+To run these benchmarks, you need to install `rust`, `cargo`, and `cargo-criterion`.
 
 ```bash
 # install rust and cargo: https://www.rust-lang.org/tools/install
