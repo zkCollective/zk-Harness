@@ -67,7 +67,7 @@ To keep logs for the runs you can use the `tee` command, e.g., `make circuits 2>
 zk-Harness is easily extensible and modular, which means that you should be able to integrate you own circuits with ease.
 Each framework in `framework/<framework_name>` includes a detailed description on how to add a self-developed circuit that goes beyond the standard payloads already integrated.
 
-### zk-Harness architecture and add support for a new framework
+### zk-Harness architecture and add support for new frameworks
 
 See [ARCHITECTURE.md](ARCHITECTURE.md)
 
