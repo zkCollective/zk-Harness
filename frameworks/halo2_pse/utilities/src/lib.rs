@@ -40,22 +40,22 @@ struct Results {
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 pub struct BinaryArgs {
-    #[arg(short, long)]
+    #[arg(long)]
     pub input: String,
 
-    #[arg(short, long)]
+    #[arg(long)]
     pub phase: String,
 
-    #[arg(short, long)]
+    #[arg(long)]
     pub params: Option<String>,
 
-    #[arg(short, long)]
+    #[arg(long)]
     pub pk: Option<String>,
 
-    #[arg(short, long)]
+    #[arg(long)]
     pub vk: Option<String>,
 
-    #[arg(short, long)]
+    #[arg(long)]
     pub proof: Option<String>,
 }
 
