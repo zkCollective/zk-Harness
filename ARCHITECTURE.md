@@ -25,7 +25,7 @@ The ``config.json`` file contains information about what benchmarks to execute w
 
 ## Running benchmarks for a specific config file
 
-Given a config file, you can run ``python3 -m _scripts.reader --config path/to/config.json`` to run the benchmarks defined by a given config file.
+Given a config file, you can run `python3 -m src.reader --config path/to/config.json` to run the benchmarks defined by a given config file.
 
 ## config.json key specification
 
