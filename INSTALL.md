@@ -22,7 +22,10 @@ For running benchmarks for the following projects, you should follow the specifi
 
 ### Circom
 
-Install Circom compiler following the instructions here: https://docs.circom.io/getting-started/installation/#installing-dependencies
+Install Circom compiler following the instructions here: https://docs.circom.io/getting-started/installation/#installing-dependencies.
+You also need to install [jq](https://jqlang.github.io/jq/).
+
+To install `jq` you can use `brew`, `apt`, or `yum`.
 
 * Using SNARKJS
 
