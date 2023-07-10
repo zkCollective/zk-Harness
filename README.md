@@ -6,8 +6,8 @@ Evaluating the practical performance of a specific library can be difficult due 
 
 **zk-Harness** is a benchmarking framework that aims to address these barriers by providing a unified
 benchmark for standardized evaluation of existing libraries for zkSNARKS. 
-It is designed to be easily extendable~---~libraries can be easily added and compared for standardized functionalities, whereas circuit developers can simply add their already developed circuit to evaluate its performance. 
-zk-Harness provides benchmarks along the whole zkSNARK stack~---~arithmetics over finite fields, mathematical operations over elliptic curves and end-to-end circuit executions. 
+It is designed to be easily extendable - libraries can be easily added and compared for standardized functionalities, whereas circuit developers can simply add their already developed circuit to evaluate its performance. 
+zk-Harness provides benchmarks along the whole zkSNARK stack - arithmetics over finite fields, mathematical operations over elliptic curves and end-to-end circuit executions. 
 The backend for mathematical operations (field & curve) is hosted and developed in [zka.lc](https://zka.lc/).
 The benchmark results are hosted at [zk-bench.org](https://www.zk-bench.org).
 
