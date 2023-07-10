@@ -12,11 +12,11 @@
         ], 
         "circuits": {
             "sha256": {
-                "input_path": "_input/circuit/sha256/bytes",
+                "input_path": "input/circuit/sha256/bytes",
                 "template_vars": ["N"]
             },
             "exponentiate": {
-                "input_path": "_input/circuit/exponentiate",
+                "input_path": "input/circuit/exponentiate",
                 "template_vars": ["E"]
             }
         },

@@ -12,7 +12,7 @@
         ], 
         "circuits": {
             "exponentiate": {
-                "input_path": "_input/circuit/exponentiate_2"
+                "input_path": "input/circuit/exponentiate_2"
             }
         },
         "algorithm": [

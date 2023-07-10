@@ -13,8 +13,8 @@
         "circuits": {
             "exponentiate": {
                 "input_path": [
-                    "_input/circuit/exponentiate_2/input_10.json",
-                    "_input/circuit/exponentiate_2/input_11.json"
+                    "input/circuit/exponentiate_2/input_10.json",
+                    "input/circuit/exponentiate_2/input_11.json"
                 ]
             }
         },
