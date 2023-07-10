@@ -54,16 +54,16 @@ class Paths():
             cls._instance.STARKY_BENCH_JSON = os.path.join(cls._instance.STARKY_BENCH, "jsons")
             # GNARK PATHS
             cls._instance.GNARK_DIR = os.path.join(cls._instance.MAIN_DIR, FRAMEWORKS_DIR, "gnark")
-            cls._instance.GNARK_BENCH = os.path.join(cls._instance.BENCHMARKS_DIR, "gnark")
+            cls._instance.GNARK_BENCH = os.path.join(cls._instance.CIRCUITS_BENCH, "gnark")
             cls._instance.GNARK_BENCH_MEMORY = os.path.join(cls._instance.GNARK_BENCH, "memory")
             # HALO2_PSE PATHS
             cls._instance.HALO2_PSE = os.path.join(cls._instance.MAIN_DIR, FRAMEWORKS_DIR, "halo2_pse")
-            cls._instance.HALO2_PSE_BENCH = os.path.join(cls._instance.BENCHMARKS_DIR, "halo2_pse")
+            cls._instance.HALO2_PSE_BENCH = os.path.join(cls._instance.CIRCUITS_BENCH, "halo2_pse")
             cls._instance.HALO2_PSE_BENCH_MEMORY = os.path.join(cls._instance.HALO2_PSE_BENCH, "memory")
             cls._instance.HALO2_PSE_BENCH_JSON = os.path.join(cls._instance.HALO2_PSE_BENCH, "jsons")
             # CIRCOM PATHS
             cls._instance.CIRCOM_DIR = os.path.join(cls._instance.MAIN_DIR, FRAMEWORKS_DIR, "circom")
-            cls._instance.CIRCOM_BENCHMAKR_DIR = os.path.join(cls._instance.BENCHMARKS_DIR, "circom")
+            cls._instance.CIRCOM_BENCHMAKR_DIR = os.path.join(cls._instance.CIRCUITS_BENCH, "circom")
             cls._instance.CIRCOM_SCRIPT = os.path.join(cls._instance.CIRCOM_DIR, "scripts", "run_circuit.sh")
             cls._instance.CIRCOM_CIRCUITS_DIR = os.path.join(cls._instance.CIRCOM_DIR, "circuits", "benchmarks")
             cls._instance.CIRCOM_PTAU = os.path.join(cls._instance.CIRCOM_DIR, "phase1", "powersOfTau28_hez_final_16.ptau")
