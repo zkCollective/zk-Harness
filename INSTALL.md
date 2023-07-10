@@ -30,7 +30,7 @@ To install `jq` you can use `brew`, `apt`, or `yum`.
 * Using SNARKJS
 
 ```
-npm install -g snarkjs
+npm install snarkjs
 ```
 
 * Using rapidsnark
