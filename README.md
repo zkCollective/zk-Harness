@@ -1,14 +1,15 @@
 <h1 align="center">zk-Harness</h1>
 
-zk-Harness is a benchmarking framework for *zero-knowledge succinct non-interactive arguments (zkSNARKs)*. 
-This repository contains a modular and easily extensible framework for benchmarking zkSNARKs and underlying mathematical primitives.
+There is a large and increasing number of libraries that enable verifiable computation with *zero-knowledge succinct non-interactive arguments (zkSNARKs)*. 
+Whereas the performance of zkSNARKs is well-understood in theory, the above factors make it difficult to compare different proof systems without favoring some approaches over others.
+Evaluating the practical performance of a specific library can be difficult due to various factors, such as the underlying elliptic curve, the proof system at hand, the arithmetization supported, or due to application specific factors such as the desired security level.
 
-## Overview
-
-TODO: goal, math (shared with zkalc), circuits, website of zk-bench, website of zkalc.
+**zk-Harness** is a benchmarking framework that aims to address these barriers by providing a unified
+benchmark for standardized evaluation of existing libraries for zkSNARKS. 
+It is designed to be easily extendable~---~libraries can be easily added and compared for standardized functionalities, whereas circuit developers can simply add their already developed circuit to evaluate its performance. 
+zk-Harness provides benchmarks along the whole zkSNARK stack~---~arithmetics over finite fields, mathematical operations over elliptic curves and end-to-end circuit executions. 
+The backend for mathematical operations (field & curve) is hosted and developed in [zka.lc](https://zka.lc/).
 The benchmark results are hosted at [zk-bench.org](https://www.zk-bench.org).
-
-The backend for mathematical operations has been merged with [zka.lc](https://zka.lc/).
 
 ## Structure
 
