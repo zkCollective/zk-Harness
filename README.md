@@ -1,13 +1,13 @@
 <h1 align="center">zk-Harness</h1>
 
 There is a large and increasing number of libraries that enable verifiable computation with *zero-knowledge succinct non-interactive arguments (zkSNARKs)*. 
-Whereas the performance of zkSNARKs is well-understood in theory, the above factors make it difficult to compare different proof systems without favoring some approaches over others.
-Evaluating the practical performance of a specific library can be difficult due to various factors, such as the underlying elliptic curve, the proof system at hand, the arithmetization supported, or due to application specific factors such as the desired security level.
+Whereas the performance of zkSNARKs is well-understood in theory, various factors make it difficult to compare different proof systems without favoring some approaches over others.
+Evaluating the practical performance of a specific library can be difficult due to various factors, such as the underlying elliptic curve, the proof system at hand, the arithmetization supported, or due to application-specific factors such as the desired security level.
 
 **zk-Harness** is a benchmarking framework that aims to address these barriers by providing a unified
 benchmark for standardized evaluation of existing libraries for zkSNARKS. 
 It is designed to be easily extendable - libraries can be easily added and compared for standardized functionalities, whereas circuit developers can simply add their already developed circuit to evaluate its performance. 
-zk-Harness provides benchmarks along the whole zkSNARK stack - arithmetics over finite fields, mathematical operations over elliptic curves and end-to-end circuit executions. 
+zk-Harness provides benchmarks along the whole zkSNARK stack - arithmetics over finite fields, mathematical operations over elliptic curves, and end-to-end circuit executions. 
 The backend for mathematical operations (field & curve) is hosted and developed in [zka.lc](https://zka.lc/).
 The benchmark results are hosted at [zk-bench.org](https://www.zk-bench.org).
 
