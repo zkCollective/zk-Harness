@@ -21,8 +21,8 @@ The benchmark results are hosted at [zk-bench.org](https://www.zk-bench.org).
 * `app`: UI code for presenting the results.
 * `frameworks`: Directory containing the harness for each framework to benchmark circuits.
 * `data`: Auxilary data
-  - `data/circuits.json`: Support zkSNARK frameworks
-  - `data/math.json`: Support math libraries
+  - `data/circuits.json`: Supported zkSNARK frameworks
+  - `data/math.json`: Supported math libraries
 * `scripts`: Other auxiliary scripts
 
 ### Circuit payloads supported by zk-Harness 
