@@ -66,7 +66,7 @@ class Paths():
             cls._instance.CIRCOM_BENCHMAKR_DIR = os.path.join(cls._instance.CIRCUITS_BENCH, "circom")
             cls._instance.CIRCOM_SCRIPT = os.path.join(cls._instance.CIRCOM_DIR, "scripts", "run_circuit.sh")
             cls._instance.CIRCOM_CIRCUITS_DIR = os.path.join(cls._instance.CIRCOM_DIR, "circuits", "benchmarks")
-            cls._instance.CIRCOM_PTAU = os.path.join(cls._instance.CIRCOM_DIR, "phase1", "powersOfTau28_hez_final_16.ptau")
+            cls._instance.CIRCOM_PTAU = os.path.join(cls._instance.CIRCOM_DIR, "phase1", "powersOfTau28_final.ptau")
         return cls._instance
 
 

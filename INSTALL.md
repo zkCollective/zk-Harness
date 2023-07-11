@@ -27,6 +27,19 @@ You also need to install [jq](https://jqlang.github.io/jq/).
 
 To install `jq` you can use `brew`, `apt`, or `yum`.
 
+Furthermore, if you are going to run the full (or larger) benchmarks you will need
+a larger powers of TAU file. The default one is downloaded from the 
+[Hermez ceremony](https://github.com/iden3/snarkjs#7-prepare-phase-2)
+and it is `powersOfTau28_hez_final_16.ptau` saved into
+`frameworks/circom/phase1/powersOfTau28_final.ptau`.
+If you want to benchmark larger circuits we suggest downloading the TAU file
+of power of 24 which is sufficient for the current benchmarks.
+Note that this file needs 18 GB of disk space.
+
+```
+wget -O frameworks/circom/phase1/powersOfTau28_final.ptau  https://hermez.s3-eu-west-1.amazonaws.com/powersOfTau28_hez_final_24.ptau
+```
+
 * Using SNARKJS
 
 ```
