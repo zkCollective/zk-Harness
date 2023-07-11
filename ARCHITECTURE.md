@@ -1,5 +1,7 @@
 # Architecture
 
+![Alt text](./architecture.png?raw=true "Title")
+
 Our benchmarking framework is designed to support all types of different frameworks.
 We specify a generic set of interfaces, such that benchmarks can be invoked through 
 a configuration file `config.json`, which produces a standardized output 
