@@ -49,16 +49,16 @@ def build_command_gnark(payload, count):
             for curve in payload.curves
             for circ, input_path in payload.circuit.items()
             for inp in helper.get_all_input_files(input_path)
-            for modified_inp in [inp.replace('_input/circuit/', '').replace('.json', '')]
+            for modified_inp in [inp.replace('input/circuit/', '').replace('.json', '')]
             for op in payload.operation
         ]
 
         commands_memory.append("cd ../../; ")
 
         commands_merge = [
-            "python3 _scripts/parsers/csv_parser.py --memory_folder {memory_folder}/{input_name} --time_filename {gnark_bench_folder}/gnark_{backend}_{circuit}.csv --circuit {circuit}\n".format(
+            "python3 src/parsers/csv_parser.py --memory_folder {memory_folder}/{input_name} --time_filename {gnark_bench_folder}/gnark_{backend}_{circuit}.csv --circuit {circuit}\n".format(
                 memory_folder=helper.Paths().GNARK_BENCH_MEMORY,
-                input_name=inp.replace('_input/circuit/', '').replace('.json', ''),
+                input_name=inp.replace('input/circuit/', '').replace('.json', ''),
                 gnark_bench_folder=helper.Paths().GNARK_BENCH,
                 backend=backend,
                 circuit=circ
@@ -189,7 +189,7 @@ def build_command_bellman(payload, count):
                     print("Neither Python nor Python3 are installed or accessible. Please install or check your path settings.")
                     sys.exit(1)
 
-            transform_command = "{python} _scripts/parsers/criterion_rust_parser.py --framework bellman --category circuit --backend bellman --curve bls12_381 --input {inp} --criterion_json {bench} --proof {proof} --output_csv {out}; ".format(
+            transform_command = "{python} src/parsers/criterion_rust_parser.py --framework bellman --category circuit --backend bellman --curve bls12_381 --input {inp} --criterion_json {bench} --proof {proof} --output_csv {out}; ".format(
                 python=python_command,
                 inp=inp,
                 bench=output_bench,
@@ -197,7 +197,7 @@ def build_command_bellman(payload, count):
                 out=out
             )
             commands.append(transform_command)
-            time_merge = "python3 _scripts/parsers/csv_parser_rust.py --memory_folder {memory_folder} --time_filename {time_filename} --circuit {circuit}; ".format(
+            time_merge = "python3 src/parsers/csv_parser_rust.py --memory_folder {memory_folder} --time_filename {time_filename} --circuit {circuit}; ".format(
                 memory_folder=os.path.join(helper.Paths().BELLMAN_BENCH_MEMORY, inp),
                 time_filename=out,
                 circuit=circuit
@@ -283,7 +283,7 @@ def build_command_starky(payload, count):
                     print("Neither Python nor Python3 are installed or accessible. Please install or check your path settings.")
                     sys.exit(1)
 
-            transform_command = "{python} _scripts/parsers/criterion_rust_parser.py --framework starky --category circuit --backend starky --curve goldilocks --input {inp} --criterion_json {bench} --proof {proof} --output_csv {out}; ".format(
+            transform_command = "{python} src/parsers/criterion_rust_parser.py --framework starky --category circuit --backend starky --curve goldilocks --input {inp} --criterion_json {bench} --proof {proof} --output_csv {out}; ".format(
                 python=python_command,
                 inp=inp,
                 bench=output_bench,
@@ -291,7 +291,7 @@ def build_command_starky(payload, count):
                 out=out
             )
             commands.append(transform_command)
-            time_merge = "python3 _scripts/parsers/csv_parser_rust.py --memory_folder {memory_folder} --time_filename {time_filename} --circuit {circuit}; ".format(
+            time_merge = "python3 src/parsers/csv_parser_rust.py --memory_folder {memory_folder} --time_filename {time_filename} --circuit {circuit}; ".format(
                 memory_folder=os.path.join(helper.Paths().STARKY_BENCH_MEMORY, inp),
                 time_filename=out,
                 circuit=circuit
@@ -361,14 +361,14 @@ def build_command_halo2_pse(payload, count):
                 helper.Paths().HALO2_PSE_BENCH,
                 "halo2_pse_bn256_" + circuit + ".csv"
             )
-            transform_command: str = "python3 _scripts/parsers/criterion_rust_parser.py --framework halo2_pse --category circuit --backend halo2 --curve bn256 --input {inp} --criterion_json {bench} --proof {proof} --output_csv {out}; ".format(
+            transform_command: str = "python3 src/parsers/criterion_rust_parser.py --framework halo2_pse --category circuit --backend halo2 --curve bn256 --input {inp} --criterion_json {bench} --proof {proof} --output_csv {out}; ".format(
                 inp=inp,
                 bench=output_bench,
                 out=out,
                 proof=os.path.join(helper.Paths().HALO2_PSE, "tmp", "proof")
             )
             commands.append(transform_command)
-            time_merge = "python3 _scripts/parsers/csv_parser_rust.py --memory_folder {memory_folder} --time_filename {time_filename} --circuit {circuit}; ".format(
+            time_merge = "python3 src/parsers/csv_parser_rust.py --memory_folder {memory_folder} --time_filename {time_filename} --circuit {circuit}; ".format(
                 memory_folder=os.path.join(helper.Paths().HALO2_PSE_BENCH_MEMORY, inp),
                 time_filename=os.path.join(helper.Paths().HALO2_PSE_BENCH, f"halo2_pse_bn256_{circuit}.csv"),
                 circuit=circuit
