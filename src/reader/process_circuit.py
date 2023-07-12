@@ -33,7 +33,10 @@ def build_command_gnark(payload, count):
         
         for command in commands:
             full_command = initial_cmd + command
-            subprocess.run(full_command, shell=True, check=True)
+            try:
+                subprocess.run(full_command, shell=True, check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"Command '{e.cmd}' failed with exit code {e.returncode}")
 
         # Builder command memory
         command_binary = f"./build_memory.sh"
@@ -66,7 +69,10 @@ def build_command_gnark(payload, count):
 
         for command in commands_memory:
             full_command = initial_cmd + command
-            subprocess.run(full_command, shell=True, check=True)
+            try:
+                subprocess.run(full_command, shell=True, check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"Command '{e.cmd}' failed with exit code {e.returncode}")
 
         commands_merge = [
             "python3 src/parsers/csv_parser.py --memory_folder {memory_folder}/{input_name} --time_filename {gnark_bench_folder}/gnark_{backend}_{circuit}.csv --circuit {circuit}\n".format(
@@ -84,10 +90,10 @@ def build_command_gnark(payload, count):
 
         for command in commands_merge:
             full_command = initial_cmd + command
-            subprocess.run(full_command, shell=True, check=True)
-
-        # Join the commands into a single string
-        pre_command = "".join(commands + commands_memory + commands_merge)
+            try:
+                subprocess.run(full_command, shell=True, check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"Command '{e.cmd}' failed with exit code {e.returncode}")
         
         command = f""
     else:
