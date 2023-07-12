@@ -16,7 +16,8 @@ def circuit_processing(project, config, count):
     # Extract relevant fields from config, build & execute command
     payload = process_circuit.get_circuit_payload(config)
     commands = process_circuit.build_command(project, payload, count)
-    subprocess.run(commands, shell=True, check=True)
+    if commands.strip():  # checks if commands is not empty or just whitespace
+        subprocess.run(commands, shell=True, check=True)
 
 def default_case():
     raise ValueError("Benchmark category not integrated into the benchmarking framework!")

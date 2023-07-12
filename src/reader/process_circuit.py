@@ -21,17 +21,26 @@ def build_command_gnark(payload, count):
     os.makedirs(helper.Paths().GNARK_BENCH_MEMORY, exist_ok=True)    
     print()
     if payload.backend is not None and payload.curves is not None:
+        initial_cmd = f"cd {helper.Paths().GNARK_DIR};"
+        subprocess.run(initial_cmd, shell=True, check=True)
+
         commands = [f"./gnark {backend} --circuit={circ} --algo={op} --curve={curve} --input={inp} --count={count} --outputPath={helper.Paths().GNARK_BENCH}/{backend}_{circ}.csv\n"
                     for backend in payload.backend
                     for curve in payload.curves
                     for circ, input_path in payload.circuit.items()
                     for inp in helper.get_all_input_files(input_path)
                     for op in payload.operation]
+        
+        for command in commands:
+            full_command = initial_cmd + command
+            subprocess.run(full_command, shell=True, check=True)
 
         # Builder command memory
         command_binary = f"./build_memory.sh"
         # Create /tmp folder if non-existent
         command_check_tmp = f"mkdir -p ./tmp"
+        full_command = initial_cmd + command_binary + command_check_tmp
+        subprocess.run(full_command, shell=True, check=True)
 
         # Memory commands
         commands_memory = [
@@ -55,6 +64,10 @@ def build_command_gnark(payload, count):
 
         commands_memory.append("cd ../../; ")
 
+        for command in commands_memory:
+            full_command = initial_cmd + command
+            subprocess.run(full_command, shell=True, check=True)
+
         commands_merge = [
             "python3 src/parsers/csv_parser.py --memory_folder {memory_folder}/{input_name} --time_filename {gnark_bench_folder}/gnark_{backend}_{circuit}.csv --circuit {circuit}\n".format(
                 memory_folder=helper.Paths().GNARK_BENCH_MEMORY,
@@ -69,13 +82,14 @@ def build_command_gnark(payload, count):
             for inp in helper.get_all_input_files(input_path)
         ]
 
+        for command in commands_merge:
+            full_command = initial_cmd + command
+            subprocess.run(full_command, shell=True, check=True)
+
         # Join the commands into a single string
         pre_command = "".join(commands + commands_memory + commands_merge)
         
-        command = f"cd {helper.Paths().GNARK_DIR}; \
-                    {command_binary}; \
-                    {command_check_tmp}; \
-                    {pre_command}\n"
+        command = f""
     else:
         raise ValueError("Missing payload fields for circuit mode")
     return command
