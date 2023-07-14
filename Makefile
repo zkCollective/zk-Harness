@@ -155,83 +155,80 @@ circuits-test: benchmark-bellman-test-circuit benchmark-halo2-pse-test-circuit b
 
 circuits: benchmark-bellman-circuits benchmark-halo2-pse-circuits benchmark-circom-circuits benchmark-gnark-circuits benchmark-starky-circuits
 
-benchmark-bellman-test-circuit: init
+log-init:
+	mkdir -p .logs
+
+benchmark-bellman-test-circuit: init log-init
 	$(info --------------------------------------------)
 	$(info ----- BELLMAN TEST CIRCUIT BENCHMARKS  -----)
 	$(info --------------------------------------------)
-	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/bellman/config_test.json --machine $(MACHINE)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/bellman/config_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/bellman.log
 
-benchmark-bellman-circuits: init
+benchmark-bellman-circuits: init log-init
 	$(info --------------------------------------------)
 	$(info ------- BELLMAN CIRCUIT BENCHMARKS ---------)
 	$(info --------------------------------------------)
-	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/bellman/config_circuits.json --machine $(MACHINE)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/bellman/config_circuits.json --machine $(MACHINE) 2>&1 | tee -a .logs/bellman.log
 
-benchmark-halo2-pse-test-circuit: init
+benchmark-halo2-pse-test-circuit: init log-init
 	$(info --------------------------------------------)
-	$(info ----- HALO-PSE TEST CIRCUIT BENCHMARKS -----)
+	$(info ----- HALO2-PSE TEST CIRCUIT BENCHMARKS -----)
 	$(info --------------------------------------------)
-	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/halo2_pse/config_test.json --machine $(MACHINE)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/halo2_pse/config_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/halo2_pse.log
 
-benchmark-halo2-pse-circuits: init
+benchmark-halo2-pse-circuits: init log-init
 	$(info --------------------------------------------)
-	$(info ----- HALO-PSE ARITHMETICS BENCHMARKS ------)
+	$(info ----- HALO2-PSE ARITHMETICS BENCHMARKS ------)
 	$(info --------------------------------------------)
-	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/halo2_pse/config_circuits.json --machine $(MACHINE)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/halo2_pse/config_circuits.json --machine $(MACHINE) 2>&1 | tee -a .logs/halo2_pse.log
 
-benchmark-circom-test-circuit:
+benchmark-circom-test-circuit: init log-init
 	$(info --------------------------------------------)
 	$(info ----- CIRCOM TEST CIRCUIT BENCHMARKS -------)
 	$(info --------------------------------------------)
-	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/circom/config_test.json --machine $(MACHINE)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/circom/config_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/circom.log
 
-circom-init:
-	cd frameworks/circom/circuits/benchmarks && if [ ! -d "circomlib" ]; then git clone https://github.com/iden3/circomlib.git; fi
-
-benchmark-exponentiate-circom: 
+benchmark-exponentiate-circom: init log-init
 	$(info --------------------------------------------)
 	$(info ----- CIRCOM EXPONENTIATE BENCHMARKS -------)
 	$(info --------------------------------------------)
-	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/circom/config_exponentiate.json --machine $(MACHINE)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/circom/config_exponentiate.json --machine $(MACHINE) 2>&1 | tee -a .logs/circom.log
 
-benchmark-sha-circom: circom-init
+benchmark-sha-circom: init log-init
 	$(info --------------------------------------------)
 	$(info -------- CIRCOM SHA256 BENCHMARKS ----------)
 	$(info --------------------------------------------)
-	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/circom/config_sha.json --machine $(MACHINE)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/circom/config_sha.json --machine $(MACHINE) 2>&1 | tee -a .logs/circom.log
 
-benchmark-circom-circuits: circom-init
+benchmark-circom-circuits: init log-init
 	$(info --------------------------------------------)
 	$(info -------- CIRCOM CIRCUIT BENCHMARKS ---------)
 	$(info --------------------------------------------)
-	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/circom/config_circuits.json --machine $(MACHINE)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/circom/config_circuits.json --machine $(MACHINE) 2>&1 | tee -a .logs/circom.log
 
-gnark-init: 
-	cd frameworks/gnark && go build
-
-benchmark-gnark-test-circuit: gnark-init
+benchmark-gnark-test-circuit: log-init
 	$(info --------------------------------------------)
 	$(info ------ GNARK TEST CIRCUIT BENCHMARKS -------)
 	$(info --------------------------------------------)
-	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/gnark/config_test.json --machine $(MACHINE)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/gnark/config_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/gnark.log
 
-benchmark-gnark-circuits: gnark-init
+benchmark-gnark-circuits: log-init
 	$(info --------------------------------------------)
 	$(info -------- GNARK CIRCUITS BENCHMARKS ---------)
 	$(info --------------------------------------------)
-	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/gnark/config_circuits.json --machine $(MACHINE)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/gnark/config_circuits.json --machine $(MACHINE) 2>&1 | tee -a .logs/gnark.log
 
-benchmark-starky-test-circuit: init
+benchmark-starky-test-circuit: init log-init
 	$(info --------------------------------------------)
-	$(info -------- STARKY CIRCUITS BENCHMARKS --------)
+	$(info -------- STARKY TEST CIRCUIT BENCHMARKS --------)
 	$(info --------------------------------------------)
-	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/starky/config_test.json --machine $(MACHINE)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/starky/config_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/starky.log
 
-benchmark-starky-circuits: init
+benchmark-starky-circuits: init log-init
 	$(info --------------------------------------------)
-	$(info -------- STARKY CIRCUITS BENCHMARKS --------)
+	$(info -------- STARKY CIRCUIT BENCHMARKS --------)
 	$(info --------------------------------------------)
-	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/starky/config_circuits.json --machine $(MACHINE)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/starky/config_circuits.json --machine $(MACHINE) 2>&1 | tee -a .logs/starky.log
 
 ################################################################################
 
