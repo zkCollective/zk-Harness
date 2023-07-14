@@ -17,45 +17,35 @@ def build_command_gnark(payload, count):
     """
     Build the command to invoke the gnark ZKP-framework given the payload
     """
+    initial_cmd = f"cd {helper.Paths().GNARK_DIR} && "
+    
     os.makedirs(helper.Paths().GNARK_BENCH, exist_ok=True)    
     os.makedirs(helper.Paths().GNARK_BENCH_MEMORY, exist_ok=True)    
-    print()
     if payload.backend is not None and payload.curves is not None:
-        initial_cmd = f"cd {helper.Paths().GNARK_DIR};"
-        subprocess.run(initial_cmd, shell=True, check=True)
 
-        commands = [f"./gnark {backend} --circuit={circ} --algo={op} --curve={curve} --input={inp} --count={count} --outputPath={helper.Paths().GNARK_BENCH}/{backend}_{circ}.csv\n"
+        commands = [f"{initial_cmd} ./gnark {backend} --circuit={circ} --algo={op} --curve={curve} --input={inp} --count={count} --outputPath={helper.Paths().GNARK_BENCH}/{backend}_{circ}.csv; \n"
                     for backend in payload.backend
                     for curve in payload.curves
                     for circ, input_path in payload.circuit.items()
                     for inp in helper.get_all_input_files(input_path)
                     for op in payload.operation]
-        
-        for command in commands:
-            full_command = initial_cmd + command
-            try:
-                subprocess.run(full_command, shell=True, check=True)
-            except subprocess.CalledProcessError as e:
-                print(f"Command '{e.cmd}' failed with exit code {e.returncode}")
 
         # Builder command memory
-        command_binary = f"./build_memory.sh"
+        command_binary = f"{initial_cmd} ./build_memory.sh;"
         # Create /tmp folder if non-existent
-        command_check_tmp = f"mkdir -p ./tmp"
-        full_command = initial_cmd + command_binary + command_check_tmp
-        subprocess.run(full_command, shell=True, check=True)
+        command_check_tmp = f"{initial_cmd} mkdir -p ./tmp;"
 
         # Memory commands
         commands_memory = [
             (
                 os.makedirs(f"{helper.Paths().GNARK_BENCH_MEMORY}/{modified_inp}", exist_ok=True),
-                f"{helper.get_memory_command()} ./{backend}_memory_{op} \
+                f"{initial_cmd} {helper.get_memory_command()} ./{backend}_memory_{op} \
                     --circuit={circ} \
                     --curve={curve} \
                     --input={inp} \
                     --count={count} \
                     2> {helper.Paths().GNARK_BENCH_MEMORY}/{modified_inp}/gnark_{backend}_{circ}_memory_{op}.txt \
-                    > /dev/null\n"
+                    > /dev/null; \n"
             )[1]
             for backend in payload.backend
             for curve in payload.curves
@@ -65,17 +55,10 @@ def build_command_gnark(payload, count):
             for op in payload.operation
         ]
 
-        commands_memory.append("cd ../../; ")
-
-        for command in commands_memory:
-            full_command = initial_cmd + command
-            try:
-                subprocess.run(full_command, shell=True, check=True)
-            except subprocess.CalledProcessError as e:
-                print(f"Command '{e.cmd}' failed with exit code {e.returncode}")
+        commands_memory.append("cd ../../;")
 
         commands_merge = [
-            "python3 src/parsers/csv_parser.py --memory_folder {memory_folder}/{input_name} --time_filename {gnark_bench_folder}/gnark_{backend}_{circuit}.csv --circuit {circuit}\n".format(
+            "python3 src/parsers/csv_parser.py --memory_folder {memory_folder}/{input_name} --time_filename {gnark_bench_folder}/{backend}_{circuit}.csv --circuit {circuit}; \n".format(
                 memory_folder=helper.Paths().GNARK_BENCH_MEMORY,
                 input_name=inp.replace('input/circuit/', '').replace('.json', ''),
                 gnark_bench_folder=helper.Paths().GNARK_BENCH,
@@ -88,14 +71,13 @@ def build_command_gnark(payload, count):
             for inp in helper.get_all_input_files(input_path)
         ]
 
-        for command in commands_merge:
-            full_command = initial_cmd + command
-            try:
-                subprocess.run(full_command, shell=True, check=True)
-            except subprocess.CalledProcessError as e:
-                print(f"Command '{e.cmd}' failed with exit code {e.returncode}")
+        # Join the commands into a single string
+        pre_command = "".join(commands + commands_memory + commands_merge)
         
-        command = f""
+        command = f"cd {helper.Paths().GNARK_DIR}; \
+                    {command_binary} \
+                    {command_check_tmp} \
+                    {pre_command}\n"
     else:
         raise ValueError("Missing payload fields for circuit mode")
     return command
@@ -148,6 +130,8 @@ def build_command_bellman(payload, count):
     """
     Build the command to invoke the bellman ZKP-library given the payload
     """
+    initial_cmd = f"cd {helper.Paths().BELLMAN} && "
+
     os.makedirs(helper.Paths().BELLMAN_BENCH, exist_ok=True)    
     os.makedirs(helper.Paths().BELLMAN_BENCH_JSON, exist_ok=True)    
     os.makedirs(helper.Paths().BELLMAN_BENCH_MEMORY, exist_ok=True)    
@@ -166,7 +150,8 @@ def build_command_bellman(payload, count):
                 circuit + "_bench_" + os.path.basename(inp)
             )
             input_file = os.path.join("..", "..", inp)
-            command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} CIRCUIT={circuit} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
+            command_bench: str = "{initial_cmd} RUSTFLAGS=-Awarnings INPUT_FILE={input_file} CIRCUIT={circuit} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
+                initial_cmd = initial_cmd,
                 circuit=circuit,
                 input_file=input_file,
                 bench="benchmark_circuit",
@@ -187,7 +172,8 @@ def build_command_bellman(payload, count):
                     proof=os.path.join("tmp", "proof"),
                 )
                 commands.append(
-                    "RUSTFLAGS=-Awarnings {memory_cmd} {cargo} 2> {time_file} > /dev/null; ".format(
+                    "{initial_cmd} RUSTFLAGS=-Awarnings {memory_cmd} {cargo} 2> {time_file} > /dev/null; ".format(
+                        initial_cmd=initial_cmd,
                         memory_cmd=helper.get_memory_command(),
                         cargo=cargo_cmd,
                         time_file=f"{helper.Paths().BELLMAN_BENCH_MEMORY}/{inp}/bellman_{circuit}_memory_{op}.txt"
@@ -233,6 +219,7 @@ def build_command_starky(payload, count):
     Build the command to invoke the starky ZKP-library given the payload
     """
     
+    initial_cmd = f"cd {helper.Paths().STARKY} && "
 
     os.makedirs(helper.Paths().BELLMAN_BENCH, exist_ok=True)    
     os.makedirs(helper.Paths().BELLMAN_BENCH_MEMORY, exist_ok=True)  
@@ -261,7 +248,8 @@ def build_command_starky(payload, count):
                 circuit + "_bench_" + os.path.basename(inp)
             )
             input_file = os.path.join("..", "..", inp)
-            command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} CIRCUIT={circuit} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
+            command_bench: str = "{initial_cmd} RUSTFLAGS=-Awarnings INPUT_FILE={input_file} CIRCUIT={circuit} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
+                initial_cmd=initial_cmd,
                 circuit=circuit,
                 input_file=input_file,
                 bench="benchmark_circuit",
@@ -275,13 +263,15 @@ def build_command_starky(payload, count):
             os.makedirs(os.path.join(helper.Paths().STARKY, "tmp"), exist_ok=True)
             for op in payload.operation:
                 cargo_cmd = "cargo run --bin {circuit}_{path} --release -- --input {inp} --proof {proof}".format(
+                    initial_cmd=initial_cmd,
                     circuit=circuit,
                     inp=input_file,
                     path=op,
                     proof=os.path.join("tmp", "proof"),
                 )
                 commands.append(
-                    "RUSTFLAGS=-Awarnings {memory_cmd} {cargo} 2> {time_file} > /dev/null; ".format(
+                    "{initial_cmd} RUSTFLAGS=-Awarnings {memory_cmd} {cargo} 2> {time_file} > /dev/null; ".format(
+                        initial_cmd=initial_cmd,
                         memory_cmd=helper.get_memory_command(),
                         cargo=cargo_cmd,
                         time_file=f"{helper.Paths().STARKY_BENCH_MEMORY}/{inp}/starky_{circuit}_memory_{op}.txt"
@@ -328,6 +318,8 @@ def build_command_halo2_pse(payload, count):
     """
     Build the command to invoke the halo2 PSE ZKP-library given the payload
     """
+    initial_cmd = f"cd {helper.Paths().HALO2_PSE} && "
+
     os.makedirs(helper.Paths().HALO2_PSE_BENCH, exist_ok=True)    
     os.makedirs(helper.Paths().HALO2_PSE_BENCH_JSON, exist_ok=True)    
     os.makedirs(helper.Paths().HALO2_PSE_BENCH_MEMORY, exist_ok=True)    
@@ -348,7 +340,8 @@ def build_command_halo2_pse(payload, count):
                 circuit + "_bench_" + os.path.basename(inp)
             )
             input_file = os.path.join("..", "..", inp)
-            command_bench: str = "RUSTFLAGS=-Awarnings INPUT_FILE={input_file} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
+            command_bench: str = "{initial_cmd} RUSTFLAGS=-Awarnings INPUT_FILE={input_file} cargo criterion --message-format=json --bench {bench} 1> {output}; ".format(
+                initial_cmd=initial_cmd,
                 input_file=input_file,
                 bench=circuit + "_bench",
                 output=output_bench
@@ -370,7 +363,8 @@ def build_command_halo2_pse(payload, count):
                     proof=os.path.join("tmp", "proof"),
                 )
                 commands.append(
-                    "RUSTFLAGS=-Awarnings {memory_cmd} {cargo} 2> {time_file} > /dev/null; ".format(
+                    "{initial_cmd} RUSTFLAGS=-Awarnings {memory_cmd} {cargo} 2> {time_file} > /dev/null; ".format(
+                        initial_cmd=initial_cmd,
                         memory_cmd=helper.get_memory_command(),
                         cargo=cargo_cmd,
                         time_file=f"{helper.Paths().HALO2_PSE_BENCH_MEMORY}/{inp}/halo2_{circuit}_memory_{op}.txt"

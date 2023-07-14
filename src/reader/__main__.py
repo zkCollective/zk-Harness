@@ -15,9 +15,15 @@ def recursion_processing(project, config, count):
 def circuit_processing(project, config, count):
     # Extract relevant fields from config, build & execute command
     payload = process_circuit.get_circuit_payload(config)
-    commands = process_circuit.build_command(project, payload, count)
-    if commands.strip():  # checks if commands is not empty or just whitespace
-        subprocess.run(commands, shell=True, check=True)
+    command_block = process_circuit.build_command(project, payload, count)
+    
+    # Split the command block into individual commands
+    commands = command_block.split(';')
+    for cmd in commands:
+        try:
+            subprocess.run(cmd, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Command '{cmd}' failed with error: {str(e)}")
 
 def default_case():
     raise ValueError("Benchmark category not integrated into the benchmarking framework!")
