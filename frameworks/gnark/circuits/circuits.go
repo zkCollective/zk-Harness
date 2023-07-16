@@ -77,7 +77,15 @@ func (d *defaultCircuit) Circuit(size int, name string, opts ...CircuitOption) f
 
 	switch name {
 	case "exponentiate":
-		return &exponentiate.ExponentiateCircuit{E: size}
+		strVal, ok := data["E"].(string)
+		if !ok {
+			panic("data[someKey] is not a string")
+		}
+		sizeTwo, err := strconv.Atoi(strVal)
+		if err != nil {
+			panic(err)
+		}
+		return &exponentiate.ExponentiateCircuit{E: sizeTwo}
 	case "cubic":
 		return &cubic.CubicCircuit{}
 	case "exponentiate_opt":
@@ -126,17 +134,20 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 
 	switch name {
 	case "exponentiate":
-		witness := exponentiate.ExponentiateCircuit{}
-		witness.X = (data["X"].(string))
-		witness.Y = (data["Y"].(string))
-		strVal, ok := data["E"].(string)
+		strVal, ok := (data["E"].(string))
+		fmt.Println(strVal)
 		if !ok {
 			panic("E is not a string")
 		}
-		witness.E, err = strconv.Atoi(strVal)
+		size, err := strconv.Atoi(strVal)
 		if err != nil {
 			panic("Error converting exponent to int")
 		}
+
+		witness := exponentiate.ExponentiateCircuit{E: size}
+		witness.X = (data["X"].(string))
+		witness.Y = (data["Y"].(string))
+
 		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {
 			panic(err)

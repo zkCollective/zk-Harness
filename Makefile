@@ -158,6 +158,12 @@ circuits: benchmark-bellman-circuits benchmark-halo2-pse-circuits benchmark-circ
 log-init:
 	mkdir -p .logs
 
+gnark-init: 
+	cd frameworks/gnark && go build
+
+circom-init:
+	cd frameworks/circom/circuits/benchmarks && if [ ! -d "circomlib" ]; then git clone https://github.com/iden3/circomlib.git; fi
+
 benchmark-bellman-test-circuit: init log-init
 	$(info --------------------------------------------)
 	$(info ----- BELLMAN TEST CIRCUIT BENCHMARKS  -----)
@@ -182,7 +188,7 @@ benchmark-halo2-pse-circuits: init log-init
 	$(info --------------------------------------------)
 	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/halo2_pse/config_circuits.json --machine $(MACHINE) 2>&1 | tee -a .logs/halo2_pse.log
 
-benchmark-circom-test-circuit: init log-init
+benchmark-circom-test-circuit: init circom-init log-init
 	$(info --------------------------------------------)
 	$(info ----- CIRCOM TEST CIRCUIT BENCHMARKS -------)
 	$(info --------------------------------------------)
@@ -194,25 +200,25 @@ benchmark-exponentiate-circom: init log-init
 	$(info --------------------------------------------)
 	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/circom/config_exponentiate.json --machine $(MACHINE) 2>&1 | tee -a .logs/circom.log
 
-benchmark-sha-circom: init log-init
+benchmark-sha-circom: init circom-init log-init
 	$(info --------------------------------------------)
 	$(info -------- CIRCOM SHA256 BENCHMARKS ----------)
 	$(info --------------------------------------------)
 	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/circom/config_sha.json --machine $(MACHINE) 2>&1 | tee -a .logs/circom.log
 
-benchmark-circom-circuits: init log-init
+benchmark-circom-circuits: init circom-init log-init
 	$(info --------------------------------------------)
 	$(info -------- CIRCOM CIRCUIT BENCHMARKS ---------)
 	$(info --------------------------------------------)
 	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/circom/config_circuits.json --machine $(MACHINE) 2>&1 | tee -a .logs/circom.log
 
-benchmark-gnark-test-circuit: log-init
+benchmark-gnark-test-circuit: gnark-init log-init
 	$(info --------------------------------------------)
 	$(info ------ GNARK TEST CIRCUIT BENCHMARKS -------)
 	$(info --------------------------------------------)
 	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/gnark/config_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/gnark.log
 
-benchmark-gnark-circuits: log-init
+benchmark-gnark-circuits: gnark-init log-init
 	$(info --------------------------------------------)
 	$(info -------- GNARK CIRCUITS BENCHMARKS ---------)
 	$(info --------------------------------------------)
