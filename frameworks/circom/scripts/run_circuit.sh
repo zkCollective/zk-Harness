@@ -37,7 +37,7 @@ else
     TEMPLATE_VARS=
 fi
 if [ ! -z "$8" ]; then
-    RAPIDSNARK=1
+    RAPIDSNARK=frameworks/circom/rapidsnark/build/prover
 else
     RAPIDSNARK=
 fi
