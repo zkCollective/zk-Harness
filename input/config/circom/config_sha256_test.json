@@ -1,0 +1,27 @@
+{
+    "project": "circom/rapidsnark",
+    "project_url": "https://github.com/iden3/circom",
+    "category": "circuit",
+    "count": 1,
+    "payload": {
+        "backend": [
+            "groth16"
+        ],
+        "curves": [
+            "bn128"
+        ], 
+        "circuits": {
+            "sha256": {
+                "input_path": "input/circuit/sha256/bytes/input_5.json",
+                "template_vars": ["N"]
+            }
+        },
+        "algorithm": [
+            "compile",
+            "setup",
+            "witness",
+            "prove",
+            "verify"
+        ]
+    }    
+}

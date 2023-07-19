@@ -170,6 +170,12 @@ benchmark-bellman-test-circuit: init log-init
 	$(info --------------------------------------------)
 	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/bellman/config_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/bellman.log
 
+benchmark-bellman-test-sha256-circuit: init log-init
+	$(info --------------------------------------------)
+	$(info ----- BELLMAN TEST CIRCUIT BENCHMARKS  -----)
+	$(info --------------------------------------------)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/bellman/config_sha256_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/bellman.log
+
 benchmark-bellman-circuits: init log-init
 	$(info --------------------------------------------)
 	$(info ------- BELLMAN CIRCUIT BENCHMARKS ---------)
@@ -182,6 +188,12 @@ benchmark-halo2-pse-test-circuit: init log-init
 	$(info --------------------------------------------)
 	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/halo2_pse/config_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/halo2_pse.log
 
+benchmark-halo2-pse-test-sha256-circuit: init log-init
+	$(info --------------------------------------------)
+	$(info ----- HALO2-PSE TEST CIRCUIT BENCHMARKS -----)
+	$(info --------------------------------------------)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/halo2_pse/config_sha256_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/halo2_pse.log
+
 benchmark-halo2-pse-circuits: init log-init
 	$(info --------------------------------------------)
 	$(info ----- HALO2-PSE ARITHMETICS BENCHMARKS ------)
@@ -193,6 +205,12 @@ benchmark-circom-test-circuit: init circom-init log-init
 	$(info ----- CIRCOM TEST CIRCUIT BENCHMARKS -------)
 	$(info --------------------------------------------)
 	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/circom/config_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/circom.log
+
+benchmark-circom-test-sha256-circuit: init circom-init log-init
+	$(info --------------------------------------------)
+	$(info ----- CIRCOM TEST CIRCUIT BENCHMARKS -------)
+	$(info --------------------------------------------)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/circom/config_sha256_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/circom.log
 
 benchmark-exponentiate-circom: init log-init
 	$(info --------------------------------------------)
@@ -217,6 +235,12 @@ benchmark-gnark-test-circuit: gnark-init log-init
 	$(info ------ GNARK TEST CIRCUIT BENCHMARKS -------)
 	$(info --------------------------------------------)
 	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/gnark/config_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/gnark.log
+
+benchmark-gnark--sha256-test-circuit: gnark-init log-init
+	$(info --------------------------------------------)
+	$(info ------ GNARK TEST CIRCUIT BENCHMARKS -------)
+	$(info --------------------------------------------)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/gnark/config_sha256_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/gnark.log
 
 benchmark-gnark-circuits: gnark-init log-init
 	$(info --------------------------------------------)
