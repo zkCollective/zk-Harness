@@ -1,0 +1,107 @@
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/secp256k1 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/secp256k1/fp ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/secp256k1 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/secp256k1/fp
+cpu: Intel(R) Xeon(R) Platinum 8375C CPU @ 2.90GHz
+BenchmarkElementAdd-32    	498923982	         2.299 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1/fp	1.396s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/secp256k1/fp
+cpu: Intel(R) Xeon(R) Platinum 8375C CPU @ 2.90GHz
+BenchmarkElementMul-32    	36330055	        32.91 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1/fp	1.234s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/secp256k1/fp
+cpu: Intel(R) Xeon(R) Platinum 8375C CPU @ 2.90GHz
+BenchmarkElementInverse-32    	  456379	      2406 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1/fp	1.130s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/secp256k1/fp
+cpu: Intel(R) Xeon(R) Platinum 8375C CPU @ 2.90GHz
+BenchmarkElementSquare
+BenchmarkElementSquare-32    	33150519	        36.15 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1/fp	1.240s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/secp256k1/fp
+cpu: Intel(R) Xeon(R) Platinum 8375C CPU @ 2.90GHz
+BenchmarkElementSqrt
+BenchmarkElementSqrt-32    	  135988	      8775 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1/fp	1.287s
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/secp256k1 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/secp256k1
+cpu: Intel(R) Xeon(R) Platinum 8375C CPU @ 2.90GHz
+BenchmarkG1JacAdd-32    	 2007314	       598.1 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1	1.809s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/secp256k1
+cpu: Intel(R) Xeon(R) Platinum 8375C CPU @ 2.90GHz
+BenchmarkG1JacScalarMultiplication/GLV-32         	   15930	     75251 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1	1.965s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/secp256k1
+cpu: Intel(R) Xeon(R) Platinum 8375C CPU @ 2.90GHz
+BenchmarkMultiExpG1/2_points-32         	    7689	    155408 ns/op
+BenchmarkMultiExpG1/4_points-32         	    6750	    172955 ns/op
+BenchmarkMultiExpG1/8_points-32         	    5533	    203676 ns/op
+BenchmarkMultiExpG1/16_points-32        	    4846	    243766 ns/op
+BenchmarkMultiExpG1/32_points-32        	    3924	    295910 ns/op
+BenchmarkMultiExpG1/64_points-32        	    3234	    359280 ns/op
+BenchmarkMultiExpG1/128_points-32       	    2492	    466784 ns/op
+BenchmarkMultiExpG1/256_points-32       	    1915	    607165 ns/op
+BenchmarkMultiExpG1/512_points-32       	    1356	    864666 ns/op
+BenchmarkMultiExpG1/1024_points-32      	     966	   1185491 ns/op
+BenchmarkMultiExpG1/2048_points-32      	     589	   2036262 ns/op
+BenchmarkMultiExpG1/4096_points-32      	     346	   3471011 ns/op
+BenchmarkMultiExpG1/8192_points-32      	     213	   5537362 ns/op
+BenchmarkMultiExpG1/16384_points-32     	     100	  10002830 ns/op
+BenchmarkMultiExpG1/32768_points-32     	      58	  19546252 ns/op
+BenchmarkMultiExpG1/65536_points-32     	      32	  36409340 ns/op
+BenchmarkMultiExpG1/131072_points-32    	      14	  76637113 ns/op
+BenchmarkMultiExpG1/262144_points-32    	       8	 139341383 ns/op
+BenchmarkMultiExpG1/524288_points-32    	       5	 247779600 ns/op
+BenchmarkMultiExpG1/1048576_points-32   	       3	 460232575 ns/op
+BenchmarkMultiExpG1/2097152_points-32   	       2	 909754879 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1	31.521s
+goos: linux
+goarch: amd64
+pkg: github.com/consensys/gnark-crypto/ecc/secp256k1
+cpu: Intel(R) Xeon(R) Platinum 8375C CPU @ 2.90GHz
+BenchmarkG1JacIsInSubGroup-32    	 4729608	       253.9 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1	1.462s
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1	0.003s
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1	0.003s
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1	0.003s
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1	0.003s
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1	0.003s
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1	0.003s
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1	0.003s
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/secp256k1	0.003s
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+~/zk-Harness/math/zkalc/backend/gnark-crypto
