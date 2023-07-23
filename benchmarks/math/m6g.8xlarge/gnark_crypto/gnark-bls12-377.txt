@@ -1,0 +1,209 @@
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bls12-377 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bls12-377/fr ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bls12-377 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/fr
+BenchmarkElementAdd-32    	273622248	         6.417 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/fr	3.244s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/fr
+BenchmarkElementMul-32    	12546904	        95.61 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/fr	1.303s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/fr
+BenchmarkElementInverse-32    	  389162	      3028 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/fr	1.216s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/fr
+BenchmarkElementSquare
+BenchmarkElementSquare-32    	15224793	        78.75 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/fr	1.286s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/fr
+BenchmarkElementSqrt
+BenchmarkElementSqrt-32    	   16288	     73657 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/fr	1.951s
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bls12-377 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bls12-377/fr/fft ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bls12-377 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/fr/fft
+BenchmarkFFT/fft_2**8bits-32        	   12895	     93055 ns/op
+BenchmarkFFT/fft_2**8bits_(coset)-32         	    9364	    126521 ns/op
+BenchmarkFFT/fft_2**9bits-32                 	    8752	    134242 ns/op
+BenchmarkFFT/fft_2**9bits_(coset)-32         	    6908	    171670 ns/op
+BenchmarkFFT/fft_2**10bits-32                	    6300	    191303 ns/op
+BenchmarkFFT/fft_2**10bits_(coset)-32        	    5049	    236189 ns/op
+BenchmarkFFT/fft_2**11bits-32                	    4789	    250479 ns/op
+BenchmarkFFT/fft_2**11bits_(coset)-32        	    3740	    314765 ns/op
+BenchmarkFFT/fft_2**12bits-32                	    3217	    376605 ns/op
+BenchmarkFFT/fft_2**12bits_(coset)-32        	    2601	    463473 ns/op
+BenchmarkFFT/fft_2**13bits-32                	    2088	    578932 ns/op
+BenchmarkFFT/fft_2**13bits_(coset)-32        	    1718	    695176 ns/op
+BenchmarkFFT/fft_2**14bits-32                	    1224	    984020 ns/op
+BenchmarkFFT/fft_2**14bits_(coset)-32        	    1028	   1154976 ns/op
+BenchmarkFFT/fft_2**15bits-32                	     663	   1808892 ns/op
+BenchmarkFFT/fft_2**15bits_(coset)-32        	     579	   2063743 ns/op
+BenchmarkFFT/fft_2**16bits-32                	     358	   3327926 ns/op
+BenchmarkFFT/fft_2**16bits_(coset)-32        	     320	   3735802 ns/op
+BenchmarkFFT/fft_2**17bits-32                	     219	   5448625 ns/op
+BenchmarkFFT/fft_2**17bits_(coset)-32        	     196	   6078876 ns/op
+BenchmarkFFT/fft_2**18bits-32                	     121	   9833309 ns/op
+BenchmarkFFT/fft_2**18bits_(coset)-32        	     100	  10864215 ns/op
+BenchmarkFFT/fft_2**19bits-32                	      63	  19091414 ns/op
+BenchmarkFFT/fft_2**19bits_(coset)-32        	      55	  20985323 ns/op
+BenchmarkFFTDITCosetReference-32             	      27	  43039623 ns/op
+BenchmarkFFTDIFReference-32                  	      36	  32748371 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/fr/fft	37.420s
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bls12-377 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+BenchmarkG1JacAdd-32    	  365088	      3285 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.239s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+BenchmarkG1JacScalarMultiplication/GLV-32         	    2851	    419386 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.245s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+BenchmarkMultiExpG1/2_points-32         	    1639	    726025 ns/op
+BenchmarkMultiExpG1/4_points-32         	    1568	    760447 ns/op
+BenchmarkMultiExpG1/8_points-32         	    1456	    812301 ns/op
+BenchmarkMultiExpG1/16_points-32        	    1351	    873542 ns/op
+BenchmarkMultiExpG1/32_points-32        	    1273	    939218 ns/op
+BenchmarkMultiExpG1/64_points-32        	    1129	   1066841 ns/op
+BenchmarkMultiExpG1/128_points-32       	     904	   1307724 ns/op
+BenchmarkMultiExpG1/256_points-32       	     637	   1882627 ns/op
+BenchmarkMultiExpG1/512_points-32       	     382	   3123575 ns/op
+BenchmarkMultiExpG1/1024_points-32      	     351	   3411806 ns/op
+BenchmarkMultiExpG1/2048_points-32      	     192	   6189198 ns/op
+BenchmarkMultiExpG1/4096_points-32      	     100	  11464158 ns/op
+BenchmarkMultiExpG1/8192_points-32      	      54	  20125755 ns/op
+BenchmarkMultiExpG1/16384_points-32     	      39	  29636207 ns/op
+BenchmarkMultiExpG1/32768_points-32     	      21	  54679425 ns/op
+BenchmarkMultiExpG1/65536_points-32     	      10	 106399159 ns/op
+BenchmarkMultiExpG1/131072_points-32    	       6	 190795032 ns/op
+BenchmarkMultiExpG1/262144_points-32    	       4	 302624712 ns/op
+BenchmarkMultiExpG1/524288_points-32    	       3	 491324578 ns/op
+BenchmarkMultiExpG1/1048576_points-32   	       2	 915207080 ns/op
+BenchmarkMultiExpG1/2097152_points-32   	       1	1921790469 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	35.031s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+BenchmarkG1JacIsInSubGroup-32    	    3819	    313594 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.235s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+BenchmarkG1AffineCofactorClearing-32    	    7476	    159855 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.217s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+BenchmarkG2JacAdd-32    	  114476	     10477 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.312s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+BenchmarkG2JacScalarMultiplication/GLV-32         	     914	   1309422 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.336s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+BenchmarkMultiExpG2/2_points-32         	     592	   2016273 ns/op
+BenchmarkMultiExpG2/4_points-32         	     562	   2124600 ns/op
+BenchmarkMultiExpG2/8_points-32         	     541	   2209250 ns/op
+BenchmarkMultiExpG2/16_points-32        	     517	   2324562 ns/op
+BenchmarkMultiExpG2/32_points-32        	     477	   2495461 ns/op
+BenchmarkMultiExpG2/64_points-32        	     420	   2853413 ns/op
+BenchmarkMultiExpG2/128_points-32       	     332	   3647698 ns/op
+BenchmarkMultiExpG2/256_points-32       	     217	   5444180 ns/op
+BenchmarkMultiExpG2/512_points-32       	     129	   9250995 ns/op
+BenchmarkMultiExpG2/1024_points-32      	     121	   9881509 ns/op
+BenchmarkMultiExpG2/2048_points-32      	      61	  18124297 ns/op
+BenchmarkMultiExpG2/4096_points-32      	      32	  35845174 ns/op
+BenchmarkMultiExpG2/8192_points-32      	      18	  64418113 ns/op
+BenchmarkMultiExpG2/16384_points-32     	      14	  84750060 ns/op
+BenchmarkMultiExpG2/32768_points-32     	       7	 162255224 ns/op
+BenchmarkMultiExpG2/65536_points-32     	       4	 279770628 ns/op
+BenchmarkMultiExpG2/131072_points-32    	       2	 500511496 ns/op
+BenchmarkMultiExpG2/262144_points-32    	       2	 788939820 ns/op
+BenchmarkMultiExpG2/524288_points-32    	       1	1398545822 ns/op
+BenchmarkMultiExpG2/1048576_points-32   	       1	2628005966 ns/op
+BenchmarkMultiExpG2/2097152_points-32   	       1	5226269013 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	41.269s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+BenchmarkG2JacIsInSubGroup-32    	    2464	    484543 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.249s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+BenchmarkG2AffineCofactorClearing-32    	    1178	   1016644 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.306s
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bls12-377/internal/fptower ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bls12-377 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/internal/fptower
+BenchmarkE12Add-32    	 8796228	       131.9 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/internal/fptower	1.305s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/internal/fptower
+BenchmarkE12Mul-32    	   82911	     14467 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/internal/fptower	1.352s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377/internal/fptower
+BenchmarkE12Cyclosquare-32    	  219651	      5460 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377/internal/fptower	1.261s
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc/bls12-377 ~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+BenchmarkPairing-32    	     324	   3686033 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	1.573s
+goos: linux
+goarch: arm64
+pkg: github.com/consensys/gnark-crypto/ecc/bls12-377
+BenchmarkMultiPair/16_pairs-32         	      56	  20904354 ns/op
+BenchmarkMultiPair/32_pairs-32         	      30	  39208086 ns/op
+BenchmarkMultiPair/64_pairs-32         	      15	  75817778 ns/op
+BenchmarkMultiPair/128_pairs-32        	       7	 149052399 ns/op
+BenchmarkMultiPair/256_pairs-32        	       4	 295551236 ns/op
+BenchmarkMultiPair/512_pairs-32        	       2	 588525850 ns/op
+BenchmarkMultiPair/1024_pairs-32       	       1	1174098752 ns/op
+PASS
+ok  	github.com/consensys/gnark-crypto/ecc/bls12-377	10.129s
+~/zk-Harness/math/zkalc/backend/gnark-crypto/ecc ~/zk-Harness/math/zkalc/backend/gnark-crypto
+~/zk-Harness/math/zkalc/backend/gnark-crypto
