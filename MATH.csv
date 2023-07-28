@@ -1,9 +1,0 @@
-low-level,framework
-arkworks,arkworks
-blstrs,
-curve25519-dalek,
-ffjavascript,snarkjs
-ffiasm,rapidsnark
-pairing_ce,bellman_ce
-pasta_curves,halo2
-zkcrypto,bellman
