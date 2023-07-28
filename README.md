@@ -11,6 +11,15 @@ zk-Harness provides benchmarks along the whole zkSNARK stack - arithmetics over 
 The backend for mathematical operations (field & curve) is hosted and developed in [zka.lc](https://zka.lc/).
 The benchmark results are hosted at [zk-bench.org](https://www.zk-bench.org).
 
+## Clone
+
+```
+git clone --recurse-submodules -j8 git@github.com:zkCollective/zk-Harness.git
+# or 
+git clone git@github.com:zkCollective/zk-Harness.git
+git submodule update --init --recursive
+```
+
 ## Structure
 
 * `benchmarks`: Directory containing the results of the benchmarks.
