@@ -16,7 +16,7 @@
                 "template_vars": ["N"]
             },
             "exponentiate": {
-                "input_path": "input/circuit/exponentiate",
+                "input_path": "input/circuit/exponentiate_2",
                 "template_vars": ["E"]
             }
         },
