@@ -12,12 +12,13 @@
         ], 
         "circuits": {
             "exponentiate": {
-                "input_path": "input/circuit/exponentiate_2"
+                "input_path": "input/circuit/exponentiate_2/"
             }
         },
         "algorithm": [
             "witness",
-            "prove"
+            "prove",
+            "verify"
         ]
     }    
 }
