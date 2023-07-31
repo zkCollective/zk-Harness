@@ -20,6 +20,14 @@ git clone git@github.com:zkCollective/zk-Harness.git
 git submodule update --init --recursive
 ```
 
+## Update benchmarks
+
+To pull the latest results run:
+
+```
+git submodule update --remote benchmarks
+```
+
 ## Structure
 
 * `benchmarks`: Directory containing the results of the benchmarks.
