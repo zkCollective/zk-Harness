@@ -2,7 +2,7 @@
     "project": "circom/rapidsnark",
     "project_url": "https://github.com/iden3/circom",
     "category": "circuit",
-    "count": 1,
+    "count": 10,
     "payload": {
         "backend": [
             "groth16"
