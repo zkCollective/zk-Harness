@@ -5,7 +5,7 @@ use halo2_proofs::{
         kzg::{
             commitment::{ParamsKZG, KZGCommitmentScheme}, 
             multiopen::{ProverGWC, VerifierGWC}, 
-            strategy::AccumulatorStrategy
+            strategy::SingleStrategy,
         }
     }, 
     halo2curves::bn256::{Bn256, G1Affine, Fr}, 
@@ -13,6 +13,7 @@ use halo2_proofs::{
         Blake2bRead, Blake2bWrite, Challenge255, TranscriptReadBuffer, TranscriptWriterBuffer,
     },
 };
+use halo2_proofs::poly::VerificationStrategy;
 use halo2_proofs::SerdeFormat;
 use criterion::{
     measurement::Measurement, BenchmarkGroup,
@@ -102,7 +103,7 @@ pub fn verify_circuit<C: Circuit<halo2_proofs::halo2curves::bn256::Fr> + Clone>(
     proof: &[u8],
     public_input: &[&[halo2_proofs::halo2curves::bn256::Fr]]
 ) {
-    let strategy = AccumulatorStrategy::new(&params);
+    let strategy = SingleStrategy::new(&params);
     let mut transcript = Blake2bRead::<_, _, Challenge255<_>>::init(&proof[..]);
     verify_proof::<KZGCommitmentScheme<_>, VerifierGWC<_>, _, _, _>(
         &params,
@@ -110,7 +111,7 @@ pub fn verify_circuit<C: Circuit<halo2_proofs::halo2curves::bn256::Fr> + Clone>(
         strategy,
         &[public_input],
         &mut transcript,
-    ).unwrap();
+    ).expect("failed to verify bench circuit");
 }
 
 pub fn bench_circuit<M: Measurement, C: Circuit<halo2_proofs::halo2curves::bn256::Fr> + Clone>(
@@ -162,7 +163,7 @@ pub fn bench_circuit<M: Measurement, C: Circuit<halo2_proofs::halo2curves::bn256
         let proof = proof.clone().unwrap();
          b.iter(|| { 
             //println!("proof len: {}", proof.len());
-            let strategy = AccumulatorStrategy::new(params.as_ref().unwrap(),);
+            let strategy = SingleStrategy::new(params.as_ref().unwrap(),);
             let mut transcript = Blake2bRead::<_, _, Challenge255<_>>::init(&proof[..]);
             let _strategy = verify_proof::<KZGCommitmentScheme<_>, VerifierGWC<_>, _, _, _>(
                 params.as_ref().unwrap(),
