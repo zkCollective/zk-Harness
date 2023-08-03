@@ -2,7 +2,7 @@ ROOT_DIR=$(pwd)
 benchmark_directory = benchmarks
 MATH = math
 MACHINE := $(shell cat machine 2> /dev/null || echo DEFAULT)
-ZKALC = https://github.com/asn-d6/zkalc.git
+ZKALC = -b dev https://github.com/asn-d6/zkalc.git
 INPUTS = input
 FRAMEWORK = src
 
