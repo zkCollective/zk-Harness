@@ -23,12 +23,15 @@ def build_command_gnark(payload, count):
     os.makedirs(helper.Paths().GNARK_BENCH_MEMORY, exist_ok=True)    
     if payload.backend is not None and payload.curves is not None:
 
-        commands = [f"{initial_cmd} ./gnark {backend} --circuit={circ} --algo={op} --curve={curve} --input={inp} --count={count} --outputPath={helper.Paths().GNARK_BENCH}/{backend}_{circ}.csv; \n"
+        # FIXME: Update that code when implementing more fine-grained benchmarking
+        # in gnark
+        commands = [f"{initial_cmd} ./gnark {backend} --circuit={circ} --algo={op} --curve={curve} --input={inp} --count=1 --outputPath={helper.Paths().GNARK_BENCH}/{backend}_{circ}.csv; \n"
                     for backend in payload.backend
                     for curve in payload.curves
                     for circ, input_path in payload.circuit.items()
                     for inp in helper.get_all_input_files(input_path)
-                    for op in payload.operation]
+                    for op in payload.operation
+                    for _ in range(0,count)]
 
         # Builder command memory
         command_binary = f"{initial_cmd} ./build_memory.sh;"
@@ -43,7 +46,7 @@ def build_command_gnark(payload, count):
                     --circuit={circ} \
                     --curve={curve} \
                     --input={inp} \
-                    --count={count} \
+                    --count=1 \
                     2> {helper.Paths().GNARK_BENCH_MEMORY}/{modified_inp}/gnark_{backend}_{circ}_memory_{op}.txt \
                     > /dev/null; \n"
             )[1]

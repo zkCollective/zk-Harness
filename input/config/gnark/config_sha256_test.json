@@ -6,8 +6,7 @@
     "payload": {
         "backend": [
             "groth16",
-            "plonk",
-            "plonkFRI"
+            "plonk"
         ],
         "curves": [
             "bn254",
