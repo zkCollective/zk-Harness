@@ -21,8 +21,8 @@
             }
         },
         "algorithm": [
-            "setup",
             "compile",
+            "setup",
             "witness",
             "prove",
             "verify"
