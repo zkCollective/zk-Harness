@@ -170,9 +170,9 @@ get_time_results() {
     fi
     # NOTE: if real contains minutes in Mac it won't work
     realTime=$(echo "$realTime" | sed 's/s//')
-    millisecs=$(echo "${realTime} * 1000" | bc)
-    millisecs_without_dec=${millisecs%.*}
-    echo "$ramBytes,$millisecs_without_dec"
+    microsecs=$(echo "${realTime} * 1000 * 1000" | bc)
+    microsecs_without_dec=${microsecs%.*}
+    echo "$ramBytes,$microsecs_without_dec"
 }
 
 get_phase_stats() {
