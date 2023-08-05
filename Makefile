@@ -260,6 +260,13 @@ benchmark-starky-circuits: init log-init
 	$(info --------------------------------------------)
 	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/starky/config_circuits.json --machine $(MACHINE) 2>&1 | tee -a .logs/starky.log
 
+benchmark-comparison-circuits: init circom-init gnark-init log-init
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/comparison/bellman.json --machine $(MACHINE) 2>&1 | tee -a .logs/bellman.log
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/comparison/halo2_pse.json --machine $(MACHINE) 2>&1 | tee -a .logs/halo2_pse.log
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/comparison/circom.json --machine $(MACHINE) 2>&1 | tee -a .logs/circom.log
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/comparison/gnark.json --machine $(MACHINE) 2>&1 | tee -a .logs/gnark.log
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/comparison/starky.json --machine $(MACHINE) 2>&1 | tee -a .logs/starky.log
+
 ################################################################################
 
 ############################## RECURSION #######################################

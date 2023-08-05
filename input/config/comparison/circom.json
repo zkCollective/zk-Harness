@@ -1,0 +1,51 @@
+{
+    "project": "circom/rapidsnark",
+    "project_url": "https://github.com/iden3/circom",
+    "category": "circuit",
+    "count": 10,
+    "payload": {
+        "backend": [
+            "groth16"
+        ],
+        "curves": [
+            "bn128"
+        ], 
+        "circuits": {
+            "sha256": {
+                "input_path": [
+                    "input/circuit/sha256/input_5.json",
+                    "input/circuit/sha256/input_6.json",
+                    "input/circuit/sha256/input_7.json",
+                    "input/circuit/sha256/input_8.json",
+                    "input/circuit/sha256/input_9.json",
+                    "input/circuit/sha256/input_10.json",
+                    "input/circuit/sha256/input_11.json"
+                ],
+                "template_vars": ["N"]
+            },
+            "exponentiate": {
+                "input_path": [
+                    "input/circuit/exponentiate_2/input_10.json",
+                    "input/circuit/exponentiate_2/input_11.json",
+                    "input/circuit/exponentiate_2/input_12.json",
+                    "input/circuit/exponentiate_2/input_13.json",
+                    "input/circuit/exponentiate_2/input_14.json",
+                    "input/circuit/exponentiate_2/input_15.json",
+                    "input/circuit/exponentiate_2/input_16.json",
+                    "input/circuit/exponentiate_2/input_17.json",
+                    "input/circuit/exponentiate_2/input_18.json",
+                    "input/circuit/exponentiate_2/input_19.json",
+                    "input/circuit/exponentiate_2/input_20.json"
+                ],
+                "template_vars": ["E"]
+            }
+        },
+        "algorithm": [
+            "compile",
+            "setup",
+            "witness",
+            "prove",
+            "verify"
+        ]
+    }    
+}
