@@ -75,7 +75,7 @@ func runGroth16(cmd *cobra.Command, args []string) {
 			ProofSize:         proof_size,
 			MaxRAM:            m.Sys,
 			Count:             *cfg.Count,
-			RunTime:           took.Milliseconds(),
+			RunTime:           took.Microseconds(),
 		}
 
 		if err := util.WriteData("csv", bData, filename); err != nil {
