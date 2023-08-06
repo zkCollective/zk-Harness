@@ -13,13 +13,13 @@
         "circuits": {
             "sha256": {
                 "input_path": [
-                    "input/circuit/sha256/input_5.json",
-                    "input/circuit/sha256/input_6.json",
-                    "input/circuit/sha256/input_7.json",
-                    "input/circuit/sha256/input_8.json",
-                    "input/circuit/sha256/input_9.json",
-                    "input/circuit/sha256/input_10.json",
-                    "input/circuit/sha256/input_11.json"
+                    "input/circuit/sha256/bytes/input_5.json",
+                    "input/circuit/sha256/bytes/input_6.json",
+                    "input/circuit/sha256/bytes/input_7.json",
+                    "input/circuit/sha256/bytes/input_8.json",
+                    "input/circuit/sha256/bytes/input_9.json",
+                    "input/circuit/sha256/bytes/input_10.json",
+                    "input/circuit/sha256/bytes/input_11.json"
                 ],
                 "template_vars": ["N"]
             },
