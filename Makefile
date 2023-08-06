@@ -9,8 +9,6 @@ FRAMEWORK = src
 # Math variables
 arkworks_directory = arkworks
 arkworks_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(arkworks_directory)
-arkworks_curves_directory = arkworks_curves
-arkworks_curves_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(arkworks_curves_directory)
 blstrs_directory = blstrs
 blstrs_benchmarks_directory = $(benchmark_directory)/$(MATH)/$(MACHINE)/$(blstrs_directory)
 curve25519_dalek_directory = curve25519-dalek
@@ -55,11 +53,11 @@ math-arkworks-curves: init math-init
 	$(info --------------------------------------------)
 	$(info ------ ARKWORKS CURVES MATH BENCHMARKS -----)
 	$(info --------------------------------------------)
-	mkdir -p $(arkworks_curves_benchmarks_directory)
+	mkdir -p $(arkworks_benchmarks_directory)
 	cd math && if [ ! -d "zkalc" ]; then git clone $(ZKALC); fi
 	cd math/zkalc/backend && make init
 	cd math/zkalc/backend && git clone https://github.com/arkworks-rs/curves.git || true
-	cd math/zkalc/backend/curves; git fetch; git checkout releases; cargo criterion --features ark-ec/parallel,ark-ff/asm --message-format=json 1> ../../../../$(arkworks_curves_benchmarks_directory)/ark-curves.json || true
+	cd math/zkalc/backend/curves; git fetch; git checkout releases; cargo criterion --features ark-ec/parallel,ark-ff/asm --message-format=json 1> ../../../../$(arkworks_benchmarks_directory)/ark-curves.json || true
 
 math-blstrs: init math-init
 	$(info --------------------------------------------)
