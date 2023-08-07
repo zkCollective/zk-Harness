@@ -52,9 +52,10 @@ def parse_csv(csv_filename, memory_folder, circuit):
                 memory_filename = next((f for f in files if row["operation"] in f), None)
                 if memory_filename is None:
                     print(f"No file found for operation: {row['operation']}")
-                    continue
-                memory_file = os.path.join(memory_folder, memory_filename)
-                ram = extract_ram_from_file(memory_file)
+                    ram = ''
+                else:
+                    memory_file = os.path.join(memory_folder, memory_filename)
+                    ram = extract_ram_from_file(memory_file)
                 row['ram'] = ram
             csv_rows.append(row)
 
