@@ -17,6 +17,8 @@ else
     TIMEBIN="/usr/bin/time"
 fi
 
+# TODO automate that
+MAX_NODE_SPACE=128000
 SCRIPT_PATH=$(dirname "$(readlink -f "$0")")
 NODE_MODULES="${SCRIPT_PATH}/../../../node_modules/"
 CIRCUIT=$1
@@ -112,24 +114,24 @@ $TIMECMD ${TMP}/compiler_times.txt circom ${CIRCUIT} --r1cs --wasm --sym --c --o
 echo "$ORIGINAL_CIRCOM_CONTENTS" > ${CIRCUIT} && \
 echo ">>>Step 2: generating the witness JS" && \
 eval """
-$TIMECMD ${TMP}/witness_times.txt node --max_old_space_size=50000 ${TMP}/${CIRCUIT_NAME_INT}_js/generate_witness.js ${TMP}/${CIRCUIT_NAME_INT}_js/${CIRCUIT_NAME_INT}.wasm ${NEW_INPUT} ${TMP}/witness.wtns
+$TIMECMD ${TMP}/witness_times.txt node --max_old_space_size=${MAX_NODE_SPACE} ${TMP}/${CIRCUIT_NAME_INT}_js/generate_witness.js ${TMP}/${CIRCUIT_NAME_INT}_js/${CIRCUIT_NAME_INT}.wasm ${NEW_INPUT} ${TMP}/witness.wtns
 """ && \
 # We only care about phase 2 which is circuit-specific
 # .zkey file that will contain the proving and verification keys together with 
 # all phase 2 contributions.
 echo ">>>Step 3: Setup" && \
 eval """
-$TIMECMD ${TMP}/setup_times.txt node --max_old_space_size=50000 ${NODE_MODULES}/snarkjs/cli.js groth16 setup ${TMP}/${CIRCUIT_NAME_INT}.r1cs ${TAU} ${TMP}/${CIRCUIT_NAME_INT}_0.zkey
+$TIMECMD ${TMP}/setup_times.txt node --max_old_space_size=${MAX_NODE_SPACE} ${NODE_MODULES}/snarkjs/cli.js groth16 setup ${TMP}/${CIRCUIT_NAME_INT}.r1cs ${TAU} ${TMP}/${CIRCUIT_NAME_INT}_0.zkey
 """ && \
 # TODO Should we contribute here?
 # We could contribute here using: snarkjs zkey contribute ${TMP}/${CIRCUIT_NAME}_0.zkey ${TMP}/${CIRCUIT_NAME}_1.zkey --name="1st Contributor Name" -v
 echo ">>>Step 4: Export verification key" && \
 eval """
-$TIMECMD ${TMP}/export_times.txt node --max_old_space_size=50000 ${NODE_MODULES}/snarkjs/cli.js zkey export verificationkey ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/verification_key.json
+$TIMECMD ${TMP}/export_times.txt node --max_old_space_size=${MAX_NODE_SPACE} ${NODE_MODULES}/snarkjs/cli.js zkey export verificationkey ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/verification_key.json
 """ && \
 echo ">>>Step 5: Prove" && \
 eval """
-$TIMECMD ${TMP}/prove_times.txt node --max_old_space_size=50000 ${NODE_MODULES}/snarkjs/cli.js groth16 prove ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/witness.wtns ${TMP}/proof.json ${TMP}/public.json
+$TIMECMD ${TMP}/prove_times.txt node --max_old_space_size=${MAX_NODE_SPACE} ${NODE_MODULES}/snarkjs/cli.js groth16 prove ${TMP}/${CIRCUIT_NAME_INT}_0.zkey ${TMP}/witness.wtns ${TMP}/proof.json ${TMP}/public.json
 """ && \
 [[ -n $RAPIDSNARK ]] && \
 eval """
@@ -139,7 +141,7 @@ echo '>>>Step 5: Prove (rapidsnark)' && $TIMECMD ${TMP}/rapidsnark_times.txt $RA
 : && \
 echo ">>>Step 6: Verify" && \
 eval """
-$TIMECMD ${TMP}/verify_times.txt node --max_old_space_size=50000 ${NODE_MODULES}/snarkjs/cli.js groth16 verify ${TMP}/verification_key.json ${TMP}/public.json ${TMP}/proof.json
+$TIMECMD ${TMP}/verify_times.txt node --max_old_space_size=${MAX_NODE_SPACE} ${NODE_MODULES}/snarkjs/cli.js groth16 verify ${TMP}/verification_key.json ${TMP}/public.json ${TMP}/proof.json
 """
 
 portable_proc() {
