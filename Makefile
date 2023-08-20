@@ -120,7 +120,7 @@ math-ffjavascript: math-init
 	mkdir -p $(ffjavascript_benchmarks_directory)
 	cd math && if [ ! -d "zkalc" ]; then git clone $(ZKALC); fi
 	cd math/zkalc/backend && make init
-	cd math/zkalc/backend/ffjavascript; node bench.js > ../../../../$(ffjavascript_benchmarks_directory)/ffjavascript.json || true
+	cd math/zkalc/backend/ffjavascript; node bench.js 2> ../../../../$(ffjavascript_benchmarks_directory)/ffjavascript.json || true
 
 math-gnark: math-init
 	$(info --------------------------------------------)
