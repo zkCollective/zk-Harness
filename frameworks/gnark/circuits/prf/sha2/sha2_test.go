@@ -7,6 +7,7 @@ import (
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/test"
 	"github.com/consensys/gnark/std/math/uints"
+	"github.com/consensys/gnark/backend"
 )
 
 func TestSHA2(t *testing.T) {
@@ -20,4 +21,17 @@ func TestSHA2(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+}
+
+func TestPreimage(t *testing.T) {
+	assert := test.NewAssert(t)
+
+	bts := make([]byte, 1)
+	dgst := sha256.Sum256(bts)
+	witness := Sha2Circuit{
+		In: uints.NewU8Array(bts),
+	}
+	copy(witness.Expected[:], uints.NewU8Array(dgst[:]))
+
+	assert.ProverSucceeded(&Sha2Circuit{In: make([]uints.U8, len(bts))}, &witness, test.WithCurves(ecc.BN254), test.WithBackends(backend.GROTH16))
 }
