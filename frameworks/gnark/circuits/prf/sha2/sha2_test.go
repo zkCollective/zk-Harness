@@ -28,10 +28,19 @@ func TestPreimage(t *testing.T) {
 
 	bts := make([]byte, 1)
 	dgst := sha256.Sum256(bts)
+	randomDigest := make([]byte, 32)
+
 	witness := Sha2Circuit{
 		In: uints.NewU8Array(bts),
 	}
 	copy(witness.Expected[:], uints.NewU8Array(dgst[:]))
 
 	assert.ProverSucceeded(&Sha2Circuit{In: make([]uints.U8, len(bts))}, &witness, test.WithCurves(ecc.BN254), test.WithBackends(backend.GROTH16))
+
+	wrongWitness := Sha2Circuit{
+		In: uints.NewU8Array(bts),
+	}
+	copy(wrongWitness.Expected[:], uints.NewU8Array(randomDigest[:]))
+
+	assert.ProverFailed(&Sha2Circuit{In: make([]uints.U8, len(bts))}, &wrongWitness, test.WithCurves(ecc.BN254), test.WithBackends(backend.GROTH16))
 }
