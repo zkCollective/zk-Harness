@@ -40,7 +40,7 @@ class Paths():
             # GENERAL PATHS
             cls._instance.MAIN_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
             cls._instance.BENCHMARKS_DIR = os.path.join(cls._instance.MAIN_DIR, "benchmarks", machine)
-            cls._instance.CIRCUITS_BENCH = os.path.join(cls._instance.MAIN_DIR, "benchmarks", "circuits", machine)
+            cls._instance.CIRCUITS_BENCH = os.path.join(cls._instance.MAIN_DIR, "benchmarks", "circuit", machine)
             cls._instance.MATH_BENCH = os.path.join(cls._instance.MAIN_DIR, "benchmarks", "math", machine)
             # BELLMAN PATHS
             cls._instance.BELLMAN = os.path.join(cls._instance.MAIN_DIR, FRAMEWORKS_DIR, "bellman_circuits")
