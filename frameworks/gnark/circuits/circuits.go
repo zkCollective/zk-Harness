@@ -11,10 +11,11 @@ import (
 	"github.com/consensys/gnark/backend/witness"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/std/math/emulated"
+	"github.com/consensys/gnark/std/math/uints"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/groth16bls12377verifier"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/groth16bls24315verifier"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/prf/mimc"
-	"github.com/zkCollective/zk-Harness/gnark/circuits/prf/sha256"
+	"github.com/zkCollective/zk-Harness/gnark/circuits/prf/sha2"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/cubic"
 	emulate "github.com/zkCollective/zk-Harness/gnark/circuits/toy/emulate"
 	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/exponentiate"
@@ -98,9 +99,10 @@ func (d *defaultCircuit) Circuit(size int, name string, opts ...CircuitOption) f
 		if data == nil || data["PreImage"] == nil {
 			panic("Input for PreImage is not defined")
 		}
-		return &sha256.Sha256Circuit{
-			In: make([]frontend.Variable, (len(data["PreImage"].(string)) / 2)),
-		}
+		input := (data["PreImage"].(string))
+		bts, _ := hex.DecodeString(input)
+		halfLength := len(bts) / 2
+		return &sha2.Sha2Circuit{In: uints.NewU8Array(bts[:halfLength])}
 	case "groth16_bls12377":
 		outerCircuit := groth16bls12377verifier.VerifierCircuit{}
 		outerCircuit.InnerVk.Allocate(optCircuit.verifyingKey)
@@ -135,7 +137,6 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 	switch name {
 	case "exponentiate":
 		strVal, ok := (data["E"].(string))
-		fmt.Println(strVal)
 		if !ok {
 			panic("E is not a string")
 		}
@@ -198,30 +199,15 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 		input := (data["PreImage"].(string))
 		output := (data["Hash"].(string))
 
-		byteSlice, _ := hex.DecodeString(input)
-		inputByteLen := len(byteSlice)
+		bts, _ := hex.DecodeString(input)
 
-		byteSlice, _ = hex.DecodeString(output)
-		outputByteLen := len(byteSlice)
+		dgst, _ := hex.DecodeString(output)
 
-		// witness definition
-		preImageAssign := sha256.StrToByteSlice(input, true)
-		outputAssign := sha256.StrToByteSlice(output, true)
-
-		// witness values preparation
-		witness := sha256.Sha256Circuit{
-			In:             make([]frontend.Variable, inputByteLen),
-			ExpectedResult: [32]frontend.Variable{},
+		witness := sha2.Sha2Circuit{
+			In: uints.NewU8Array(bts),
 		}
-
-		// assign values here because required to use make in assignment
-		for i := 0; i < inputByteLen; i++ {
-			witness.In[i] = preImageAssign[i]
-		}
-		for i := 0; i < outputByteLen; i++ {
-			witness.ExpectedResult[i] = outputAssign[i]
-		}
-
+		
+		copy(witness.Expected[:], uints.NewU8Array(dgst[:]))
 		w, err := frontend.NewWitness(&witness, curveID.ScalarField())
 		if err != nil {
 			panic(err)
@@ -259,6 +245,8 @@ type CircuitConfig struct {
 	inputPath    string
 	verifyingKey groth16.VerifyingKey
 }
+
+
 
 func WithInputCircuit(inputPath string) CircuitOption {
 	return func(opt *CircuitConfig) error {

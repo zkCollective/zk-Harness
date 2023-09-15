@@ -2,7 +2,9 @@ package sha2
 
 import (
 	"crypto/sha256"
+	"fmt"
 	"testing"
+	"encoding/hex"
 
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/test"
@@ -26,7 +28,15 @@ func TestSHA2(t *testing.T) {
 func TestPreimage(t *testing.T) {
 	assert := test.NewAssert(t)
 
-	bts := make([]byte, 1)
+	input := "68656c6c6f20776f726c64"
+	// output := "b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9"
+
+	bts, err := hex.DecodeString(input)
+	// bts := make([]byte, 1)
+	if err != nil {
+		fmt.Println("Error decoding hex:", err)
+		return
+	}
 	dgst := sha256.Sum256(bts)
 	randomDigest := make([]byte, 32)
 
