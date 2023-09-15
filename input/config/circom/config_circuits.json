@@ -11,12 +11,8 @@
             "bn128"
         ], 
         "circuits": {
-            "sha256": {
-                "input_path": "input/circuit/sha256/bytes",
-                "template_vars": ["N"]
-            },
             "exponentiate": {
-                "input_path": "input/circuit/exponentiate_2",
+                "input_path": "input/circuit/exponentiate_2/input_10.json",
                 "template_vars": ["E"]
             }
         },

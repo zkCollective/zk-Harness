@@ -45,7 +45,7 @@ func init() {
 
 	// Hashes
 	BenchCircuits["mimc"] = &defaultCircuit{}
-	BenchCircuits["sha256"] = &defaultCircuit{}
+	BenchCircuits["sha2"] = &defaultCircuit{}
 
 	// Recursion
 	BenchCircuits["groth16_bls12377"] = &defaultCircuit{}
@@ -95,14 +95,22 @@ func (d *defaultCircuit) Circuit(size int, name string, opts ...CircuitOption) f
 		return &emulate.Circuit{}
 	case "mimc":
 		return &mimc.MimcCircuit{}
-	case "sha256":
+	case "sha2":
 		if data == nil || data["PreImage"] == nil {
 			panic("Input for PreImage is not defined")
 		}
 		input := (data["PreImage"].(string))
+		output := (data["Hash"].(string))
 		bts, _ := hex.DecodeString(input)
-		halfLength := len(bts) / 2
-		return &sha2.Sha2Circuit{In: uints.NewU8Array(bts[:halfLength])}
+		// halfLength := len(bts)
+		dgst, _ := hex.DecodeString(output)
+
+		result := &sha2.Sha2Circuit{
+			In: uints.NewU8Array(bts),
+		}
+		copy(result.Expected[:], uints.NewU8Array(dgst[:]))
+		// return &sha2.Sha2Circuit{In: uints.NewU8Array(bts[:halfLength])}
+		return result
 	case "groth16_bls12377":
 		outerCircuit := groth16bls12377verifier.VerifierCircuit{}
 		outerCircuit.InnerVk.Allocate(optCircuit.verifyingKey)
@@ -195,7 +203,7 @@ func (d *defaultCircuit) Witness(size int, curveID ecc.ID, name string, opts ...
 			panic(err)
 		}
 		return w
-	case "sha256":
+	case "sha2":
 		input := (data["PreImage"].(string))
 		output := (data["Hash"].(string))
 
