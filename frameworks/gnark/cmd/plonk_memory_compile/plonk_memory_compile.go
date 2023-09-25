@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"log"
+	"bytes"
 
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/frontend"
@@ -38,15 +40,13 @@ func runPlonkMemoryCompile(cmd *cobra.Command, args []string) {
 		frontend.WithCapacity(*cfg.CircuitSize))
 	parser.AssertNoError(err)
 
-	f, err := os.Create("tmp/ccs.dat")
-	if err != nil {
-		panic("Failed to create file: " + err.Error())
-	}
-	defer f.Close()
+	// SERIALIZE - WRITE THE CCS
+	var buf bytes.Buffer
+	_, _ = ccs.WriteTo(&buf)
 
-	_, err = ccs.WriteTo(f)
+	err = os.WriteFile("tmp/ccs.dat", buf.Bytes(), 0644)
 	if err != nil {
-		panic("Failed to write to file: " + err.Error())
+		log.Fatal(err)
 	}
 	return
 }

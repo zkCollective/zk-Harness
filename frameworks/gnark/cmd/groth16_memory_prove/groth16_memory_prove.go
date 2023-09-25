@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"bytes"
+	"log"
 
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/groth16"
@@ -29,34 +31,27 @@ func runGroth16MemoryProve(cmd *cobra.Command, args []string) {
 	}
 
 	// Initialize variables
-	ccs := groth16.NewCS(parser.CurveID)
-	pk := groth16.NewProvingKey(parser.CurveID)
+	reconstructedCCS := groth16.NewCS(parser.CurveID)
+	reconstructedPK := groth16.NewProvingKey(parser.CurveID)
 
 	// Read CCS
-	f, err := os.Open("tmp/ccs.dat")
+	_ccs, err := os.ReadFile("tmp/ccs.dat")
 	if err != nil {
-		panic("Failed to open file: " + err.Error())
+		log.Fatal(err)
 	}
-
-	_, err = ccs.ReadFrom(f)
-	if err != nil {
-		panic("Failed to read from file: " + err.Error())
-	}
-
-	f.Close()
+	_buf := *bytes.NewBuffer(_ccs)
+	_, _ = reconstructedCCS.ReadFrom(&_buf)
 
 	// Read PK
-	f, err = os.Open("tmp/pk.dat")
-	if err != nil {
-		panic("Failed to open file: " + err.Error())
-	}
-
-	_, err = pk.ReadFrom(f)
+	_pk, err := os.ReadFile("tmp/pk.dat")
 	if err != nil {
 		panic("Failed to read from file: " + err.Error())
 	}
-
-	f.Close()
+	_buf = *bytes.NewBuffer(_pk)
+	_, err = reconstructedPK.ReadFrom(&_buf)
+	if err != nil {
+		panic("Failed to read prover key: " + err.Error())
+	}
 
 	// Witness creation is included in Prover Memory benchmarks
 	witness := parser.C.Witness(*cfg.CircuitSize,
@@ -64,7 +59,7 @@ func runGroth16MemoryProve(cmd *cobra.Command, args []string) {
 		*cfg.Circuit,
 		circuits.WithInputWitness(*cfg.InputPath))
 
-	proof, err := groth16.Prove(ccs, pk, witness)
+	proof, err := groth16.Prove(reconstructedCCS, reconstructedPK, witness)
 	if err != nil {
 		panic("Error when computing proof. Ensure that Constraint System and pk/vk are generated for the same parameters.")
 	}
@@ -73,27 +68,21 @@ func runGroth16MemoryProve(cmd *cobra.Command, args []string) {
 	publicWitness, _ := witness.Public()
 
 	// Serialize the publicWitness
-	f, err = os.Create("tmp/publicWitness.dat")
+	data, err := publicWitness.MarshalBinary()
 	if err != nil {
-		panic("Failed to create file: " + err.Error())
+		panic("Failed to marshal binary: " + err.Error())
 	}
-	defer f.Close()
-
-	_, err = publicWitness.WriteTo(f)
+	err = os.WriteFile("tmp/publicWitness.dat", data, 0644)
 	if err != nil {
 		panic("Failed to write to file: " + err.Error())
 	}
 
 	// Serialize the Proof
-	f, err = os.Create("tmp/proof.dat")
+	var bufProof bytes.Buffer
+	_, _ = proof.WriteTo(&bufProof)
+	err = os.WriteFile("tmp/proof.dat", bufProof.Bytes(), 0644)
 	if err != nil {
-		panic("Failed to create file: " + err.Error())
-	}
-	defer f.Close()
-
-	_, err = proof.WriteTo(f)
-	if err != nil {
-		panic("Failed to write to file: " + err.Error())
+		log.Fatal(err)
 	}
 
 	return

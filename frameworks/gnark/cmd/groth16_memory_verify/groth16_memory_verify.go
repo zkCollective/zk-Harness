@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"bytes"
 
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/groth16"
@@ -30,53 +31,45 @@ func runGroth16MemoryVerify(cmd *cobra.Command, args []string) {
 	}
 
 	// Initialize variables
-	proof := groth16.NewProof(parser.CurveID)
-	vk := groth16.NewVerifyingKey(parser.CurveID)
-	publicWitness, err := witness.New(parser.CurveID.ScalarField())
+	reconstructedProof := groth16.NewProof(parser.CurveID)
+	reconstructedVK := groth16.NewVerifyingKey(parser.CurveID)
+	newWitness, err := witness.New(parser.CurveID.ScalarField())
+	reconstructedPublicWitness, _ := newWitness.Public()
 
 	// Read vk
-	f, err := os.Open("tmp/vk.dat")
+	_vk, err := os.ReadFile("tmp/vk.dat")
 	if err != nil {
 		panic("Failed to open file: " + err.Error())
 	}
 
-	_, err = vk.ReadFrom(f)
+	_buf := *bytes.NewBuffer(_vk)
+	_, err = reconstructedVK.ReadFrom(&_buf)
 	if err != nil {
-		panic("Failed to read from file: " + err.Error())
+		panic("Failed to read verifier key: " + err.Error())
 	}
 
 	// Read Public Witness
-	f, err = os.Open("tmp/publicWitness.dat")
-	if err != nil {
-		panic("Failed to open file: " + err.Error())
-	}
-
-	_, err = publicWitness.ReadFrom(f)
+	_pubWit, err := os.ReadFile("tmp/publicWitness.dat")
 	if err != nil {
 		panic("Failed to read from file: " + err.Error())
 	}
 
-	f.Close()
+	// Binary marshalling
+	reconstructedPublicWitness.UnmarshalBinary(_pubWit)
 
 	// Read proof
-	f, err = os.Open("tmp/proof.dat")
-	if err != nil {
-		panic("Failed to open file: " + err.Error())
-	}
-
-	_, err = proof.ReadFrom(f)
+	_proof, err := os.ReadFile("tmp/proof.dat")
 	if err != nil {
 		panic("Failed to read from file: " + err.Error())
 	}
-
-	f.Close()
+	
+	_, err = reconstructedProof.ReadFrom(bytes.NewReader(_proof))
 
 	// Proof Verification
-	err = groth16.Verify(proof, vk, publicWitness)
+	err = groth16.Verify(reconstructedProof, reconstructedVK, reconstructedPublicWitness)
 	if err != nil {
 		panic("Failed Verification!")
 	}
-
 	return
 }
 

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"bytes"
+	"log"
 
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/groth16"
@@ -29,47 +31,34 @@ func runGroth16MemorySetup(cmd *cobra.Command, args []string) {
 	}
 
 	// Open the file in read-only mode
-	f, err := os.Open("tmp/ccs.dat")
+	_ccs, err := os.ReadFile("tmp/ccs.dat")
 	if err != nil {
-		panic("Failed to open file: " + err.Error())
+		log.Fatal(err)
 	}
+	_buf := *bytes.NewBuffer(_ccs)
+	reconstructedCCS := groth16.NewCS(parser.CurveID)
+	_, _ = reconstructedCCS.ReadFrom(&_buf)
 
-	ccs := groth16.NewCS(parser.CurveID)
-	_, err = ccs.ReadFrom(f)
-	if err != nil {
-		panic("Failed to read from file: " + err.Error())
-	}
-
-	// Close the file after reading
-	f.Close()
-
-	pk, vk, err := groth16.Setup(ccs)
+	pk, vk, err := groth16.Setup(reconstructedCCS)
 	if err != nil {
 		panic("Setup failed!")
 	}
 
 	// Open the file in write mode for pk
-	fPK, err := os.OpenFile("tmp/pk.dat", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
+	var bufPK bytes.Buffer
+	_, _ = pk.WriteTo(&bufPK)
+	err = os.WriteFile("tmp/pk.dat", bufPK.Bytes(), 0644)
 	if err != nil {
-		panic("Failed to open file for writing: " + err.Error())
+		log.Fatal(err)
 	}
-	defer fPK.Close()
-
-	_, err = pk.WriteRawTo(fPK)
-	if err != nil {
-		panic("Failed to write pk to file: " + err.Error())
-	}
+	
 
 	// Open the file in write mode for vk
-	fVK, err := os.OpenFile("tmp/vk.dat", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
+	var bufVK bytes.Buffer
+	_, _ = vk.WriteTo(&bufVK)
+	err = os.WriteFile("tmp/vk.dat", bufVK.Bytes(), 0644)
 	if err != nil {
-		panic("Failed to open file for writing: " + err.Error())
-	}
-	defer fVK.Close()
-
-	_, err = vk.WriteRawTo(fVK)
-	if err != nil {
-		panic("Failed to write vk to file: " + err.Error())
+		log.Fatal(err)
 	}
 	return
 }

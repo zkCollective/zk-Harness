@@ -29,13 +29,14 @@ func runPlonkMemoryWitness(cmd *cobra.Command, args []string) {
 
 	witness := parser.C.Witness(*cfg.CircuitSize, parser.CurveID, *cfg.Circuit, circuits.WithInputWitness(*cfg.InputPath))
 
-	f, err := os.Create("tmp/witness.dat")
+	// Binary marshalling
+	data, err := witness.MarshalBinary()
 	if err != nil {
-		panic("Failed to create file: " + err.Error())
+		panic("Failed to marshal binary: " + err.Error())
 	}
-	defer f.Close()
 
-	_, err = witness.WriteTo(f)
+	// SERIALIZE write binary marshalled data to file
+	err = os.WriteFile("tmp/witness.dat", data, 0644)
 	if err != nil {
 		panic("Failed to write to file: " + err.Error())
 	}

@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"log"
+	"bytes"
+	"reflect"
 
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/plonk"
@@ -12,10 +15,9 @@ import (
 	"github.com/zkCollective/zk-Harness/frameworks/gnark/parser"
 )
 
-// groth16Cmd represents the groth16 command
 var plonkMemorySetupCmd = &cobra.Command{
-	Use:   "groth16MemorySetup",
-	Short: "runs benchmarks and profiles using Groth16 proof system",
+	Use:   "plonkMemorySetup",
+	Short: "runs benchmarks and profiles using Plonk proof system",
 	Run:   runPlonkMemorySetup,
 }
 
@@ -29,54 +31,38 @@ func runPlonkMemorySetup(cmd *cobra.Command, args []string) {
 		os.Exit(-1)
 	}
 
-	// Open the file in read-only mode
-	f, err := os.Open("tmp/ccs.dat")
+	_ccs, err := os.ReadFile("tmp/ccs.dat")
 	if err != nil {
-		panic("Failed to open file: " + err.Error())
+		log.Fatal(err)
 	}
-
-	ccs := plonk.NewCS(parser.CurveID)
-	_, err = ccs.ReadFrom(f)
-	if err != nil {
-		panic("Failed to read from file: " + err.Error())
-	}
-
-	// Close the file after reading
-	f.Close()
+	_buf := *bytes.NewBuffer(_ccs)
+	reconstructedCCS := plonk.NewCS(parser.CurveID)
+	_, _ = reconstructedCCS.ReadFrom(&_buf)
 
 	// create srs
-	srs, err := test.NewKZGSRS(ccs)
+	srs, err := test.NewKZGSRS(reconstructedCCS)
+	fmt.Println(reflect.TypeOf(srs))
 	if err != nil {
 		panic("Failed to create srs: " + err.Error())
 	}
 
-	pk, vk, err := plonk.Setup(ccs, srs)
+	pk, vk, err := plonk.Setup(reconstructedCCS, srs)
 	if err != nil {
 		panic("Setup failed!")
 	}
 
-	// Open the file in write mode for pk
-	fPK, err := os.OpenFile("tmp/pk.dat", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
+	// SERIALIZE - WRITE THE PK & VK
+	var bufPK bytes.Buffer
+	_, _ = pk.WriteTo(&bufPK)
+	err = os.WriteFile("tmp/pk.dat", bufPK.Bytes(), 0644)
 	if err != nil {
-		panic("Failed to open file for writing: " + err.Error())
+		log.Fatal(err)
 	}
-	defer fPK.Close()
-
-	_, err = pk.WriteTo(fPK)
+	var bufVK bytes.Buffer
+	_, _ = vk.WriteTo(&bufVK)
+	err = os.WriteFile("tmp/vk.dat", bufVK.Bytes(), 0644)
 	if err != nil {
-		panic("Failed to write pk to file: " + err.Error())
-	}
-
-	// Open the file in write mode for vk
-	fVK, err := os.OpenFile("tmp/vk.dat", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
-	if err != nil {
-		panic("Failed to open file for writing: " + err.Error())
-	}
-	defer fVK.Close()
-
-	_, err = vk.WriteTo(fVK)
-	if err != nil {
-		panic("Failed to write vk to file: " + err.Error())
+		log.Fatal(err)
 	}
 	return
 }
