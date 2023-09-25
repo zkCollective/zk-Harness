@@ -6,7 +6,7 @@ import (
 
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/pkg/profile"
-	"github.com/zkCollective/zk-Harness/gnark/circuits"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/circuits"
 )
 
 type Config struct {

@@ -8,8 +8,8 @@ import (
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/spf13/cobra"
-	"github.com/zkCollective/zk-Harness/gnark/circuits"
-	"github.com/zkCollective/zk-Harness/gnark/parser"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/circuits"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/parser"
 )
 
 var groth16MemoryProveCmd = &cobra.Command{

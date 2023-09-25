@@ -13,9 +13,9 @@ import (
 	"github.com/consensys/gnark/frontend/cs/r1cs"
 	"github.com/consensys/gnark/logger"
 	"github.com/spf13/cobra"
-	"github.com/zkCollective/zk-Harness/gnark/circuits"
-	"github.com/zkCollective/zk-Harness/gnark/parser"
-	"github.com/zkCollective/zk-Harness/gnark/util"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/circuits"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/parser"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/util"
 )
 
 var recursionCmd = &cobra.Command{

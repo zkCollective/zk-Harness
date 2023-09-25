@@ -8,8 +8,8 @@ import (
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend/plonk"
 	"github.com/spf13/cobra"
-	"github.com/zkCollective/zk-Harness/gnark/circuits"
-	"github.com/zkCollective/zk-Harness/gnark/parser"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/circuits"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/parser"
 )
 
 var plonkMemoryProveCmd = &cobra.Command{

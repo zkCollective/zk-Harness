@@ -12,15 +12,15 @@ import (
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/std/math/emulated"
 	"github.com/consensys/gnark/std/math/uints"
-	"github.com/zkCollective/zk-Harness/gnark/circuits/groth16bls12377verifier"
-	"github.com/zkCollective/zk-Harness/gnark/circuits/groth16bls24315verifier"
-	"github.com/zkCollective/zk-Harness/gnark/circuits/prf/mimc"
-	"github.com/zkCollective/zk-Harness/gnark/circuits/prf/sha2"
-	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/cubic"
-	emulate "github.com/zkCollective/zk-Harness/gnark/circuits/toy/emulate"
-	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/exponentiate"
-	"github.com/zkCollective/zk-Harness/gnark/circuits/toy/exponentiate_opt"
-	"github.com/zkCollective/zk-Harness/gnark/util"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/circuits/groth16bls12377verifier"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/circuits/groth16bls24315verifier"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/circuits/prf/mimc"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/circuits/prf/sha2"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/circuits/toy/cubic"
+	emulate "github.com/zkCollective/zk-Harness/frameworks/gnark/circuits/toy/emulate"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/circuits/toy/exponentiate"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/circuits/toy/exponentiate_opt"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/util"
 )
 
 var err error
@@ -100,16 +100,10 @@ func (d *defaultCircuit) Circuit(size int, name string, opts ...CircuitOption) f
 			panic("Input for PreImage is not defined")
 		}
 		input := (data["PreImage"].(string))
-		output := (data["Hash"].(string))
 		bts, _ := hex.DecodeString(input)
-		// halfLength := len(bts)
-		dgst, _ := hex.DecodeString(output)
-
 		result := &sha2.Sha2Circuit{
-			In: uints.NewU8Array(bts),
+			In: make([]uints.U8, len(bts)),
 		}
-		copy(result.Expected[:], uints.NewU8Array(dgst[:]))
-		// return &sha2.Sha2Circuit{In: uints.NewU8Array(bts[:halfLength])}
 		return result
 	case "groth16_bls12377":
 		outerCircuit := groth16bls12377verifier.VerifierCircuit{}

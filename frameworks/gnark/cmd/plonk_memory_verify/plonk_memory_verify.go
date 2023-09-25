@@ -9,7 +9,7 @@ import (
 	"github.com/consensys/gnark/backend/groth16"
 	"github.com/consensys/gnark/backend/witness"
 	"github.com/spf13/cobra"
-	"github.com/zkCollective/zk-Harness/gnark/parser"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/parser"
 )
 
 // groth16Cmd represents the groth16 command

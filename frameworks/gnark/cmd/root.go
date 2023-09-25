@@ -7,7 +7,7 @@ import (
 
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/spf13/cobra"
-	"github.com/zkCollective/zk-Harness/gnark/parser"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/parser"
 )
 
 var cfg = parser.NewConfig()

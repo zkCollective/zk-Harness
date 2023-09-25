@@ -14,8 +14,8 @@ import (
 
 	"github.com/consensys/gnark/logger"
 	"github.com/spf13/cobra"
-	"github.com/zkCollective/zk-Harness/gnark/parser"
-	"github.com/zkCollective/zk-Harness/gnark/util"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/parser"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/util"
 )
 
 const (

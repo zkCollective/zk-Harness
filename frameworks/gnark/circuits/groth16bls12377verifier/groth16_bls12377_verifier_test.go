@@ -9,8 +9,8 @@ import (
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/r1cs"
 	"github.com/consensys/gnark/test"
-	mimc "github.com/zkCollective/zk-Harness/gnark/circuits/prf/mimc"
-	"github.com/zkCollective/zk-Harness/gnark/util"
+	mimc "github.com/zkCollective/zk-Harness/frameworks/gnark/circuits/prf/mimc"
+	"github.com/zkCollective/zk-Harness/frameworks/gnark/util"
 )
 
 const (
