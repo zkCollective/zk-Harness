@@ -10,9 +10,9 @@ def parse_memory_txt(circuit_folder, circuit):
                 lines = file.readlines()
                 for line in lines:
                     if "maximum resident set size" in line:
-                        ram = int(line.split()[0])  
+                        ram = int(line.split()[0])
                         operation = filename.split("memory_")[-1].split("_")[0].replace(".txt", "")
-                        input_file = "_input/circuit/" + circuit + "/input_" + circuit_folder.split("_")[-1] + ".json" 
+                        input_file = "input/circuit/" + circuit + "/input_" + circuit_folder.split("_")[-1] + ".json" 
                         memory_data.append([input_file, operation, ram])
     df_memory = pd.DataFrame(memory_data, columns=["input", "operation", "ramReal"])
     return df_memory
