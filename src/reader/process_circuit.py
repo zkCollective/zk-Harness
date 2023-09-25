@@ -48,7 +48,7 @@ def build_command_gnark(payload, count):
                     --input={inp} \
                     --count=1 \
                     2> {helper.Paths().GNARK_BENCH_MEMORY}/{modified_inp}/gnark_{backend}_{circ}_memory_{op}.txt \
-                    > /dev/null; \n"
+                    > /dev/null || true; \n"
             )[1]
             for backend in payload.backend
             for curve in payload.curves
