@@ -11,7 +11,7 @@ import (
 // mimc(secret preImage) = public hash
 type Sha2Circuit struct {
 	In       []uints.U8
-	Expected [32]uints.U8
+	Expected [32]uints.U8 `gnark:",public"`
 }
 
 // Define declares the circuit's constraints
