@@ -1,0 +1,27 @@
+{
+    "project": "halo2_pse",
+    "project_url": "https://github.com/privacy-scaling-explorations/halo2/",
+    "category": "circuit",
+    "count": 10,
+    "payload": {
+        "backend": [
+            "halo2"
+        ],
+        "curves": [
+            "bn256"
+        ], 
+        "circuits": {
+            "exponentiate": {
+                "input_path": [
+                    "input/circuit/exponentiate/input_100.json",
+                    "input/circuit/exponentiate/input_1000.json"
+                ]
+            }
+        },
+        "algorithm": [
+            "setup",
+            "prove",
+            "verify"
+        ]
+    }    
+}
