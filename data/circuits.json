@@ -1,0 +1,101 @@
+{
+    "circuits": [
+        "Exponentiate",
+        "SHA-256"
+    ],
+    "frameworks": [
+        {
+            "name": "Bellman",
+            "url": "https://github.com/zkcrypto/bellman",
+            "circuits": [
+                {
+                    "name": "Exponentiate",
+                    "implementation": {
+                        "custom": true,
+                        "url": ""
+                    }
+                },
+                {
+                    "name": "SHA-256",
+                    "implementation": {
+                        "custom": false,
+                        "url": "https://github.com/zkcrypto/bellman/blob/main/src/gadgets/sha256.rs"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Circom",
+            "url": "https://github.com/iden3/circom",
+            "circuits": [
+                {
+                    "name": "Exponentiate",
+                    "implementation": {
+                        "custom": true,
+                        "url": ""
+                    }
+                },
+                {
+                    "name": "SHA-256",
+                    "implementation": {
+                        "custom": false,
+                        "url": "https://github.com/iden3/circomlib/tree/master/circuits/sha256"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Gnark",
+            "url": "https://github.com/Consensys/gnark",
+            "circuits": [
+                {
+                    "name": "Exponentiate",
+                    "implementation": {
+                        "custom": true,
+                        "url": ""
+                    }
+                },
+                {
+                    "name": "SHA-256",
+                    "implementation": {
+                        "custom": true,
+                        "url": ""
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Halo2-PSE",
+            "url": "https://github.com/privacy-scaling-explorations/halo2/",
+            "circuits": [
+                {
+                    "name": "Exponentiate",
+                    "implementation": {
+                        "custom": true,
+                        "url": ""
+                    }
+                },
+                {
+                    "name": "SHA-256",
+                    "implementation": {
+                        "custom": false,
+                        "url": "https://github.com/privacy-scaling-explorations/halo2/blob/main/halo2_gadgets/benches/sha256.rs"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Starky",
+            "url": "https://github.com/mir-protocol/plonky2",
+            "circuits": [
+                {
+                    "name": "Exponentiate",
+                    "implementation": {
+                        "custom": true,
+                        "url": ""
+                    }
+                }
+            ]
+        }
+    ]
+}

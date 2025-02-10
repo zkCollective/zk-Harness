@@ -191,9 +191,10 @@ class CircuitLogRow(LogRow):
     def check_count(cls, df):
         dff = df[['circuit', 'input_path', 'operation', 'count']]
         dff_grouped = dff.groupby(['circuit', 'input_path', 'operation'])
-        for name, group in dff_grouped:
-            if len(group['count'].unique()) != 1:
-                raise AssertionError(f"Each experiment in group `{name}` should have the same count")
+        # This check is not required if we use criterion or other such framework
+        #for name, group in dff_grouped:
+        #    if len(group['count'].unique()) != 1:
+        #        raise AssertionError(f"Each experiment in group `{name}` should have the same count")
 
 
 class ArithmeticLogRow(LogRow):

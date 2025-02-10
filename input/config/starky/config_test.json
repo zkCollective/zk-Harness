@@ -1,0 +1,27 @@
+{
+    "project": "starky",
+    "project_url": "https://github.com/zkcrypto/starky",
+    "category": "circuit",
+    "count": 10,
+    "payload": {
+        "backend": [
+            "starky"
+        ],
+        "curves": [
+            "goldilocks"
+        ], 
+        "circuits": {
+            "exponentiate": {
+                "input_path": [
+                    "input/circuit/exponentiate_2/input_10.json",
+                    "input/circuit/exponentiate_2/input_11.json"
+                ]
+            }
+        },
+        "algorithm": [
+            "witness",
+            "prove",
+            "verify"
+        ]
+    }    
+}

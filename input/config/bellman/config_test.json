@@ -1,0 +1,27 @@
+{
+    "project": "bellman",
+    "project_url": "https://github.com/zkcrypto/bellman",
+    "category": "circuit",
+    "count": 10,
+    "payload": {
+        "backend": [
+            "bellman"
+        ],
+        "curves": [
+            "bls12_381"
+        ], 
+        "circuits": {
+            "exponentiate": {
+                "input_path": [
+                    "input/circuit/exponentiate/input_100.json",
+                    "input/circuit/exponentiate/input_1000.json"
+                ]
+            }
+        },
+        "algorithm": [
+            "setup",
+            "prove",
+            "verify"
+        ]
+    }    
+}
