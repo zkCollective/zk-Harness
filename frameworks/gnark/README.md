@@ -1,13 +1,13 @@
 # Benchmarking the gnark Library
 
-The development version documentation of gnark can be found [here](https://docs.gnark.consensys.net/en/latest/Concepts/schemes_curves/).
+The development version documentation of gnark can be found [here](https://docs.gnark.consensys.io/Concepts/schemes_curves).
 Note: this is an integration of the [gnark-bench](https://github.com/ConsenSys/gnark-bench), extended and adapted to zk-Harness.
 
 ## Plain Setup
 
 ### Installation
 
-Installation and setup descriptions can be found [here](https://docs.gnark.consensys.net/en/latest/HowTo/get_started/)
+Installation and setup descriptions can be found [here](https://docs.gnark.consensys.io/HowTo/get_started)
 gnark is written in Golang and hence requires the system wide installation of [go](https://go.dev/doc/install) to compile circuits and run proofs.
 
 To write gnark code, the gnark module needs needs to be installed by running ``` go get github.com/consensys/gnark@v0.7.0 ```.
