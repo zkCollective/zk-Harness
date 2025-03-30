@@ -3,7 +3,7 @@
 To run most of the benchmarks, you will need to have the following software installed on your system:
 
 1. Rust: Rust is a systems programming language that is used by some of the benchmarks. You can install Rust by following the instructions provided on the official website: https://www.rust-lang.org/tools/install.
-2. Go: Go is a programming language that is used by some of the benchmarks. You can install Go by following the instructions provided on the official website: https://golang.org/doc/install.
+2. Go: Go is a programming language that is used by some of the benchmarks. You can install Go by following the instructions provided on the official website: https://go.dev/doc/install.
 3. Node.js: Node.js is a JavaScript runtime environment that is used by some of the benchmarks. You can install Node.js by following the instructions provided on the official website: https://nodejs.org.
 4. Cargo Criterion: Cargo Criterion is a benchmarking library for Rust. To install Cargo Criterion, open a terminal and run the following command:
 
