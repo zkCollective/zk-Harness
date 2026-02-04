@@ -1,0 +1,18 @@
+{
+  "project": "opoch",
+  "project_url": "https://github.com/chetannothingness/opoch-hash",
+  "category": "circuit",
+  "count": 1,
+  "payload": {
+    "backend": ["stark"],
+    "curves": ["goldilocks"],
+    "circuits": {
+      "sha256_chain": {
+        "input_path": [
+          "input/circuit/opoch/sha256_chain/input_64.json"
+        ]
+      }
+    },
+    "algorithm": ["prove", "verify"]
+  }
+}

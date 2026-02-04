@@ -33,6 +33,9 @@ class Paths():
     CIRCOM_CIRCUITS_DIR = None
     CIRCOM_PTAU = None
 
+    OPOCH_DIR = None
+    OPOCH_BENCH = None
+
     def __new__(cls, machine=None, *args, **kwargs):
         if not cls._instance:
             assert machine is not None
@@ -67,6 +70,9 @@ class Paths():
             cls._instance.CIRCOM_SCRIPT = os.path.join(cls._instance.CIRCOM_DIR, "scripts", "run_circuit.sh")
             cls._instance.CIRCOM_CIRCUITS_DIR = os.path.join(cls._instance.CIRCOM_DIR, "circuits", "benchmarks")
             cls._instance.CIRCOM_PTAU = os.path.join(cls._instance.CIRCOM_DIR, "phase1", "powersOfTau28_final.ptau")
+            # OPOCH PATHS
+            cls._instance.OPOCH_DIR = os.path.join(cls._instance.MAIN_DIR, FRAMEWORKS_DIR, "opoch")
+            cls._instance.OPOCH_BENCH = os.path.join(cls._instance.CIRCUITS_BENCH, "opoch")
         return cls._instance
 
 

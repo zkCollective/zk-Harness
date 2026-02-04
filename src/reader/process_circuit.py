@@ -396,6 +396,56 @@ def build_command_halo2_pse(payload, count):
 
     return command
 
+def build_command_opoch(payload, count):
+    """
+    Build the command to invoke the OPOCH ZKP-framework given the payload.
+
+    OPOCH uses a custom benchmark binary that outputs CSV directly.
+    Input JSON files contain {"n": <value>} to specify the number of SHA-256 iterations.
+    """
+    initial_cmd = f"cd {helper.Paths().OPOCH_DIR} && "
+
+    os.makedirs(helper.Paths().OPOCH_BENCH, exist_ok=True)
+
+    if len(payload.backend) != 1 or payload.backend[0] != "stark":
+        raise ValueError("OPOCH benchmark only supports stark backend")
+    if len(payload.curves) != 1 or payload.curves[0] != "goldilocks":
+        raise ValueError("OPOCH benchmark only supports goldilocks field")
+
+    commands = []
+
+    # Build the benchmark binary first
+    build_cmd = f"{initial_cmd} cargo build --release --bin zkharness_bench 2>/dev/null; "
+    commands.append(build_cmd)
+
+    for circuit, input_path in payload.circuit.items():
+        output_file = os.path.join(helper.Paths().OPOCH_BENCH, f"opoch_stark_{circuit}.csv")
+
+        # Write header once at the start
+        header_cmd = f"echo 'framework,category,backend,curve,circuit,input,operation,nbConstraints,nbSecret,nbPublic,ram,time,proofSize,count' > {output_file}; "
+        commands.append(header_cmd)
+
+        for inp in helper.get_all_input_files(input_path):
+            # Read the input JSON to get the N value
+            import json
+            with open(inp, 'r') as f:
+                input_data = json.load(f)
+            n_value = input_data.get('n', 1024)
+
+            for _ in range(count):
+                # Only capture data lines (starting with 'opoch'), not header
+                cmd = "{initial_cmd} ./target/release/zkharness_bench --circuit {circuit} --input {n} --input-path {inp} --count 1 2>/dev/null | grep -E '^opoch,' >> {output}; ".format(
+                    initial_cmd=initial_cmd,
+                    circuit=circuit,
+                    n=n_value,
+                    inp=inp,
+                    output=output_file
+                )
+                commands.append(cmd)
+
+    return "".join(commands)
+
+
 def default_case(_payload, _count):
     raise ValueError("Framework not integrated into the benchmarking framework!")
 
@@ -407,7 +457,8 @@ projects = {
     "circom/rapidsnark":    build_command_circom_rapidsnark,
     "bellman":              build_command_bellman,
     "starky":               build_command_starky,
-    "halo2_pse":            build_command_halo2_pse
+    "halo2_pse":            build_command_halo2_pse,
+    "opoch":                build_command_opoch
 }
 
 
