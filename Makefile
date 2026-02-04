@@ -149,9 +149,9 @@ math-ffiasm: math-init
 
 ############################## CIRCUITS ########################################
 
-circuits-test: benchmark-bellman-test-circuit benchmark-halo2-pse-test-circuit benchmark-circom-test-circuit gnark-init benchmark-gnark-test-circuit benchmark-starky-test-circuit
+circuits-test: benchmark-bellman-test-circuit benchmark-halo2-pse-test-circuit benchmark-circom-test-circuit gnark-init benchmark-gnark-test-circuit benchmark-starky-test-circuit benchmark-opoch-test-circuit
 
-circuits: benchmark-bellman-circuits benchmark-halo2-pse-circuits benchmark-circom-circuits benchmark-gnark-circuits benchmark-starky-circuits
+circuits: benchmark-bellman-circuits benchmark-halo2-pse-circuits benchmark-circom-circuits benchmark-gnark-circuits benchmark-starky-circuits benchmark-opoch-circuits
 
 log-init:
 	mkdir -p .logs
@@ -257,6 +257,18 @@ benchmark-starky-circuits: init log-init
 	$(info -------- STARKY CIRCUIT BENCHMARKS --------)
 	$(info --------------------------------------------)
 	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/starky/config_circuits.json --machine $(MACHINE) 2>&1 | tee -a .logs/starky.log
+
+benchmark-opoch-test-circuit: init log-init
+	$(info --------------------------------------------)
+	$(info -------- OPOCH TEST CIRCUIT BENCHMARKS ----)
+	$(info --------------------------------------------)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/opoch/config_test.json --machine $(MACHINE) 2>&1 | tee -a .logs/opoch.log
+
+benchmark-opoch-circuits: init log-init
+	$(info --------------------------------------------)
+	$(info -------- OPOCH CIRCUIT BENCHMARKS ---------)
+	$(info --------------------------------------------)
+	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/opoch/config_circuits.json --machine $(MACHINE) 2>&1 | tee -a .logs/opoch.log
 
 benchmark-comparison-circuits: init circom-init gnark-init log-init
 	python3 -m $(FRAMEWORK).reader --config $(INPUTS)/config/comparison/bellman.json --machine $(MACHINE) 2>&1 | tee -a .logs/bellman.log
